@@ -66,7 +66,7 @@ public class PeopleSearch extends SocialBase{
 		if(useEnterKey)
 			Utils.javaSimulateKeyPress(KeyEvent.VK_ENTER);
 		else
-			click(ELEMENT_SEARCH_BUTTON);
+			clickByJavascript(ELEMENT_SEARCH_BUTTON);
 		if (directory!=""){
 			click(By.linkText(directory));
 		}

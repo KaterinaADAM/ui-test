@@ -1,5 +1,6 @@
 package org.exoplatform.selenium;
 
+import static org.exoplatform.selenium.TestLogger.info;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
@@ -32,6 +33,7 @@ public class ManageAlert extends TestBase{
 		try {
 			Alert alert = driver.switchTo().alert();
 			alert.accept();
+			Utils.pause(2000);
 			switchToParentWindow();
 		} catch (NoAlertPresentException e) {
 		}
@@ -51,7 +53,7 @@ public class ManageAlert extends TestBase{
 
 	//Get Text
 	public String getTextFromAlert() {
-		Utils.pause(1000);
+		Utils.pause(2000);
 		try {
 			Alert alert = driver.switchTo().alert();
 			return alert.getText();
@@ -65,14 +67,14 @@ public class ManageAlert extends TestBase{
 		String message = getTextFromAlert();
 		int timeOut = wait.length > 0 ? wait[0] : DEFAULT_TIMEOUT;
 
-		//log("confirmation: " + message);
+		info("confirmation: " + message);
 		if (message.isEmpty()) {
 			if (loopCount > timeOut/500) {
 				Assert.fail("Message is empty");
 			}
 			Utils.pause(500);
 			loopCount++;
-			waitForConfirmation(confirmationText);
+//			waitForConfirmation(confirmationText);
 			return;
 		}
 

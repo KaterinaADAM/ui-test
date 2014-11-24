@@ -27,11 +27,11 @@ public class PlatformBase extends TestBase {
 
 	public final String USER_ROOT = "root";//"root@acme.com";
 	public final String PASS_ROOT = "gtngtn";
-//	public final String DATA_USER1 = "john.smith@acme.com";
-//	public final String DATA_USER2 = "mary.williams@acme.com";
+	//	public final String DATA_USER1 = "john.smith@acme.com";
+	//	public final String DATA_USER2 = "mary.williams@acme.com";
 	public final String DATA_USER3 = "james";//"james.davis@acme.com";
 	public final String DATA_USER4 = "demo";//"jack.demo@acme.com";
-//	public final String DATA_PASS = "gtngtn";
+	//	public final String DATA_PASS = "gtngtn";
 
 	public ManageAlert alert = new ManageAlert(driver);
 	public Button button = new Button(driver);
@@ -78,7 +78,7 @@ public class PlatformBase extends TestBase {
 	public By ELEMENT_CALENDAR_PANEL = By.xpath("//div[@class='uiBox uiCalendars']");
 	public final By ELEMENT_TITLE_WIKI_HOME_LINK = By.xpath("//*[@class='titleWikiBox']/*[contains(text(), 'Wiki Home')]");
 
-	
+
 	/*
 	 * Navigation Bar
 	 */
@@ -175,13 +175,13 @@ public class PlatformBase extends TestBase {
 	//IDE
 	public final By ELEMENT_LINK_IDE = By.linkText("IDE");
 	public final By ELEMENT_GADGET_WORKSPACE_FRAME = By.id("remote_iframe_0");
-	public final By ELEMENT_IDE_WORKSPACE_DEFAULT = By.xpath("//nobr[text()='dev-monit']");
+	public final By ELEMENT_IDE_WORKSPACE_DEFAULT = By.xpath("//nobr[text()='dev-monit']");//nobr[text()='dev-monit']
 	public final By ELEMENT_WORKSPACE_FRAME_2 = By.id("remote_iframe_2");
 	/* End Setting Icon*/
 
 	/*--------------- User account Management (Click from user name) ---------------------*/
 	public final By ELEMENT_ACCOUNT_NAME_LINK = By.cssSelector("div[id=UIUserPlatformToolBarPortlet] a");
-//			By.xpath("//*[@id='UIUserPlatformToolBarPortlet']/a");
+	//			By.xpath("//*[@id='UIUserPlatformToolBarPortlet']/a");
 	public final By ELEMENT_NAVIGATION_ACCOUNT_AVATAR = By.xpath("//*[@id='UIUserPlatformToolBarPortlet']/a/img[@alt='avatar']");
 	public final By ELEMENT_SIGN_OUT_LINK = By.className("uiIconPLFLogout");
 	public final By ELEMENT_CHANGE_LANGUAGE_LINK_ACME = By.className("LanguageIcon");
@@ -232,7 +232,7 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_NOTIFICATION_LINK = By.linkText("Notifications");
 	public final By ELEMENT_MY_CONNECTIONS_LINK = By.linkText("My Connections");
 	public final String ELEMENT_PROFILE_PAGE = "//div[@id='UIProfile']//h3[contains(.,'${user}')]";
-	
+
 	//User-> Setting
 	public final By ELEMENT_CHANGE_PASSWORD_TAB = By.linkText("Change Password");
 	public final By ELEMENT_ACCOUNT_PROFILE_TAB = By.linkText("Account Profiles");
@@ -408,7 +408,7 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_BROWSE_GROUP = By.xpath("//h6[text()='Browse and select a group']");
 	public final By ELEMENT_PERMISSION_GRID = By.id("PermissionGrid");
 	public final By ELEMENT_PERMISSION_GRID_DELETE_ICON = By.xpath("//*[@id='PermissionGrid']//*[@data-original-title='Delete']");
-	
+
 	//Portal Template TAB
 	public final By ELEMENT_PORTAL_TEMPLATE_TAB= By.linkText("Portal Templates");
 
@@ -804,7 +804,7 @@ public class PlatformBase extends TestBase {
 	public final String ELEMENT_TOPIC_POST_DESCRIPTION_DECORATED_JUSTIFY=".//*[@class='postContent']//..[contains(text(),'${descripTopic}')][@style='text-align: justify;']";
 	public final String ELEMENT_TOPIC_POST_DESCRIPTITON_DECORATED_NUM_LIST=".//*[@class='postContent']//ol/li[contains(text(),'${nameItem}')]";
 	public final String ELEMENT_TOPIC_POST_DESCRIPTITON_DECORATED_BULLET_LIST=".//*[@class='postContent']//ul/li[contains(text(),'${nameItem}')]";
-    public final String ELEMENT_TOPIC_POST_DESCRIPTION_DECORATED_INCREASE=".//*[@class='postContent']//p[@style='margin-left: 40px;'][contains(text(),'${nameItem}')]";
+	public final String ELEMENT_TOPIC_POST_DESCRIPTION_DECORATED_INCREASE=".//*[@class='postContent']//p[@style='margin-left: 40px;'][contains(text(),'${nameItem}')]";
 	public final By ELEMENT_RESULT_FLOATING_RESULTS_DISCUSSION_ICON= By.xpath("//*[@class='uiQuickSearchResult']/descendant::tr[th[contains(text(),'Discussion')]]//a/i[contains(@class,'uiIconPLFDiscussion')]");
 	public final String ELEMENT_RESULT_FLOATING_RESULTS_NAME= "//*[@class='uiQuickSearchResult']/descendant::tr[th[contains(text(),'${type_Search}')]]//a[contains(.,'${detail_Name}')]";
 
@@ -818,9 +818,9 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_SEARCH_APPLICATION = By.xpath("//a[@title='Search']");
 	public final String ELEMENT_GADGET_SEARCH_APPLICATION_PAGE_EDITOR = "//div[@id='UIApplicationList17']//div[contains(text(),'${gadget}')]";
 	public final By ELEMENT_QUICK_SEARCH_PORTLET = By.id("Search/local._unified-search.QuicksearchPortlet");
-	
-	
-	
+
+
+
 	//Administration Menu for admin acc
 
 	//public final By ELEMENT_MENU_ADMIN_DROPDOWN = By.xpath("//*[@id='UISetupPlatformToolBarPortlet']/a[@class='dropdown-toggle']");
@@ -860,7 +860,7 @@ public class PlatformBase extends TestBase {
 		String[] groups = groupId.split("/");
 		Utils.pause(500);
 		click(ELEMENT_ADD_PERMISSION_BUTTON);
-//		waitForAndGetElement(ELEMENT_BROWSE_GROUP);
+		//		waitForAndGetElement(ELEMENT_BROWSE_GROUP);
 		for (String group : groups) {
 			String groupToSelect = ELEMENT_SELECT_ACCESS_GROUP_ITEM.replace("${group}", group);
 			click(groupToSelect);
@@ -1246,7 +1246,7 @@ public class PlatformBase extends TestBase {
 	 * 		           = true, clear old data of frame
 	 * 				   = false, not clear old data, not verify that new data is input correctly
 	 */
-	public void inputDataToFrame(By framelocator, String data, boolean...validate){
+	public void inputDataToFrame(Object framelocator, String data, boolean...validate){
 		try {
 			WebElement inputsummary = null;
 
@@ -1254,22 +1254,29 @@ public class PlatformBase extends TestBase {
 				if (repeat >= DEFAULT_TIMEOUT/WAIT_INTERVAL) {
 					Assert.fail("Fail to input data to frame " + framelocator);
 				}
-				WebElement e = waitForAndGetElement(framelocator,DEFAULT_TIMEOUT,1,2);
+				WebElement e = null;
+				if(framelocator instanceof By)
+					e = waitForAndGetElement(framelocator,DEFAULT_TIMEOUT,1,2);
+				else if(framelocator instanceof WebElement)
+					e = (WebElement) framelocator;
 				driver.switchTo().frame(e);
 				inputsummary = driver.switchTo().activeElement();
 				inputsummary.click();
-				inputsummary.clear();
 
 				if (validate.length >0)
 					if (validate[0]){
-						((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "'");
+						inputsummary.clear();
+						inputsummary.sendKeys(data);
+						//						((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "'");
 						if (inputsummary.getText().contains(data)) break;
 					}
 					else{
-						((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "' + document.body.innerHTML;");
+						inputsummary.sendKeys(data);
+						//						((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "' + document.body.innerHTML;");
 						break;
 					}
 				else {
+
 					((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "' + document.body.innerHTML;");
 					if (inputsummary.getText().contains(data)) break;
 				}
@@ -1333,7 +1340,7 @@ public class PlatformBase extends TestBase {
 		while(iter.hasNext()) {
 			String windowHandle = iter.next(); 
 			driver.switchTo().window(windowHandle);
-			info("Switch to new windown successfully");
+			info("Switch to new window successfully");
 		} 
 	}
 
@@ -1417,10 +1424,10 @@ public class PlatformBase extends TestBase {
 				click(ELEMENT_GMAIL_SIGNIN_DIFFERENT_ACC);
 				click(ELEMENT_GMAIL_ADD_ACCOUNT);
 			}
-			
+
 		}
 
-//		waitForAndGetElement(ELEMENT_GMAIL_USERNAME,60000);
+		//		waitForAndGetElement(ELEMENT_GMAIL_USERNAME,60000);
 		type(ELEMENT_GMAIL_USERNAME, email, true);
 		type(ELEMENT_GMAIL_PASS, pass, true);
 		click(ELEMENT_GMAIL_SIGN_IN);
@@ -1472,29 +1479,45 @@ public class PlatformBase extends TestBase {
 		if(newFolder!=""){
 
 			if(plfVersion =="4.1"){
-				click(ELEMENT_CREATE_FOLDER_BUTTON_PLF41);
+				waitForAndGetElement(ELEMENT_CREATE_FOLDER_BUTTON_PLF41).click();
 			}
 			else{
-				click(ELEMENT_CREATE_FOLDER_BUTTON);
+				waitForAndGetElement(ELEMENT_CREATE_FOLDER_BUTTON).click();
 			}
+			
 			alert.inputAlertText(newFolder);
+			try{
 			click(By.linkText(newFolder));
+			}catch(org.openqa.selenium.UnhandledAlertException e){
+				alert.inputAlertText(newFolder);
+				click(By.linkText(newFolder));
+			}
 		}
 		if (upload)
 		{
 			info("-- Upload file --");
 			WebElement frame = waitForAndGetElement(ELEMENT_UPLOAD_FILE_FRAME_XPATH);
 			driver.switchTo().frame(frame);
+			/*
 			WebElement upload2 = waitForAndGetElement(ELEMENT_UPLOAD_IMG_ID, DEFAULT_TIMEOUT,1,2);
 			((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block';", upload2);
 			upload2.sendKeys(Utils.getAbsoluteFilePath("TestData/" +uploadFileName));	
 			info("Upload file " + Utils.getAbsoluteFilePath("TestData/" +uploadFileName));
-			switchToParentWindow();
+			switchToParentWindow();*/
+			WebElement eX = (WebElement) ((JavascriptExecutor)driver).executeScript("return document.getElementsByClassName('BrowseLink')[0];");
+			((JavascriptExecutor)driver).executeScript("document.getElementsByClassName('BrowseLink')[0].click();");
+			eX.click();
+
+			uploadFile("TestData/"+uploadFileName);
+			driver.switchTo().defaultContent();
 			waitForAndGetElement(By.linkText(uploadFileName));
+			info("finish uploading");
 		}
-		button.close();
+//		button.close();
 		Utils.pause(1000);
-		waitForElementNotPresent(ELEMENT_SELECT_FILE_POPUP);	
+		
+//		driver.navigate().refresh();
+//		waitForElementNotPresent(ELEMENT_SELECT_FILE_POPUP);	
 
 	}
 
@@ -1523,9 +1546,20 @@ public class PlatformBase extends TestBase {
 	 * @date 05-Nov-2013
 	 */
 	public void loginWithAnotherAccOnThesameBrowser(String User2, String Pass2){
-		newDriver = new FirefoxDriver();
-		newDriver.get(baseUrl);
-		ManageAccount  acc = new ManageAccount(newDriver);
+		ManageAccount  acc = null;
+		if(System.getProperty("browser").equalsIgnoreCase("firefox")){
+			newDriver = new FirefoxDriver();
+			newDriver.get(baseUrl);
+			acc = new ManageAccount(newDriver);
+		}else if(System.getProperty("browser").equalsIgnoreCase("iexplorer")){
+			newDriver = initIEDriver();
+//			newDriver = new InternetExplorerDriver();
+			newDriver.get(baseUrl);
+			acc = new ManageAccount(newDriver);
+			
+//			acc.signOut();
+		}
+
 		acc.signIn(User2, Pass2);
 		Utils.pause(2000);
 	}

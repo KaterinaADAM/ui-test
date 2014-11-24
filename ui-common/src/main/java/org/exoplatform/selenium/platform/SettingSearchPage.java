@@ -194,12 +194,13 @@ public class SettingSearchPage extends PlatformBase {
 	 */
 	public void quickSearch(String searchText) {
 		info("-- Go to quick search --");
-		click(ELEMENT_QUICK_SEARCH_ICON);
+		clickByJavascript((ELEMENT_QUICK_SEARCH_ICON));
 		type(ELEMENT_QUICK_SEARCH_TEXTBOX, searchText, true);
 		Utils.pause(3000);
 		click(ELEMENT_SEE_ALL_SEARCH_RESULTS);
 		Utils.pause(1000);
 	}
+
 
 	/**
 	 * quick search a text
@@ -267,13 +268,13 @@ public class SettingSearchPage extends PlatformBase {
 				uncheck(ELEMENT_SEARCH_FILES_CHECKBOX, 2);
 		}
 		if (checkboxes.length > 3) {
-			if (checkboxes[4])
+			if (checkboxes[3])
 				check(ELEMENT_SEARCH_WIKI_CHECKBOX, 2);
 			else
 				uncheck(ELEMENT_SEARCH_WIKI_CHECKBOX, 2);
 		}
 		if (checkboxes.length > 4) {
-			if (checkboxes[3])
+			if (checkboxes[4])
 				check(ELEMENT_SEARCH_DOCUMENTS_CHECKBOX, 2);
 			else
 				uncheck(ELEMENT_SEARCH_DOCUMENTS_CHECKBOX, 2);
@@ -332,11 +333,16 @@ public class SettingSearchPage extends PlatformBase {
 			check(ELEMENT_SEARCH_WIKI_CHECKBOX, 2);
 		else
 			uncheck(ELEMENT_SEARCH_WIKI_CHECKBOX);
-		click(ELEMENT_SAVE_SETTING);
+		waitForAndGetElement(ELEMENT_SAVE_SETTING).click();
 		alert.acceptAlert();
+		try{
 		button.close();
+		
+		}catch(org.openqa.selenium.UnhandledAlertException e)	{
+			alert.acceptAlert();
+			button.close();
+		}
 		pEditor.finishEditLayout();
-
 	}
 
 	/**

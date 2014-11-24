@@ -369,7 +369,7 @@ public class ManageApplications extends PlatformBase {
 		showImportApplication(true);
 		if(waitForAndGetElement(ELEMENT_IMPORT_APPLICATION,DEFAULT_TIMEOUT,0)==null)
 			click(ELEMENT_MANAGE_APPLICATION);
-		click(ELEMENT_IMPORT_APPLICATION);
+		waitForAndGetElement(ELEMENT_IMPORT_APPLICATION).click();
 		alt.waitForConfirmation(IMPORT_APPLICATION_CONFIRMATION);
 		Utils.pause(1000);
 	}

@@ -61,11 +61,13 @@ public class PeopleProfile extends PlatformBase {
 	public final By ELEMENT_INPUT_FIELD_POSITION = By.id("position1");
 	public final By ELEMENT_INPUT_FIELD_SKILL = By.id("skills1");
 	public final By ELEMENT_REMOVE_EXPERIENCE_BUTTON = By.xpath("//*[@id='UIExperienceSection']//../*[@class='uiIconClose uiIconLightGray']");
-	
+
 	//Avatar
 	public final By	ELEMENT_CHANGE_AVATAR_LINK = By.className("changeAvatar");
 	public final By ELEMENT_CHOOSE_AVATAR_IMAGE = By.className("fileNameLabel");
 	public final By ELEMENT_UPLOAD_NAME = By.name("file");
+	public final By ELEMENT_SELECT_FILE_BUTTON = By.xpath("//label[text()='Select File']");
+	public final String ELEMENT_IMAGE_FINISHED = "//div[@class='fileNameLabel' and contains(text(),'${image}')]";
 
 	//Confirm
 	public final By ELEMENT_CONFIRM = By.xpath("//*[text()='Confirm']");
@@ -119,13 +121,14 @@ public class PeopleProfile extends PlatformBase {
 			boolean addIMS, String typeOfIMS, String nameOfIMS,
 			boolean addURLS, String nameOfURLS){
 		info("-- Edit the user's contact --");
-		click(ELEMENT_EDIT_CONTACT_BUTTON);
+		WebElement e = getElementByJavascript("uiIconEdit", 2);
+		e.click();
 		info("-- Type of gender --");
 		select(ELEMENT_GENDER_BOX, typeOfGender);
 		if(addPhone){
 			info("-- Adding a phone number --");
 			if (isTextPresent("No phone number entered")){
-				click(ELEMENT_ADD_PHONE_BUTTON);
+				getElementByJavascript("uiIconPlus uiIconLightGray").click();
 			}
 			select(ELEMENT_TYPE_OF_ADD_PHONE, typeOfAddPhone);
 			type(ELEMENT_INPUT_FIELD_ADD_PHONE, numberOfPhone, true);
@@ -133,7 +136,7 @@ public class PeopleProfile extends PlatformBase {
 		if(addIMS){
 			info("-- Adding an IM --");
 			if (isTextPresent("No IM handle entered")){
-				click(ELEMENT_ADD_IMS_BUTTON);
+				getElementByJavascript("uiIconPlus uiIconLightGray",1).click();
 			}
 			select(ELEMENT_IMS_BOX, typeOfIMS);
 			type(ELEMENT_INPUT_FIELD_IMS, nameOfIMS, true);
@@ -141,12 +144,13 @@ public class PeopleProfile extends PlatformBase {
 		if(addURLS){
 			info("-- Adding an URL --");
 			if (isTextPresent("No contact link entered")){
-				click(ELEMENT_ADD_URLS_BUTTON);
+				getElementByJavascript("uiIconPlus uiIconLightGray",2).click();
 			}
 			type(ELEMENT_INPUT_FIELD_URLS, nameOfURLS, true);
 		}
-		click(ELEMENT_SAVE_UPDATE_INFO);
+		getElementByJavascript("btn btn-primary").click();
 		waitForElementNotPresent(ELEMENT_SAVE_UPDATE_INFO);
+		Utils.pause(2000);
 	}
 
 	/**
@@ -169,7 +173,7 @@ public class PeopleProfile extends PlatformBase {
 		click(ELEMENT_SAVE_UPDATE_INFO);
 		waitForElementNotPresent(ELEMENT_SAVE_UPDATE_INFO);
 	}
-	
+
 	/**
 	 * Remove experience
 	 * @author phuongdt
@@ -185,18 +189,18 @@ public class PeopleProfile extends PlatformBase {
 		click(ELEMENT_SAVE_UPDATE_INFO);
 		waitForElementNotPresent(ELEMENT_SAVE_UPDATE_INFO);
 	}
-	
+
 	/**
 	 * Remove contact information
 	 * @author phuongdt
 	 */
 	public void removeUserContact(boolean phone, boolean im, boolean url){
 		info("-- Remove the user's contact --");
-		click(ELEMENT_EDIT_CONTACT_BUTTON);
+		WebElement e = getElementByJavascript("uiIconEdit", 2);
+		e.click();
 		if(phone){
-			waitForAndGetElement(ELEMENT_REMOVE_PHONE_BUTTON);
-			click(ELEMENT_REMOVE_PHONE_BUTTON);
-			waitForElementNotPresent(ELEMENT_REMOVE_PHONE_BUTTON);
+			getElementByJavascript("uiIconClose uiIconLightGray").click();
+			assert getElementByJavascript("uiIconClose uiIconLightGray") == null;
 		}
 		if(im){
 			waitForAndGetElement(ELEMENT_REMOVE_IMS_BUTTON);
@@ -208,7 +212,7 @@ public class PeopleProfile extends PlatformBase {
 			click(ELEMENT_REMOVE_URLS_BUTTON);
 			waitForElementNotPresent(ELEMENT_REMOVE_URLS_BUTTON);
 		}
-		click(ELEMENT_SAVE_UPDATE_INFO);
+		getElementByJavascript("btn btn-primary").click();
 		waitForElementNotPresent(ELEMENT_SAVE_UPDATE_INFO);
 	}
 
@@ -219,16 +223,27 @@ public class PeopleProfile extends PlatformBase {
 	 */
 	public void changeAvatar(String linkfile){
 		info("-- changeAvatar --");
-		click(ELEMENT_CHANGE_AVATAR_LINK);
-		WebElement upload = waitForAndGetElement(ELEMENT_UPLOAD_NAME, DEFAULT_TIMEOUT, 1, 2);
-		((JavascriptExecutor)driver).executeScript("arguments[0].style.visibility = 'visible'; arguments[0].style.height = '1px'; " +
-				"arguments[0].style.width = '1px'; arguments[0].style.opacity = 1", upload);
-		((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block'; arguments[0].style.visibility = 'visible'", upload);
-		upload.sendKeys(Utils.getAbsoluteFilePath(linkfile));
-		Utils.pause(3000);
+		String[] files = linkfile.split("/");
+
+		clickByJavascript(ELEMENT_CHANGE_AVATAR_LINK);
+
+		Utils.pause(2000);
+		if(System.getProperty("browser").equalsIgnoreCase("firefox")){
+			WebElement upload = waitForAndGetElement(ELEMENT_UPLOAD_NAME, DEFAULT_TIMEOUT, 1, 2);
+			((JavascriptExecutor)driver).executeScript("arguments[0].style.visibility = 'visible'; arguments[0].style.height = '1px'; " +
+			"arguments[0].style.width = '1px'; arguments[0].style.opacity = 1", upload);
+			((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block'; arguments[0].style.visibility = 'visible'", upload);
+			upload.sendKeys(Utils.getAbsoluteFilePath(linkfile));
+		}else if(System.getProperty("browser").equalsIgnoreCase("iexplorer")){
+			waitForAndGetElement(ELEMENT_SELECT_FILE_BUTTON).click();
+			uploadFile(linkfile);
+		}
+		
 		info("Upload file " + Utils.getAbsoluteFilePath(linkfile));
 		switchToParentWindow();
+		waitForAndGetElement(ELEMENT_IMAGE_FINISHED.replace("${image}",files[files.length-1]));
 		click(ELEMENT_CONFIRM);
+
 		waitForElementNotPresent(ELEMENT_CONFIRM);
 		button.save();
 		Utils.pause(1000);

@@ -56,6 +56,7 @@ public class Event extends CalendarBase{
 	public String ELEMENT_SCHEDULE_DRAG = "//td[${index}]//span[@data-original-title=\"Drag here to change your event's start and end times\"]";
 	public By ELEMENT_SCHEDULE_FROM_TIME_INPUT = By.xpath("//input[@id='timeFrom']/../input[@class='UIComboboxInput']");
 	public By ELEMENT_SCHEDULE_TO_TIME_INPUT = By.xpath("//input[@id='timeTo']/../input[@class='UIComboboxInput']");
+	public By ELEMENT_ADD_EVENT_SELECT_FILE = By.xpath("//label[contains(text(),'Select File')]");
 
 	//Preview form
 	public String ELEMENT_EVENT_PREVIEW_TITLE = "//form[@id='UIPreviewPopup']//div[@class='titleList']/strong[text()='${event}']";
@@ -175,7 +176,7 @@ public class Event extends CalendarBase{
 	 */
 	public void goToAddEventFromActionBar(){
 		info("Go to Add Event page");
-		click(ELEMENT_BUTTON_EVENT);
+		clickByJavascript(ELEMENT_BUTTON_EVENT);
 		waitForAndGetElement(ELEMENT_ADD_EVENT_POPUP);
 	}
 
@@ -373,11 +374,11 @@ public class Event extends CalendarBase{
 			type(ELEMENT_ADD_EDIT_EVENT_LOCATION,location,true);
 		}
 		if(opt.length>0){
-			click(ELEMENT_ADD_EVENT_ATTACHMENT_BUTTON);
+			clickByJavascript(ELEMENT_ADD_EVENT_ATTACHMENT_BUTTON);
+			clickByJavascript(ELEMENT_ADD_EVENT_SELECT_FILE);
 			WebElement upload = waitForAndGetElement(ELEMENT_ADD_EVENT_UPLOAD_FILE,DEFAULT_TIMEOUT,1,2);
-			String path = Utils.getAbsoluteFilePath(opt[0]);
 			((JavascriptExecutor)driver).executeScript("arguments[0].style.display='block';",upload);
-			upload.sendKeys(path);
+			uploadFile(opt[0]);
 			String[] links = opt[0].split("/");
 			waitForAndGetElement(ELEMENT_ATTACH_FILE_LABEL.replace("${file}", links[links.length - 1]),60000);
 			click(ELEMENT_ATTACH_FILE_SAVE_BUTTON);
@@ -577,7 +578,7 @@ public class Event extends CalendarBase{
 		inputFromToEvent(from, to, allDay);
 		button.save();
 		waitForElementNotPresent(ELEMENT_ADD_EVENT_POPUP);
-		Utils.pause(1000);
+		Utils.pause(2000);
 		/*if((from != null) & (from != "")){
 			date = from.split("/")[1];
 			click(ELEMENT_MINI_CALENDAR_DATE_HIGHLIGHT.replace("${date}", date));

@@ -221,8 +221,9 @@ public class HomePageGadget extends PlatformBase{
 	public void connectPeoplefromWhoisOnlineGadget(String username){
 		info("--Connecting from Who's Online gadget--");
 		mouseOver(ELEMENT_ONLINE_USER_AVATAR.replace("${acc}",username),true);
-		WebElement element = waitForAndGetElement(ELEMENT_WHOISONLINE_CONNECT_BUTTON_INVITE.replace("${acc}",username), DEFAULT_TIMEOUT,1,2);
-		((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
+		click(ELEMENT_WHOISONLINE_CONNECT_BUTTON_INVITE.replace("${acc}",username),2);
+		/*WebElement element = waitForAndGetElement(ELEMENT_WHOISONLINE_CONNECT_BUTTON_INVITE.replace("${acc}",username), DEFAULT_TIMEOUT,1,2);
+		((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);*/
 		Utils.pause(3000);
 	}
 

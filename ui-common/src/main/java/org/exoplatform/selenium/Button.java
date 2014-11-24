@@ -76,7 +76,7 @@ public class Button extends TestBase{
 	}
 	public void save() {
 		waitForAndGetElement(ELEMENT_SAVE_BUTTON);
-		click(ELEMENT_SAVE_BUTTON);
+		clickByJavascript(ELEMENT_SAVE_BUTTON);
 		Utils.pause(500);
 	}
 	public void ok() {
@@ -118,7 +118,7 @@ public class Button extends TestBase{
 
 	public void add(){
 		waitForAndGetElement(ELEMENT_ADD_BUTTON);
-		click(ELEMENT_ADD_BUTTON);
+		clickByJavascript(ELEMENT_ADD_BUTTON);
 		waitForElementNotPresent(ELEMENT_ADD_BUTTON);
 		Utils.pause(500);
 	}

@@ -81,8 +81,22 @@ public class UserGroupManagement extends PlatformBase {
 			usePaginator(userDeleteIcon, "User " + username + "not found in group");
 		}*/
 		Utils.pause(500);
-		click(userDeleteIcon);
+		waitForAndGetElement(userDeleteIcon).click();
 		alert.waitForConfirmation("Are you sure you want to delete " + username + " user?");
+		/*try {
+			Process proc=Runtime.getRuntime().exec(Utils.getAbsoluteFilePath("TestData\\verifyAlert.exe") + " \"Are you sure you want to delete " + username + " user?\"" );
+			InputStream is = proc.getInputStream();
+			int retCode = 0;
+			while(retCode != -1)
+			{
+				retCode = is.read();
+				info("Now Exiting");
+			} 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
 		Utils.pause(1000);
 		type(ELEMENT_INPUT_SEARCH_USER_NAME, username, true);
 

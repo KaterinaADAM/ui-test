@@ -8,6 +8,7 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -45,9 +46,9 @@ public class TestBase {
 	public WebDriver driver;
 	public WebDriver newDriver;
 
-	protected String baseUrl;
-	protected int DEFAULT_TIMEOUT = 60000; //milliseconds = 30 seconds
-	protected int WAIT_INTERVAL = 1000; //milliseconds  
+	public static String baseUrl;
+	protected int DEFAULT_TIMEOUT = 40000; //milliseconds = 30 seconds
+	protected int WAIT_INTERVAL = 50; //milliseconds  
 	public int loopCount = 0;	
 	public boolean ieFlag;	 
 	public boolean chromeFlag;
@@ -105,10 +106,10 @@ public class TestBase {
 			driver = new ChromeDriver();
 			chromeFlag = true;
 		} else if ("iexplorer".equals(browser)){
-			System.setProperty("webdriver.ie.driver","D:\\java\\eXoProjects\\IEDriverServer\\IEDriverServer.exe") ;
-			DesiredCapabilities  capabilitiesIE = DesiredCapabilities.internetExplorer();
-			capabilitiesIE.setCapability("ignoreProtectedModeSettings", true);
-			driver = new InternetExplorerDriver(capabilitiesIE);
+			info("ie test " + System.getProperty("webdriver.ie.driver"));
+			//			capabilitiesIE.setJavascriptEnabled(true);                   
+			//			capabilitiesIE.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);                                   
+			driver = initIEDriver();
 
 			this.ieFlag = true;
 		} else {
@@ -129,27 +130,34 @@ public class TestBase {
 	}
 
 	public void initSeleniumTest(Object... opParams){
+
 		initSeleniumTestWithOutTermAndCondition();
 		info("Term and conditions");
 		termsAndConditions(opParams);
+
 		info("End of term and conditions");
 
 		if(!firstTimeLogin){
 			info("This is not the first time login");
 			checkPLFVersion();
-			info("ieFlag of TestBase is " + ieFlag);
 		}
 		else{
 			info("This is the first time login");
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
 			Utils.pause(2000);
-			info("ieFlag of TestBase is " + ieFlag);
 			ManageAccount acc = new ManageAccount(driver,this.plfVersion);
 			acc.signOut();
 			firstTimeLogin=false;
 			checkPLFVersion();
 		}
+		/*if ("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			acc = new ManageAccount(driver,plfVersion);
+			if (waitForAndGetElement(ELEMENT_INPUT_USERNAME,5000,0) == null){
+				info("User logged in already");
+				acc.signOut();
+			}
+		}*/
 	}
 
 	/**
@@ -184,7 +192,7 @@ public class TestBase {
 	 * Verify plf version
 	 */
 	public void checkPLFVersion(){
-//		waitForTextNotPresent("terms and conditions agreement");
+		//		waitForTextNotPresent("terms and conditions agreement");
 		try{
 			info("Verify platform version");
 			String des = driver.findElement(ELEMENT_PLF_INFORMATION).getText();
@@ -243,7 +251,7 @@ public class TestBase {
 		try {
 			elem = wDriver.findElement(by);
 		} catch (NoSuchElementException e) {
-
+			return null;
 		}
 		return elem;
 	}
@@ -274,6 +282,7 @@ public class TestBase {
 				if (isDisplay(by)) return e;
 			}
 		} catch (NoSuchElementException ex) {
+			return null;
 			//			info("NoSuchElementException");
 		}catch(StaleElementReferenceException ex)
 		{
@@ -302,6 +311,28 @@ public class TestBase {
 	 * 1: Assert
 	 */
 	public WebElement waitForAndGetElement(Object locator, Object... opParams) {
+		WebElement elem = null;
+		int timeout = (Integer) (opParams.length>0 ? opParams[0] : DEFAULT_TIMEOUT);
+		int isAssert = (Integer) (opParams.length > 1 ? opParams[1]: 1);
+		int notDisplayE = (Integer) (opParams.length > 2 ? opParams[2]: 0);
+		WebDriver wDriver = (WebDriver) (opParams.length > 3 ? opParams[3]: driver);	
+		for (int tick = 0; tick < timeout/WAIT_INTERVAL; tick++) {
+			if (notDisplayE == 2){
+				elem = getElement(locator,wDriver);
+				//elem = getDisplayedElement(locator);
+			}else{
+				elem = getDisplayedElement(locator,wDriver);
+			}
+			if (null != elem) return elem;
+			Utils.pause(WAIT_INTERVAL);
+		}
+		if (isAssert == 1)
+			assert false: ("Timeout after " + timeout + "ms waiting for element present: " + locator);
+		info("cannot find element after " + timeout/1000 + "s.");
+		return null;
+	}
+
+	public WebElement waitAndGetElementByJavascript(Object locator, Object... opParams){
 		WebElement elem = null;
 		int timeout = (Integer) (opParams.length>0 ? opParams[0] : DEFAULT_TIMEOUT);
 		int isAssert = (Integer) (opParams.length > 1 ? opParams[1]: 1);
@@ -425,11 +456,12 @@ public class TestBase {
 	public void click(Object locator, Object... opParams) {
 		//Actions actions = new Actions(driver);
 		int notDisplay = (Integer) (opParams.length > 0 ? opParams[0]: 0);		
-		Actions actions = new Actions(driver);
+		//		Actions actions = new Actions(driver);
 		try {
 			WebElement element = waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplay);
 			if(element.isEnabled())
-				actions.click(element).perform();
+				//				actions.click(element).perform();
+				((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
 			else {
 				debug("Element is not enabled");
 				click(locator, notDisplay);
@@ -437,11 +469,11 @@ public class TestBase {
 		} catch (StaleElementReferenceException e) {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
 			Utils.pause(WAIT_INTERVAL);
-			click(locator, notDisplay);
+			clickByJavascript(locator, notDisplay);
 		} catch (ElementNotVisibleException e) {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
 			Utils.pause(WAIT_INTERVAL);
-			click(locator, notDisplay);
+			clickByJavascript(locator, notDisplay);
 		} finally {
 			loopCount = 0;
 		}
@@ -455,7 +487,10 @@ public class TestBase {
 	public void clickByJavascript(Object locator, Object... opParams){
 		int notDisplay = (Integer) (opParams.length > 0 ? opParams[0]: 0);	
 		WebElement e = waitForAndGetElement(locator,DEFAULT_TIMEOUT, 1, notDisplay);
-		((JavascriptExecutor)driver).executeScript("arguments[0].click();", e);
+		if(e != null)
+			((JavascriptExecutor)driver).executeScript("arguments[0].click();", e);
+		else
+			info("The element " + locator + " is null");
 	}
 
 	public void clearCache(){
@@ -729,6 +764,9 @@ public class TestBase {
 			Utils.pause(WAIT_INTERVAL);
 			isDisplay(locator);
 		}
+		catch (org.openqa.selenium.WebDriverException e2) {
+			return false;
+		}
 		finally{
 			loopCount=0;
 		}
@@ -741,42 +779,67 @@ public class TestBase {
 	 */
 	public void getDriverAutoSave(){
 		String pathFile = System.getProperty("user.dir") + "/src/main/resources/TestData/TestOutput";
+		String browser = System.getProperty("browser");
 
-		FirefoxProfile fp = new FirefoxProfile();	
+		baseUrl = System.getProperty("baseUrl");
+		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
+		if("chrome".equals(browser)){
+			driver = new ChromeDriver();
+			chromeFlag = true;
+		} else if ("iexplorer".equals(browser)){
+			driver = initIEDriver();
 
-		info("Save file to " + pathFile);
-		fp.setPreference("browser.download.manager.showWhenStarting", false);
-		fp.setPreference("browser.download.dir", pathFile);
-		fp.setPreference("browser.download.folderList", 2);
-		//		fp.setPreference("browser.helperApps.neverAsk.saveToDisk", 
-		//				"application/x-zip;application/x-zip-compressed;application/x-winzip;application/zip;application/bzip2;" +
-		//				"gzip/document;multipart/x-zip;application/x-gunzip;application/x-gzip;application/x-gzip-compressed;" +
-		//				"application/x-bzip;application/gzipped;application/gzip-compressed;application/gzip;application/octet-stream");
+			this.ieFlag = true;
+		} else {
+			System.setProperty("browser", "firefox");
+			FirefoxProfile fp = new FirefoxProfile();	
 
-		fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-xpinstall;" +
-				"application/x-zip;application/x-zip-compressed;application/x-winzip;application/zip;" +
-				"gzip/document;multipart/x-zip;application/x-gunzip;application/x-gzip;application/x-gzip-compressed;" +
-				"application/x-bzip;application/gzipped;application/gzip-compressed;application/gzip" +
-				"application/octet-stream" +
-				";application/pdf;application/msword;text/plain;" +
-				"application/octet;text/calendar;text/x-vcalendar;text/Calendar;" +
-				"text/x-vCalendar;image/jpeg;image/jpg;image/jp_;application/jpg;" +
-				"application/x-jpg;image/pjpeg;image/pipeg;image/vnd.swiftview-jpeg;image/x-xbitmap;image/png;application/xml;text/xml;text/icalendar;");
+			info("Save file to " + pathFile);
+			fp.setPreference("browser.download.manager.showWhenStarting", false);
+			fp.setPreference("browser.download.dir", pathFile);
+			fp.setPreference("browser.download.folderList", 2);
+			//		fp.setPreference("browser.helperApps.neverAsk.saveToDisk", 
+			//				"application/x-zip;application/x-zip-compressed;application/x-winzip;application/zip;application/bzip2;" +
+			//				"gzip/document;multipart/x-zip;application/x-gunzip;application/x-gzip;application/x-gzip-compressed;" +
+			//				"application/x-bzip;application/gzipped;application/gzip-compressed;application/gzip;application/octet-stream");
 
-		fp.setPreference("plugin.disable_full_page_plugin_for_types", "application/pdf");
-		fp.setPreference("pref.downloads.disable_button.edit_actions", true);
-		//		fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");
-		fp.setPreference("pdfjs.disabled", true); 
-		//		fp.setPreference("pdfjs.firstRun", false); 
-		//		fp.setPreference("pdfjs.migrationVersion", 1);
+			fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-xpinstall;" +
+					"application/x-zip;application/x-zip-compressed;application/x-winzip;application/zip;" +
+					"gzip/document;multipart/x-zip;application/x-gunzip;application/x-gzip;application/x-gzip-compressed;" +
+					"application/x-bzip;application/gzipped;application/gzip-compressed;application/gzip" +
+					"application/octet-stream" +
+					";application/pdf;application/msword;text/plain;" +
+					"application/octet;text/calendar;text/x-vcalendar;text/Calendar;" +
+					"text/x-vCalendar;image/jpeg;image/jpg;image/jp_;application/jpg;" +
+					"application/x-jpg;image/pjpeg;image/pipeg;image/vnd.swiftview-jpeg;image/x-xbitmap;image/png;application/xml;text/xml;text/icalendar;");
 
-		fp.setPreference("browser.helperApps.alwaysAsk.force", false);
-		driver = new FirefoxDriver(fp);
+			fp.setPreference("plugin.disable_full_page_plugin_for_types", "application/pdf");
+			fp.setPreference("pref.downloads.disable_button.edit_actions", true);
+			//		fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");
+			fp.setPreference("pdfjs.disabled", true); 
+			//		fp.setPreference("pdfjs.firstRun", false); 
+			//		fp.setPreference("pdfjs.migrationVersion", 1);
+
+			fp.setPreference("browser.helperApps.alwaysAsk.force", false);
+			driver = new FirefoxDriver(fp);
+		}
+
 		baseUrl = System.getProperty("baseUrl");
 		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
 		action = new Actions(driver);
 		termsAndConditions();
 		checkPLFVersion();
+	}
+
+	/**
+	 * Init IE driver
+	 */
+	public WebDriver initIEDriver(){
+		System.setProperty("webdriver.ie.driver","D:\\java\\eXoProjects\\IEDriverServer\\IEDriverServer.exe") ;
+		DesiredCapabilities  capabilitiesIE = DesiredCapabilities.internetExplorer();
+		capabilitiesIE.setCapability("ignoreProtectedModeSettings", true);
+		capabilitiesIE.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
+		return new InternetExplorerDriver(capabilitiesIE);
 	}
 
 	/**function set driver to auto open new window when click link
@@ -801,13 +864,14 @@ public class TestBase {
 	 * false-> file is not exist
 	 */
 	public boolean checkFileExisted(String file){
-		String pathFile = System.getProperty("user.dir") + "/src/main/resources/TestData/" + file;
+		String fs = File.separator;
+		String pathFile = System.getProperty("user.dir") +  fs + "src" + fs + "main" + fs + "resources" + fs +"TestData" +fs +  file;
 		boolean found = false;
 
 		if (new File(pathFile).isFile()){
 			found = true;
 		}
-		info("File exists: " + file + " is " + found);
+		info("File exists: " + pathFile + " is " + found);
 		return found;
 	}
 
@@ -817,7 +881,8 @@ public class TestBase {
 	 * @param file: file name
 	 */
 	public void deleteFile(String file){
-		String pathFile = System.getProperty("user.dir") + "/src/main/resources/TestData/" + file;
+		String fs = File.separator;
+		String pathFile = System.getProperty("user.dir") + fs + "src" + fs + "main" + fs + "resources" + fs + "TestData"+ fs + file;
 		File Files = new File(pathFile);
 		if(checkFileExisted(file)){
 			Files.setWritable(true);
@@ -1165,5 +1230,63 @@ public class TestBase {
 		// Note: could optionally check for handle found here and throw
 		// an exception if no window was found.
 		return foundHandle;
+	}
+
+	/**
+	 * Upload file on IE
+	 * @param file: name of file
+	 */
+	public void uploadFile(String file){
+		String fs = File.separator;
+		try {
+			Process proc=Runtime.getRuntime().exec(Utils.getAbsoluteFilePath("TestData\\uploadFile.exe") + " " + Utils.getAbsoluteFilePath(file.replace("/", fs)));
+			InputStream is = proc.getInputStream();
+			int retCode = 0;
+			while(retCode != -1)
+			{
+				retCode = is.read();
+				if(retCode == -1)
+					info("Now Exiting");
+			} 
+			info("done upload");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Download fileon IE
+	 * @param file
+	 */
+	public void downloadFile(String file){
+		String download = "TestData\\downloadIE9.exe";
+		String fs = File.separator;
+		String pathDownload = Utils.getAbsoluteFilePath(download);
+		try {
+			Process proc=Runtime.getRuntime().exec(pathDownload + " " + Utils.getAbsoluteFilePath("TestData" +fs + "TestOutput" + fs + file));
+			InputStream is = proc.getInputStream();
+			int retCode = 0;
+			while(retCode != -1)
+			{
+				retCode = is.read();
+				info("Now Exiting");
+			} 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Get element by class name via Javascript
+	 * @param className
+	 * @param index
+	 * @return
+	 */
+	public WebElement getElementByJavascript(String className,int...index){
+		int i = index.length > 0 ? index[0] : 0;
+		WebElement e = (WebElement)((JavascriptExecutor) driver).executeScript("return document.getElementsByClassName('"+className+"')["+i+"];");
+		return e;
 	}
 }

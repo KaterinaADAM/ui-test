@@ -182,7 +182,7 @@ public class NavigationManagement extends  PlatformBase{
 		if (firstLevel){
 			click(currentNodeName);
 			rightClickOnElement(currentNodeName);
-			click(ELEMENT_NAVIGATION_DELETE_NODE);
+			waitForAndGetElement(ELEMENT_NAVIGATION_DELETE_NODE).click();
 			alt.waitForConfirmation("Are you sure you want to delete this node?");
 			if (check){
 				waitForElementNotPresent(currentNodeName);
@@ -194,7 +194,7 @@ public class NavigationManagement extends  PlatformBase{
 			}
 			click(currentNodeName);
 			rightClickOnElement(currentNodeName);
-			click(ELEMENT_NAVIGATION_DELETE_NODE);
+			waitForAndGetElement(ELEMENT_NAVIGATION_DELETE_NODE).click();
 			alt.waitForConfirmation("Are you sure you want to delete this node?");
 			if (check){
 				waitForElementNotPresent(currentNodeName);

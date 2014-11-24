@@ -50,7 +50,7 @@ public class Dialog extends TestBase{
 	//Delete Button in Dialog
 	public void deleteInDialog(){
 		waitForAndGetElement(ELEMENT_DELETE_IN_DIALOG);
-		click(ELEMENT_DELETE_IN_DIALOG);
+		clickByJavascript(ELEMENT_DELETE_IN_DIALOG);
 		Utils.pause(3000);
 	}
 }

@@ -51,6 +51,6 @@ public class ApplicationManagement extends SocialBase {
 		info("-----Click delete button-----");
 		click(By.xpath((ELEMENT_DELETE_APPLICATION.replace("${applicationTitle}", applicationTitle))));
 		info("----Verify application is deleted----");
-		waitForElementNotPresent((ELEMENT_DELETE_APPLICATION.replace("${applicationTitle}", applicationTitle)));
+		waitForElementNotPresent((ELEMENT_DELETE_APPLICATION.replace("${applicationTitle}", applicationTitle)),60000);
 	}
 }

@@ -85,6 +85,9 @@ public class SitesExplorer extends EcmsBase{
 	public final String ELEMENT_BUTTON_WATCH_EMAIL = "//*[text()='Email']";
 	public final String ELEMENT_BUTTON_WATCH_WATCH = "//*[@class='btn' and text()='Watch']";
 	
+	//Icons view
+	public final String ELEMENT_ICON_VIEW_NODE = "//span[@class='nodeName' and text()='${node}']";
+	
 	/*================***==================*/
 
 	//Verify if Driver is present

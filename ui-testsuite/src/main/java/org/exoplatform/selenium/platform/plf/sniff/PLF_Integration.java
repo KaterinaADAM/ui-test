@@ -85,7 +85,7 @@ public class PLF_Integration extends PlatformBase {
 		Utils.pause(2000);
 		driver.switchTo().frame(waitForAndGetElement(ELEMENT_GADGET_WORKSPACE_FRAME));
 		//IDE page is shown correctly, dev-monit workspace is selected as default
-		waitForAndGetElement(ELEMENT_IDE_WORKSPACE_DEFAULT);
+		waitForAndGetElement(ELEMENT_IDE_WORKSPACE_DEFAULT,50000);
 		driver.switchTo().defaultContent();
 	}
 

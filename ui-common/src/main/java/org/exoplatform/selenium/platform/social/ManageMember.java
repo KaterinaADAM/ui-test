@@ -45,7 +45,7 @@ public class ManageMember extends SpaceManagement {
 	//Go to My Spaces > Select a space > Settings
 	//Member Tab 
 	public final By ELEMENT_MEMBER_TAB = By.xpath("//a[text()='Members']");
-	public final By ELEMENT_SELECT_MEMBER_BUTTON = By.xpath("//i[@class='uiIconUser uiIconLightGray']");
+	public final By ELEMENT_SELECT_MEMBER_BUTTON = By.cssSelector("i[class='uiIconUser uiIconLightGray']");
 	public final By ELEMENT_INVITE_MEMBER_BUTTON = By.xpath("//*[text()='Invite']");
 	public final By ELEMENT_INVITE_MEMBER_BUTTON_AUX = By.xpath("//*[@id='UISpaceMember']/*[@title='Invite']");
 	public final By ELEMENT_SELECT_MEMBER_FORM   = By.xpath("//span[contains(@class,'PopupTitle') and contains(text(),'Select Users')]");
@@ -286,7 +286,7 @@ public class ManageMember extends SpaceManagement {
 	public void inviteSingleUser(ManageAccount.userType userName, String... newUser){
 		String user = newUser.length > 0 ? newUser[0]:"John";
 		info("-- Invite the user: " + userName + " to join our space");
-		click(ELEMENT_SELECT_MEMBER_BUTTON);
+		clickByJavascript(ELEMENT_SELECT_MEMBER_BUTTON);
 		waitForAndGetElement(ELEMENT_SELECT_MEMBER_FORM);
 		switch (userName) {
 		case ROOT:

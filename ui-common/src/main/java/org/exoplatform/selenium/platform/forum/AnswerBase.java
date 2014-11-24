@@ -118,7 +118,8 @@ public class AnswerBase extends ForumBase {
 	 */
 	public void goToAnswer(){
 		info("--Go to Answer--");
-		WebElement answer = waitForAndGetElement(ELEMENT_ANSWER_LINK, 10000, 0);
+		waitForAndGetElement(ELEMENT_PERSONAL_DOCUMENTS);
+		WebElement answer = waitForAndGetElement(ELEMENT_ANSWER_LINK, 2000, 0);
 		if (answer == null){
 			createAnswerPageAtRootPath();                        
 		} else {

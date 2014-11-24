@@ -2,6 +2,8 @@ package org.exoplatform.selenium.platform.social;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import java.util.concurrent.TimeUnit;
+
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.Dialog;
 import org.exoplatform.selenium.ManageAlert;
@@ -130,14 +132,14 @@ public class Activity extends SocialBase {
 	public final By ELEMENT_WELCOME_SPACES_LINK = By.linkText("Spaces");
 	public final By ELEMENT_WELCOME_APPSTORE_LINK = By.linkText("iOS App Store");
 	public final By ELEMENT_WELCOME_GOOGLE_LINK = By.linkText("Google Play"); 
-	
+
 	public Activity(WebDriver dr,String...plfVersion){
 		driver = dr;
 		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.0";
-		
+
 	}
 	public Activity(){
-		
+
 	}
 	/**
 	 * Select filter activity
@@ -241,16 +243,32 @@ public class Activity extends SocialBase {
 		{
 			info("-- Upload file --");
 			WebElement frame = waitForAndGetElement(ELEMENT_UPLOAD_FILE_FRAME_XPATH);
+
 			driver.switchTo().frame(frame);
-			WebElement upload2 = waitForAndGetElement(ELEMENT_UPLOAD_IMG_ID, DEFAULT_TIMEOUT,1,2);
-			((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block';", upload2);
-			upload2.sendKeys(Utils.getAbsoluteFilePath("TestData/" +uploadFileName));	
-			info("Upload file " + Utils.getAbsoluteFilePath("TestData/" +uploadFileName));
-			switchToParentWindow();
+			Utils.pause(2000);
+			//			
+			driver.manage().timeouts().setScriptTimeout(40, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+			((JavascriptExecutor)driver).executeScript("document.getElementsByTagName('input')[0].setAttribute('class','File');");
+			((JavascriptExecutor)driver).executeScript("document.getElementsByTagName('input')[0].style.display = 'block';");
+			((JavascriptExecutor)driver).executeScript("document.getElementsByTagName('input')[0].style.visibility='visible'");
+			Utils.pause(2000);
+			WebElement eX = (WebElement) ((JavascriptExecutor)driver).executeScript("return document.getElementsByClassName('BrowseLink')[0];");
+			((JavascriptExecutor)driver).executeScript("document.getElementsByClassName('BrowseLink')[0].click();");
+			eX.click();
+
+			uploadFile("TestData/"+uploadFileName);
+			driver.switchTo().defaultContent();
 			waitForAndGetElement(By.linkText(uploadFileName));
+
+			//			if(eX.isDisplayed())
+			//				eX.sendKeys(Utils.getAbsoluteFilePath("TestData\\" +uploadFileName));
+			//			else info("Not show element "+ eX);
+
 			Utils.pause(1000);
-			click(By.linkText(uploadFileName));
-//			waitForAndGetElement(ecms.ELEMENT_BREADCUMBSCONTAINER.replace("${fileName}", uploadFileName));
+			info("Upload finished");
+			clickByJavascript(By.linkText(uploadFileName));
+			//			waitForAndGetElement(ecms.ELEMENT_BREADCUMBSCONTAINER.replace("${fileName}", uploadFileName));
 		}
 		else 
 		{
@@ -317,7 +335,8 @@ public class Activity extends SocialBase {
 		}
 		waitForAndGetElement(ELEMENT_SHARE_BUTTON);
 		info("----Click share button----");
-		click(ELEMENT_SHARE_BUTTON);
+//		click(ELEMENT_SHARE_BUTTON);
+		waitForAndGetElement(ELEMENT_SHARE_BUTTON).click();
 		Utils.pause(1000);
 		info("-- Verify that an activity has been added --");
 		if (addText) {

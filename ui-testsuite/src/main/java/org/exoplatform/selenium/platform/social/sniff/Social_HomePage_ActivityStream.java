@@ -206,16 +206,16 @@ public class Social_HomePage_ActivityStream extends Activity {
 
 		/*Clear data*/
 		info("clear data");
-		activity.deleteActivity(activityOfUser+user);
-		activity.deleteActivity(activityOfSpace + spacename);
+		activity.deleteActivity(activityOfUser+user,true,false);
+		activity.deleteActivity(activityOfSpace + spacename,true,false);
 		navToolBar.goToConnectionPage();
 		peoConn.removeConnection(user1);
 		magMember.goToMySpacePage();
 		magMember.deleteSpace(spacename,300000);
 		magAcc.userSignIn(userType.PUBLISHER);
-		activity.deleteActivity(activityOfUser+user1);
+		activity.deleteActivity(activityOfUser+user1,true,false);
 		magAcc.userSignIn(userType.DEVELOPER);
-		activity.deleteActivity(activityOfUser+user2);
+		activity.deleteActivity(activityOfUser+user2,true,false);
 	}
 
 	/**
@@ -237,10 +237,11 @@ public class Social_HomePage_ActivityStream extends Activity {
 		//Add new space
 		magMember.goToMySpacePage();
 		magMember.addNewSpace(spacename, spacedesc);
+		
 
 		//add activity space
-		addActivity(true, activityOfSpace+spacename, false,"");
-
+		/*addActivity(true, activityOfSpace+spacename, false,"");*/
+		magMember.accessSpace(spacename);
 		//Click on Connections on the left panel
 		navToolBar.goToConnectionPage();
 

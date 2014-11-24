@@ -2,13 +2,15 @@ package org.exoplatform.selenium.platform.plf.sniff;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import org.exoplatform.selenium.Dialog;
 import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.exoplatform.selenium.platform.calendar.Event;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.ActionBar;
-import org.exoplatform.selenium.platform.ecms.contentexplorer.ContextMenu.actionType;
+import org.exoplatform.selenium.platform.ecms.contentexplorer.ContextMenu;
+import org.exoplatform.selenium.platform.ecms.contentexplorer.SitesExplorer;
 import org.exoplatform.selenium.platform.forum.ForumManageCategory;
 import org.exoplatform.selenium.platform.forum.ForumManageForum;
 import org.exoplatform.selenium.platform.forum.ForumManagePoll;
@@ -32,6 +34,9 @@ public class PLF_Navigation_TopNavigation extends BasicAction {
 	PeopleProfile peoPro;
 	ActionBar actBar;
 	EcmsBase ecms;
+	SitesExplorer siteEx;
+	ContextMenu cMenu;
+	Dialog dialog;
 
 	//Calendar base
 	Event evt;
@@ -47,6 +52,9 @@ public class PLF_Navigation_TopNavigation extends BasicAction {
 		initSeleniumTest();
 		driver.get(baseUrl);
 		info("Login with " + DATA_USER1);
+		siteEx = new SitesExplorer(driver, this.plfVersion);
+		cMenu = new ContextMenu(driver, this.plfVersion);
+		dialog = new Dialog(driver);
 		magAcc = new ManageAccount(driver, this.plfVersion);
 		naviToolbar = new NavigationToolbar(driver, this.plfVersion);
 		peoPro = new PeopleProfile(driver, this.plfVersion);
@@ -287,7 +295,7 @@ public class PLF_Navigation_TopNavigation extends BasicAction {
 		click(ELEMENT_HELP_ICON);
 		//- A new tab in the internet browser is opened
 		//- The user guide is opened and the chapter displayed matched with the current navigation of the user.
-		Utils.pause(1000);
+		Utils.pause(5000);
 		switchToNewWindow();
 		String url = driver.getCurrentUrl();
 		Utils.pause(1000);
@@ -299,9 +307,9 @@ public class PLF_Navigation_TopNavigation extends BasicAction {
 	 * Test case ID: 74366
 	 * Step 1: Connect to Intranet
 	 * Step 2: Open Document selector popup
-	 * ERROR: Refer https://jira.exoplatform.org/browse/PLF-5532
+	 * 
 	 */
-	@Test(groups="error")
+	@Test
 	public void test07_UploadANewFileViaTheTopNavigation(){
 		String driverName = "Personal Drives";
 		String folderPath = "Personal Documents";
@@ -320,11 +328,19 @@ public class PLF_Navigation_TopNavigation extends BasicAction {
 		naviToolbar.goToUploadFile();
 		//- File is uploaded successfully
 		uploadFileFromTopNavigation(driverName,true,folderPath,"",uploadFileName,folder);
-		
+		magAcc.signOut();
+		magAcc.signIn(DATA_USER1,DATA_PASS);
+		/*driver.close();
+		initIEDriver();
+		driver.get(baseUrl);*/
 		/*Clear data*/
 		info("-- Clear data --");
-		naviToolbar.goToSiteExplorer();
-		actBar.chooseDrive(ecms.ELEMENT_PERSONAL_DRIVE);
-		actBar.actionsOnElement(folder, actionType.DELETE,true,true);
+//		naviToolbar = new NavigationToolbar(driver,this.plfVersion);
+//		dialog = new Dialog(driver);
+		naviToolbar.goToPersonalDocuments();
+		naviToolbar.click(ecms.ELEMENT_ICONS_VIEW);
+		naviToolbar.rightClickOnElement(siteEx.ELEMENT_ICON_VIEW_NODE.replace("${node}", folder));
+		naviToolbar.click(cMenu.ELEMENT_MENU_DELETE);
+		dialog.deleteInDialog();
 	}
 }

@@ -36,6 +36,7 @@ public class ForumBase extends PlatformBase {
 	//-----------------Forum Home screen--------------------------------------------
 	public final By ELEMENT_ADD_CATEGORY = By.linkText("Add Category");
 	public final By ELEMENT_FORUM_STATE = By.id("UIForumIconState");
+	public final By ELEMENT_FORUM_PAGE = By.id("UIForumPortlet");
 	public final By ELEMENT_WHAT_GOING_ON = By.xpath("//div[contains(text(),'Going on?')]");
 	public final By ELEMENT_ADD_FORUM = By.linkText("Add Forum");
 	public final String ELEMENT_BREAD_FORUM = "//li[text()='${forum}']";
@@ -372,6 +373,7 @@ public class ForumBase extends PlatformBase {
 				inputsummary = driver.switchTo().activeElement();
 				inputsummary.clear();
 				if (valid){		
+					info("input by javascript");
 					((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "'");
 				}else {
 					inputsummary.sendKeys(data); break;

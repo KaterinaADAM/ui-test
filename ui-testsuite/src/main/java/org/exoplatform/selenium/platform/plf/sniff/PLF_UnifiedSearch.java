@@ -2,6 +2,7 @@ package org.exoplatform.selenium.platform.plf.sniff;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,6 +37,7 @@ import org.exoplatform.selenium.platform.social.PeopleProfile;
 import org.exoplatform.selenium.platform.social.SpaceManagement;
 import org.exoplatform.selenium.platform.wiki.Template;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -111,7 +113,12 @@ public class PLF_UnifiedSearch extends Template {
 	public void afterMethods() {
 		info("Logout portal");
 		driver.manage().deleteAllCookies();
-		driver.quit();
+		driver.close();
+		try{
+		((JavascriptExecutor) driver).executeScript( "window.onbeforeunload = function(e){};" );
+		}catch(org.openqa.selenium.remote.SessionNotFoundException e){
+			driver.quit();
+		}
 	}
 
 	/**
@@ -129,6 +136,7 @@ public class PLF_UnifiedSearch extends Template {
 		//- Login and go to intranet home page
 		//- Go to Search Administration via the Administration > Content > Search menu of the navigation bar 
 		//The search admin has a table with 3 columns : Content Type, Description, and Actions, as attachment searchAdmin.png
+		info("Administrate the unified search engine");
 		naviToolbar.goToSearch();
 
 		/*Step 2: Enable a content type*/ 
@@ -154,7 +162,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 70831
 	 * Step 1: Configure Quick search
 	 */
-	@Test(priority=3)
+	@Test(priority=3,dependsOnGroups = { "search" },alwaysRun=true)
 	public void test02_ConfigureQuickSearch(){
 		/*Declare variables*/
 		String qsGadget = "Quick Search";
@@ -165,7 +173,7 @@ public class PLF_UnifiedSearch extends Template {
 		//There is a page containing a Quick search portlet
 		qsPage.addQuickSearchPage(pageName,qsGadget);
 
-		/*Step 1: Configure Quick search*/
+//		Step 1: Configure Quick search
 		//- Login as admin, go to intranet home page
 		//- Open Quick search page
 		//- Click Edit this page
@@ -188,17 +196,20 @@ public class PLF_UnifiedSearch extends Template {
 	 * Step 1: Go to search page 
 	 * Step 2: Configure search page
 	 */
-	@Test(priority=4)
+	@Test(priority=4,dependsOnGroups = {"search"},alwaysRun=true)
 	public void test03_ConfigureSearchPage(){
 		/*Declare variables*/
 		String searchText = "searchtext70919";
 
+		info("Configure Search page");
 		/*Step 1: Go to search page */
 		//- Login and go to intranet home page
 		//-Go to search page
 		//Seach page is shown
-		qsPage.quickSearch(searchText);
-
+		qsPage.quickSearchType(searchText);
+		Utils.javaSimulateKeyPress(KeyEvent.VK_ENTER);
+		waitForAndGetElement(ELEMENT_RESULT_SEARCH_PAGE);
+		
 		/*Step 2: Configure search page*/
 		//- Click Edit this page
 		//- Click Edit portlet " search"
@@ -221,7 +232,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Step 1: Quick search
 	 * Step 2: Filter search
 	 */
-	@Test(priority=0)
+	@Test(priority=0,groups = {"search"})
 	public void test04_FilterSearch(){
 		/*Declare variables*/
 		String searchText = "qfind";
@@ -246,7 +257,7 @@ public class PLF_UnifiedSearch extends Template {
 
 		//Add space
 		info("-- Create space --");
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, spaceName);
 
 		/*Step 1: Quick search*/
@@ -255,17 +266,17 @@ public class PLF_UnifiedSearch extends Template {
 		qsPage.quickSearch(searchText);
 
 		//- By default, quick search returns results for items located in the current site only, as attachment SearchResult.png
-		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", searchText).replace("${item}", "S"));
-		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", searchText).replace("${item}", "W"));
-		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", searchText).replace("${item}", "C"));
+		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", spaceName));
+		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", wikiName));
+		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", contentName));
 
 		/*Step 2: Filter search*/
 		//On filter area, click on fields that you want to search
 		uncheck(qsPage.ELEMENT_FILTER_SEARCH_SPACE_CHECKBOX,2);
 		//The page will search only selected fields for results
-		waitForElementNotPresent(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", searchText).replace("${item}", "S"));
-		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", searchText).replace("${item}", "W"));
-		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", searchText).replace("${item}", "C"));
+		waitForElementNotPresent(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", spaceName));
+		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", wikiName));
+		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", contentName));
 
 		/*clear data*/
 		info("-- Clear data --");
@@ -285,7 +296,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 70771
 	 * Step 1: Quick search
 	 */
-	@Test(priority=1)
+	@Test(priority=1,groups = {"search"})
 	public void test05_QuickSearch(){
 		/*Declare variables*/
 		String searchText = "test70771";
@@ -299,7 +310,7 @@ public class PLF_UnifiedSearch extends Template {
 		//Add new webcontent
 		info("Add new webcontent");
 		naviToolbar.goToSiteExplorer();
-		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK);
+//		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK);
 		actBar.goToAddNewContent();
 		conTemp.createNewWebContent(contentName, contentName, "", "", "", "");
 
@@ -310,8 +321,8 @@ public class PLF_UnifiedSearch extends Template {
 
 		//Add space
 		info("-- Create space --");
-		magMember.goToMySpacePage();
-		magMember.addNewSpace(spaceName, spaceName);
+		magMember.goToAllSpaces();
+		magMember.addNewSpace(spaceName, spaceName,70000);
 
 		/*Step 1: Quick search*/
 		//- Login and Open intranet home
@@ -342,7 +353,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71619
 	 * Step 1: Search Answers
 	 */
-	@Test(priority=5)
+	@Test(priority=5,groups = {"search"})
 	public void test06_SearchAnswers(){
 		/*Declare variables*/
 		String searchText = "Search";
@@ -395,7 +406,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71612
 	 * Step 1: Search Discussions
 	 */
-	@Test(priority=6)
+	@Test(priority=6,groups = {"search"})
 	public void test07_SearchDiscussions(){
 		/*Declare variables*/
 		String searchText = "Search";
@@ -456,7 +467,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71611
 	 * Step 1: Search documents
 	 */
-	@Test(priority=7)
+	@Test(priority=7,groups = {"search"})
 	public void test08_SearchDocuments(){
 		/*Declare variables*/
 		String searchText = "Search71611Con";
@@ -515,7 +526,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71614
 	 * Step 1: Search events
 	 */
-	@Test(priority=8)
+	@Test(priority=8,groups = {"search"})
 	public void test09_SearchEvents(){
 		/*Declare variables*/
 		String searchText = "Search71614";
@@ -572,7 +583,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71610
 	 * Step 1: Search files (nt:file)
 	 */
-	@Test(priority=9)
+	@Test(priority=9,groups = {"search"})
 	public void test10_SearchFiles(){
 		/*Declare variables*/
 		String searchText = "Search71610";
@@ -586,7 +597,6 @@ public class PLF_UnifiedSearch extends Template {
 		//Some documents are existed on Site explorer
 		info("Add new webcontent");
 		naviToolbar.goToSiteExplorer();
-		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK);
 		actBar.goToAddNewContent();
 		conTemp.createNewFile(fileName1, fileName1, fileName1);
 		click(naviToolbar.ELEMENT_SITE_EXPLORER_HOME);
@@ -610,6 +620,8 @@ public class PLF_UnifiedSearch extends Template {
 		info("-- Verify file title --");
 		waitForAndGetElement(qsPage.ELEMENT_RESULT_ITEM.replace("${keySearch}", searchText).replace("${item}", "File"));
 		info("-- Verify file location --");
+		waitForAndGetElement(qsPage.ELEMENT_RESULT_LOCATION_DATETIME.replace("${keySearch}", searchText).replace("${item}", "File"));
+		info(waitForAndGetElement(qsPage.ELEMENT_RESULT_LOCATION_DATETIME.replace("${keySearch}", searchText).replace("${item}", "File")).getText());
 		assert waitForAndGetElement(qsPage.ELEMENT_RESULT_LOCATION_DATETIME.replace("${keySearch}", searchText).replace("${item}", "File")).getText().contains(location);
 
 		//- Item in search result is clickable and open it when user click
@@ -629,7 +641,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71615
 	 * Step 1: Search pages
 	 */
-	@Test(priority=15)
+	@Test(priority=15,groups = {"search"})
 	public void test11_SearchPages(){
 		/*Declare variables*/
 		String searchText = "Search71615";
@@ -693,7 +705,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71618
 	 * Step 1: Search people
 	 */
-	@Test(priority=10)
+	@Test(priority=10,groups = {"search"})
 	public void test12_SearchPeople(){
 		/*Declare variables*/
 		String searchText = "John Smith";
@@ -702,8 +714,8 @@ public class PLF_UnifiedSearch extends Template {
 		String numberOfPhone="09880000";
 		String email = "john.smith@acme.exoplatform.com";
 
-		//Create data
 		naviToolbar.goToMyProfile();
+		//Create data
 		peoPro.editUserContact(typeOfGender,true,typeOfAddPhone,numberOfPhone,false,"","",false,"");
 
 		/*Step 1: Search people*/
@@ -717,18 +729,19 @@ public class PLF_UnifiedSearch extends Template {
 		//- Search results should display: the user profile avatar, the user full name, the user profile title, the user profile email, the user profile phone, gender
 		info("-- Verify profile avatar --");
 		waitForAndGetElement(qsPage.ELEMENT_RESULT_PEOPLE_ICON);
+		String text = waitForAndGetElement(qsPage.ELEMENT_RESULT_CONTENT_DETAIL).getText();
 		info("-- Verify the user full name --");
 		assert waitForAndGetElement(qsPage.ELEMENT_RESULT_TITLE).getText().contains(searchText);
 		info("-- the user profile email --");
-		assert waitForAndGetElement(qsPage.ELEMENT_RESULT_CONTENT_DETAIL).getText().contains(email);
+		assert text.contains(email);
 		info("-- the user profile phone --");
-		assert waitForAndGetElement(qsPage.ELEMENT_RESULT_CONTENT_DETAIL).getText().contains(numberOfPhone);
+		assert text.contains(numberOfPhone);
 		info("-- genders --");
-		assert waitForAndGetElement(qsPage.ELEMENT_RESULT_CONTENT_DETAIL).getText().contains(typeOfGender.toLowerCase());
+		assert text.contains(typeOfGender.toLowerCase());
 
 		//- Item in search result is clickable and open it when user click
-		waitForAndGetElement(qsPage.ELEMENT_RESULT_TITLE).click();
-		waitForAndGetElement(peoPro.ELEMENT_EDIT_INFORMATION_BUTTON);
+		click(qsPage.ELEMENT_RESULT_TITLE);
+		getElementByJavascript("uiIconEdit");
 
 		/*Clear data*/
 		info("-- Clear data --");
@@ -740,7 +753,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71617
 	 * Step 1: Search spaces
 	 */
-	@Test(priority=12)
+	@Test(priority=12,groups = { "search" })
 	public void test13_SearchSpaces(){
 		/*Declare variables*/
 		String searchText = "Search72617";
@@ -750,10 +763,10 @@ public class PLF_UnifiedSearch extends Template {
 		//Create data
 		//Some spaces are existed.
 		info("-- Create space --");
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName1, spaceName1);
 
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName2, spaceName2);
 
 		/*Step 1: Search spaces*/
@@ -792,7 +805,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71613
 	 * Step 1: Search tasks
 	 */
-	@Test(priority=13)
+	@Test(priority=13,groups = { "search" })
 	public void test14_SearchTasks(){
 		/*Declare variables*/
 		String searchText = "Search71613";
@@ -849,7 +862,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Test case ID: 71616
 	 * Step 1: Search wikis
 	 */
-	@Test(priority=14)
+	@Test(priority=14,groups = { "search" })
 	public void test15_SearchWikis(){
 		/*Declare variables*/
 		String searchText = "Search72616";
@@ -923,7 +936,7 @@ public class PLF_UnifiedSearch extends Template {
 	 * Step 1: Quick search
 	 * Step 2: Sort search results
 	 */
-	@Test(priority=11)
+	@Test(priority=11,groups = { "search" })
 	public void test16_SortSearchResult(){
 		/*Declare variables*/
 		String searchText = "searchtext71633";

@@ -47,7 +47,7 @@ public class PeopleConnection extends SocialBase {
 	public String ELEMENT_INVITATION_RECEIVED_MSG = "//h4[@class='spaceTitle']/a[contains(text(),'${acc}')]/ancestor::div[@class='spaceBox pull-left']/div[@class='connectionBtn clearfix']/span[contains(text(),'Invitation Received')]";
 	//---------------------------Generic user popup - Connection Application------------
 	public final String ELEMENT_CONNECTION_MEMBER = "//a[text()='${peopleName}']";
-	
+
 	/**
 	 * Connect to people
 	 * @param peopleName: name of selected people (String)
@@ -66,11 +66,13 @@ public class PeopleConnection extends SocialBase {
 			click(ELEMENT_EVERYONE_TAB);
 		}
 		if(waitForAndGetElement(ELEMENT_EVERYONE_TAB_ACTIVE,5000,0) == null)
-			click(ELEMENT_EVERYONE_TAB);
-		resetConnection(peopleName);
+			clickByJavascript(ELEMENT_EVERYONE_TAB);
+		waitForAndGetElement(By.linkText(peopleName),DEFAULT_TIMEOUT,1,2);
+		if(isElementNotPresent(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName)))
+			resetConnection(peopleName);
 		info("-----Click connect to people-----");
-		//	waitForAndGetElement(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
-		click(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
+		Utils.pause(2000);
+		clickByJavascript(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
 		info("---Verify Connect button is disappeared----");
 		waitForElementNotPresent(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
 		info("-----Verify Cancel request button is displayed-----");
@@ -87,15 +89,15 @@ public class PeopleConnection extends SocialBase {
 			info("----Go to My connections----");
 			goToMyConnections();
 			info("---Click Requests Received tab-----");
-			click(ELEMENT_REQUESTS_RECEIVED_TAB);
+			clickByJavascript(ELEMENT_REQUESTS_RECEIVED_TAB);
 		}
 		else
-			click(ELEMENT_REQUESTS_RECEIVED_TAB);
+			clickByJavascript(ELEMENT_REQUESTS_RECEIVED_TAB);
 		info("----Confirm the invitation from user '"+peopleName+"' ");
-		click(ELEMENT_CONFIRM_BUTTON.replace("${peopleName}", peopleName));
+		clickByJavascript(ELEMENT_CONFIRM_BUTTON.replace("${peopleName}", peopleName));
 		waitForElementNotPresent(ELEMENT_CONFIRM_BUTTON.replace("${peopleName}", peopleName));
 		info("----Go to My connections tab----");
-		click(ELEMENT_MY_CONNECTIONS_TAB);
+		clickByJavascript(ELEMENT_MY_CONNECTIONS_TAB);
 		info("---Verify remove connection button----");
 		waitForAndGetElement(ELEMENT_REMOVE_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
 	}

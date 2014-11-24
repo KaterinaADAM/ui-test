@@ -245,7 +245,7 @@ public class CalendarBase extends PlatformBase {
 		info("--Go to calendar--");
 		click(ELEMENT_CALENDAR_LINK);
 		waitForAndGetElement(ELEMENT_CALENDAR_PANEL);
-		ID_CALENDAR_PAGE = waitForAndGetElement(ELEMENT_GET_ID_PAGE).getAttribute("id");
+		ID_CALENDAR_PAGE = waitForAndGetElement(ELEMENT_GET_ID_PAGE,60000).getAttribute("id");
 	}
 
 	/** 
@@ -1035,18 +1035,19 @@ public class CalendarBase extends PlatformBase {
 			button.save();
 			if(verify){
 				if(isEvent){
-					waitForAndGetElement(ELEMENT_CREATE_EVENT_MESSAGE.replace("${calendar}", waitForAndGetElement(ELEMENT_ACCOUNT_NAME_LINK).getText()));
+					waitForAndGetElement(ELEMENT_CREATE_EVENT_MESSAGE.replace("${calendar}", waitForAndGetElement(ELEMENT_ACCOUNT_NAME_LINK).getText()),DEFAULT_TIMEOUT,1,2);
 					Utils.pause(3000);
 					waitForElementNotPresent(ELEMENT_CREATE_EVENT_MESSAGE.replace("${calendar}",  waitForAndGetElement(ELEMENT_ACCOUNT_NAME_LINK).getText()));
 				}
 				else{
-					waitForAndGetElement(ELEMENT_CREATE_TASK_MESSAGE.replace("${calendar}", waitForAndGetElement(ELEMENT_ACCOUNT_NAME_LINK).getText()));
+					waitForAndGetElement(ELEMENT_CREATE_TASK_MESSAGE.replace("${calendar}", waitForAndGetElement(ELEMENT_ACCOUNT_NAME_LINK).getText()),DEFAULT_TIMEOUT,1,2);
 					Utils.pause(3000);
 					waitForElementNotPresent(ELEMENT_CREATE_TASK_MESSAGE.replace("${calendar}",  waitForAndGetElement(ELEMENT_ACCOUNT_NAME_LINK).getText()));
 
 				}
 			}
 		}
+		info("create event/task successfully");
 	}
 
 	/**

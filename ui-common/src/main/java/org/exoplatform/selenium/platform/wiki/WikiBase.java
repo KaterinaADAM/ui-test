@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.io.File;
@@ -330,6 +331,7 @@ public class WikiBase extends PlatformBase{
 	public final String ELEMENT_SPACE_WIKI = "//a[text()='${spaceName}']/..//a[text()='Wiki']";
 	public final By ELEMENT_TITLE_WIKI_HOME = By.xpath("//*[@id='titleInfo' and text()='Wiki Home']");
 	public final By ELEMENT_WIKI_TAB = By.xpath("//a[@class='ApplicationAdd' and text()='Wiki']");
+	public final By ELEMENT_SPACE_WIKI_PAGE = By.cssSelector("div[id='UIWikiPageContentArea']");
 
 	/*-----------------------Watch/UnWatch page-------------------------------*/
 	public final String MESSAGE_WATCH_PAGE = "You have started watching this page now.";
@@ -342,6 +344,10 @@ public class WikiBase extends PlatformBase{
 	//================== PLF4/Common function for Wiki ==================//
 	public WikiBase(){
 		ieFlag = super.ieFlag;
+	}
+	
+	public WikiBase(WebDriver dr){
+		this.driver = dr;
 	}
 
 	//////

@@ -249,7 +249,7 @@ public class ActionBar extends EcmsBase{
 			if (newContent == null){
 				WebElement more = waitForAndGetElement(ELEMENT_MORE_LINK_WITHOUT_BLOCK, 10000, 0);
 				if (more != null){
-					mouseOverAndClick(ELEMENT_MORE_LINK_WITHOUT_BLOCK);
+					click(ELEMENT_MORE_LINK_WITHOUT_BLOCK);
 					Utils.pause(1000);
 				}else {
 					info("There is not Add New content icon in action bar");
@@ -716,16 +716,18 @@ public class ActionBar extends EcmsBase{
 			for (String node : nodes){
 				info("-- Delete node: " + node); 
 				if (waitForAndGetElement(ELEMENT_SELECT_CHECKBOX.replace("${name}", node), 3000, 0, 2) != null){
-					click(ELEMENT_SELECT_CHECKBOX.replace("${name}", node), 2);
+//					check(ELEMENT_SELECT_CHECKBOX.replace("${name}", node), 2);
+					info("check click of selenium ");
+					waitForAndGetElement(ELEMENT_SELECT_CHECKBOX.replace("${name}", node),DEFAULT_TIMEOUT,1,2).click();
 				}else{
-					click(ELEMENT_NODE_ADMIN_VIEW.replace("${nodeName}", node) + "/../../../div[@class='columnCheckbox']", 2);
+					check(ELEMENT_NODE_ADMIN_VIEW.replace("${nodeName}", node) + "/../../../div[@class='columnCheckbox']", 2);
 				}
 			}
 		}else{
 			if (waitForAndGetElement(ELEMENT_UI_CHECKBOX.replace("${element}", elementName), 3000, 0, 2) != null){
-				click(ELEMENT_UI_CHECKBOX.replace("${element}", elementName), 2);
+				check(ELEMENT_UI_CHECKBOX.replace("${element}", elementName), 2);
 			}else{
-				click(ELEMENT_NODE_ADMIN_VIEW.replace("${nodeName}", elementName) + "/../../../div[@class='columnCheckbox']", 2);
+				check(ELEMENT_NODE_ADMIN_VIEW.replace("${nodeName}", elementName) + "/../../../div[@class='columnCheckbox']", 2);
 			}
 		}
 		/*else {
@@ -751,9 +753,9 @@ public class ActionBar extends EcmsBase{
 			break;
 		case DELETE:
 			if (waitForAndGetElement(cMenu.ELEMENT_MENU_DELETE, 3000, 0) != null){
-				click(cMenu.ELEMENT_MENU_DELETE);
+				clickByJavascript(cMenu.ELEMENT_MENU_DELETE);
 			}else {
-				click(By.className("uiIconEcmsDelete"));
+				clickByJavascript(By.className("uiIconEcmsDelete"));
 			}
 			//waitForTextPresent("Delete");
 			dialog.deleteInDialog();

@@ -178,19 +178,20 @@ public class SpaceManagement extends SocialBase {
 		if (waitForAndGetElement(ELEMENT_ADDNEWSPACE_BUTTON, 3000, 0, 2) != null){
 			click(ELEMENT_ADDNEWSPACE_BUTTON);
 		}else {
-			click(By.xpath("//*[contains(@class, 'uiIconSocSimplePlus')]"));
+			clickByJavascript(By.xpath("//*[contains(@class, 'uiIconSocSimplePlus')]"));
 		}
-		waitForAndGetElement(ELEMENT_ADDNEWSPACE_FORM);
+		waitForAndGetElement(ELEMENT_ADDNEWSPACE_FORM,60000);
 		type(ELEMENT_SPACE_NAME_INPUT, name, true);
 		type(ELEMENT_SPACE_DESCRIPTION_INPUT, desc, true);
 		clickButton("Create");
 		waitForAndGetElement(By.linkText(name), iTimeout);
 		//waitForElementPresent(By.xpath("//div[contains(@class,'UISpaceName')]/a[@title='" + name + "']"),iTimeout);
-		if(waitForAndGetElement("//span[contains(text(),'More')]",iTimeout,0) == null){
+		if(waitForAndGetElement("//span[contains(text(),'Activity Stream')]",iTimeout,0) == null){
 			click(By.linkText(name));
-			waitForAndGetElement("//span[contains(text(),'More')]",iTimeout,0);
+			waitForAndGetElement("//span[contains(text(),'Activity Stream')]",iTimeout,0);
 		}
 			
+		info("A new space is created successfully!");
 		//Utils.pause(1000);
 	}
 

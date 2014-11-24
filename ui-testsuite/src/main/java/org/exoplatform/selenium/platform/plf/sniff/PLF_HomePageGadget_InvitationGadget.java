@@ -66,8 +66,8 @@ public class PLF_HomePageGadget_InvitationGadget extends Activity{
 	@Test
 	public void test01_InvitationGadget() {
 
-		String spaceName1 = "space705791";
-		String spaceName2 = "space705792";
+		String spaceName1 = "space705791"+ getRandomNumber();
+		String spaceName2 = "space" + getRandomNumber();
 		String user2="Jack Miller";
 		String user3="James Davis";
 		String user_login2 = DATA_USER4;
@@ -75,13 +75,13 @@ public class PLF_HomePageGadget_InvitationGadget extends Activity{
 		String number_gadget = "4";
 		String status = "Private Space";
 		String eInvitationUser;
-		String username = "test75079";
+		String username = getRandomString();
 		String pass = "gtngtn";
 		String name = "TestMot";
 
 		info("Create new user to test");
 		navToolBar.goToNewStaff();
-		acc.addNewUserAccount(username, pass, pass, name, name, name, username + "@gmail.com", null, null, true);
+		acc.addNewUserAccount(username, pass, pass, name, name, "", username + "@gmail.com", null, null, true);
 		acc.signOut();
 		
 		// Check not show Invitation gadget	
@@ -90,6 +90,7 @@ public class PLF_HomePageGadget_InvitationGadget extends Activity{
 		acc.signOut();
 
 		//James request connect and invite user in space
+		
 		acc.signIn(user_login4, DATA_PASS);
 		magMember.goToMySpacePage();
 		magMember.addNewSpace(spaceName1, "");

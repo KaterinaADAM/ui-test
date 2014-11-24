@@ -44,7 +44,7 @@ public class NavigationToolbar extends PlatformBase {
 				driver.get(url);
 				break;
 			}
-			mouseOver(ELEMENT_LINK_SETUP, true);
+			click(ELEMENT_LINK_SETUP);
 			if (waitForAndGetElement(ELEMENT_LINK_PORTAL, 5000, 0)!= null) {	
 				mouseOver(ELEMENT_LINK_PORTAL, false);
 				if (waitForAndGetElement(ELEMENT_LINK_BRANDING, 5000, 0)!= null){
@@ -72,11 +72,11 @@ public class NavigationToolbar extends PlatformBase {
 				break;
 			}
 			//mouseOverAndClick(ELEMENT_LINK_SETUP);
-			mouseOver(ELEMENT_LINK_SETUP, true);
+			click(ELEMENT_LINK_SETUP);
 			if (waitForAndGetElement(ELEMENT_LINK_PORTAL, 5000, 0)!= null) {	
 				mouseOver(ELEMENT_LINK_PORTAL, false);
 				if (waitForAndGetElement(ELEMENT_LINK_SITES, 5000, 0)!= null){
-					click(ELEMENT_LINK_SITES);
+					click(ELEMENT_LINK_SITES,2);
 					break;
 				}
 			}
@@ -95,11 +95,11 @@ public class NavigationToolbar extends PlatformBase {
 				break;
 			}
 			//mouseOverAndClick(ELEMENT_LINK_SETUP);
-			mouseOver(ELEMENT_LINK_SETUP, true);
+			click(ELEMENT_LINK_SETUP);
 			if (waitForAndGetElement(ELEMENT_LINK_PORTAL, 5000, 0)!= null) {	
 				mouseOver(ELEMENT_LINK_PORTAL, false);
 				if (waitForAndGetElement(ELEMENT_LINK_PAGES, 5000, 0)!= null){
-					click(ELEMENT_LINK_PAGES);
+					click(ELEMENT_LINK_PAGES,2);
 					break;
 				}
 			}
@@ -138,17 +138,17 @@ public class NavigationToolbar extends PlatformBase {
 		//mouseOver(ELEMENT_LINK_SETUP, true);
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
-				mouseOverAndClick(ELEMENT_LINK_SETUP);
+				clickByJavascript(ELEMENT_LINK_SETUP);
 				break;
 			}
-			mouseOver(ELEMENT_LINK_SETUP, true);
+			clickByJavascript(ELEMENT_LINK_SETUP);
 			if (waitForAndGetElement(ELEMENT_LINK_USERS, 5000, 0) != null){
 				info("Element " + ELEMENT_LINK_USERS + "... is displayed");
 				break;
 			}
 			info("Retry...[" + repeat + "]");
 		}
-		click(ELEMENT_LINK_USERS);
+		clickByJavascript(ELEMENT_LINK_USERS);
 		Utils.pause(1000);
 	}
 
@@ -223,9 +223,8 @@ public class NavigationToolbar extends PlatformBase {
 
 	public void goToUsersAndGroupsManagement() {
 		info("--Go to Users and groups management--");
-		mouseOver(ELEMENT_LINK_SETUP, true);
-		WebElement element = waitForAndGetElement(By.xpath(ELEMENT_GROUP_AND_ROLE_LINK), DEFAULT_TIMEOUT, 1, 2);		
-		((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
+		clickByJavascript(ELEMENT_LINK_SETUP);
+		clickByJavascript(ELEMENT_GROUP_AND_ROLE_LINK,2);
 		Utils.pause(500);
 	}
 
@@ -234,17 +233,17 @@ public class NavigationToolbar extends PlatformBase {
 		info("--Go to Portal Application Registry--");
 		for (int repeat = 0;; repeat ++){
 			if (repeat > 4){
-				mouseOverAndClick(ELEMENT_LINK_SETUP);
+				click(ELEMENT_LINK_SETUP);
 				break;
 			}
-			mouseOver(ELEMENT_LINK_SETUP, false);
+			click(ELEMENT_LINK_SETUP);
 			if (waitForAndGetElement(ELEMENT_APPLICATIONS_LINK, 3000, 0) != null){
 				info("Link application is displayed");
 				break;
 			}
 			info("Retry..." + repeat + "...");
 		}
-		click(ELEMENT_APPLICATIONS_LINK);
+		click(ELEMENT_APPLICATIONS_LINK,2);
 		Utils.pause(500);
 	}
 
@@ -302,10 +301,10 @@ public class NavigationToolbar extends PlatformBase {
 		Utils.pause(500);
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
-				mouseOverAndClick(ELEMENT_LINK_SETUP);
+				clickByJavascript(ELEMENT_LINK_SETUP);
 				break;
 			}
-			mouseOver(ELEMENT_LINK_SETUP, true);
+			clickByJavascript(ELEMENT_LINK_SETUP);
 			if (waitForAndGetElement(ELEMENT_MENU_CONTENT_LINK, 5000, 0) != null){
 				info("Element " + ELEMENT_MENU_CONTENT_LINK + "... is displayed");
 				break;
@@ -314,7 +313,7 @@ public class NavigationToolbar extends PlatformBase {
 		}
 		//mouseOverAndClick(ELEMENT_LINK_SETUP);
 		//mouseOver(ELEMENT_LINK_SETUP, true);
-		mouseOverAndClick(ELEMENT_MENU_CONTENT_LINK);
+		clickByJavascript(ELEMENT_MENU_CONTENT_LINK,2);
 		//click(ELEMENT_MENU_SITE_EXPLORER);
 		Utils.pause(2000);
 	}
@@ -416,10 +415,10 @@ public class NavigationToolbar extends PlatformBase {
 		info("Go to Edit layout form");
 		for(int repeat=0;; repeat ++){
 			if (repeat > 4){
-				mouseOverAndClick(ELEMENT_MENU_EDIT_LINK);
+				click(ELEMENT_MENU_EDIT_LINK);
 				break;
 			}
-			mouseOver(ELEMENT_MENU_EDIT_LINK, true);
+			click(ELEMENT_MENU_EDIT_LINK);
 			if (waitForAndGetElement(ELEMENT_MENU_PAGE_LINK, 5000, 0)!= null) {
 				info("-- Click Pagemenu --");
 				mouseOver(ELEMENT_MENU_PAGE_LINK,true);
@@ -442,9 +441,10 @@ public class NavigationToolbar extends PlatformBase {
 	//Function go to Home Page
 	public void goToHomePage(){
 		info("-- Go to home page --");
+		driver.manage().deleteAllCookies();
 		clickByJavascript(ELEMENT_HOME_PAGE);
 		Utils.pause(1000);
-		driver.navigate().refresh();
+//		driver.navigate().refresh();
 		waitForAndGetElement(ELEMENT_REFRESH,60000);
 	}
 
@@ -455,7 +455,7 @@ public class NavigationToolbar extends PlatformBase {
 	 */
 	public void goToConnectionPage(){
 		hpAct = new HomePageActivity(driver, this.plfVersion);
-		click(ELEMENT_CONNECTION_PAGE);
+		clickByJavascript(ELEMENT_CONNECTION_PAGE);
 		waitForAndGetElement(peoCon.ELEMENT_EVERYONE_TAB);
 		if(waitForElementNotPresent(hpAct.ELEMENT_ACTIVITY_TEXTBOX,DEFAULT_TIMEOUT,0) != null){
 			clearCache();
@@ -474,11 +474,11 @@ public class NavigationToolbar extends PlatformBase {
 		info("--Go to My Profile--");		
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
-				mouseOverAndClick(ELEMENT_ACCOUNT_NAME_LINK);
+				click(ELEMENT_ACCOUNT_NAME_LINK);
 				info("--Error mouse over and click: can't mouseover, need to use mouse over and click --");
 				break;
 			}
-			mouseOver(ELEMENT_ACCOUNT_NAME_LINK, true);
+			click(ELEMENT_ACCOUNT_NAME_LINK);
 			if (waitForAndGetElement(ELEMENT_MY_PROFILE_LINK, 5000, 0) != null){
 				info("Element " + ELEMENT_MY_PROFILE_LINK + "... is displayed");
 				break;
@@ -500,9 +500,9 @@ public class NavigationToolbar extends PlatformBase {
 				driver.get(url);
 				break;
 			}
-			mouseOver(ELEMENT_LINK_SETUP, true);
+			click(ELEMENT_LINK_SETUP);
 			if (waitForAndGetElement(ELEMENT_LINK_IDE, 5000, 0)!= null) {        
-				click(ELEMENT_LINK_IDE, false);
+				waitForAndGetElement(ELEMENT_LINK_IDE,DEFAULT_TIMEOUT,1,2).click();
 				break;
 			}
 			info("Retry...[" + repeat + "]");
@@ -589,11 +589,10 @@ public class NavigationToolbar extends PlatformBase {
 		info("--Go to Create icon --");		
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
-				mouseOverAndClick(ELEMENT_ADD_ICON);
-				info("--Error mouse over and click: can't mouseover, need to use mouse over and click --");
+				click(ELEMENT_ADD_ICON);
 				break;
 			}
-			mouseOver(ELEMENT_ADD_ICON, true);
+			click(ELEMENT_ADD_ICON);
 			if (waitForAndGetElement(ELEMENT_ADD_EVENT_TASK_ICON, 5000, 0) != null){
 				break;
 			}

@@ -121,7 +121,7 @@ public class ContentTemplate extends EcmsBase {
 
 	// File
 	public final By ELEMENT_NEWFILE_LINK = By
-			.xpath("//*[@class='templateLabel']//*[text()='File']");
+			.xpath("//i[@class='uiIcon64x64Templatent_file']");
 	// By.linkText("File");
 	public final By ELEMENT_NEWFILE_NAME_TEXTBOX = By.id("name");
 
@@ -323,8 +323,10 @@ public class ContentTemplate extends EcmsBase {
 		if (cont != "") {
 			if (this.plfVersion.equalsIgnoreCase("4.0"))
 				inputDataToFrame(ELEMENT_WEBCONTENT_CONTENT_FRAME, cont,true);
-			else
-				inputDataToFrame(ELEMENT_WEBCONTENT_CONTENT_FRAME_41, cont,true);
+			else{
+				WebElement frame = (WebElement)((JavascriptExecutor)driver).executeScript("return document.getElementsByClassName('cke_wysiwyg_frame cke_reset')[0]");
+				inputDataToFrame(frame, cont,true);
+			}
 			switchToParentWindow();
 			/*if (this.plfVersion.equalsIgnoreCase("4.1"))
 				inputDataToFrame(ELEMENT_WEBCONTENT_CONTENT_FRAME_41, cont,
@@ -407,15 +409,13 @@ public class ContentTemplate extends EcmsBase {
 		}
 		Utils.pause(300);
 		if (!lines) {
-			if (waitForAndGetElement(ELEMENT_NEWFILE_CONTENT_FRAME, 5000, 0, 2) != null) {
-				inputDataToFrame(ELEMENT_NEWFILE_CONTENT_FRAME, cont, true);
-			} else if (waitForAndGetElement(ELEMENT_NEWFILE_TEXTAREA_ID, 3000,
-					0) != null) {
-				type(ELEMENT_NEWFILE_TEXTAREA_ID, cont, true);
-			} else if (waitForAndGetElement(ELEMENT_NEWFILE_CONTENT_FRAME_41,
-					3000, 0) != null) {
+			if(this.plfVersion.equalsIgnoreCase("4.1"))
 				inputDataToFrame(ELEMENT_NEWFILE_CONTENT_FRAME_41, cont, true);
-			}
+			else if(this.plfVersion.equalsIgnoreCase("4.0"))
+				inputDataToFrame(ELEMENT_NEWFILE_CONTENT_FRAME, cont, true);
+			else
+				type(ELEMENT_NEWFILE_TEXTAREA_ID, cont, true);
+			
 			switchToParentWindow();
 		} else {
 			typeMultiLineInCkeContent(ELEMENT_NEWFILE_CONTENT_FRAME, cont);

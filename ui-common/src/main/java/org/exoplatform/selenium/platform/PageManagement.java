@@ -133,7 +133,7 @@ public class PageManagement extends PlatformBase {
 		//int waitTime = wait.length > 0 ? wait[0] : DEFAULT_TIMEOUT;
 		String pageDeleteIcon = ELEMENT_PAGE_DELETE_ICON.replace("${page}", pageTitle);
 		searchPageInManagementPage(type, pageTitle, true);
-		click(pageDeleteIcon);
+		waitForAndGetElement(pageDeleteIcon).click();
 		Utils.pause(1000);
 		alt.waitForConfirmation(MESSAGE_DELETE_PAGE);
 		//waitForMessage("No result found.",waitTime);

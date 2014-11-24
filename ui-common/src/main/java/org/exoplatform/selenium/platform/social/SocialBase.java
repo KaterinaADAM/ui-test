@@ -188,7 +188,7 @@ public class SocialBase extends PlatformBase {
 
 	// Go to Member tab
 	public void goToMembers(){
-		click(ELEMENT_MEMBERS_TAB);
+		clickByJavascript(ELEMENT_MEMBERS_TAB);
 		waitForAndGetElement(By.id("user"));
 	}
 
@@ -271,18 +271,18 @@ public class SocialBase extends PlatformBase {
 		info("--Go to My Connections--");		
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
-				mouseOverAndClick(ELEMENT_ACCOUNT_NAME_LINK);
+				clickByJavascript(ELEMENT_ACCOUNT_NAME_LINK,2);
 				info("--Error mouse over and click: can't mouseover, need to use mouse over and click --");
 				break;
 			}
-			mouseOver(ELEMENT_ACCOUNT_NAME_LINK, true);
+			clickByJavascript(ELEMENT_ACCOUNT_NAME_LINK,2);
 			if (waitForAndGetElement(ELEMENT_TOOLBAR_NETWORKS_ICON, 5000, 0) != null){
 				info("Element " + ELEMENT_TOOLBAR_NETWORKS_ICON + "... is displayed");
 				break;
 			}
 			info("Retry...[" + repeat + "]");
 		}
-		click(ELEMENT_TOOLBAR_NETWORKS_ICON);
+		clickByJavascript(ELEMENT_TOOLBAR_NETWORKS_ICON);
 		waitForAndGetElement(ELEMENT_MY_CONNECTIONS_TAB);
 	}	
 
@@ -318,7 +318,7 @@ public class SocialBase extends PlatformBase {
 	public void doAction(String action, String spaceName){
 		By actionLink = By.xpath(ELEMENT_ACTION_USER_ON_SPACE.replace("${spaceName}", spaceName).replace("${action}", action));
 		waitForAndGetElement(actionLink, DEFAULT_TIMEOUT,1);
-		click(actionLink);
+		clickByJavascript(actionLink);
 		Utils.pause(1000);
 	}
 

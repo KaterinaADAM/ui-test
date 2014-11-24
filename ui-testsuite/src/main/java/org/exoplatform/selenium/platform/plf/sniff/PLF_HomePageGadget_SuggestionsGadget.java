@@ -59,9 +59,9 @@ public class PLF_HomePageGadget_SuggestionsGadget extends Activity{
 	 * 
 	 * CaseID 70729
 	 * Cancel a people connection
-	 * 
+	 * Bug: https://jira.exoplatform.org/browse/PLF-4496s
 	 */
-	@Test
+	@Test(groups="error")
 	public void test01_NotShowOrAcceptOrCancelSuggestionGadget() { 
 		/*Declare variables*/
 		String user1="FQA VN";
