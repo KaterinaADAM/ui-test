@@ -66,21 +66,17 @@ public class Calendar_Views extends CalendarBase{
 		info("add some events and tasks in Meeting");
 		event.addQuickEvent(event1, event1,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),true,"John Smith","Meeting");
 		task.addQuickTask(task1, task1,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),true,"John Smith","Meeting");
-
 		info("Add event in Calls");
 		event.addQuickEvent(event2, event2,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),true,"John Smith","Calls");
-
 		info("Add event in Client");
 		event.addQuickEvent(event3, event3,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),true,"John Smith","Clients");
-
 		info("Add event in Holiday");
 		event.addQuickEvent(event4, event4,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),true,"John Smith","Holiday");
-
 		info("Add event in Anniversary");
 		event.addQuickEvent(event5, event5,getDate(0,"MM/dd/yyyy"),getDate(0,"MM/dd/yyyy"),true,"John Smith","Anniversary");
-
 		info("Check event displayed in Meeting category");
 		chooseEventCategoryOpt("Meeting");
+		Utils.pause(3000);
 		waitForAndGetElement(ELEMENT_EVENT_TASK_ALL_DAY.replace("${event}",event1));
 		waitForElementNotPresent(ELEMENT_EVENT_TASK_ALL_DAY.replace("${event}",event2));
 		waitForElementNotPresent(ELEMENT_EVENT_TASK_ALL_DAY.replace("${event}",event3));
@@ -90,6 +86,7 @@ public class Calendar_Views extends CalendarBase{
 
 		info("Check event displayed in Anniversary category");
 		chooseEventCategoryOpt("Anniversary");
+		Utils.pause(3000);
 		waitForElementNotPresent(ELEMENT_EVENT_TASK_ALL_DAY.replace("${event}",event1));
 		waitForElementNotPresent(ELEMENT_EVENT_TASK_ALL_DAY.replace("${event}",event2));
 		waitForElementNotPresent(ELEMENT_EVENT_TASK_ALL_DAY.replace("${event}",event3));
@@ -767,11 +764,11 @@ public class Calendar_Views extends CalendarBase{
 		 *Expected Outcome: 
 		- Calendar is displayed with the selected view(day/week/month/list/work week)		*/
 		info("view month");
-		click(ELEMENT_BUTTON_MONTH_VIEW);
+		clickByJavascript(ELEMENT_BUTTON_MONTH_VIEW);
 		waitForAndGetElement(ELEMENT_BUTTON_VIEW_ACTIVE.replace("${view}", "Month"));
 		waitForAndGetElement(EVENT_MONTH_VIEW.replace("${eventTitle}", event1));
 		waitForAndGetElement(EVENT_MONTH_VIEW.replace("${eventTitle}", task1));	
-		click(event.ELEMENT_NEXT_MONTH);
+		clickByJavascript(event.ELEMENT_NEXT_MONTH);
 		waitForElementNotPresent(EVENT_MONTH_VIEW.replace("${eventTitle}",event1));
 		waitForElementNotPresent(EVENT_MONTH_VIEW.replace("${eventTitle}",task1));
 

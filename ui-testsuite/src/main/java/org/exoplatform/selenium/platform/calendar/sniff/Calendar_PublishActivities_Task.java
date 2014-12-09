@@ -92,7 +92,7 @@ public class Calendar_PublishActivities_Task extends CalendarBase{
 		String path = "TestData/Calendar_74741.xml";
 		info("Update activity for event of Space Calendar- event is updated as all day event a space");
 		
-		//Add space
+//		//Add space
 		sp.goToAllSpaces();
 		sp.addNewSpace(space,space,60000);
 		Utils.pause(3000);

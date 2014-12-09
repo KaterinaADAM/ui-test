@@ -146,8 +146,9 @@ public class CalendarBase extends PlatformBase {
 	public String ELEMENT_EVENT_TASK_ALL_DAY_PLF41_DAY_VIEW = ".//*[@id='UIDayView']//div[@class='eventAllDay']//*[contains(@class,'eventContainer asparagus') and contains(.,'${event}')]";
 	//public String ELEMENT_EVENT_TASK_ONE_DAY = "//*[@id='UIWeekViewGrid']//div[contains(text(),'${taskName}')]/parent::div[@class='clearfix']/div[@class='eventContainerBar eventTitle pull-left']";
 	public String ELEMENT_EVENT_TASK_RECURRING_ICON = "//*[@id='UIWeekViewGrid']//*[contains(@startfull,'${date}')]//*[@class='uiIconCalRecurring']";
-	public String ELEMENT_EVENT_TASK_DETAIL_DATE = "//*[@id='UIWeekViewGrid']//*[contains(@startfull,'${date}')]//div[contains(text(),'${taskName}')]";
+	public String ELEMENT_EVENT_TASK_DETAIL_DATE = "//*[@id='UIWeekViewGrid']//*[contains(@startfull,'${date}')]/..//div[contains(text(),'${taskName}')]";
 	public String ELEMENT_EVENT_TASK_DETAIL_ALL_DAY = "//*[@id='UIWeekViewGridAllDay']//*[contains(@starttimefull,'${date}')]//div[contains(text(),'${event}')]";
+	public String ELEMENT_EVENT_TASK_DETAIL_ALL_DAY_41= "//*[contains(@endtimefull,'${date}')]//*[text()='${event}']";
 	public String ELEMENT_EVENT_TASK_ONE_DAY = "//*[@id='UIWeekViewGrid']//div[contains(text(),'${taskName}')]";
 	public String ELEMENT_EVENT_TASK_ONE_DAY_1 = "//*[@id='UIWeekView']//div[contains(text(),'${taskName}')]";
 	public String ELEMENT_EVENT_TASK_WORKING_PANE = "//*[@id='UIWeekViewGrid']//div[@class='eventContainer' and contains(text(),'${event}')]";
@@ -543,7 +544,7 @@ public class CalendarBase extends PlatformBase {
 		info("--Upload Calendar--");
 		WebElement element = waitForAndGetElement(ELEMENT_CAL_IMPORT_SELECT_FILE, DEFAULT_TIMEOUT, 1, 2);
 		((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block';", element);
-		element.sendKeys(Utils.getAbsoluteFilePath(path));
+		uploadFile(Utils.getAbsoluteFilePath(path));
 		String[] links = path.split("/");
 		waitForAndGetElement("//*[text()='"+links[links.length-1]+"']");
 		info("import " + Utils.getAbsoluteFilePath(path));

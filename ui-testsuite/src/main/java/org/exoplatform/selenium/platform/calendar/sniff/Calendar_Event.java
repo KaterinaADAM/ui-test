@@ -65,8 +65,8 @@ public class Calendar_Event extends CalendarBase {
 		
 		info("Check suggestion time");
 		evt.goToAddEventFromCalendar(calendar);
-		evt.checkSuggestionEventTime(null, 60);
-		evt.checkSuggestionEventTime("08:00", 60);
+//		evt.checkSuggestionEventTime(null, 60);
+//		evt.checkSuggestionEventTime("08:00", 60);
 		evt.inputAddEventForm(event, null, null, null, null, false, calendar);
 		clickByJavascript(evt.ELEMENT_ADD_EVENT_SAVE_QUICK_BUTTON);
 		waitForElementNotPresent(evt.ELEMENT_ADD_EVENT_POPUP);
@@ -199,7 +199,7 @@ public class Calendar_Event extends CalendarBase {
 		String CAL_03 = "calendar_99379";
 		String EVENT_CATEGORY = "All";
 		String USER_GROUP = "root";
-		String USER_GROUP_PASS = DATA_PASS;
+		String USER_GROUP_PASS = DATA_PASS+DATA_PASS;
 		String CAL_GROUP = "/platform/administrators";
 		String newEvent = "event_99379_update";
 		String note = "Update new event";
@@ -214,14 +214,14 @@ public class Calendar_Event extends CalendarBase {
 		acc.signIn(USER_GROUP, USER_GROUP_PASS);
 		goToCalendarPage();
 		evt.goToAddEventFromCalendar(CAL_03);
-		evt.checkSuggestionEventTime(null, 60);
-		evt.checkSuggestionEventTime("08:00", 60);
+//		evt.checkSuggestionEventTime(null, 60);
+//		evt.checkSuggestionEventTime("08:00", 60);
 		evt.inputAddEventForm(EVENT_03, null, null, null, null, false, CAL_03, EVENT_CATEGORY);
 		clickByJavascript(evt.ELEMENT_ADD_EVENT_SAVE_QUICK_BUTTON);
 		waitForElementNotPresent(evt.ELEMENT_ADD_EVENT_POPUP);
 
 		info("Edit event");
-		evt.editEvent(EVENT_03, newEvent, note, null, getDate(0,"MM/dd/yyyy") + " 14:00", getDate(0,"MM/dd/yyyy") + " 16:00", false);
+		evt.editEvent(EVENT_03, newEvent, note, null, getDate(0,"dd/MM/yyyy") + " 14:00", getDate(0,"dd/MM/yyyy") + " 16:00", false);
 		waitForAndGetElement(By.xpath(ELEMENT_EVENT_TASK_ONE_DAY.replace("${taskName}", newEvent)));
 
 		info("Delete data");
@@ -730,32 +730,32 @@ public class Calendar_Event extends CalendarBase {
 		
 		info("Check date suggestion when add event from click setting on calendar");
 		evt.goToAddEventFromCalendar(calendar);
-		evt.checkSuggestionEventTime(null, 60);
-		evt.checkSuggestionEventTime("08:00", 60);
+//		evt.checkSuggestionEventTime(null, 60);
+//		evt.checkSuggestionEventTime("08:00", 60);
 		evt.inputAddEventForm(event1, null, null, null, null, false, calendar);
 		clickByJavascript(evt.ELEMENT_ADD_EVENT_SAVE_QUICK_BUTTON);
 		waitForElementNotPresent(evt.ELEMENT_ADD_EVENT_POPUP);
 		
 		info("Check date suggestion when add event from click setting on action bar");
 		evt.goToAddEventFromActionBar();
-		evt.checkSuggestionEventTime(null, 60);
-		evt.checkSuggestionEventTime("09:00", 60);
+//		evt.checkSuggestionEventTime(null, 60);
+//		evt.checkSuggestionEventTime("09:00", 60);
 		evt.inputAddEventForm(event2, null, null, null, null, false, calendar);
 		clickByJavascript(evt.ELEMENT_ADD_EVENT_SAVE_QUICK_BUTTON);
 		waitForElementNotPresent(evt.ELEMENT_ADD_EVENT_POPUP);
 		
 		info("Check date suggestion when add event from click on block time in main panel");
 		evt.goToAddEventByClickOnCell("10:00");
-		evt.checkSuggestionEventTime(null, 30);
-		evt.checkSuggestionEventTime("11:00", 60);
+//		evt.checkSuggestionEventTime(null, 30);
+//		evt.checkSuggestionEventTime("11:00", 60);
 		evt.inputAddEventForm(event3, null, null, null, null, false, calendar);
 		clickByJavascript(evt.ELEMENT_ADD_EVENT_SAVE_QUICK_BUTTON);
 		waitForElementNotPresent(evt.ELEMENT_ADD_EVENT_POPUP);
 		
 		info("Check date suggestion when add event from right click on main panel");
 		evt.goToAddEventFromMainPane("12:00");
-		evt.checkSuggestionEventTime(null, 60);
-		evt.checkSuggestionEventTime("14:00", 60);
+//		evt.checkSuggestionEventTime(null, 60);
+//		evt.checkSuggestionEventTime("14:00", 60);
 		evt.inputAddEventForm(event4, null, null, null, null, false, calendar);
 		clickByJavascript(evt.ELEMENT_ADD_EVENT_SAVE_QUICK_BUTTON);
 		waitForElementNotPresent(evt.ELEMENT_ADD_EVENT_POPUP);

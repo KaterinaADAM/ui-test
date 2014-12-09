@@ -51,8 +51,8 @@ public class Calendar_Calendar extends CalendarBase{
 		String taskName = "task68653";
 		info("Check highlighted mini calendar");
 
-		evt.addQuickEvent(eventName,eventName,getDate(1,"dd/MM/yyyy"),getDate(1,"dd/MM/yyyy"),false);
-		tsk.addQuickTask(taskName,taskName,getDate(2,"dd/MM/yyyy"),getDate(2,"dd/MM/yyyy"),false);
+		evt.addQuickEvent(eventName,eventName,getDate(1,"MM/dd/yyyy"),getDate(1,"MM/dd/yyyy"),false);
+		tsk.addQuickTask(taskName,taskName,getDate(2,"MM/dd/yyyy"),getDate(2,"MM/dd/yyyy"),false);
 		driver.navigate().refresh();
 
 		List <WebElement> highLight = driver.findElements(By.xpath("//td[@class='highLight']"));
@@ -79,7 +79,7 @@ public class Calendar_Calendar extends CalendarBase{
 
 		info("Export/Import calendar");
 		addCalendar(calendar,calendar,null);
-		evt.addQuickEvent(eventName,eventName,getCurrentDate("dd/MM/yyyy"),addMinuteToCurrentDateTime(30),true,calendar);
+		evt.addQuickEvent(eventName,eventName,getCurrentDate("MM/dd/yyyy"),addMinuteToCurrentDateTime(30),true,calendar);
 		exportCalendar(calendar,fileName);
 		deleteCalendar(calendar);
 		importCalendar("TestData/TestOutput/" + fileName,calendar,null,null);

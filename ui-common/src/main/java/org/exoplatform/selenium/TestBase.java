@@ -8,6 +8,7 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -830,6 +831,51 @@ public class TestBase {
 	}
 
 	/**
+	 * Upload file on IE
+	 * @param file: name of file
+	 */
+	 public void uploadFile(String file){
+	 String fs = File.separator;
+	 try {
+	 Process proc=Runtime.getRuntime().exec(Utils.getAbsoluteFilePath("TestData\\uploadFile.exe") + " " + Utils.getAbsoluteFilePath(file.replace("/", fs)));
+	 InputStream is = proc.getInputStream();
+	 int retCode = 0;
+	 while(retCode != -1)
+	 {
+	 retCode = is.read();
+	 if(retCode == -1)
+	 info("Now Exiting");
+	 }
+	 } catch (IOException e) {
+	 // TODO Auto-generated catch block
+	 e.printStackTrace();
+	 }
+	 }
+	
+	 /**
+	 * Download fileon IE
+	 * @param file
+	 */
+	 public void downloadFile(String file){
+	 String download = "TestData\\downloadIE9.exe";
+	 String fs = File.separator;
+	 String pathDownload = Utils.getAbsoluteFilePath(download);
+	 try {
+	 Process proc=Runtime.getRuntime().exec(pathDownload + " " + Utils.getAbsoluteFilePath("TestData" +fs + "TestOutput" + fs + file));
+	 InputStream is = proc.getInputStream();
+	 int retCode = 0;
+	 while(retCode != -1)
+	 {
+	 retCode = is.read();
+	 info("Now Exiting");
+	 }
+	 } catch (IOException e) {
+	 // TODO Auto-generated catch block
+	 e.printStackTrace();
+	 }
+	 }
+	
+	 /**
 	 * @author lientm
 	 * @param fileName
 	 */

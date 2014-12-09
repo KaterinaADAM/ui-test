@@ -231,8 +231,8 @@ public class Calendar_Event_Attachment_Schedule_Participants extends CalendarBas
 	public  void test06_07_CheckAndEditStartendTimeOfEventOnSchedule() {
 		info("Test 6: Check start/end time of event on schedule");
 		String name = "Event109868";
-		String from = getCurrentDate("dd/MM/yyyy");
-		String to = getCurrentDate("dd/MM/yyyy");
+		String from = getCurrentDate("MM/dd/yyyy");
+		String to = getCurrentDate("MM/dd/yyyy");
 		/*Step Number: 12
 		 *Step Name: Step 1: Open add/edit event pop up
 		 *Step 2: Add aprticipant
@@ -255,7 +255,7 @@ public class Calendar_Event_Attachment_Schedule_Participants extends CalendarBas
 
 		event.goToAddEventFromActionBar();
 		event.inputBasicQuickEvent("Event109868", "Event109868");
-		event.inputFromToEvent(getCurrentDate("dd/MM/yyyy"), getCurrentDate("dd/MM/yyyy"),false);
+		event.inputFromToEvent(getCurrentDate("MM/dd/yyyy"), getCurrentDate("MM/dd/yyyy"),false);
 		clickByJavascript(event.ELEMENT_ADD_EVENT_MORE_DETAILS_BUTTON);
 		clickByJavascript(event.ELEMENT_SCHEDULE_TAB);
 		waitForAndGetElement("//td[26]").getAttribute("class").contains("userSelection");
@@ -288,8 +288,8 @@ public class Calendar_Event_Attachment_Schedule_Participants extends CalendarBas
 	public  void test08_CheckBusyTimeOnScheduleTab() {
 		info("Test 3: Check busy time on schedule tab");
 		String name = "Event111862";
-		String from = getCurrentDate("dd/MM/yyyy") + " 09:00";
-		String to = getCurrentDate("dd/MM/yyyy") + " 10:00";
+		String from = getCurrentDate("MM/dd/yyyy") + " 09:00";
+		String to = getCurrentDate("MM/dd/yyyy") + " 10:00";
 		/*Step Number: 12
 		 *Step Name: Step 1: Add new event
 		 *Step 2: Add participant to event
@@ -322,10 +322,10 @@ public class Calendar_Event_Attachment_Schedule_Participants extends CalendarBas
 		event.inputParticipantTab("mary", 2);
 
 		clickByJavascript(event.ELEMENT_SCHEDULE_TAB);
-		Assert.assertTrue(waitForAndGetElement(event.ELEMENT_SCHEDULE_TIME.replace("${user}", "mary").replace("${index}", "38")).getAttribute("class").contains("busyDotTime"), "Wrong busy time");
-		assert waitForAndGetElement(event.ELEMENT_SCHEDULE_TIME.replace("${user}", "mary").replace("${index}", "39")).getAttribute("class").contains("busyDotTime"):"Wrong busy time";
-		assert waitForAndGetElement(event.ELEMENT_SCHEDULE_TIME.replace("${user}", "mary").replace("${index}", "40")).getAttribute("class").contains("busyDotTime"):"Wrong busy time";
-		assert waitForAndGetElement(event.ELEMENT_SCHEDULE_TIME.replace("${user}", "mary").replace("${index}", "41")).getAttribute("class").contains("busyDotTime"):"Wrong busy time";
+		waitForAndGetElement(waitForAndGetElement(event.ELEMENT_SCHEDULE_TIME.replace("${user}", "mary").replace("${index}", "38")).getAttribute("class").contains("busyDotTime"));
+		waitForAndGetElement(event.ELEMENT_SCHEDULE_TIME.replace("${user}", "mary").replace("${index}", "39")).getAttribute("class").contains("busyDotTime");
+		waitForAndGetElement(event.ELEMENT_SCHEDULE_TIME.replace("${user}", "mary").replace("${index}", "40")).getAttribute("class").contains("busyDotTime");
+		waitForAndGetElement(event.ELEMENT_SCHEDULE_TIME.replace("${user}", "mary").replace("${index}", "41")).getAttribute("class").contains("busyDotTime");
 
 		clickByJavascript(event.ELEMENT_ADD_DETAIL_EVENT_CLOSE);
 		acc.userSignIn(userType.PUBLISHER);

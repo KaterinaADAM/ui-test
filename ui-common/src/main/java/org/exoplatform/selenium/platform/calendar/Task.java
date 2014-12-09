@@ -101,7 +101,8 @@ public class Task extends CalendarBase{
 	 */
 	public void goToAddTaskFromActionBar(){
 		info("Go to Add Task page from action bar"); 
-		click(ELEMENT_BUTTON_TASK);
+		clickByJavascript(ELEMENT_BUTTON_TASK);
+		Utils.pause(3000);
 		waitForAndGetElement(ELEMENT_QUICK_ADD_TASK_POPUP);
 	}
 
@@ -236,7 +237,7 @@ public class Task extends CalendarBase{
 				check(ELEMENT_CHECKBOX_TASK_ALLDAY,2);
 				if ((from != null) & (from != ""))
 					type(ELEMENT_INPUT_TASK_FROM, from, true);
-				check(ELEMENT_CHECKBOX_TASK_ALLDAY,2);
+					check(ELEMENT_CHECKBOX_TASK_ALLDAY,2);
 				if ((to != null) & (to != ""))
 					type(ELEMENT_INPUT_TASK_TO, to, true);
 

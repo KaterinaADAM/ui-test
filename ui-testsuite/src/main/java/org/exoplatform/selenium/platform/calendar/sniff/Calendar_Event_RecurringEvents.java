@@ -223,7 +223,7 @@ public class Calendar_Event_RecurringEvents extends CalendarBase {
 		goToCalendarPage();
 		evt.goToAddEventFromActionBar();
 		evt.inputBasicQuickEvent(name, description);
-		evt.inputFromToEvent(getDate(0,"dd/MM/yyyy"), getDate(0,"dd/MM/yyyy"), true);
+		evt.inputFromToEvent(getDate(0,"dd/MM/yyyy"), getDate(0,"dd/MM/yyyy"), false);
 		clickByJavascript(evt.ELEMENT_BUTTON_EVENT_MORE_DETAILS);
 		Utils.pause(1000);
 		check(evt.ELEMENT_IS_REPEAT_CHECKBOX,2);
@@ -279,8 +279,7 @@ public class Calendar_Event_RecurringEvents extends CalendarBase {
 		
 		/*Clear data*/
 		info("Clear data");
-		evt.deleteRecurringEvent(name, selectDayOption.ALLDAY, recurringType.ALL_EVENT,getDate(1, "MMM dd yyyy"));
-		evt.deleteRecurringEvent(newName, selectDayOption.ALLDAY);
+		evt.deleteRecurringEvent(newName, selectDayOption.ALLDAY, recurringType.ALL_EVENT,getDate(0, "dd yyyy"));
 	}
 
 	/**
@@ -505,7 +504,7 @@ public class Calendar_Event_RecurringEvents extends CalendarBase {
 //		assert evt.verifyEventInWeekView(name, getDate(4, "MMM dd yyyy"), selectDayOption.ONEDAY);
 		/*Clear data*/
 		info("Clear data");
-		evt.deleteRecurringEvent(name, selectDayOption.ONEDAY, recurringType.ALL_EVENT,getDate(1, "MMM dd yyyy"));
+		evt.deleteRecurringEvent(name, selectDayOption.ONEDAY, recurringType.ALL_EVENT,getDate(1, "dd yyyy"));
 	}
 
 	/**
@@ -535,7 +534,7 @@ public class Calendar_Event_RecurringEvents extends CalendarBase {
 		goToCalendarPage();
 		evt.goToAddEventFromActionBar();
 		evt.inputBasicQuickEvent(name, description);
-		evt.inputFromToEvent(getDate(0,"dd/MM/yyyy"), getDate(0,"dd/MM/yyyy"), true);
+		evt.inputFromToEvent(getDate(0,"dd/MM/yyyy"), getDate(0,"dd/MM/yyyy"), false);
 		clickByJavascript(evt.ELEMENT_BUTTON_EVENT_MORE_DETAILS);
 		Utils.pause(1000);
 		check(evt.ELEMENT_IS_REPEAT_CHECKBOX,2);
@@ -593,8 +592,8 @@ public class Calendar_Event_RecurringEvents extends CalendarBase {
 		
 		/*Clear data*/
 		info("Clear data");
-		evt.deleteRecurringEvent(name, selectDayOption.ALLDAY, recurringType.ALL_EVENT,getDate(0, "MMM dd yyyy"));
-		evt.deleteRecurringEvent(newName, selectDayOption.ALLDAY, recurringType.ALL_EVENT,getDate(2, "MMM dd yyyy"));
+//		evt.deleteRecurringEvent(name, selectDayOption.ALLDAY, recurringType.ALL_EVENT,getDate(0, "dd yyyy"));
+		evt.deleteRecurringEvent(newName, selectDayOption.ALLDAY, recurringType.ALL_EVENT,getDate(0, "dd yyyy"));
 	}
 
 	/**
@@ -624,7 +623,7 @@ public class Calendar_Event_RecurringEvents extends CalendarBase {
 		goToCalendarPage();
 		evt.goToAddEventFromActionBar();
 		evt.inputBasicQuickEvent(name, description);
-		evt.inputFromToEvent(getDate(0,"dd/MM/yyyy"), getDate(0,"dd/MM/yyyy"), true);
+		evt.inputFromToEvent(getDate(0,"dd/MM/yyyy"), getDate(0,"dd/MM/yyyy"), false);
 		clickByJavascript(evt.ELEMENT_BUTTON_EVENT_MORE_DETAILS);
 		Utils.pause(1000);
 		check(evt.ELEMENT_IS_REPEAT_CHECKBOX,2);
@@ -684,7 +683,7 @@ public class Calendar_Event_RecurringEvents extends CalendarBase {
 		
 		/*Clear data*/
 		info("Clear data");
-		evt.deleteRecurringEvent(newName, selectDayOption.ALLDAY, recurringType.ALL_EVENT,getDate(2, "MMM dd yyyy"));
+		evt.deleteRecurringEvent(newName, selectDayOption.ALLDAY, recurringType.ALL_EVENT,getDate(2, "dd yyyy"));
 	}
 
 	/**

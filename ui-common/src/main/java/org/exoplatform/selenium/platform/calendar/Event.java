@@ -26,7 +26,7 @@ public class Event extends CalendarBase{
 	//--------------------Event basic actions------------------------
 	public By ELEMENT_INPUT_EVENT_TITLE = By.cssSelector("#eventName");
 	public By ELEMENT_INPUT_EVENT_DESCRIPTION = By.cssSelector("#description");
-	public By ELEMENT_CHECKBOX_EVENT_ALLDAY = By.cssSelector("#allDay");
+	public By ELEMENT_CHECKBOX_EVENT_ALLDAY = By.xpath("//*[@id='UIQuickAddEvent']//*[@name='allDay']");
 	public By ELEMENT_INPUT_EVENT_FROM = By.name("from");
 	public By ELEMENT_INPUT_EVENT_TO = By.name("to");
 	public By ELEMENT_INPUT_ADD_QUICK_EVENT_FROM = By.xpath("//form[@id='UIQuickAddEvent']//*[@name='from']");
@@ -193,12 +193,23 @@ public class Event extends CalendarBase{
 	 * @param time: format 12:00
 	 */
 	public void goToAddEventFromMainPane(String time){
-		String current = getCurrentDate("MMM dd yyyy");
+		String current = getDate(2, "MMM dd yyyy HH:00");
 		info("Current date is " + current);
+		if(getHours() <= 10)
+		{
+			String cell = "//td[contains(@startfull,'" + current + "')]";
+			rightClickOnElement(cell);
+			click(ELEMENT_RIGHT_CLICK_ADD_EVENT, 2);
+		}
+		else 
+		{
+			String cell = "//td[contains(@startfull,'" + current + "')]";
+			rightClickOnElement(cell);
+			click(ELEMENT_RIGHT_CLICK_ADD_EVENT, 2);
+		}
 
-		String cell = "//td[contains(@startfull,'" + current + " " + time + ":00')]";
-		rightClickOnElement(cell);
-		clickByJavascript(ELEMENT_RIGHT_CLICK_ADD_EVENT, 2);
+
+		Utils.pause(2000);
 		waitForAndGetElement(ELEMENT_ADD_EVENT_POPUP);
 	}
 
@@ -207,14 +218,17 @@ public class Event extends CalendarBase{
 	 * @param time
 	 */
 	public void goToAddEventByClickOnCell(String time){
-		String current = getCurrentDate("MMM dd yyyy");
+		String current = getDate(1, "MMM dd yyyy HH:00");
+		
 		info("Current date is " + current);
 		for (int i = 0; i < 5; i ++){
 			if (waitForAndGetElement(ELEMENT_ADD_EVENT_POPUP, 5000, 0) == null){
-				clickByJavascript("//td[contains(@startfull,'" + current + " " + time + ":00')]", 2);
+				info("//td[contains(@startfull,'" + current + "')]");
+				click("//td[contains(@startfull,'" + current + "')]");
 				info("Repeat " + i);
 			}
 		}
+		Utils.pause(2000);
 		waitForAndGetElement(ELEMENT_ADD_EVENT_POPUP);
 	}
 
@@ -293,9 +307,9 @@ public class Event extends CalendarBase{
 		boolean quick = (waitForAndGetElement(ELEMENT_ADD_EVENT_POPUP,5000,0) != null) ? true : false; 
 		if(quick){
 			if(allDay){
-				check(ELEMENT_CHECKBOX_EVENT_ALLDAY,2);
 				if((from != "") & (from != null))
 					type(ELEMENT_INPUT_EVENT_FROM, from, true);
+					check(ELEMENT_CHECKBOX_EVENT_ALLDAY,2);
 				if((to != null) & (to != ""))
 					type(ELEMENT_INPUT_EVENT_TO, to, true);
 			}
@@ -380,7 +394,7 @@ public class Event extends CalendarBase{
 			String path = Utils.getAbsoluteFilePath(opt[0]);
 			((JavascriptExecutor)driver).executeScript("arguments[0].style.display='block';",upload);
 			Utils.pause(5000);
-			upload.sendKeys(path);
+			uploadFile(opt[0]);
 			String[] links = opt[0].split("/");
 			waitForAndGetElement(ELEMENT_ATTACH_FILE_LABEL.replace("${file}", links[links.length - 1]),60000);
 			clickByJavascript(ELEMENT_ATTACH_FILE_SAVE_BUTTON);
@@ -578,7 +592,7 @@ public class Event extends CalendarBase{
 		goToAddEventFromActionBar();
 		inputBasicQuickEvent(name, description, opt);
 		inputFromToEvent(from, to, allDay);
-		click(By.xpath("//*[text()='Save']"));
+		clickByJavascript(By.xpath("//*[@id='UIQuickAddEventPopupWindow']//*[text()='Save']"));
 		Utils.pause(3000);
 		waitForElementNotPresent(ELEMENT_ADD_EVENT_POPUP);
 		Utils.pause(1000);
@@ -671,7 +685,7 @@ public class Event extends CalendarBase{
 			}
 			else{ //this.plfVersion.contains("4.1")
 				if(dateTime!="")
-					rightClickOnElement(By.xpath(ELEMENT_EVENT_TASK_DETAIL_ALL_DAY.replace("${event}", event).replace("${date}", dateTime)),2);
+					rightClickOnElement(By.xpath(ELEMENT_EVENT_TASK_DETAIL_ALL_DAY_41.replace("${event}", event).replace("${date}", dateTime)),2);
 				else{
 					if(waitForAndGetElement(ELEMENT_EVENT_TASK_ALL_DAY_PLF41.replace("${event}", event), 5000, 0) == null){
 						rightClickOnElement(ELEMENT_EVENT_TASK_WORKING_PANE_PLF41.replace("${event}", event),2);
