@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Platform Acceptance Test" verbose="1" preserve-order="true">
+	<test name="document preview testing" enabled="true"
+		preserve-order="true">
+		<groups>
+			<run>
+				<exclude name="pending" />
+			</run>
+		</groups>
+		<classes>
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_TestConfig" />
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_Media_VideoTag" />
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_Media_FlowPlayer" />
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_Media_FlashPlayer" />
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_Media_WindowMediaPlayer" />
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_Media_Others" />
+		</classes>
+	</test>
+	<listeners>
+		<listener class-name="org.exoplatform.selenium.TestReportListener" />
+	</listeners>
+</suite>

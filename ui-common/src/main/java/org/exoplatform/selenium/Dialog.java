@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
  * This class provides simple way to manage basic modal dialogs 
  * by specifying a message, a title, an icon, and a message type 
  * or a type of option
- * @Date January, 30th, 2013
+ * Date January, 30th, 2013
  *
  */
 public class Dialog extends TestBase{
@@ -52,8 +52,9 @@ public class Dialog extends TestBase{
 	 * Click button Delete in Dialog
 	 */
 	public void deleteInDialog(){
-		waitForAndGetElement(ELEMENT_DELETE_IN_DIALOG);
-		click(ELEMENT_DELETE_IN_DIALOG);
-		Utils.pause(3000);
+		if (waitForAndGetElement(ELEMENT_DELETE_IN_DIALOG, 3000, 0) != null) {
+			click(ELEMENT_DELETE_IN_DIALOG);
+			Utils.pause(3000);
+		}
 	}
 }

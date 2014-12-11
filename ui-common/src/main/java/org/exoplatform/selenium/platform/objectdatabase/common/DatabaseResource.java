@@ -1,7 +1,5 @@
 package org.exoplatform.selenium.platform.objectdatabase.common;
 
-import org.exoplatform.selenium.Utils;
-
 public class DatabaseResource {
 	public static String[][] getDataFromSource(String userDataFile, String userSheet, Object... opParams) throws Exception{
 		Boolean isUseFile = (Boolean)(opParams.length > 0 ? opParams[0]: true);
@@ -12,7 +10,7 @@ public class DatabaseResource {
 		String sqlDb = (String)(opParams.length > 5 ? opParams[5]: "");
 		String[][] arrayData = null;
 		if(isUseFile){
-			ExcelUtils.setExcelFile(Utils.getAbsoluteFilePath(userDataFile),userSheet);
+			ExcelUtils.setExcelFile(userDataFile,userSheet);
 			arrayData = ExcelUtils.getData();
 		}
 		else{

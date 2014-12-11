@@ -8,7 +8,7 @@ import org.testng.Assert;
 
 /**
  * This class provides simple way to manage all type of Alert in PLF4
- * @Date January, 30th, 2013
+ * Date January, 30th, 2013
  *
  */
 public class ManageAlert extends TestBase{

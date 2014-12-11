@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 /**
  * This class provides simple way to manage all type of buttons in PLF4
- * @Date January, 30th, 2013
+ * Date January, 30th, 2013
  *
  */
 public class Button extends TestBase{

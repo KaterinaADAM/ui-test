@@ -48,7 +48,7 @@ public class Wiki_BasicAction_ManagePage extends PlatformBase{
 	@BeforeTest
 	public void setUpBeforeTest() throws Exception{
 		initSeleniumTest();
-		getDefaultUserPass(texboxFilePath,defaultSheet,false,jdbcDriver,dbUrl,user,pass,sqlUser);
+		getDefaultUserPass(userDataFilePath,defaultSheet,true,jdbcDriver,dbUrl,user,pass,sqlUser);
 		driver.get(baseUrl);
 		magAc = new ManageAccount(driver);
 		but = new Button(driver);

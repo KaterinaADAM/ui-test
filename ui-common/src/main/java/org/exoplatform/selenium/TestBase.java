@@ -4,17 +4,12 @@ import static org.exoplatform.selenium.TestLogger.debug;
 import static org.exoplatform.selenium.TestLogger.info;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.apache.commons.io.FileUtils;
-import org.exoplatform.selenium.platform.ManageAccount;
+import org.exoplatform.selenium.platform.ManageLogInOut;
+import org.exoplatform.selenium.platform.ecms.ContextMenu;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -70,10 +65,19 @@ public class TestBase {
 	protected String userDataFilePath;
 	protected String wikiRichTextFilePath;
 	protected String attachmentFilePath;
+	protected String videoLinksFilePath;
 	protected String texboxFilePath;
 	protected String wikiTemplateFilePath;
 	protected String spaceVisibleFilePath;
 	protected String spaceRegistrationFilePath;
+
+	protected String siteExpDrivePath;
+	protected String siteExpPathPath;
+	protected String dataTestFilePath;
+	protected String previewContentFilePath;
+	protected String previewTextSearchPath;
+	protected String previewMesgSearchPath;
+
 
 	/*========Default System Property=============*/
 	public final String DEFAULT_BASEURL="http://localhost:8080/portal";
@@ -93,11 +97,19 @@ public class TestBase {
 	public final String DEFAULT_SHEET="sheet1";
 	public final String DEFAULT_USERFILEURL="DataDriven/" + "user.xls";
 	public final String DEFAULT_ATTACHMENTFILEURL="DataDriven/" + "attachment_file.xls";
+	public final String DEFAULT_VIDEOLINKSFILEURL="DataDriven/" + "video_links_file.xls";
 	public final String DEFAULT_TEXTBOXFILEURL="DataDriven/" + "textbox.xls";
 	public final String DEFAULT_WIKITEMPLATEFILEURL="DataDriven/" + "wiki_template.xls";
 	public final String DEFAULT_SPACEVISIBLEFILEURL="DataDriven/" + "space_visibility.xls";
 	public final String DEFAULT_SPACEREGISTRATIONFILEURL="DataDriven/" + "space_registration.xls";
 	public final String DEFAULT_WIKIRICHTEXTFILEURL="DataDriven/" + "wiki_richtext.xls";
+
+	public final String DEFAULT_SITEEXPLORERDRIVE="DataDriven/" + "SE_drive.xls";
+	public final String DEFAULT_SITEEXPLORERPATH="DataDriven/" + "SE_path.xls";
+	public final String DEFAULT_DATATESTPATH="DataDriven/" + "DataTest_Path.xls";
+	public final String DEFAULT_PREVIEWCONTENTFILEPATH="DataDriven/" + "preview_content_file.xls";
+	public final String DEFAULT_PREVIEWMESSAGESEARCHPATH="DataDriven/" + "preview_message_search.xls";
+	public final String DEFAULT_PREVIEWTEXTSEARCHPATH="DataDriven/" + "preview_text_search.xls";
 
 	/*======= Welcome Screen (Term and Conditions) =====*/
 	public final By ELEMENT_FIRSTNAME_ACCOUNT = By.name("firstNameAccount");
@@ -126,6 +138,7 @@ public class TestBase {
 	public final By ELEMENT_ADMIN_PASS_LABEL = By.xpath("//h5[contains(text(), 'Admin Password')]");
 	public final By ELEMENT_ACCOUNT_ERROR = By.xpath("//*[@class='accountSetupError']");
 
+	public final String DATA_MESSAGE_CONFIRM_DELETE_COMMENT = "Are you sure you want to delete this comment?";
 	/*======== End of Term and conditions =====*/	
 	/**
 	 * Get System Property
@@ -146,10 +159,18 @@ public class TestBase {
 		userDataFilePath = System.getProperty("userDataFilePath");
 		wikiRichTextFilePath = System.getProperty("wikiRichTextFilePath");
 		attachmentFilePath = System.getProperty("attachmentFilePath");
+		videoLinksFilePath = System.getProperty("videoLinksFilePath");
 		texboxFilePath = System.getProperty("texboxFilePath");
 		wikiTemplateFilePath = System.getProperty("wikiTemplateFilePath");
 		spaceVisibleFilePath = System.getProperty("spaceVisibleFilePath");
 		spaceRegistrationFilePath = System.getProperty("spaceRegistrationFilePath");
+
+		siteExpDrivePath=System.getProperty("siteExpDrivePath");
+		siteExpPathPath=System.getProperty("siteExpPathPath");
+		dataTestFilePath = System.getProperty("dataTestPath");
+		previewContentFilePath= System.getProperty("previewContentFilePath");
+		previewTextSearchPath= System.getProperty("previewTextSearchPath");
+		previewMesgSearchPath= System.getProperty("previewMesgSearchPath");
 
 		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
 
@@ -170,10 +191,33 @@ public class TestBase {
 		if (userDataFilePath==null) userDataFilePath = DEFAULT_USERFILEURL;
 		if (wikiRichTextFilePath==null) wikiRichTextFilePath = DEFAULT_WIKIRICHTEXTFILEURL;
 		if (attachmentFilePath==null) attachmentFilePath = DEFAULT_ATTACHMENTFILEURL;
+		if (videoLinksFilePath==null)videoLinksFilePath = DEFAULT_VIDEOLINKSFILEURL;
 		if (wikiTemplateFilePath==null) wikiTemplateFilePath = DEFAULT_WIKITEMPLATEFILEURL;
 		if (texboxFilePath==null) texboxFilePath = DEFAULT_TEXTBOXFILEURL;
 		if (spaceVisibleFilePath==null) spaceVisibleFilePath = DEFAULT_SPACEVISIBLEFILEURL;
 		if (spaceRegistrationFilePath==null) spaceRegistrationFilePath = DEFAULT_SPACEREGISTRATIONFILEURL;
+
+		if (siteExpDrivePath==null) siteExpDrivePath = DEFAULT_SITEEXPLORERDRIVE;
+		if (siteExpPathPath==null) siteExpPathPath = DEFAULT_SITEEXPLORERPATH;
+		if (dataTestFilePath==null) dataTestFilePath = DEFAULT_DATATESTPATH;
+		if (previewContentFilePath==null) previewContentFilePath = DEFAULT_PREVIEWCONTENTFILEPATH;
+		if (previewTextSearchPath==null) previewTextSearchPath = DEFAULT_PREVIEWTEXTSEARCHPATH;
+		if (previewMesgSearchPath==null) previewMesgSearchPath = DEFAULT_PREVIEWMESSAGESEARCHPATH;
+		
+		userDataFilePath = getAbsoluteFilePath(userDataFilePath);
+		wikiRichTextFilePath = getAbsoluteFilePath(wikiRichTextFilePath);
+		attachmentFilePath = getAbsoluteFilePath(attachmentFilePath);
+		texboxFilePath = getAbsoluteFilePath(texboxFilePath);
+		wikiTemplateFilePath = getAbsoluteFilePath(wikiTemplateFilePath);
+		spaceVisibleFilePath = getAbsoluteFilePath(spaceVisibleFilePath);
+		spaceRegistrationFilePath = getAbsoluteFilePath(spaceRegistrationFilePath);
+		dataTestFilePath = getAbsoluteFilePath(dataTestFilePath);
+		previewContentFilePath = getAbsoluteFilePath(previewContentFilePath);
+		videoLinksFilePath = getAbsoluteFilePath(videoLinksFilePath);
+		siteExpDrivePath = getAbsoluteFilePath(siteExpDrivePath);
+		siteExpPathPath = getAbsoluteFilePath(siteExpPathPath);
+		previewMesgSearchPath = getAbsoluteFilePath(previewMesgSearchPath);
+		previewTextSearchPath = getAbsoluteFilePath(previewTextSearchPath);
 	}
 
 	public void initSeleniumTestWithOutTermAndCondition(Object... opParams){
@@ -195,6 +239,19 @@ public class TestBase {
 		getSystemProperty();
 		action = new Actions(driver);
 	}
+	
+	/**
+	 * This function returns a absolute path from a relative path
+	 * @param relativeFilePath
+	 * @return - FQA-2092: Run and check calendar sniff on IE and FF
+	 */
+	public String getAbsoluteFilePath(String relativeFilePath){
+		String fs = File.separator;
+		String curDir = System.getProperty("user.dir");
+		String absolutePath = curDir + "/src/main/resources/" + relativeFilePath;
+		absolutePath=absolutePath.replace("/", fs);
+		return absolutePath;
+	}
 
 	public void initSeleniumTest(Object... opParams){
 		initSeleniumTestWithOutTermAndCondition();
@@ -211,7 +268,7 @@ public class TestBase {
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
 			Utils.pause(2000);
-			ManageAccount acc = new ManageAccount(driver);
+			ManageLogInOut acc = new ManageLogInOut(this.driver);
 			acc.signOut();
 			firstTimeLogin=false;
 			checkPLFVersion();
@@ -263,8 +320,8 @@ public class TestBase {
 				info("Platform version 4.1.x");
 			}
 		}catch(Exception e){
-			info("Unknown platform version. Set to default version 4.0.x.");
-			this.plfVersion="4.0";
+			info("Unknown platform version. Set to default version 4.1.x.");
+			this.plfVersion="4.1.x";
 		}
 
 	}
@@ -364,18 +421,23 @@ public class TestBase {
 		for (int tick = 0; tick < timeout/WAIT_INTERVAL; tick++) {
 			if (notDisplayE == 2){
 				elem = getElement(locator,wDriver);
-				//elem = getDisplayedElement(locator);
 			}else{
 				elem = getDisplayedElement(locator,wDriver);
 			}
-			if (null != elem) return elem;
+			
+			if (null != elem)
+			    return elem;
 			Utils.pause(WAIT_INTERVAL);
+			
 		}
 		if (isAssert == 1)
-			assert false: ("Timeout after " + timeout + "ms waiting for element present: " + locator);
-		info("cannot find element after " + timeout/1000 + "s.");
+			assert false : ("Timeout after " + timeout
+					+ "ms waiting for element present: " + locator);
+		info("cannot find element after " + timeout / 1000 + "s.");
+		
 		return null;
 	}
+	
 
 	/**
 	 * Get element
@@ -699,7 +761,7 @@ public class TestBase {
 			loopCount = 0;
 		}
 	}
-	public void rightClickOnElement(Object locator, int...opParams) {
+	public ContextMenu rightClickOnElement(Object locator, int...opParams) {
 		int display = opParams.length > 0 ? opParams[0]: 0;
 		Actions actions = new Actions(driver);
 		Utils.pause(500);
@@ -717,22 +779,9 @@ public class TestBase {
 		} finally {
 			loopCount = 0;
 		}
+		return new ContextMenu(driver,this.plfVersion);
 	}
 
-	//doubleClickOnElement
-	public void doubleClickOnElement(Object locator) {
-		Actions actions = new Actions(driver);
-		try {
-			WebElement element = waitForAndGetElement(locator);
-			actions.doubleClick(element).perform();
-		} catch (StaleElementReferenceException e) {
-			checkCycling(e, 5);
-			Utils.pause(1000);
-			doubleClickOnElement(locator);
-		} finally {
-			loopCount = 0;
-		}
-	}
 
 	public void checkCycling(Exception e, int loopCountAllowed) {
 		info("Exception:" + e.getClass().getName());
@@ -743,7 +792,9 @@ public class TestBase {
 		loopCount++;
 	}
 
-	//function to switch to parent windows
+	/**
+	 * function to switch to parent windows
+	 */
 	public void switchToParentWindow (){
 		try
 		{
@@ -783,239 +834,55 @@ public class TestBase {
 		return bool;
 	}
 
-	/** function: set driver to auto save file to TestData/TestOutput
-
-	 */
-	public void getDriverAutoSave(){
-		String pathFile = System.getProperty("user.dir") + "/src/main/resources/TestData/TestOutput";
-
-		FirefoxProfile fp = new FirefoxProfile();	
-
-		info("Save file to " + pathFile);
-		fp.setPreference("browser.download.manager.showWhenStarting", false);
-		fp.setPreference("browser.download.dir", pathFile);
-		fp.setPreference("browser.download.folderList", 2);
-		fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-xpinstall;" +
-				"application/x-zip;application/x-zip-compressed;application/x-winzip;application/zip;" +
-				"gzip/document;multipart/x-zip;application/x-gunzip;application/x-gzip;application/x-gzip-compressed;" +
-				"application/x-bzip;application/gzipped;application/gzip-compressed;application/gzip" +
-				"application/octet-stream" +
-				";application/pdf;application/msword;text/plain;" +
-				"application/octet;text/calendar;text/x-vcalendar;text/Calendar;" +
-				"text/x-vCalendar;image/jpeg;image/jpg;image/jp_;application/jpg;" +
-				"application/x-jpg;image/pjpeg;image/pipeg;image/vnd.swiftview-jpeg;image/x-xbitmap;image/png;application/xml;text/xml;text/icalendar;");
-
-		fp.setPreference("plugin.disable_full_page_plugin_for_types", "application/pdf");
-		fp.setPreference("pref.downloads.disable_button.edit_actions", true);
-		fp.setPreference("pdfjs.disabled", true); 
-		fp.setPreference("browser.helperApps.alwaysAsk.force", false);
-		driver = new FirefoxDriver(fp);
-		getSystemProperty();
-		action = new Actions(driver);
-		termsAndConditions();
-		checkPLFVersion();
-	}
-
-	/**function set driver to auto open new window when click link
-	 */
-	public void getDriverAutoOpenWindow(){
-		FirefoxProfile fp = new FirefoxProfile();		
-		fp.setPreference("browser.link.open_newwindow.restriction", 2);
-		driver = new FirefoxDriver(fp);
-		baseUrl = System.getProperty("baseUrl");
-		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
-		action = new Actions(driver);
-		termsAndConditions();
-		checkPLFVersion();
-	}
-
-	/**
-	 * function: check a file existed in folder
-	 * @param file: file name (eg: export.zip)
-	 * @return: true -> file exist
-	 * false-> file is not exist
-	 */
-	public boolean checkFileExisted(String file){
-		String pathFile = System.getProperty("user.dir") + "/src/main/resources/TestData/" + file;
-		boolean found = false;
-
-		if (new File(pathFile).isFile()){
-			found = true;
-		}
-		info("File exists: " + file + " is " + found);
-		return found;
-	}
-
-	/**
-	 * function delete file in folder test output
-	 * @param file: file name
-	 */
-	public void deleteFile(String file){
-		String pathFile = System.getProperty("user.dir") + "/src/main/resources/TestData/" + file;
-		File Files = new File(pathFile);
-		if(checkFileExisted(file)){
-			Files.setWritable(true);
-			Files.delete();
-		}
-		if (checkFileExisted(file) == false){
-			info("Delete file successfully");
-		}else info("Have error when delete file");
-	}
-
-	/**
-	 * @param fileName
-	 */
-	public void cutPasteFileFromOutputToTestData(String fileName){
-		String source = System.getProperty("user.dir") + "/src/main/resources/TestData/TestOutput/" + fileName;
-		//directory where file will be copied
-		String target = System.getProperty("user.dir") + "/src/main/resources/TestData/";
-
-		//name of source file
-		File sourceFile = new File(source);
-		String name = sourceFile.getName();
-
-		File targetFile = new File(target+name);
-
-		//copy file from one location to other
-		try {
-			FileUtils.copyFile(sourceFile, targetFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//delete file in TestOutput
-		deleteFile("TestOutput/" + fileName);
-	}
-
 	public enum Language{
 		en, fr, vi, lo;
 	}
 
-	public void getDriverSetLanguage(Language language){
-		String locale = language.toString();
-		FirefoxProfile profile = new FirefoxProfile();
-		profile.setPreference("intl.accept_languages", locale);
-		driver = new FirefoxDriver(profile);
-		baseUrl = System.getProperty("baseUrl");
-		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
-		action = new Actions(driver);
-		termsAndConditions();
-	}
-
 	/**
-	 * function get current Date of system follow a format
-	 * @param fomat
-	 * @return
+	 * @param object
+	 * @param classElement
+	 * @return = true: if there is not scroll bar on element
+	 *         = false: if there is scroll bar on element
 	 */
-	public String getCurrentDate(String format){
-		DateFormat dateFormat = new SimpleDateFormat(format);
-		Date date = new Date(); 
-		return (dateFormat.format(date));
+	public boolean checkExitScrollBar(By object){
+		/*WebElement element = waitForAndGetElement(object);
+		 JavascriptExecutor jse = (JavascriptExecutor) driver;
+		String scrollTopMax = String.valueOf(jse.executeScript("return arguments[0].scrollTopMax;", element));
+		info("scrollTopMax: " + scrollTopMax);
+		int scroTopMax = Integer.parseInt(scrollTopMax);
+		return scroTopMax>0;*/
+		WebElement element = waitForAndGetElement(object);
+		String scrollHeight = String.valueOf(((JavascriptExecutor)driver).executeScript("return arguments[0].scrollHeight;", element));
+		String offsetHeight = String.valueOf(((JavascriptExecutor)driver).executeScript("return arguments[0].offsetHeight;", element));
+		info("scrollHeight: " + scrollHeight);
+		info("offsetHeight: " + offsetHeight);
+		int scroll = Integer.parseInt(scrollHeight);
+		int offset = Integer.parseInt(offsetHeight);
+		return scroll==offset;
 	}
-
-	//Add 1 minute to current date time
-	public String addMinuteToCurrentDateTime(int min, String...format){
-		DateFormat dateFormat = format.length > 0 ? new SimpleDateFormat(format[0]) : new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.MINUTE, min);
-		return (dateFormat.format(cal.getTime()));	
-	}
-
-	/** Get date in format "dd"
-	 * @param gap: distance from current date
-	 * @return date in format "dd"
-	 */
-	public String getDate(int gap, String format){
-		DateFormat dateFormat = new SimpleDateFormat(format);
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, gap);
-		return (dateFormat.format(cal.getTime()));	
-	}
-
-	/** Get day of week
-	 * @param gap: distance from current date
-	 * @return day of week (monday, tuesday,..., sunday)
-	 */
-	public int getDayOfWeek(int gap){
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, gap);
-		return cal.get(Calendar.DAY_OF_WEEK);
-	}
-
+	
 	/**
-	 * Get minute in format "mm" from current date
-	 * @return minute
-	 * 
+	 *  doubleClickOnElement
+	 * @param locator
 	 */
-	public int getMinute(){
-		Date date = new Date();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date); 
-		int minute = cal.get(Calendar.MINUTE);
-		return (minute); 
-	}
-
-	/**
-	 * Change attribute "display" of HTML tag from "none" to "block" 
-	 */
-	public void changeDisplayAttributeHTML(String locator){
-		WebElement element = waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, 2);
-		((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block';",element);	
-	}
-
-
-
-	public void setPreferenceRunTime(){
-		FirefoxProfile fp = new FirefoxProfile();
-
-		fp.setPreference("dom.max_script_run_time", 30);
-	}
-
-	/**
-	 * Mouse hover by Javascript
-	 * @date 06-Nov-2013
-	 * @param 
-	 */
-	public void mouseHoverByJavaScript(WebElement targetElement)
-	{
-		String argu1 = "var evObj = document.createEvent('MouseEvents');";
-		String argu2 = "evObj.initMouseEvent('mouseover',true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);";
-		String argu3 =  "arguments[0].dispatchEvent(evObj);";
-		String javascript = argu1 + argu2 + argu3;
-		((JavascriptExecutor)driver).executeScript(javascript, targetElement);
-	}
-
-	/** change lanugage of browser
-	 * @param language
-	 * English: "en"
-	 * French: "fr"
-	 */
-	public void initFFBrowserWithSetLanguageBrowser(String language){
-		FirefoxProfile profile = new FirefoxProfile();
-		profile.setPreference("intl.accept_languages",language);   
-		driver = new FirefoxDriver(profile);
-		baseUrl = System.getProperty("baseUrl");
-		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
-		action = new Actions(driver);
-	}
-
-	/**
-	 * get random string
-	 * @return
-	 */
-	public String getRandomString(){
-		char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-		StringBuilder sb = new StringBuilder();
-		Random random = new Random();
-		for (int i = 0; i < 6; i++) {
-			char c = chars[random.nextInt(chars.length)];
-			sb.append(c);
+	public void doubleClickOnElement(Object locator) {
+		Actions actions = new Actions(driver);
+		try {
+			WebElement element = waitForAndGetElement(locator);
+			actions.doubleClick(element).perform();
+		} catch (StaleElementReferenceException e) {
+			checkCycling(e, 5);
+			Utils.pause(1000);
+			doubleClickOnElement(locator);
+		} finally {
+			loopCount = 0;
 		}
-		return sb.toString();
 	}
-
+	
 	/**
-	 * get a list of random numbers
-	 * @return
+	 * get a list of random numbers author quynhpt
+	 * 
+	 * @return sb.toString();
 	 */
 	public String getRandomNumber() {
 		char[] chars = "0123456789".toCharArray();
@@ -1027,79 +894,46 @@ public class TestBase {
 		}
 		return sb.toString();
 	}
-
-	/**
-	 * Copy and paste a string from one locator to other
-	 * 
-	 * @param destination
-	 * @param target
-	 */
-	public void copyPasteString(By origin, By target, String value) {
-		WebElement element1 = driver.findElement(origin);
-		WebElement element2 = driver.findElement(target);
-
-		info("Type into the first locator");
-		element1.clear();
-		element1.click();
-		element1.sendKeys(value);
-
-		info("Copy from the first locator");
-		element1.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-		element1.sendKeys(Keys.chord(Keys.CONTROL, "c"));
-
-		info("Paste to the second locator");
-		element2.click();
-		element2.sendKeys(Keys.chord(Keys.CONTROL, "v"));
+    /**
+     * Press ESC key
+     */
+	public void pressESCKey(){
+		info("press ESC key");
+		Actions action = new Actions (driver);
+		action.sendKeys(Keys.ESCAPE).build().perform();
+		action.release();
 	}
-
 	/**
-	 * Get minute in format "HH" from current date
-	 * @return hours
-	 * 
+	 * Press Enter key
 	 */
-	public int getHours(){
-		Date date = new Date();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date); 
-		int minute = cal.get(Calendar.HOUR);
-		return (minute); 
-	}
-
-	/**
-	 * @param object
-	 * @param classElement
-	 * @return = true: if there is not scroll bar on element
-	 *         = false: if there is scroll bar on element
-	 */
-	public boolean checkExitScrollBar(By object){
-		WebElement element = waitForAndGetElement(object);
-		String scrollHeight = String.valueOf(((JavascriptExecutor)driver).executeScript("return arguments[0].scrollHeight;", element));
-		String offsetHeight = String.valueOf(((JavascriptExecutor)driver).executeScript("return arguments[0].offsetHeight;", element));
-		info("scrollHeight: " + scrollHeight);
-		info("offsetHeight: " + offsetHeight);
-		int scroll = Integer.parseInt(scrollHeight);
-		int offset = Integer.parseInt(offsetHeight);
-		return scroll == offset;
+	public void pressEnterKey(){
+		info("press Enter key");
+		Actions action = new Actions (driver);
+		action.sendKeys(Keys.ENTER).build().perform();
+		action.release();
 	}
 	
 	/**
-	 * function get an element from link text when cannot get by text in xpath
-	 * @param text
-	 * @return
+	 *This function will try to get an element. if after timeout, the element is not found.
+	 *The function will refresh the page and find the element again.
+	 * @param element
 	 */
-	public WebElement getElementFromTextByJquery(String text){
-
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		Utils.pause(2000);
-		try{
-			WebElement web = (WebElement) js.executeScript("return $(\"a:contains('" + text + "')\").get(0);");
-			return web;
-		}catch(org.openqa.selenium.WebDriverException e){
-			WebElement web = (WebElement) js.executeScript("return $(\"a:contains('" + text + "')\").get(0);");
-			return web;
+	public void waitElementAndTryGetElement(Object element){
+		info("-- Starting finding element --");
+		Utils.pause(500);
+		for(int repeat=0;; repeat ++){
+			if (repeat > 1){
+				if(waitForAndGetElement(element,3000,0)!=null);
+				break;
+			}
+			if (waitForAndGetElement(element, 5000, 0) != null){
+				info("Element "+element+" is displayed");
+				break;
+			}
+			info("Retry...[" + repeat + "]");
+			this.driver.navigate().refresh();
 		}
+		Utils.pause(2000);
+		info("The elemnt is shown successfully");
 	}
-	
-	
-	
 }

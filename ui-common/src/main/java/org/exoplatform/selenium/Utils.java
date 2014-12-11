@@ -145,10 +145,27 @@ public class Utils {
 	}
 	 */
 
-	//This function returns a absolute path from a relative path
+	/**
+	 * This function returns a absolute path from a relative path
+	 * @param relativeFilePath
+	 * @return
+	 */
 	public static String getAbsoluteFilePath(String relativeFilePath){
 		String curDir = System.getProperty("user.dir");
-		String absolutePath = curDir + "/src/main/resources/" + relativeFilePath;
+	    String absolutePath = curDir + "/src/main/resources/" + relativeFilePath;
+	    info("absolutePath:"+ absolutePath);
+		return absolutePath;
+	}
+	
+	/**
+	 *  This function returns a absolute path from a relative path that get from excel file
+	 * @param relativeFilePath
+	 * @return
+	 */
+	public static String getAbsoluteFilePathFromFile(String relativeFilePath) {
+		String curDir = System.getProperty("user.home");
+		String absolutePath = curDir + relativeFilePath;
+		info("absolutePath:" + absolutePath);
 		return absolutePath;
 	}
 
@@ -162,6 +179,7 @@ public class Utils {
 		} catch (FileNotFoundException e) {
 			error("Failed to find location of... " + filePath);
 		}
+		@SuppressWarnings("resource")
 		String inputStreamString = new Scanner(fis,"UTF-8").useDelimiter("\\A").next();		
 		return inputStreamString;	
 	}

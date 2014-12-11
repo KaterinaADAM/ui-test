@@ -29,6 +29,19 @@
 
 	<profiles>
 		<profile>
+			<id>document-preview1</id>
+			<properties>
+				<testSuite>document-preview1.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>document-preview2</id>
+			<properties>
+				<testSuite>document-preview2.xml</testSuite>
+			</properties>
+		</profile>
+		
+		<profile>
 			<id>ecms-sniff-se</id>
 			<properties>
 				<testSuite>ecms-sniff-se.xml</testSuite>

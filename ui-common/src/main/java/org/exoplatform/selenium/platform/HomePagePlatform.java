@@ -3,6 +3,7 @@ package org.exoplatform.selenium.platform;
 import static org.exoplatform.selenium.TestLogger.info;
 
 import org.exoplatform.selenium.TestBase;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.wiki.WikiHomePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,9 @@ import org.openqa.selenium.WebDriver;
 public class HomePagePlatform extends TestBase{
 	WikiHomePage wHome;
 
+	//Middle homepage panel
+    public final By ELEMENT_HOMPAGE_MIDDLE_PANEL = By.id("OfficeMiddle");
+		
 	//Left panel
 	public final By ELEMENT_WIKI_LINK_PLF=By.xpath("//*[@data-original-title='Wiki']");
 	public final By ELEMENT_HOME_LINK_PLF=By.xpath("//*[@data-original-title='Home']");
@@ -48,8 +52,13 @@ public class HomePagePlatform extends TestBase{
 	 */
 	public void goToHomePage(){
 		info("--Go to Home page--");
+		info("Click on Home link of intranet page");
+		Utils.pause(2000);
 		click(ELEMENT_HOME_LINK_PLF);
-		waitForAndGetElement(wHome.ELEMENT_WIKI_HOME_PAGE_LINK);
+		info("Verify that the home page of intranet is shown");
+		waitForAndGetElement(ELEMENT_HOMPAGE_MIDDLE_PANEL,3000,0);
+		info("the intranet is shown sucessfully"); 
 	}
+
 }
 

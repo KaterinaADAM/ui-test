@@ -18,7 +18,7 @@
 				name="org.exoplatform.selenium.platform.calendar.sniff.Calendar_PublishActivities_Event" />
 			<class
 				name="org.exoplatform.selenium.platform.calendar.sniff.Calendar_PublishActivities_Task" />
-			<class
+			<class 
 				name="org.exoplatform.selenium.platform.calendar.sniff.Calendar_Search" />
 			<class
 				name="org.exoplatform.selenium.platform.calendar.sniff.Calendar_Settings_Setting" />
@@ -29,9 +29,11 @@
 			<class
 				name="org.exoplatform.selenium.platform.calendar.sniff.Calendar_Event_Attachment_Schedule_Participants" />
 			<class
-				name="org.exoplatform.selenium.platform.calendar.sniff.Calendar_Views" />
+				name="org.exoplatform.selenium.platform.calendar.sniff.Calendar_View" />
 			<class
-				name="org.exoplatform.selenium.platform.calendar.sniff.Calendar_Event_RecurringEvents" />
+				name="org.exoplatform.selenium.platform.calendar.sniff.Calendar_Setting" />
+			<class
+				name="org.exoplatform.selenium.platform.calendar.sniff.Calendar_Event_RecurringEvents" />	
 		</classes>
 	</test>
 	<listeners>

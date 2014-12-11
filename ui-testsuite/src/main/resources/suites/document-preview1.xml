@@ -1,0 +1,26 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Platform Acceptance Test" verbose="1" preserve-order="true">
+	<test name="document preview testing" enabled="true"
+		preserve-order="true">
+		<groups>
+			<run>
+				<exclude name="pending" />
+			</run>
+		</groups>
+		<classes>
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_TestConfig" />
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_Preview" />
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_NewFileReader_ToolBar" />
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_NewFileReader_ToolBar_Others" />
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_NewFileReader_Others" />
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_NewFileReader_AllTypes" />
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_Comment" />
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_ECMSRendering" />
+			<class name="org.exoplatform.selenium.platform.ecms.acceptance.Document_Preview_DisplayArea_WebContent" />
+		</classes>
+	</test>
+	<listeners>
+		<listener class-name="org.exoplatform.selenium.TestReportListener" />
+	</listeners>
+</suite>
