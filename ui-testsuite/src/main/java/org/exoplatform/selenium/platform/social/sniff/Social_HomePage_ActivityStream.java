@@ -72,7 +72,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 	 * (please remove the verification: Comment will be shown in comment section of activity)
 	 * 2. The icon (X) will not be checked in selenium test case
 	 */
-	@Test
+	@Test()
 	public void test01_DeleteYourActivity(){
 		//Declare variable
 		String activity1 = "activity 1";
@@ -87,7 +87,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 		//- activity is deteled successfully
 		activity.deleteActivity(activity1);
 	}
-
+	
 	/**
 	 * == Load previous activity page automatically ==
 	 * Test case ID: 64715
@@ -128,11 +128,11 @@ public class Social_HomePage_ActivityStream extends Activity {
 		/*Clear data*/
 		for(int i=22;i>0;i-- ){
 			if(i<10){
-				activity.deleteActivity("activity 0"+String.valueOf(i));
+				activity.deleteActivity("activity 0"+String.valueOf(i),true,false);
 				driver.navigate().refresh();
 			}
 			else
-				activity.deleteActivity("activity "+String.valueOf(i));
+				activity.deleteActivity("activity "+String.valueOf(i),true,false);
 		}
 	}
 
@@ -153,7 +153,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 		//Create data
 		//Create Space
 		//Add new space
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spacename, spacedesc);
 
 		//add activity space
@@ -170,6 +170,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 
 		//Login by invited users, go to My Connections/Requests Received
 		magAcc.userSignIn(userType.PUBLISHER);
+		goToMyConnections();
 		//An user click on Confirm button
 		peoConn.acceptInvitation(user);
 		//Add activity of connection user
@@ -178,6 +179,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 
 		//Login by invited users, go to My Connections/Requests Received
 		magAcc.userSignIn(userType.DEVELOPER);
+		goToMyConnections();
 		//Another user Ignore the invitation
 		peoConn.ignoreInvitation(user);
 		//Add activity of connection user
@@ -213,6 +215,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 		magMember.goToMySpacePage();
 		magMember.deleteSpace(spacename,300000);
 		magAcc.userSignIn(userType.PUBLISHER);
+		navToolBar.goToHomePage();
 		activity.deleteActivity(activityOfUser+user1,true,false);
 		magAcc.userSignIn(userType.DEVELOPER);
 		activity.deleteActivity(activityOfUser+user2,true,false);
@@ -227,7 +230,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 	@Test
 	public void test04_CheckMySpacesFilter(){
 		//Declare variable
-		String spacename = "Space64720";
+		String spacename = "Space647201";
 		String spacedesc = "Description Of Space04";
 		String activityOfUser = "activity 64720 of ";
 		String activityOfSpace = "activity 64720 of space ";
@@ -235,13 +238,11 @@ public class Social_HomePage_ActivityStream extends Activity {
 		//Create data
 		//Create Space
 		//Add new space
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spacename, spacedesc);
-		
 
 		//add activity space
-		/*addActivity(true, activityOfSpace+spacename, false,"");*/
-		magMember.accessSpace(spacename);
+		addActivity(true, activityOfSpace+spacename, false,"");
 		//Click on Connections on the left panel
 		navToolBar.goToConnectionPage();
 
@@ -253,6 +254,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 
 		//Login by invited users, go to My Connections/Requests Received
 		magAcc.userSignIn(userType.PUBLISHER);
+		goToMyConnections();
 		//An user click on Confirm button
 		peoConn.acceptInvitation(user);
 		//Add activity of connection user
@@ -261,6 +263,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 
 		//Login by invited users, go to My Connections/Requests Received
 		magAcc.userSignIn(userType.DEVELOPER);
+		goToMyConnections();
 		//Another user Ignore the invitation
 		peoConn.ignoreInvitation(user);
 		//Add activity of connection user
@@ -299,6 +302,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 		magMember.goToMySpacePage();
 		magMember.deleteSpace(spacename,300000);
 		magAcc.userSignIn(userType.PUBLISHER);
+		navToolBar.goToHomePage();
 		activity.deleteActivity(activityOfUser+user1);
 		magAcc.userSignIn(userType.DEVELOPER);
 		activity.deleteActivity(activityOfUser+user2);
@@ -323,7 +327,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 		//Create data
 		//Create Space
 		//Add new space
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spacename, spacedesc);
 
 		//add activity space
@@ -340,6 +344,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 
 		//Login by invited users, go to My Connections/Requests Received
 		magAcc.userSignIn(userType.PUBLISHER);
+		goToMyConnections();
 		//An user click on Confirm button
 		peoConn.acceptInvitation(user);
 		//Add activity of connection user
@@ -348,6 +353,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 
 		//Login by invited users, go to My Connections/Requests Received
 		magAcc.userSignIn(userType.DEVELOPER);
+		goToMyConnections();
 		//Another user Ignore the invitation
 		peoConn.ignoreInvitation(user);
 		//Add activity of connection user
@@ -384,6 +390,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 		magMember.goToMySpacePage();
 		magMember.deleteSpace(spacename,300000);
 		magAcc.userSignIn(userType.PUBLISHER);
+		navToolBar.goToHomePage();
 		activity.deleteActivity(activityOfUser+user1);
 		magAcc.userSignIn(userType.DEVELOPER);
 		activity.deleteActivity(activityOfUser+user2);
@@ -413,7 +420,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 		
 		//Create Space
 		//Add new space
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spacename, spacedesc);
 
 		//add activity space
@@ -428,6 +435,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 
 		//Login by invited users, go to My Connections/Requests Received
 		magAcc.userSignIn(userType.PUBLISHER);
+		goToMyConnections();
 		//An user click on Confirm button
 		peoConn.acceptInvitation(user);
 		//Add activity of connection user
@@ -446,7 +454,7 @@ public class Social_HomePage_ActivityStream extends Activity {
 		//Add activity of connection user
 		navToolBar.goToHomePage();
 		//Mention user in comment
-		mentionActivity(false,"activity mention of "+user1, user);
+		mentionActivity(false,"activity mention of "+user1, "John");
 		
 		//Remove connection
 		navToolBar.goToConnectionPage();

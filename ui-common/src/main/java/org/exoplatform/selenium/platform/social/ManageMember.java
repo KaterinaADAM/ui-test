@@ -44,7 +44,7 @@ public class ManageMember extends SpaceManagement {
 
 	//Go to My Spaces > Select a space > Settings
 	//Member Tab 
-	public final By ELEMENT_MEMBER_TAB = By.xpath("//a[text()='Members']");
+	public final By ELEMENT_MEMBER_TAB =  By.xpath("//div[@id='UISpaceSetting']//a[contains(text(),'Members')]");
 	public final By ELEMENT_SELECT_MEMBER_BUTTON = By.cssSelector("i[class='uiIconUser uiIconLightGray']");
 	public final By ELEMENT_INVITE_MEMBER_BUTTON = By.xpath("//*[text()='Invite']");
 	public final By ELEMENT_INVITE_MEMBER_BUTTON_AUX = By.xpath("//*[@id='UISpaceMember']/*[@title='Invite']");
@@ -210,7 +210,8 @@ public class ManageMember extends SpaceManagement {
 	public void grantManager(String name) {
 		waitForElementNotPresent(By.xpath(ELEMENT_IS_MANAGER_ICON.replace("${username}", name)));
 		click(By.xpath(ELEMENT_GRAND_MANAGER_BUTTON.replace("${username}", name)));
-		waitForAndGetElement(By.xpath(ELEMENT_IS_MANAGER_ICON.replace("${username}", name)));
+		if(!"iexplorer".equals(System.getProperty("browser")))
+			waitForAndGetElement(By.xpath(ELEMENT_IS_MANAGER_ICON.replace("${username}", name)));
 	}
 
 	/**
@@ -286,7 +287,7 @@ public class ManageMember extends SpaceManagement {
 	public void inviteSingleUser(ManageAccount.userType userName, String... newUser){
 		String user = newUser.length > 0 ? newUser[0]:"John";
 		info("-- Invite the user: " + userName + " to join our space");
-		clickByJavascript(ELEMENT_SELECT_MEMBER_BUTTON);
+		click(ELEMENT_SELECT_MEMBER_BUTTON);
 		waitForAndGetElement(ELEMENT_SELECT_MEMBER_FORM);
 		switch (userName) {
 		case ROOT:
@@ -758,11 +759,11 @@ public class ManageMember extends SpaceManagement {
 		magAcc.userSignIn(user);
 		if (accept){
 			acceptInvitation(spaceName);
-			goToMySpacePage();
+			click(ELEMENT_MY_SPACES_LINK);
 			waitForTextPresent(spaceName);
 		}else{
 			ignoreInvitation(spaceName);
-			goToMySpacePage();
+			click(ELEMENT_MY_SPACES_LINK);
 			waitForTextNotPresent(spaceName);
 		}
 	}

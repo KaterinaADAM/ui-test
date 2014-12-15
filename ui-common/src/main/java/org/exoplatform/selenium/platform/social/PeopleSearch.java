@@ -26,7 +26,7 @@ public class PeopleSearch extends SocialBase{
 
 	//Search people by skill
 	public final By ELEMENT_SKILL_OF_PEOPLE = By.id("skills");
-	//By ELEMENT_SKILL_OF_PEOPLE = By.xpath("//*[@id='skills']");   
+	//By ELEMENT_SKILL_OF_PEOPLE = By.xpath("//*[@id='skills']");   	
 
 	//Search people by directory
 	public final String ELEMENT_DIRECTORY_OF_PEOPLE = "//*[@id='DirectorySpaces']/li/a[text()='${directoryPeople}']";
@@ -51,9 +51,9 @@ public class PeopleSearch extends SocialBase{
 		String directory = (String) (params.length > 3 ? params[3]: "");
 		//Clear textboxes
 		click(By.linkText("All"));
-		type(ELEMENT_NAME_OF_PEOPLE, "", true);
+		/*type(ELEMENT_NAME_OF_PEOPLE, "", true);
 		type(ELEMENT_ROLE_OF_PEOPLE, "", true);
-		type(ELEMENT_SKILL_OF_PEOPLE, "", true);
+		type(ELEMENT_SKILL_OF_PEOPLE, "", true);*/
 		if(peopleName!=""){
 			type(ELEMENT_NAME_OF_PEOPLE, peopleName, true);
 		}
@@ -70,6 +70,8 @@ public class PeopleSearch extends SocialBase{
 		if (directory!=""){
 			click(By.linkText(directory));
 		}
+		if(!peopleName.equalsIgnoreCase("Root Root") && !peopleName.equals(""))
+			waitForElementNotPresent(By.linkText("Root Root"));
 		Utils.pause(1000);
 	}
 //	/**

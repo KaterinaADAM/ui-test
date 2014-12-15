@@ -58,7 +58,7 @@ public class Social_Space_ManageNavigation extends SocialBase {
 		//Create data
 		//Add new space
 		info("Create data");
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, "");
 
 		/*Step 1: Add new node*/ 
@@ -95,7 +95,7 @@ public class Social_Space_ManageNavigation extends SocialBase {
 		//- Add new space
 		//- Access space and select Space settings portlet or Click on Space setting icon
 		//- Select Space navigation tab
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, "");
 		goToNavigation(spaceName);
 		spaceNav.addNodeDoNotSelectPage(nodeName, nodeLabel, pageName);
@@ -120,15 +120,15 @@ public class Social_Space_ManageNavigation extends SocialBase {
 	public void test03_DeleteANode(){
 		//Declare variable
 		String spaceName = "space67898";
-		String nodeName = "nodeName67898";
-		String nodeLabel = "nodeLabel67898";
+		String nodeName = "aanodeName67898";
+		String nodeLabel = "aanodeLabel67898";
 
 		/*Step 1: Delete a node*/ 
 		//- Go to spaces page
 		//- Add new space
 		//- Access space and select Space settings portlet or Click on Space setting icon
 		//- Select Space navigation tab
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, "");
 		goToNavigation(spaceName);
 		spaceNav.addNodeDoNotSelectPage(nodeName, nodeLabel);

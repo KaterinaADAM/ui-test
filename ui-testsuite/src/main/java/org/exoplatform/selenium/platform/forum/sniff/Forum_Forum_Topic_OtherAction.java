@@ -56,9 +56,9 @@ public class Forum_Forum_Topic_OtherAction extends ForumBase{
 	 */
 	@Test
 	public void test01_OpenCloseTopic() {
-		String titleCat = "Category 01";
-		String titleForum = "Forum 01";
-		String titleTop = "Topic 01";
+		String titleCat = "Category 71208";
+		String titleForum = "Forum 71208";
+		String titleTop = "Topic 71208";
 
 		info("Lock/Unlock a topic");
 		//create category, forum, topic
@@ -81,9 +81,9 @@ public class Forum_Forum_Topic_OtherAction extends ForumBase{
 	 */
 	@Test
 	public void test02_RateTopic() {
-		String titleCat = "Category 02";
-		String titleForum = "Forum 02";
-		String titleTop = "Topic 02";
+		String titleCat = "Category 68933";
+		String titleForum = "Forum 68933";
+		String titleTop = "Topic 68933";
 
 		info("Rate topic");
 		//create category, forum, topic
@@ -106,9 +106,9 @@ public class Forum_Forum_Topic_OtherAction extends ForumBase{
 
 	@Test
 	public void test03_TagTopic() {
-		String titleCat = "Category 03";
-		String titleForum = "Forum 03";
-		String titleTop = "Topic 03";
+		String titleCat = "Category 68933";
+		String titleForum = "Forum 68933";
+		String titleTop = "Topic 68933";
 		String tag = "tag1";
 
 		info("Tag for topic");

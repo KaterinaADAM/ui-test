@@ -52,9 +52,9 @@ public class Forum_Forum_Topic_BasicAction extends ForumBase {
 	 */
 	@Test
 	public void test01_CreateTopic() {
-		String titleCat = "Category 01";
-		String titleForum = "Forum 01";
-		String titleTop = "Topic 01";
+		String titleCat = "Category 74749";
+		String titleForum = "Forum 74749";
+		String titleTop = "Topic 74749";
 
 		info("Create a topic");
 		//create category, forum, topic
@@ -74,9 +74,9 @@ public class Forum_Forum_Topic_BasicAction extends ForumBase {
 	 */
 	@Test
 	public void test02_DeleteTopic() {
-		String titleCat = "Category 02";
-		String titleForum = "Forum 02";
-		String titleTop = "Topic 02";
+		String titleCat = "Category 74753";
+		String titleForum = "Forum 74753";
+		String titleTop = "Topic 74753";
 
 		info("Delete topic");
 		//create category, forum, topic
@@ -97,10 +97,10 @@ public class Forum_Forum_Topic_BasicAction extends ForumBase {
 	 */
 	@Test
 	public void test04_MoveTopic() {
-		String titleCat = "Category 04";
-		String titleForum = "Forum 04";
-		String titleTop = "Topic 04";
-		String forum2 = "Forum 04 2";
+		String titleCat = "Category 71197";
+		String titleForum = "Forum 71197";
+		String titleTop = "Topic 71197";
+		String forum2 = "Forum 71197 2";
 		String[] addForum2 = {forum2, "1",null,null,forum2};
 		String[] permission = {};
 
@@ -127,10 +127,10 @@ public class Forum_Forum_Topic_BasicAction extends ForumBase {
 	 */
 	@Test
 	public void test05_UpdateTopicTitle() {
-		String titleCat = "Category 05";
-		String titleForum = "Forum 05";
-		String titleTop = "Topic 05";
-		String newTopic = "New topic 05";
+		String titleCat = "Category 74750";
+		String titleForum = "Forum 74750";
+		String titleTop = "Topic 74750";
+		String newTopic = "New topic 74750";
 		String[] userGroup = {};
 
 		info("Update topic title");
@@ -150,10 +150,10 @@ public class Forum_Forum_Topic_BasicAction extends ForumBase {
 	 */
 	@Test
 	public void test06_UpdateTopicContent() {
-		String titleCat = "Category 06";
-		String titleForum = "Forum 06";
-		String titleTop = "Topic 06";
-		String newDesc = "New topic 06";
+		String titleCat = "Category 74751";
+		String titleForum = "Forum 74751";
+		String titleTop = "Topic 74751";
+		String newDesc = "New topic 74751";
 		String[] userGroup = {};
 
 		info("Update topic title");

@@ -82,7 +82,7 @@ public class TestBase {
 	public final By ELEMENT_CONTINUE_BUTTON = By.xpath("//button[text()='Continue' and @class='btn active']");
 	public final By ELEMENT_START_BUTTON = By.xpath("//button[text()='Start']");
 	public final By ELEMENT_SUBMIT_BUTTON = By.xpath("//*[text()='Submit']");
-	
+
 	public final By ELEMENT_INPUT_PASSWORD = By.name("password");
 	public final By ELEMENT_ACCOUNT_NAME_LINK = By.xpath("//*[@id='UIUserPlatformToolBarPortlet']/a");
 	public final By ELEMENT_PLF_INFORMATION = By.id("platformInfoDiv");
@@ -108,7 +108,6 @@ public class TestBase {
 
 	/*======== End of Term and conditions =====*/	
 	public void initSeleniumTestWithOutTermAndCondition(Object... opParams){
-		//		System.setProperty("browser", "iexplorer");
 		String browser = System.getProperty("browser");
 
 		baseUrl = System.getProperty("baseUrl");
@@ -301,7 +300,7 @@ public class TestBase {
 			//			info("NoSuchElementException");
 		}catch(StaleElementReferenceException ex)
 		{
-			checkCycling(ex, 10);
+			checkCycling(ex, 2);
 			Utils.pause(WAIT_INTERVAL);
 			getDisplayedElement(locator);
 		}
@@ -347,27 +346,6 @@ public class TestBase {
 		return null;
 	}
 
-	public WebElement waitAndGetElementByJavascript(Object locator, Object... opParams){
-		WebElement elem = null;
-		int timeout = (Integer) (opParams.length>0 ? opParams[0] : DEFAULT_TIMEOUT);
-		int isAssert = (Integer) (opParams.length > 1 ? opParams[1]: 1);
-		int notDisplayE = (Integer) (opParams.length > 2 ? opParams[2]: 0);
-		WebDriver wDriver = (WebDriver) (opParams.length > 3 ? opParams[3]: driver);	
-		for (int tick = 0; tick < timeout/WAIT_INTERVAL; tick++) {
-			if (notDisplayE == 2){
-				elem = getElement(locator,wDriver);
-				//elem = getDisplayedElement(locator);
-			}else{
-				elem = getDisplayedElement(locator,wDriver);
-			}
-			if (null != elem) return elem;
-			Utils.pause(WAIT_INTERVAL);
-		}
-		if (isAssert == 1)
-			assert false: ("Timeout after " + timeout + "ms waiting for element present: " + locator);
-		info("cannot find element after " + timeout/1000 + "s.");
-		return null;
-	}
 
 	/*
 	 * @opPram[0]: timeout
@@ -474,13 +452,22 @@ public class TestBase {
 
 		Actions actions = new Actions(driver);
 		try {
-			WebElement element = waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplay);
-			if(element.isEnabled())
-				actions.click(element).perform();
-			else {
-				
-				debug("Element is not enabled");
-				click(locator, notDisplay);
+			if("firefox".equals(System.getProperty("browser"))){
+				WebElement element = waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplay);
+				if(element.isEnabled())
+					actions.click(element).perform();
+				else {
+
+					debug("Element is not enabled");
+					click(locator, notDisplay);
+				}
+			}else if("iexplorer".equals(System.getProperty("browser")))
+			{
+				WebElement e = waitForAndGetElement(locator,DEFAULT_TIMEOUT, 1, notDisplay);
+				if(e != null)
+					((JavascriptExecutor)driver).executeScript("arguments[0].click();", e);
+				else
+					info("The element " + locator + " is null");
 			}
 		} catch (StaleElementReferenceException e) {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
@@ -529,6 +516,27 @@ public class TestBase {
 
 			if (!element.isSelected()) {
 				click(locator,notDisplayE);
+			} else {
+				info("Element " + locator + " is already checked.");
+			}
+		} catch (StaleElementReferenceException e) {
+			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
+			Utils.pause(WAIT_INTERVAL);
+			check(locator, opParams);
+		} finally {
+			loopCount = 0;
+		}
+	}
+
+	//Use this function to verify if a check-box is checked, not use javascript
+	public void checkNotJavascript(Object locator, int... opParams) {
+		int notDisplayE = opParams.length > 0 ? opParams[0]: 0;
+		//		Actions actions = new Actions(driver);
+		try {
+			WebElement element = waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE);
+
+			if (!element.isSelected()) {
+				element.click();
 			} else {
 				info("Element " + locator + " is already checked.");
 			}
@@ -629,6 +637,7 @@ public class TestBase {
 
 	public void type(Object locator, String value, boolean validate, Object...opParams) {	
 		int notDisplay = (Integer) (opParams.length > 0 ? opParams[0]: 0);
+		boolean verify = (boolean) (opParams.length > 1 ? opParams[1]: true);
 		try {
 			for (int loop = 1;; loop++) {
 				if (loop >= ACTION_REPEAT) {
@@ -639,7 +648,7 @@ public class TestBase {
 					if (validate) element.clear();
 					element.click();
 					element.sendKeys(value);
-					if (!validate || value.equals(getValue(locator))) {
+					if (!verify || !validate || value.equals(getValue(locator))) {
 						break;
 					}
 				}
@@ -703,6 +712,28 @@ public class TestBase {
 			loopCount = 0;
 		}
 	}
+
+	//un-check a checked-box
+	public void uncheckNotJavascript(Object locator, int... opParams) {
+		int notDisplayE = opParams.length > 0 ? opParams[0]: 0;
+		//		Actions actions = new Actions(driver);
+		try {
+			WebElement element = waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE);
+
+			if (element.isSelected()) {
+				element.click();
+			} else {
+				info("Element " + locator + " is already unchecked.");
+			}
+		} catch (StaleElementReferenceException e) {
+			checkCycling(e, 5);
+			Utils.pause(1000);
+			uncheck(locator, opParams);
+		} finally {
+			loopCount = 0;
+		}
+	}
+
 	public void rightClickOnElement(Object locator, int...opParams) {
 		int display = opParams.length > 0 ? opParams[0]: 0;
 		Actions actions = new Actions(driver);
@@ -854,7 +885,7 @@ public class TestBase {
 	public WebDriver initIEDriver(){
 		System.setProperty("webdriver.ie.driver","D:\\java\\eXoProjects\\IEDriverServer\\IEDriverServer.exe") ;
 		DesiredCapabilities  capabilitiesIE = DesiredCapabilities.internetExplorer();
-		capabilitiesIE.setCapability("ignoreProtectedModeSettings", true);
+		//		capabilitiesIE.setCapability("ignoreProtectedModeSettings", true);
 		capabilitiesIE.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
 		return new InternetExplorerDriver(capabilitiesIE);
 	}
@@ -863,9 +894,23 @@ public class TestBase {
 	 * @author lientm
 	 */
 	public void getDriverAutoOpenWindow(){
-		FirefoxProfile fp = new FirefoxProfile();		
-		fp.setPreference("browser.link.open_newwindow.restriction", 2);
-		driver = new FirefoxDriver(fp);
+		String browser = System.getProperty("browser");
+
+		baseUrl = System.getProperty("baseUrl");
+		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
+		if("chrome".equals(browser)){
+			driver = new ChromeDriver();
+			chromeFlag = true;
+		} else if ("iexplorer".equals(browser)){
+			driver = initIEDriver();
+
+			this.ieFlag = true;
+		} else {
+			System.setProperty("browser", "firefox");
+			FirefoxProfile fp = new FirefoxProfile();		
+			fp.setPreference("browser.link.open_newwindow.restriction", 2);
+			driver = new FirefoxDriver(fp);
+		}
 		baseUrl = System.getProperty("baseUrl");
 		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
 		action = new Actions(driver);
@@ -940,10 +985,24 @@ public class TestBase {
 	}
 
 	public void getDriverSetLanguage(Language language){
-		String locale = language.toString();
-		FirefoxProfile profile = new FirefoxProfile();
-		profile.setPreference("intl.accept_languages", locale);
-		driver = new FirefoxDriver(profile);
+		String browser = System.getProperty("browser");
+
+		baseUrl = System.getProperty("baseUrl");
+		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
+		if("chrome".equals(browser)){
+			driver = new ChromeDriver();
+			chromeFlag = true;
+		} else if ("iexplorer".equals(browser)){
+			driver = initIEDriver();
+
+			this.ieFlag = true;
+		} else {
+			System.setProperty("browser", "firefox");
+			String locale = language.toString();
+			FirefoxProfile profile = new FirefoxProfile();
+			profile.setPreference("intl.accept_languages", locale);
+			driver = new FirefoxDriver(profile);
+		}
 		baseUrl = System.getProperty("baseUrl");
 		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
 		action = new Actions(driver);
@@ -1305,5 +1364,10 @@ public class TestBase {
 		int i = index.length > 0 ? index[0] : 0;
 		WebElement e = (WebElement)((JavascriptExecutor) driver).executeScript("return document.getElementsByClassName('"+className+"')["+i+"];");
 		return e;
+	}
+
+	public void clickByJavascriptWithClassName(String className,int...index){
+		int i = index.length > 0 ? index[0] : 0;
+		((JavascriptExecutor) driver).executeScript("document.getElementsByClassName('"+className+"')["+i+"].click();");
 	}
 }

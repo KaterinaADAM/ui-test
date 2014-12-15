@@ -107,11 +107,12 @@ public class Social_EmailNotifications_Administration extends Notification {
 		String fullName = username + " "+username;
 		String email = username + "@gmail.com";
 		By eEmail = By.xpath(ELEMENT_GMAIL_TITLE.replace("${title}", fullName+" has joined eXo"));
-		String username2 = "liiceo";//getRandomString();
+		String username2 = getRandomString();
 		String fullName2 = username2 + " "+ username2;
 		String email2 = username2 + "@gmail.com";
 		By eEmail2 = By.xpath(ELEMENT_GMAIL_TITLE.replace("{$title}", fullName2+" has joined eXo"));
 		info("CaseID-109865:Disable a Notification");
+		String handlePLF = driver.getWindowHandle();
 		//Setup email
 		navToolBar.goToMyProfile();
 		magAcc.updateUserProfile(null, null, null, EMAIL_ADDRESS1);
@@ -135,7 +136,7 @@ public class Social_EmailNotifications_Administration extends Notification {
 
 		//Verify activity "New user" is not present on Notification settings
 		navToolBar.goToNotificationSettings();
-		waitForAndGetElement(ELEMENT_NOTIFY_COLUMN.replace("${column}", ""));
+		waitForAndGetElement(ELEMENT_NOTIFY_COLUMN.replace("${column}", "Send me an email right away"));
 		waitForElementNotPresent(ELEMENT_JOIN_INTRANET_SEND_RIGHT);
 
 		//Add new user
@@ -145,10 +146,10 @@ public class Social_EmailNotifications_Administration extends Notification {
 		//Verify no mail is sent
 		goToMail(EMAIL_ADDRESS1, EMAIL_PASS);
 		String handle = driver.getWindowHandle();
-		assert waitForAndGetElement(eEmail, 60000,0) == null : "Still receive email!";
+		assert waitForAndGetElement(eEmail, 30000,0) == null : "Still receive email!";
 
 		info("caseID-109866: Enable a Notification");
-		switchToParentWindow();
+		driver.switchTo().window(handlePLF);
 		navToolBar.goToNotificationAdministration();
 		enableNotification(MSG_TITLE_NEW_USER, true);
 
@@ -162,7 +163,7 @@ public class Social_EmailNotifications_Administration extends Notification {
 		driver.switchTo().window(handle);
 		driver.navigate().refresh();
 		checkAndDeleteMail(eEmail2, MSG_CONTENT_EMAIL_NEW_USER.replace("${user}", fullName2));
-		switchToParentWindow();
+		driver.switchTo().window(handlePLF);
 		
 		//Restore data
 		navToolBar.goToUsersAndGroupsManagement();

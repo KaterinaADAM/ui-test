@@ -115,9 +115,6 @@ public class Forum_Answers_Category extends AnswerBase {
 		info("Delete category and question");
 		magCat.deleteCategoryInAnswer(categoryName);
 		
-		info("Cut/paste file from TestOutput folder to TestData folder");
-		cutPasteFileFromOutputToTestData(fileFull);
-		
 		magCat.importAnswerCategory(fileFull);
 		deleteFile(fileFull);
 		magCat.openCategoryInAnswer(categoryName);

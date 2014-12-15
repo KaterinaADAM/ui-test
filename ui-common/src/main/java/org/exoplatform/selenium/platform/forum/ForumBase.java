@@ -340,7 +340,7 @@ public class ForumBase extends PlatformBase {
 	public final String ELEMENT_PRIVATE_MESSAGE_NAME_SENT=".//*[@id='PermissionInfo']//td/span[contains(text(),'${nameReceiver}')]//..//..//../a/strong[contains(text(),'${nameMess}')]";
 
 	//Gmail
-	public String ELEMENT_GMAIL_EMAIL = ".//*/b[contains(text(),'[${category}][${forum}] ${topic}')]";
+	public String ELEMENT_GMAIL_EMAIL = "//div[@class='xT']//b[contains(text(),'[${category}][${forum}] ${topic}')]";
 	public String ELEMENT_GMAIL_EMAIL2 = "//span/b[text()='[${category}][${forum}]${topic}']";
 	public String ELEMENT_GMAIL_EMAIL_PREFIX = "//span/b[text()='${prefix}[${category}][${forum}] ${topic}']";
 

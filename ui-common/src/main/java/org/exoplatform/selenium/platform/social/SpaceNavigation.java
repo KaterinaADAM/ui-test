@@ -37,7 +37,7 @@ public class SpaceNavigation extends SocialBase{
 	public final By ELEMENT_SELECT_PAGE = By.xpath("//div[@id='UIRepeater']//table//tbody/tr/td[5]/div[@class='ActionContainer']/img");
 	public final String WARNING_EXISTING_NODE = "This node name already exists.";
 	public final By SAVE_PAGE_BUTTON = By.xpath("//div[@class='uiAction']/button[text()='Save']");
-	
+
 	public final String ELEMENT_NODE_LINK_FORM = "//ul[@class='nodeGroup']//a[@title='${nodeLabel}']";
 	public final String ELEMENT_NODE_LINK_FORM_COLLAPSE = "//ul[@class='nodeGroup']//a[@title='${nodeLabel}' and @ class= 'uiIconNode nodeSelected collapseIcon']";
 	public final String ELEMENT_RIGHT_CLICK_ADD_NODE_FORM_ = "//div[@class='TopLeftRightClickPopupMenu']/div[@class='UIContextMenuContainer']//a[@class='ItemIcon AddNode16x16Icon']";
@@ -148,8 +148,8 @@ public class SpaceNavigation extends SocialBase{
 		waitForAndGetElement("//*[contains(text(),'Page Node Setting')]");
 		type(NODE_NAME, nodeName, true);
 		if (extendedLabelMode) {
-				select(ELEMENT_SELECT_LANGUAGE, language);
-				Utils.pause(500);
+			select(ELEMENT_SELECT_LANGUAGE, language);
+			Utils.pause(500);
 		} else {
 			uncheck(ELEMENT_CHECKBOX_EXTENDED_LABEL_MODE,2);
 			type(NODE_LABEL, nodeLabel, true);
@@ -220,12 +220,12 @@ public class SpaceNavigation extends SocialBase{
 	public void deleteNode(String nodePath, String nodeName){
 		info("--Delete a node from navigation--");
 		String []paths = nodePath.split("/");
-		for(String path:paths){
-			if(waitForAndGetElement(By.xpath(ELEMENT_NODE_LINK_FORM_COLLAPSE.replace("${nodeLabel}",path)),DEFAULT_TIMEOUT,0)!=null)
-				click(ELEMENT_NODE_LINK_FORM.replace("${nodeLabel}",path));
+		for(int i = 1; i < paths.length; i++){
+			click(ELEMENT_NODE_LINK_FORM.replace("${nodeLabel}",paths[i]));
+			waitForElementNotPresent(ELEMENT_NODE_LINK_FORM.replace("${nodeLabel}",paths[i-1]));
 		}
 		rightClickOnElement(ELEMENT_NODE_LINK_FORM.replace("${nodeLabel}",nodeName));
-		click(ELEMENT_DELETE_NODE);
+		waitForAndGetElement(ELEMENT_DELETE_NODE).click();
 		magAlert.waitForConfirmation("Are you sure you want to delete this node?");
 		magAlert.acceptAlert();
 		waitForElementNotPresent(ELEMENT_NODE_LINK_FORM.replace("${nodeLabel}",nodeName));

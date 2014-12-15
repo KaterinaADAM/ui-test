@@ -1,15 +1,16 @@
 package org.exoplatform.selenium.platform.social.sniff;
 
 import static org.exoplatform.selenium.TestLogger.info;
-
 import org.exoplatform.selenium.Utils;
+import org.exoplatform.selenium.Dialog;
 import org.exoplatform.selenium.platform.HomePageActivity;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.ActionBar;
 import org.exoplatform.selenium.platform.ecms.contentexplorer.ContentTemplate;
-import org.exoplatform.selenium.platform.ecms.contentexplorer.ContextMenu.actionType;
+import org.exoplatform.selenium.platform.ecms.contentexplorer.ContextMenu;
+import org.exoplatform.selenium.platform.ecms.contentexplorer.SitesExplorer;
 import org.exoplatform.selenium.platform.social.Activity;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -27,6 +28,9 @@ public class Social_HomePage_ActivityComposer extends Activity {
 	NavigationToolbar navToolBar;
 	HomePageActivity activity;
 	ActionBar actBar;
+	SitesExplorer siteEx;
+	ContextMenu cMenu;
+	Dialog dialog;
 
 	//ecms
 	EcmsBase ecms;
@@ -44,6 +48,9 @@ public class Social_HomePage_ActivityComposer extends Activity {
 		navToolBar = new NavigationToolbar(driver);
 		actBar = new ActionBar(driver);
 		ecms = new EcmsBase(driver);
+		cMenu = new ContextMenu(driver, this.plfVersion);
+		dialog = new Dialog(driver);
+		siteEx = new SitesExplorer(driver, this.plfVersion);
 		conTemp = new ContentTemplate(driver);
 		magAcc.signIn(DATA_USER1, DATA_PASS);
 	}
@@ -72,7 +79,7 @@ public class Social_HomePage_ActivityComposer extends Activity {
 		//Select name is wrapped in the input
 		//Click Share button
 		//In the activity stream, mentions are displayed as a link on "Firstname Lastname" to the user's activities page
-		mentionActivity(true,"", user1);
+		mentionActivity(true,"", "Mary");
 
 		//Clear data
 		activity.deleteActivity(user1);
@@ -109,7 +116,7 @@ public class Social_HomePage_ActivityComposer extends Activity {
 	@Test(priority=2)
 	public void test03_AddAdocument(){
 		//Declare variables
-		String file="test03_AddAdocument";
+		String file="test03addadocument";
 		String driverName = "Personal Drives";
 		String folderPath = "Personal Documents";
 
@@ -120,10 +127,11 @@ public class Social_HomePage_ActivityComposer extends Activity {
 		Utils.pause(2000);
 		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK, "Admin", "Admin");
 		actBar.chooseDrive(ecms.ELEMENT_PERSONAL_DRIVE);
+		click(siteEx.ELEMENT_ADMIN_VIEW);
 		actBar.goToAddNewContent();
 		conTemp.createNewFile(file, file, "");
 
-		/*Step 1: Go to Select File Dialog*/  
+		/*Step 1: Go to Select File Dialog  */
 		//- Goto Homepage
 		navToolBar.goToHomePage();
 
@@ -141,9 +149,12 @@ public class Social_HomePage_ActivityComposer extends Activity {
 
 		//Clear data
 		activity.deleteActivity(file);
-		navToolBar.goToSiteExplorer();
-		actBar.chooseDrive(ecms.ELEMENT_PERSONAL_DRIVE);
-		actBar.actionsOnElement(file, actionType.DELETE,true,true);
+		navToolBar.goToPersonalDocuments();
+		click(ecms.ELEMENT_ICONS_VIEW);
+		rightClickOnElement(siteEx.ELEMENT_ICON_VIEW_NODE.replace("${node}", file));
+		click(cMenu.ELEMENT_MENU_DELETE);
+		dialog.deleteInDialog();
+		waitForElementNotPresent(siteEx.ELEMENT_ICON_VIEW_NODE.replace("${node}", file));
 	}
 
 	/**
@@ -164,7 +175,6 @@ public class Social_HomePage_ActivityComposer extends Activity {
 
 		/*Step 1: Go to Select File Dialog*/  
 		//- Goto Homepage
-		navToolBar.goToHomePage();
 
 		//- In Activity Composer click File (icon)
 		//Select File Dialog shows up
@@ -188,9 +198,12 @@ public class Social_HomePage_ActivityComposer extends Activity {
 
 		//Clear data
 		activity.deleteActivity(uploadFileName);
-		navToolBar.goToSiteExplorer();
-		actBar.chooseDrive(ecms.ELEMENT_PERSONAL_DRIVE);
-		actBar.actionsOnElement(folder, actionType.DELETE,true,true);
+		navToolBar.goToPersonalDocuments();
+		click(ecms.ELEMENT_ICONS_VIEW);
+		rightClickOnElement(siteEx.ELEMENT_ICON_VIEW_NODE.replace("${node}", folder));
+		click(cMenu.ELEMENT_MENU_DELETE);
+		dialog.deleteInDialog();
+		waitForElementNotPresent(siteEx.ELEMENT_ICON_VIEW_NODE.replace("${node}", folder));
 	}
 	
 	/**

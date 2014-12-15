@@ -577,29 +577,10 @@ public class ActionBar extends EcmsBase{
 	public void addItem2ActionBar(String item, By eItem, Object...params){
 		String view = (String) (params.length > 0 ? params[0] : "Web");
 		String tab = (String) (params.length > 1 ? params[1] : "Authoring");
-		WebElement element = waitForAndGetElement(eItem, 5000, 0);
-		WebElement more = waitForAndGetElement(ELEMENT_MORE_LINK_WITHOUT_BLOCK, 5000, 0);
-		Utils.pause(2000);
-		if (element != null){
-			info(item + " tab is already displayed --");
-		}else if (more != null){
-			click(ELEMENT_MORE_LINK_WITHOUT_BLOCK);
-			Utils.pause(2000);
-			if (waitForAndGetElement(eItem, 5000, 0) != null){
-				info(item + " tab is already displayed --");
-			}else{
-				magView.setup2ShowViewAction(item, view, tab);
-				magAcc.signOut();
-				magAcc.signIn(DATA_USER1, DATA_PASS);
-				navToolBar.goToSiteExplorer();
-			}
-		}else {
-			Utils.pause(2000);
-			magView.setup2ShowViewAction(item, view, tab);
-			magAcc.signOut();
-			magAcc.signIn(DATA_USER1, DATA_PASS);
-			navToolBar.goToSiteExplorer();
-		}
+		magView.setup2ShowViewAction(item, view, tab);
+		magAcc.signOut();
+		magAcc.signIn(DATA_USER1, DATA_PASS);
+		navToolBar.goToSiteExplorer();
 		driver.navigate().refresh();
 		Utils.pause(2000);
 	}
@@ -944,7 +925,7 @@ public class ActionBar extends EcmsBase{
 			click(ELEMENT_MORE_LINK_WITHOUT_BLOCK);
 		click(ELEMENT_ADD_RELATION_LINK);
 
-		click(ELEMENT_DELETE_RELATION_ICON.replace("{$relation}", relation));
+		waitForAndGetElement(ELEMENT_DELETE_RELATION_ICON.replace("{$relation}", relation)).click();
 		alert.waitForConfirmation(MESSAGE_DELETE_RELATION);
 
 		waitForTextNotPresent(relation);
@@ -1064,7 +1045,7 @@ public class ActionBar extends EcmsBase{
 	 */
 	public void deleteComment(String comment){
 		click(ELEMENT_SHOW_COMMENT_LINK);
-		click(By.xpath(ELEMENT_DELETE_COMMENT_ICON.replace("${comment}", comment)));
+		waitForAndGetElement(By.xpath(ELEMENT_DELETE_COMMENT_ICON.replace("${comment}", comment))).click();
 		alert.acceptAlert();
 		if (waitForAndGetElement(ELEMENT_SHOW_COMMENT_LINK, 5000, 0) != null){
 			click(ELEMENT_SHOW_COMMENT_LINK);
@@ -1206,7 +1187,7 @@ public class ActionBar extends EcmsBase{
 		}else {
 			click(By.className("uiIconEcmsManageCategories"));
 		}
-		click(ELEMENT_DELETE_CATEGORY_ICON.replace("{$categoryPath}", categoryPath));
+		waitForAndGetElement(ELEMENT_DELETE_CATEGORY_ICON.replace("{$categoryPath}", categoryPath)).click();
 		alert.waitForConfirmation(MSG_DELETE_CATEGORY);
 
 		waitForTextNotPresent(categoryPath);

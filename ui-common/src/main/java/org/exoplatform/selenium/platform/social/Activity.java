@@ -235,9 +235,16 @@ public class Activity extends SocialBase {
 				click(By.linkText(newFolder));
 			}
 			if(plfVersion.equalsIgnoreCase("4.1")){
-				click(ELEMENT_CREATE_FOLDER_BUTTON_PLF41);
+				waitForAndGetElement(ELEMENT_CREATE_FOLDER_BUTTON_PLF41).click();
 				alert.inputAlertText(newFolder);
+				Utils.pause(3000);
+				try{
 				click(By.linkText(newFolder));
+				}catch(org.openqa.selenium.UnhandledAlertException e){
+					alert.inputAlertText(newFolder);
+					Utils.pause(3000);
+					click(By.linkText(newFolder));
+				}
 			}
 		}
 
@@ -256,7 +263,6 @@ public class Activity extends SocialBase {
 			((JavascriptExecutor)driver).executeScript("document.getElementsByTagName('input')[0].style.visibility='visible'");
 			Utils.pause(2000);
 			WebElement eX = (WebElement) ((JavascriptExecutor)driver).executeScript("return document.getElementsByClassName('BrowseLink')[0];");
-			((JavascriptExecutor)driver).executeScript("document.getElementsByClassName('BrowseLink')[0].click();");
 			eX.click();
 
 			uploadFile("TestData/"+uploadFileName);
@@ -275,7 +281,7 @@ public class Activity extends SocialBase {
 		else 
 		{
 			if(selectFileName!=""){
-				click(By.linkText(selectFileName));
+				click(By.xpath("//a[contains(.,'"+selectFileName+"')]"));
 				waitForAndGetElement(ecms.ELEMENT_BREADCUMBSCONTAINER.replace("${fileName}", selectFileName));
 				Utils.pause(500);
 			}
@@ -292,7 +298,7 @@ public class Activity extends SocialBase {
 				}
 			}
 			waitForElementNotPresent(ELEMENT_SELECT_BUTTON);
-			click(ELEMENT_SHARE_BUTTON);
+			waitForAndGetElement(ELEMENT_SHARE_BUTTON).click();
 			if(upload)
 				waitForAndGetElement(By.linkText(uploadFileName));
 			else
@@ -392,7 +398,7 @@ public class Activity extends SocialBase {
 		((JavascriptExecutor)driver).executeScript("arguments[0].textContent = '"+contentOfComment+"';", commentText);
 		((JavascriptExecutor)driver).executeScript("arguments[0].disabled = false;", commentButton);
 		((JavascriptExecutor)driver).executeScript("arguments[0].className = 'btn pull-right btn-primary';", commentButton);
-		click(ELEMENT_COMMENT_BUTTON.replace("${activityText}", activityText));
+		waitForAndGetElement(ELEMENT_COMMENT_BUTTON.replace("${activityText}", activityText)).click();
 		waitForAndGetElement(ELEMENT_DELETE_COMMENT_BUTTON.replace("${activityText}", activityText).replace("${commentText}", contentOfComment), DEFAULT_TIMEOUT,1,2);
 
 	}
@@ -576,16 +582,24 @@ public class Activity extends SocialBase {
 		hpActivity = new HomePageActivity(driver);
 		if(isActivity){
 			info ("-- Adding a mention activity --");	
+			click(ELEMENT_MENTION_USER_BUTTON);
+			Utils.pause(1000);
 			WebElement inputText = waitForAndGetElement(hpActivity.ELEMENT_ACTIVITY_TEXTBOX, DEFAULT_TIMEOUT, 1, 2);
 			((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block'; arguments[0].style.visibility = 'visible'", inputText);
 			Utils.pause(1000);
-			click(ELEMENT_MENTION_USER_BUTTON);
-			inputText.sendKeys(userName);
-			click(ELEMENT_MENTION_USER_AVATAR.replace("${userName}", userName));
+			String text = inputText.getText();
+			assert text.equals("@");
+			inputText.clear();
+			
+			inputText.sendKeys("@"+userName);
+			inputText.sendKeys(Keys.BACK_SPACE);
+			Utils.pause(2000);
+			getElementByJavascript("avatarSmall").click();
+//			waitForAndGetElement(ELEMENT_MENTION_USER_AVATAR.replace("${userName}", userName)).click();
 			Utils.pause(1000);
 			click(hpActivity.ELEMENT_ACTIVITY_TEXTBOX);
 			Utils.pause(1000);			
-			click(ELEMENT_SHARE_BUTTON);
+			waitForAndGetElement(ELEMENT_SHARE_BUTTON).click();
 			waitForAndGetElement(By.xpath(ELEMENT_USER_NAME_LINK_ACTIVITY.replace("${userName}", userName)));
 		}
 		else{
@@ -602,7 +616,7 @@ public class Activity extends SocialBase {
 			click(hpActivity.ELEMENT_COMMENTBOX.replace("${title}", activityText));
 			Utils.pause(1000);
 			//click("//*[@class='avatarSmall' and text()='"+userName+"']");
-			click(ELEMENT_MENTION_USER_AVATAR.replace("${userName}", userName));
+			getElementByJavascript("avatarSmall").click();
 			Utils.pause(1000);
 			//Click on Comment button
 			WebElement commentButton = waitForAndGetElement(ELEMENT_COMMENT_BUTTON.replace("${activityText}", activityText));

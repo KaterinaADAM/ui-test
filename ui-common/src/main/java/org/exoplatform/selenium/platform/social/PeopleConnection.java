@@ -3,6 +3,7 @@ package org.exoplatform.selenium.platform.social;
 import static org.exoplatform.selenium.TestLogger.*;
 
 import org.exoplatform.selenium.Utils;
+import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -27,32 +28,35 @@ public class PeopleConnection extends SocialBase {
 	// My Connections
 	public final By	ELEMENT_CONNECTION_OF_USER = By.xpath("//*[@id='UIUserNavigationPortlet']//../*[contains(text(),'Connections')]");
 	public final By ELEMENT_REQUESTS_RECEIVED_TAB = By.linkText("Requests Received");
+	public final By ELEMENT_REQUESTS_RECEIVED_TAB_ACTIVE = By.xpath("//li[@class='active']/a[contains(text(),'Requests Received')]");
 	public final By ELEMENT_REQUEST_PENDING_TAB = By.linkText("Requests Pending");
 	public final By ELEMENT_MY_CONNECTIONS_TAB = By.linkText("My Connections");
-	public final By ELEMENT_EVERYONE_TAB = By.linkText("Everyone");
+	public final By ELEMENT_EVERYONE_TAB = By.xpath("//a[contains(text(),'Everyone')]");
 	public final String ELEMENT_EVERYONE_TAB_ACTIVE = "//li[@class='active']/a[contains(text(),'Everyone')]";
 	public final By ELEMENT_REQUEST_SENT_TAB = By.linkText("Requests Sent");
-	public final String ELEMENT_CONNECTION_BUTTON = "//*[contains(text(), '${peopleName}')]/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Connect')]";
-	public final String ELEMENT_CANCEL_REQUEST_BUTTON = "//a[text()='${peopleName}']/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Cancel Request')]";
-	public final String ELEMENT_REMOVE_CONNECTION_BUTTON = "//a[text()='${peopleName}']/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Remove Connection')]";
-	public final String ELEMENT_CONFIRM_BUTTON = "//a[text()='${peopleName}']/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Confirm')]";
 
-	public final String ELEMENT_IGNORE_BUTTON = "//a[text()='${peopleName}']/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Ignore')]";
+	public final String ELEMENT_CONNECTION_BUTTON = "//a[contains(text(),'${peopleName}')]/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Connect')]";
+	public final String ELEMENT_CANCEL_REQUEST_BUTTON = "//a[contains(text(),'${peopleName}')]/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Cancel Request')]";
+	public final String ELEMENT_REMOVE_CONNECTION_BUTTON = "//a[contains(text(),'${peopleName}')]/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Remove Connection')]";
+	public final String ELEMENT_CONFIRM_BUTTON = "//a[contains(text(),'${peopleName}')]/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Confirm')]";
+
+	public final String ELEMENT_IGNORE_BUTTON = "//a[contains(text(),'${peopleName}')]/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Ignore')]";
 	//public final String ELEMENT_IGNORE_BUTTON = "//*[@data-original-title='${peopleName}']/../..//*[text()='Ignore']";
 	public final String ELEMENT_CONNECT_LIST = "//*[text()='Connect']";
-	public final String ELEMENT_PEOPLE_SEARCH = "//*[@class='uiProfileUserSearch']/..//*[text()='${peopleName}']";
+	public final String ELEMENT_PEOPLE_SEARCH = "//*[@class='uiProfileUserSearch']/..//*[contains(text(),'${peopleName}')]";
 	public final By ELEMENT_REVOKE_BUTTON = By.xpath("//button[text()='Revoke']");
 
 	//-----------------------Connections page------------------------
 	public String ELEMENT_INVITATION_RECEIVED_MSG = "//h4[@class='spaceTitle']/a[contains(text(),'${acc}')]/ancestor::div[@class='spaceBox pull-left']/div[@class='connectionBtn clearfix']/span[contains(text(),'Invitation Received')]";
 	//---------------------------Generic user popup - Connection Application------------
-	public final String ELEMENT_CONNECTION_MEMBER = "//a[text()='${peopleName}']";
+	public final String ELEMENT_CONNECTION_MEMBER = "//a[contains(text(),'${peopleName}')]";
 
 	/**
 	 * Connect to people
 	 * @param peopleName: name of selected people (String)
 	 */
 	public void connectPeople (String peopleName) {
+		NavigationToolbar navi = new NavigationToolbar(driver, this.plfVersion);
 		info("-- Connect to: " + peopleName);
 		//By ELEMENT_CONNECT_BUTTON = By.xpath("//div/a[text()='"+peopleName+"']/following::ul/li/a[@title='Connect']");
 		//By ELEMENT_CONNECT_BUTTON = By.xpath(ELEMENT_CONNECTION.replace("${peopleName}", peopleName) + "/../../ul/li/a[@title='Connect']");
@@ -61,20 +65,24 @@ public class PeopleConnection extends SocialBase {
 		info("-- Connect the user: " + peopleName);
 		if(waitForAndGetElement(ELEMENT_EVERYONE_TAB,5000, 0)==null){
 			info("----Go to My connections----");
-			goToMyConnections();
+			navi.goToConnectionPage();
 			info("---Click  every one tab-----");
 			click(ELEMENT_EVERYONE_TAB);
 		}
 		if(waitForAndGetElement(ELEMENT_EVERYONE_TAB_ACTIVE,5000,0) == null)
 			clickByJavascript(ELEMENT_EVERYONE_TAB);
-		waitForAndGetElement(By.linkText(peopleName),DEFAULT_TIMEOUT,1,2);
+		peoSearch.searchPeople(false,peopleName);
+		waitForAndGetElement("//a[contains(text(),'" + peopleName + "')]",DEFAULT_TIMEOUT,1,2);
 		if(isElementNotPresent(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName)))
 			resetConnection(peopleName);
 		info("-----Click connect to people-----");
-		Utils.pause(2000);
-		clickByJavascript(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
+		Utils.pause(3000);
+		click(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
 		info("---Verify Connect button is disappeared----");
+		if(waitForElementNotPresent(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName),5000,0)!=null)
+			click(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
 		waitForElementNotPresent(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
+		
 		info("-----Verify Cancel request button is displayed-----");
 		waitForAndGetElement(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName),5000, 1);
 	}
@@ -93,8 +101,12 @@ public class PeopleConnection extends SocialBase {
 		}
 		else
 			clickByJavascript(ELEMENT_REQUESTS_RECEIVED_TAB);
+		waitForAndGetElement(ELEMENT_REQUESTS_RECEIVED_TAB_ACTIVE);
 		info("----Confirm the invitation from user '"+peopleName+"' ");
 		clickByJavascript(ELEMENT_CONFIRM_BUTTON.replace("${peopleName}", peopleName));
+		if(waitForElementNotPresent(ELEMENT_CONFIRM_BUTTON.replace("${peopleName}", peopleName),15000,0) != null){
+			clickByJavascript(ELEMENT_CONFIRM_BUTTON.replace("${peopleName}", peopleName));
+		}
 		waitForElementNotPresent(ELEMENT_CONFIRM_BUTTON.replace("${peopleName}", peopleName));
 		info("----Go to My connections tab----");
 		clickByJavascript(ELEMENT_MY_CONNECTIONS_TAB);
@@ -179,6 +191,9 @@ public class PeopleConnection extends SocialBase {
 		waitForAndGetElement(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName));
 		info("---Cancel the invitation to user '"+peopleName+"'-----");
 		click(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName));
+		if(waitForElementNotPresent(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName),15000,0) != null){
+			click(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName));
+		}
 		waitForElementNotPresent(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", peopleName));
 		info("---Go to Everyone tab----");
 		click(ELEMENT_EVERYONE_TAB);
@@ -206,7 +221,6 @@ public class PeopleConnection extends SocialBase {
 		}
 		else
 			click(ELEMENT_EVERYONE_TAB);
-		peoSearch.searchPeople(true,user);
 		waitForAndGetElement(By.linkText(user));
 		if (waitForAndGetElement(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", user), 5000, 0) != null){
 			click(ELEMENT_CANCEL_REQUEST_BUTTON.replace("${peopleName}", user));

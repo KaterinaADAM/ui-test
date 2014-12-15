@@ -344,10 +344,11 @@ public class WikiBase extends PlatformBase{
 	public final By ELEMENT_WIKI_TITLE_PREVIEW = By.xpath("//div[@class='uiWikiPageTitle']");
 	
 	//================== PLF4/Common function for Wiki ==================//
-	public WikiBase(){
+	public WikiBase(String...plfVersion){
 		ieFlag = super.ieFlag;
+		this.plfVersion = plfVersion.length>0?plfVersion[0]:"4.1";
 	}
-	
+
 	public WikiBase(WebDriver dr){
 		this.driver = dr;
 	}
@@ -400,10 +401,10 @@ public class WikiBase extends PlatformBase{
 		Utils.pause(500);
 		//mouseOver(ELEMENT_ADD_PAGE_LINK, true);
 		clickByJavascript(ELEMENT_ADD_PAGE_LINK);
-		if (isElementNotPresent(ELEMENT_BLANK_PAGE_LINK))
-			clickByJavascript(ELEMENT_BLANK_PAGE_LINK_41);
-		else
+		if (this.plfVersion.equalsIgnoreCase("4.0"))
 			clickByJavascript(ELEMENT_BLANK_PAGE_LINK);
+		else
+			clickByJavascript(ELEMENT_BLANK_PAGE_LINK_41);
 		Utils.pause(1000);
 	}
 

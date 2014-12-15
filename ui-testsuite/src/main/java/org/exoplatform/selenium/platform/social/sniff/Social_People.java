@@ -2,6 +2,7 @@ package org.exoplatform.selenium.platform.social.sniff;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.HomePageActivity;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.ManageAccount.userType;
@@ -258,20 +259,20 @@ public class Social_People extends SocialBase {
 
 		/*Step 1: Search people*/ 
 		//Enter name of people into search text box and press Enter
-		peoSearch.searchPeople(true,user1);
+		peoSearch.searchPeople(false,user1);
 		//Display all results match with keyword 
 		waitForAndGetElement("//*[contains(text(),'"+user1+"')]");
-		peoSearch.searchPeople(true,"", "", "");
+		peoSearch.searchPeople(false,"", "", "");
 
 		//Search by Role/Skill:
 		//Enter text into field skill and press Enter
-		peoSearch.searchPeople(true,"", "", nameOfSkill);
+		peoSearch.searchPeople(false,"", "", nameOfSkill);
 		//Display all results match with keyword 
 		waitForAndGetElement("//*[contains(text(),'"+user1+"')]");
-		peoSearch.searchPeople(true,"", "", "");
+		peoSearch.searchPeople(false,"", "", "");
 
 		//Enter text into Position field and press Enter
-		peoSearch.searchPeople(true,"",nameOfPosition);
+		peoSearch.searchPeople(false,"",nameOfPosition);
 		//Display all results match with keyword 
 		waitForAndGetElement("//*[contains(text(),'"+user1+"')]");
 		peoSearch.searchPeople(true,"", "", "");
@@ -291,7 +292,7 @@ public class Social_People extends SocialBase {
 	@Test
 	public void test07_ViewAndEditUserProfile(){
 		//Declare variable
-		String firstName="John update";
+		String firstName="update John";
 		String lastName = "Smith update";
 		String email = "john1.smith1@acme.exoplatform.com";
 		String file = "ECMS_DMS_SE_Upload_imgfile.jpg";
@@ -353,7 +354,7 @@ public class Social_People extends SocialBase {
 		peoPro.goToUserProfile(user);
 
 		//Click on My network tab
-		click(peoConn.ELEMENT_CONNECTION_OF_USER);
+		clickByJavascriptWithClassName("uiIconAppconnections uiIconDefaultApp");
 		click(peoConn.ELEMENT_MY_CONNECTIONS_TAB);
 
 		//Verify there is not any user in my network tab
@@ -366,16 +367,20 @@ public class Social_People extends SocialBase {
 
 		//Login by invited users, go to My Connections/Requests Received
 		magAcc.userSignIn(userType.DEVELOPER);
+		goToMyConnections();
 		//Another user Ignore the invitation
 		peoConn.acceptInvitation(user);
 
 		/*Step 1: View Connections list*/ 
 		//Click on name or avatar
-		click(peoConn.ELEMENT_MY_CONNECTIONS_TAB);
-		click(By.linkText(user));
+
+		peoPro.goToUserProfile(user);
 		
-		//Click connection of user
-		click(peoConn.ELEMENT_CONNECTION_OF_USER);
+		//Click on My network tab
+		clickByJavascriptWithClassName("uiIconAppconnections uiIconDefaultApp");
+		click(peoConn.ELEMENT_MY_CONNECTIONS_TAB);
+		peoSearch.searchPeople(false, "");
+
 		//Display user's relation
 		waitForAndGetElement(peoConn.ELEMENT_PEOPLE_SEARCH.replace("${peopleName}", user1));
 		waitForAndGetElement(peoConn.ELEMENT_PEOPLE_SEARCH.replace("${peopleName}", user2));
@@ -396,7 +401,7 @@ public class Social_People extends SocialBase {
 	@Test
 	public void test09_ViewProfileOfOtherUser(){
 		//Declare variable
-		String firstName="Mary update";
+		String firstName="update Mary";
 		String lastName = "Williams update";
 		String email = "mary1.williams1@acme.exoplatform.com";
 		String typeOfGender ="Female";
@@ -453,7 +458,9 @@ public class Social_People extends SocialBase {
 		//magAcc.signIn(user_login1, DATA_PASS);
 		navToolBar.goToMyProfile();
 		peoPro.editUserBasicInformation(oldFirstnName, oldLastName);
+		Utils.pause(2000);
 		peoPro.removeUserExperience();
+		Utils.pause(2000);
 		peoPro.removeUserContact(true, true, true);
 	}
 }

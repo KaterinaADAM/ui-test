@@ -52,7 +52,7 @@ public class ManageScript extends EcmsBase{
 		info("-- Adding a new Script --");
 		String content = Utils.getFileContent(scriptFileContent);
 		Utils.pause(500);
-		type(ELEMENT_SCRIPT_CONTENT, content, true);		
+		type(ELEMENT_SCRIPT_CONTENT, content, true,0,false);		
 		type(ELEMENT_SCRIPT_LABEL, scriptLabel, true);
 		type(ELEMENT_SCRIPT_NAME, scriptName, true);
 
@@ -68,7 +68,7 @@ public class ManageScript extends EcmsBase{
 		click(ELEMENT_EDIT_SCRIPT_ICON.replace("${scriptLabel}", scriptName));
 		if (!newScriptFileContent.isEmpty()){
 			String content = Utils.getFileContent(newScriptFileContent);
-			type(ELEMENT_SCRIPT_CONTENT, content, true);
+			type(ELEMENT_SCRIPT_CONTENT, content, true,0,false);
 		}
 		if (enableVersion){
 				click(ELEMENT_ENABLE_VERSION, 2);
@@ -89,7 +89,7 @@ public class ManageScript extends EcmsBase{
 	public void deleteScript(String scriptLabel){
 		info("-- Deleting Script...-- " + scriptLabel);
 		Utils.pause(500);
-		click(ELEMENT_DELETE_SCRIPT_ICON.replace("${scriptLabel}", scriptLabel));
+		waitForAndGetElement(ELEMENT_DELETE_SCRIPT_ICON.replace("${scriptLabel}", scriptLabel)).click();
 		magAlert.acceptAlert();
 		waitForTextNotPresent(scriptLabel);
 	}

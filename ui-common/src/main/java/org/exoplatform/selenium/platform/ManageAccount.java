@@ -296,12 +296,12 @@ public class ManageAccount extends PlatformBase {
 
 		navTool.goToMyProfile();
 		if (pos != null){
-			mouseOverAndClick(ELEMENT_EDIT_POSITION);
+			clickByJavascriptWithClassName("uiIconEdit");
 			type(ELEMENT_POSITION_TEXTBOX_EDIT, pos, true);
 			click(ELEMENT_EDIT_POSITION_SAVE_BUTTON);
 		}
 		if (first != null || last != null || email != null){
-			click(ELEMENT_EDIT_BASIC_INFORMATION);
+			clickByJavascriptWithClassName("uiIconEdit",1);
 			if (first != null){
 				type(ELEMENT_FIRST_NAME_TEXTBOX_EDIT, first, true);
 			}
@@ -312,6 +312,7 @@ public class ManageAccount extends PlatformBase {
 				type(ELEMENT_EMAIL_TEXTBOX_EDIT, email, true);
 			}
 			click(ELEMENT_EDIT_BASIC_INFO_SAVE_BUTTON);
+			waitForElementNotPresent(ELEMENT_EDIT_BASIC_INFO_SAVE_BUTTON);
 		}
 	}
 

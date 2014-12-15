@@ -6,6 +6,8 @@ import javax.management.Notification;
 
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.Utils;
+import org.exoplatform.selenium.platform.ecms.EcmsBase;
+import org.exoplatform.selenium.platform.ecms.contentexplorer.SitesExplorer;
 import org.exoplatform.selenium.platform.social.PeopleConnection;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -20,6 +22,7 @@ public class NavigationToolbar extends PlatformBase {
 	BrandingManagement brandMag;
 	PeopleConnection peoCon;
 	HomePageActivity hpAct;
+	
 
 	Notification noti;
 	
@@ -315,6 +318,8 @@ public class NavigationToolbar extends PlatformBase {
 
 	//Enter Sites Management Form 
 	public void goToSiteExplorer(){
+		SitesExplorer siteE;
+		siteE = new SitesExplorer(driver);
 		Utils.pause(500);
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
@@ -331,6 +336,7 @@ public class NavigationToolbar extends PlatformBase {
 		//mouseOverAndClick(ELEMENT_LINK_SETUP);
 		//mouseOver(ELEMENT_LINK_SETUP, true);
 		clickByJavascript(ELEMENT_MENU_CONTENT_LINK,2);
+		waitForAndGetElement(siteE.ELEMENT_SITE_EXPLORER_PAGE);
 		//click(ELEMENT_MENU_SITE_EXPLORER);
 		Utils.pause(2000);
 	}
@@ -365,10 +371,11 @@ public class NavigationToolbar extends PlatformBase {
 	 * @author lientm
 	 */
 	public void goToPersonalDocuments(){
+		EcmsBase ecms = new EcmsBase(driver);
 		info("Go to Intranet/Documents");
 		Utils.pause(500);
 		click(ELEMENT_PERSONAL_DOCUMENTS);
-		waitForAndGetElement(By.id("UIFileViewCheckBox"), 3000, 1, 2);
+		waitForAndGetElement(ecms.ELEMENT_PERSONAL_DRIVE);
 		//waitForTextPresent("Personal Documents");
 	}
 
@@ -643,17 +650,18 @@ public class NavigationToolbar extends PlatformBase {
 				break;
 			}
 			//mouseOverAndClick(ELEMENT_LINK_SETUP);
-			mouseOver(ELEMENT_LINK_SETUP, true);
+			click(ELEMENT_LINK_SETUP, 2);
 			if (waitForAndGetElement(ELEMENT_MENU_PORTAL, 5000, 0)!= null) {	
 				mouseOver(ELEMENT_MENU_PORTAL, true);
-				if (waitForAndGetElement(ELEMENT_MENU_EMAIL_NOTIFICATION, 5000, 0)!= null){
-					click(ELEMENT_MENU_EMAIL_NOTIFICATION);
+				if (waitForAndGetElement(ELEMENT_MENU_EMAIL_NOTIFICATION, 5000, 0,2)!= null){
+					click(ELEMENT_MENU_EMAIL_NOTIFICATION,2);
 					break;
 				}
 			}
 			info("Retry...[" + repeat + "]");
 		}
 		Utils.pause(1000);
+		waitForAndGetElement(ELEMENT_NOTIFICATION_ADMIN_PAGE);
 	}
 	
 	/**
@@ -662,6 +670,6 @@ public class NavigationToolbar extends PlatformBase {
 	public void goToNotificationSettings(){
 		info("Go to notification settings");
 		click(ELEMENT_ACCOUNT_NAME_LINK);
-		click(ELEMENT_NOTIFICATION_SETTING_MENU);
+		click(ELEMENT_NOTIFICATION_SETTING_MENU,2);
 	}
 }

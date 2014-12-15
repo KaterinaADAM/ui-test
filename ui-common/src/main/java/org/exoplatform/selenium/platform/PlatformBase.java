@@ -172,6 +172,7 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_MENU_SEARCH_ICON = By.className("uiIconPLF24x24Search");
 	public final By ELEMENT_MENU_HELP_ICON = By.className("uiIconPLF24x24Help");
 	public final By ELEMENT_MENU_EMAIL_NOTIFICATION = By.xpath("//a[text()='Email Notifications']");
+	public final By ELEMENT_NOTIFICATION_ADMIN_PAGE = By.xpath(".//*[@id='notificationAdmin']/h3[contains(text(),'Email Notifications Administration')]");
 
 	//IDE
 	public final By ELEMENT_LINK_IDE = By.linkText("IDE");
@@ -666,7 +667,7 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_WIKI_LINK_IN_SPACE = By.cssSelector("i[class='uiIconAppWikiPortlet uiIconDefaultApp']");
 
 	//----------------------Gmail form ---------------------------------------------------
-	public final String GMAIL_URL = "https://mail.google.com";
+	public final String GMAIL_URL = "https://gmail.com";
 	public final String EMAIL_ADDRESS1 = "exomailtest01@gmail.com";
 	public final String EMAIL_ADDRESS2 = "exoservice@gmail.com";
 	public final String EMAIL_PASS = "exoadmin";
@@ -1270,7 +1271,9 @@ public class PlatformBase extends TestBase {
 
 				if (validate.length >0)
 					if (validate[0]){
-						((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "'");
+						inputsummary.clear();
+						inputsummary.sendKeys(data);
+//						((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "'");
 						if (inputsummary.getText().contains(data))
 							break;
 					}
@@ -1454,11 +1457,11 @@ public class PlatformBase extends TestBase {
 	}
 
 	//function open and go to mail
-	public void goToMail(String email, String pass){	
-		((JavascriptExecutor) driver).executeScript("window.open()");
-		for(String winHandle : driver.getWindowHandles()){
-			driver.switchTo().window(winHandle);
-		}
+	public void goToMail(String email, String pass){
+		Set<String> existingHandles = driver.getWindowHandles();
+		((JavascriptExecutor) driver).executeScript("window.open();");
+		String handle = FindNewWindowHandle(existingHandles, 12000);
+		driver.switchTo().window(handle);
 		info("Go to gmail");
 		driver.navigate().to(GMAIL_URL);
 		driver.manage().window().maximize();
@@ -1478,7 +1481,7 @@ public class PlatformBase extends TestBase {
 		type(ELEMENT_GMAIL_USERNAME, email, true);
 		type(ELEMENT_GMAIL_PASS, pass, true);
 		click(ELEMENT_GMAIL_SIGN_IN);
-		clearCache();
+		waitForElementNotPresent(ELEMENT_GMAIL_SIGN_IN);
 		click(ELEMENT_GMAIL_INBOX);
 		Utils.pause(1000);
 	}

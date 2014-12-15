@@ -79,7 +79,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Test case ID: 74725
 	 * Step 1: Check layout of activity
 	 */
-	@Test(priority = 0)
+	@Test(priority = 0,groups="activity")
 	public void test01_CheckLayoutOfActivities(){
 		//Declare variable
 		String activity1 = "activity747251";
@@ -90,12 +90,11 @@ public class Social_HomePage_Activity extends Activity {
 
 		//Create data
 		info("-- Create space --");
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, "");
 
 		info("-- Create new Webcontent --");
 		navToolBar.goToSiteExplorer();
-		actBar.addItem2ActionBar("addDocument", actBar.ELEMENT_NEW_CONTENT_LINK);
 		actBar.goToAddNewContent();
 		conTemp.createNewFile(nameWebContent, nameWebContent, "");
 		navToolBar.goToHomePage();
@@ -156,7 +155,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Test case ID: 95701
 	 * Step 1: Check the order of activities
 	 */
-	@Test(priority = 0)
+	@Test(priority = 0,dependsOnGroups="activity",alwaysRun=true)
 	public void test02_CheckOrderOfTheActivities(){
 		//Declare variable
 		String activity1 = "activity95701";
@@ -260,7 +259,6 @@ public class Social_HomePage_Activity extends Activity {
 
 		//Clear data
 		info("clear data");
-		navToolBar.goToHomePage();
 		activity.deleteActivity(activity1);
 		activity.deleteActivity(link);
 		activity.deleteActivity(fileDocument);
@@ -286,7 +284,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Test case ID: 67890
 	 * Step 1: Add comment for activity
 	 */
-	@Test
+	@Test(groups="activity")
 	public void test03_AddComment(){
 		//Declare variable
 		String activity1 = "activity 67890";
@@ -315,7 +313,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Test case ID: 74724
 	 * Step 1: - Delete a comment
 	 */
-	@Test
+	@Test(groups="activity")
 	public void test04_DeleteComment(){
 		//Declare variable
 		String activity1 = "activity 74724";
@@ -346,7 +344,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Test case ID: 74729
 	 * Step 1: Add comment with mention
 	 */
-	@Test
+	@Test(groups="activity")
 	public void test05_MentionAUserInComment(){
 		//Declare variable
 		String activity1 = "activity 74729";
@@ -361,7 +359,7 @@ public class Social_HomePage_Activity extends Activity {
 		//- Input text field is displayed in activity, click comment button to show comment textbox
 		//- Comment will be added into comment section of activity
 		info("-- Mention a user in comment --");
-		mentionActivity(false,activity1,user1);
+		mentionActivity(false,activity1,"Mary");
 
 		//Clear data
 		info("clear data");
@@ -373,7 +371,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Test case ID: 74728
 	 * Step 1: - Check view of comment
 	 */
-	@Test
+	@Test(groups="activity")
 	public void test06_ViewComments(){
 		//Declare variable
 		String activity1 = "activity 74728";
@@ -418,7 +416,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Step 1: Like/Unlike Activity
 	 * Step 2: Check Likes part
 	 */
-	@Test
+	@Test(groups="activity")
 	public void test07_LikeActivity(){
 		//Declare variable
 		String activity1 = "activity 67659";
@@ -437,6 +435,7 @@ public class Social_HomePage_Activity extends Activity {
 
 		//Login by invited users, go to My Connections/Requests Received
 		magAcc.userSignIn(userType.PUBLISHER);
+		goToMyConnections();
 		//An user click on Confirm button
 		peoConn.acceptInvitation(user);
 
@@ -470,6 +469,7 @@ public class Social_HomePage_Activity extends Activity {
 
 		//Clear data
 		info("clear data");
+		goToMyConnections();
 		peoConn.removeConnection(user1);
 		navToolBar.goToHomePage();
 		activity.deleteActivity(activity1);
@@ -481,7 +481,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Step 1: - Invite another user
 	 * Step 2: - Accept request
 	 */
-	@Test
+	@Test(groups="activity")
 	public void test08_RelationActivity(){
 		//Declare variable
 		String activity1 = "activity 74765";
@@ -501,6 +501,7 @@ public class Social_HomePage_Activity extends Activity {
 		/*Step 2: - Accept request*/
 		//- Login as user B and goto my Connection
 		magAcc.userSignIn(userType.PUBLISHER);
+		goToMyConnections();
 		//- Accept the request from user A
 		peoConn.acceptInvitation(user);
 
@@ -511,6 +512,7 @@ public class Social_HomePage_Activity extends Activity {
 		//Clear data
 		info("clear data");
 		magAcc.userSignIn(userType.ADMIN);
+		goToMyConnections();
 		peoConn.removeConnection(user1);
 		navToolBar.goToHomePage();
 		activity.deleteActivity(activity1);
@@ -521,7 +523,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Test case ID: 74789
 	 * Step 1: - Create a new Space
 	 */
-	@Test
+	@Test(groups="activity")
 	public void test09_CreateANewSpace(){
 		//Declare variable
 		String spaceName = "space74789";
@@ -562,7 +564,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Test case ID: 74792
 	 * Step 1: Promote a member as manager
 	 */
-	@Test
+	@Test(groups="activity")
 	public void test10_PromoteAMemberAManager(){
 		//Declare variable
 		String spaceName = "space74792";
@@ -570,7 +572,7 @@ public class Social_HomePage_Activity extends Activity {
 
 		//Create data
 		info("-- Create space --");
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, spaceDesc);
 
 		//- Check homepage
@@ -595,7 +597,7 @@ public class Social_HomePage_Activity extends Activity {
 		//- User become member of Space
 		magMember.userAcceptInvitationToJoinSpace(true,userType.PUBLISHER,spaceName);
 
-		/*Step 1: Promote a member as manager*/ 
+		/*Step 1: Promote a member as manager */
 		//- Connect to Intranet
 		magAcc.userSignIn(userType.ADMIN);
 
@@ -620,6 +622,7 @@ public class Social_HomePage_Activity extends Activity {
 
 		//- A comment is added: $user has been promoted as space's manager.
 		String comment = waitForAndGetElement(ELEMENT_COMMENT_BOX_SPACE_ACTIVITY.replace("${activityText}", spaceName)+"/a[text()='"+user1+"']/..").getText();
+		info("comment is " + comment +" vs "+ user1 + " has been promoted as the space's manager");
 		assert comment.contains(user1+" has been promoted as the space's manager");
 
 		//Clear data
@@ -633,7 +636,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Test case ID: 74791
 	 * Step 1: - Rename space
 	 */
-	@Test
+	@Test(groups="activity")
 	public void test11_RenameASpace(){
 		//Declare variable
 		String spaceName = "space74791";
@@ -642,7 +645,7 @@ public class Social_HomePage_Activity extends Activity {
 
 		//Create data
 		info("-- Create space --");
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, spaceDesc);
 
 		//- Check homepage
@@ -689,7 +692,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Step 2: - Invite other user
 	 * Step 3: - User B join space
 	 */
-	@Test
+	@Test(groups="activity")
 	public void test12_UserJoinASpace(){
 		//Declare variable
 		String spaceName = "space74790";
@@ -701,7 +704,7 @@ public class Social_HomePage_Activity extends Activity {
 		//- Click [Add new space] button
 		//- Fill the information and click [create] to create a space
 		info("-- Create space --");
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, spaceDesc);
 
 		//- Check homepage
@@ -757,7 +760,7 @@ public class Social_HomePage_Activity extends Activity {
 	 * Test case ID: 74794
 	 * Step 1: - Change Avatar
 	 */
-	@Test
+	@Test(groups="activity")
 	public void test13_UpdateProfileChangeOfAvatar(){
 		//Declare variable
 		String file = "ECMS_DMS_SE_Upload_imgfile.jpg";
@@ -782,10 +785,10 @@ public class Social_HomePage_Activity extends Activity {
 	 * Test case ID: 74795
 	 * Step 1: - Change Avatar
 	 */
-	@Test
+	@Test(groups="activity")
 	public void test14_UpdateProfileUpdateBasicInformation(){
 		//Declare variable
-		String firstName="John update";
+		String firstName="update John";
 		String lastName = "Smith update";
 		String email = "john1.smith1@acme.exoplatform.com";
 		String oldFirstnName = "John";

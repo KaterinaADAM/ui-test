@@ -29,6 +29,7 @@ public class PeopleProfile extends PlatformBase {
 	// Go to Account Name link > My Profile	
 	// Edit user in My Profile
 	// Basic information
+	public final String ELEMENT_HEADER_NAME = "//div[@id='UIBreadCrumbsNavigationPortlet']//div[contains(text(),'${name}')]";
 	public final By ELEMENT_EDIT_HEADER_BUTTON = By.xpath("//*[@id='UIHeaderSection']//../*[@class='uiIconEdit']");
 	public final By ELEMENT_EDIT_INFORMATION_BUTTON = By.xpath("//*[@id='UIBasicInfoSection']//../*[@class='uiIconEdit']");
 
@@ -93,14 +94,14 @@ public class PeopleProfile extends PlatformBase {
 		String firstName = (String) (params.length > 0 ? params[0]: "");
 		String lastName = (String) (params.length > 1 ? params[1]: "");
 		String email = (String) (params.length > 2 ? params[2]: "");
-		click(ELEMENT_EDIT_INFORMATION_BUTTON);
+		getElementByJavascript("uiIconEdit",1).click();
 		if(firstName!="")
 			type(ELEMENT_INPUT_FIRSTNAME, firstName, true);
 		if(lastName!="")
 			type(ELEMENT_INPUT_LASTNAME, lastName, true);
 		if(email!="")
 			type(ELEMENT_INPUT_EMAIL, email, true);
-		click(ELEMENT_SAVE_UPDATE_INFO);
+		getElementByJavascript("btn btn-primary").click();
 		waitForElementNotPresent(ELEMENT_SAVE_UPDATE_INFO);
 		Utils.pause(1000);
 	}
@@ -144,7 +145,11 @@ public class PeopleProfile extends PlatformBase {
 		if(addURLS){
 			info("-- Adding an URL --");
 			if (isTextPresent("No contact link entered")){
-				getElementByJavascript("uiIconPlus uiIconLightGray",2).click();
+//				info("test" + waitForAndGetElement(ELEMENT_ADD_URLS_BUTTON) + " and " + getElementByJavascript("uiIconPlus uiIconLightGray",1) + " and " + getElementByJavascript("uiIconPlus uiIconLightGray"));
+				
+				((JavascriptExecutor) driver).executeScript("return document.getElementsByClassName('uiIconPlus uiIconLightGray')[2].click();");
+//				click("//*[@class='uiContactSection']//../*[text()='URLs:']//../..//*[@class='uiIconPlus uiIconLightGray']");
+//				getElementByJavascript("uiIconPlus uiIconLightGray",3).click();
 			}
 			type(ELEMENT_INPUT_FIELD_URLS, nameOfURLS, true);
 		}
@@ -162,15 +167,16 @@ public class PeopleProfile extends PlatformBase {
 	public void editUserExperience(String nameOfOrganization, String nameOfPosition, Object...params){
 		info("-- Edit the user's experience --");
 		String nameOfSkill = (String) (params.length > 0 ? params[0]: "");
-		click(ELEMENT_EDIT_EXPERIENCE_BUTTON);
+		getElementByJavascript("uiIconEdit",3).click();
 		if(isTextPresent("You have not entered any experience yet.")){
-			click(ELEMENT_ADD_EXPERIENCE_BUTTON);
+			((JavascriptExecutor) driver).executeScript("return document.getElementsByClassName('uiIconPlus uiIconLightGray')[0].click();");
+//			getElementByJavascript("uiIconPlus uiIconLightGray").click();
 		}
 		type(ELEMENT_INPUT_FIELD_ORGANIZATION, nameOfOrganization, true);
 		type(ELEMENT_INPUT_FIELD_POSITION, nameOfPosition, true);
 		if(nameOfSkill!="")
 			type(ELEMENT_INPUT_FIELD_SKILL, nameOfSkill, true);
-		click(ELEMENT_SAVE_UPDATE_INFO);
+		getElementByJavascript("btn btn-primary").click();
 		waitForElementNotPresent(ELEMENT_SAVE_UPDATE_INFO);
 	}
 
@@ -180,13 +186,14 @@ public class PeopleProfile extends PlatformBase {
 	 */
 	public void removeUserExperience(){
 		info("-- Remove the user's experience --");
-		click(ELEMENT_EDIT_EXPERIENCE_BUTTON);
-		waitForAndGetElement(ELEMENT_REMOVE_EXPERIENCE_BUTTON);
-		click(ELEMENT_REMOVE_EXPERIENCE_BUTTON);
+		getElementByJavascript("uiIconEdit",3).click();
+		waitForAndGetElement(ELEMENT_INPUT_FIELD_ORGANIZATION);
+		
+		getElementByJavascript("uiIconClose uiIconLightGray").click();
 		button.ok();
 		Utils.pause(500);
 		waitForElementNotPresent(ELEMENT_REMOVE_EXPERIENCE_BUTTON);
-		click(ELEMENT_SAVE_UPDATE_INFO);
+		getElementByJavascript("btn btn-primary").click();
 		waitForElementNotPresent(ELEMENT_SAVE_UPDATE_INFO);
 	}
 
@@ -198,19 +205,27 @@ public class PeopleProfile extends PlatformBase {
 		info("-- Remove the user's contact --");
 		WebElement e = getElementByJavascript("uiIconEdit", 2);
 		e.click();
+		waitForAndGetElement(ELEMENT_GENDER_BOX);
 		if(phone){
 			getElementByJavascript("uiIconClose uiIconLightGray").click();
-			assert getElementByJavascript("uiIconClose uiIconLightGray") == null;
+			waitForMessage("No phone number entered");
 		}
 		if(im){
-			waitForAndGetElement(ELEMENT_REMOVE_IMS_BUTTON);
-			click(ELEMENT_REMOVE_IMS_BUTTON);
-			waitForElementNotPresent(ELEMENT_REMOVE_IMS_BUTTON);
+			if(isTextPresent("No phone number entered"))
+				getElementByJavascript("uiIconClose uiIconLightGray").click();
+			else
+				getElementByJavascript("uiIconClose uiIconLightGray",1).click();
+			waitForMessage("No IM handle entered");
 		}
 		if(url){
-			waitForAndGetElement(ELEMENT_REMOVE_URLS_BUTTON);
-			click(ELEMENT_REMOVE_URLS_BUTTON);
-			waitForElementNotPresent(ELEMENT_REMOVE_URLS_BUTTON);
+			if(isTextPresent("No phone number entered") && isTextPresent("No IM handle entered"))
+				getElementByJavascript("uiIconClose uiIconLightGray").click();
+			else
+				if (isTextPresent("No phone number entered") || isTextPresent("No IM handle entered"))
+					getElementByJavascript("uiIconClose uiIconLightGray",1).click();
+				else
+					getElementByJavascript("uiIconClose uiIconLightGray",2).click();
+			waitForMessage("No contact link entered");
 		}
 		getElementByJavascript("btn btn-primary").click();
 		waitForElementNotPresent(ELEMENT_SAVE_UPDATE_INFO);
@@ -259,6 +274,7 @@ public class PeopleProfile extends PlatformBase {
 		info("--Go to User's Profile--");
 		peoSearch.searchPeople(false,userName);
 		click(By.linkText(userName));
+		waitForAndGetElement(ELEMENT_HEADER_NAME.replace("${name}", userName));
 		waitForAndGetElement(ELEMENT_MY_PROFILE_TAB);
 	}
 }

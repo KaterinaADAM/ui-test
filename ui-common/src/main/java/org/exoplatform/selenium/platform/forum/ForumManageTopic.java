@@ -424,7 +424,7 @@ public class ForumManageTopic extends ForumBase {
 			String[] userGroup, boolean canview, boolean canpost,
 			boolean... options) {
 		info("Start a topic");
-		// goToStartTopic();
+		 goToStartTopic();
 		inputDataStartTopic(title, message, file, type, userGroup, canview,
 				canpost, options);
 		click(ELEMENT_SUBMIT_BUTTON);

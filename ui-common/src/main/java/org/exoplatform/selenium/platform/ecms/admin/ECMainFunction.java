@@ -91,7 +91,7 @@ public class ECMainFunction extends EcmsBase{
 		if (waitForAndGetElement(ELEMENT_DOCUMENT_LINK, 5000, 0) == null){
 			click(ELEMENT_TEMPLATE_TAB);
 		}
-		click(ELEMENT_LIST_LINK);
+		waitForAndGetElement(ELEMENT_LIST_LINK).click();
 		waitForAndGetElement(By.xpath("//*[text()='Add Template']"));
 	}
 	

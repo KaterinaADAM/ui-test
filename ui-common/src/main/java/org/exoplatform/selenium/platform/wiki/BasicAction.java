@@ -72,8 +72,6 @@ public class BasicAction extends Permission{
 		String message = (String) (option.length > 1 ? option[1] : "");	
 		goToAddBlankPage();
 		Utils.pause(500);
-		driver.navigate().refresh();
-		Utils.pause(2000);
 
 		info("-- Add a wiki page from blank page --");
 		if (mode == 1){ 

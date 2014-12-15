@@ -58,6 +58,7 @@ public class SpaceManagement extends SocialBase {
 	public final By     ELEMENT_USER_GROUP_CHECKBOX     = By.xpath("//*[@id='useExistingGroup']");
 
 	//Edit space
+	public final By ELEMENT_SPACE_CONFIGURATION = By.xpath("//h3[contains(text(),'Space Configuration')]");
 	public final By     ELEMENT_SPACE_SETTING_TAB       = By.xpath("//div[contains(@class,'MiddleTab') and text()='Settings']");
 	public final By     ELEMENT_CHANGE_AVATAR_BUTTON      = By.xpath("//button[text()='Change Picture']");
 	public final By 	ELEMENT_UPLOAD_NAME 			= By.name("file");
@@ -283,6 +284,7 @@ public class SpaceManagement extends SocialBase {
 //		if (waitForAndGetElement(button.ELEMENT_OK_BUTTON, 3000, 0, 2) != null){
 //			click(button.ELEMENT_OK_BUTTON);
 //		}
+		waitForAndGetElement(button.ELEMENT_OK_BUTTON,iTimeout);
 		button.ok();
 		Utils.pause(1000);
 		waitForElementNotPresent(By.xpath(ELEMENT_ACTION_USER_ON_SPACE.replace("${spaceName}", name).replace("${action}", "Delete")), iTimeout);
@@ -326,21 +328,27 @@ public class SpaceManagement extends SocialBase {
 	public void gotoEditSpace(String name){  
 		info("-- Go to Edit space page --");
 		doAction("Edit", name);
-		waitForAndGetElement(ELEMENT_SPACE_SETTING_MENU,60000);    
+		waitForAndGetElement(ELEMENT_SPACE_CONFIGURATION,60000);    
 	}
 	/**
 	 * Change avatar of a space
 	 * @param file : File path of new avatar
 	 */
 	public void changeAvatar(String file){
+		PeopleProfile peo = new PeopleProfile(driver, this.plfVersion);
 		info("-- changeAvatar --");
 		click(ELEMENT_CHANGE_AVATAR_BUTTON);
+		if(System.getProperty("browser").equalsIgnoreCase("firefox")){
 		WebElement upload = waitForAndGetElement(ELEMENT_UPLOAD_NAME, DEFAULT_TIMEOUT, 1, 2);
 		((JavascriptExecutor)driver).executeScript("arguments[0].style.visibility = 'visible'; arguments[0].style.height = '1px'; " +
 				"arguments[0].style.width = '1px'; arguments[0].style.opacity = 1", upload);
 		((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block'; arguments[0].style.visibility = 'visible'", upload);
 		upload.sendKeys(Utils.getAbsoluteFilePath(file));
 		Utils.pause(3000);
+		}else if(System.getProperty("browser").equalsIgnoreCase("iexplorer")){
+			waitForAndGetElement(peo.ELEMENT_SELECT_FILE_BUTTON).click();
+			uploadFile(file);
+		}
 		info("Upload file " + Utils.getAbsoluteFilePath(file));
 		switchToParentWindow();
 		Utils.pause(1000);

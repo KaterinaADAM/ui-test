@@ -71,7 +71,7 @@ public class Notification extends SocialBase {
 	public final By ELEMENT_NEVER_NOTIFY_ME = By.id("checkBoxDeactivate");
 
 	//==================Email notification=================
-	
+
 	public final String MSG_CONTENT_EMAIL_CONNECTION_REQUEST = "${user} has sent you a connection request. Accept the connection request and start collaborating with ${user} ?";
 	public final String ELEMENT_NOTIFICATION_EMAIL_SUBJECT = "//td[contains(text(),'${subject}')]";
 	public final String MSG_CONNECTION_REQUEST_SUBJECT = "New connection request";
@@ -96,7 +96,7 @@ public class Notification extends SocialBase {
 	public final String MSG_CONTENT_EMAIL_COMMENT_ACTIVITY = "${user} has posted a comment on your activity. See below :</br>${activity}</br>${user}:</br>${comment}";
 	public final String MSG_CONTENT_EMAIL_POST_MY_ACTIVITY = "${user} has posted on your activity stream. See the post below :</br>${activity}";
 	public final String MSG_CONTENT_EMAIL_POST_SPACE_ACTIVITY = "${user} has posted an activity in the ${space} space. See the post below:</br>${activity}";
-	public final String MSG_CONTENT_EMAIL_JOIN_SPACE = "${user} has requested access to the ${space} space where you are a manager. Would you like to authorize ${user} to join ?";
+	public final String MSG_CONTENT_EMAIL_JOIN_SPACE = "${user} has requested access to the ${space} space where you are a manager. Would you like to authorize ${user} to join the space?";
 	public final String MSG_CONTENT_EMAIL_INVITATION_SPACE = "You've received an invitation to join the ${space} space. Interested to join the space and access its documents and applications ?";
 	public final String MSG_CONTENT_EMAIL_MENTION = "${user} has mentioned you in the following post:</br>${activity}";
 	public final String MSG_CONTENT_EMAIL_NEW_USER = "${user} has joined eXo. Interested to connect and start collaborate with ${user}";
@@ -128,12 +128,14 @@ public class Notification extends SocialBase {
 	public void enableNotification(String title,boolean option){
 		if(!option){
 			info("Disable notification " + title);
-			click(ELEMENT_ENABLE.replace("${title}", title).replace("${enable}", "YES"));
+			if(waitForAndGetElement(ELEMENT_ENABLE.replace("${title}", title).replace("${enable}", "YES"),5000,0) != null)
+				waitForAndGetElement(ELEMENT_ENABLE.replace("${title}", title).replace("${enable}", "YES")).click();
 			waitForAndGetElement(ELEMENT_ENABLE.replace("${title}",title).replace("${enable}", "NO"));
 		}
 		else{
 			info("Enable notification " + title);
-			click(ELEMENT_ENABLE.replace("${title}", title).replace("${enable}", "NO"));
+			if(waitForAndGetElement(ELEMENT_ENABLE.replace("${title}", title).replace("${enable}", "NO"),5000,0) != null)
+				waitForAndGetElement(ELEMENT_ENABLE.replace("${title}", title).replace("${enable}", "NO")).click();
 			waitForAndGetElement(ELEMENT_ENABLE.replace("${title}",title).replace("${enable}", "YES"));
 		}
 	}
@@ -146,7 +148,7 @@ public class Notification extends SocialBase {
 	public void enableSendNotificationRight(String activity, boolean option){
 		button = new Button(driver);
 		if(option){
-			info("Enble to send notification instantly");
+			info("Enable to send notification instantly");
 			check(ELEMENT_NOTIFY_RIGHT_INPUT.replace("${activity}", activity),2);
 		}else{
 			info("Disable to send notification instantly");
@@ -179,7 +181,7 @@ public class Notification extends SocialBase {
 			waitForAndGetElement(By.linkText(action));
 		if(action2 != "")
 			waitForAndGetElement(By.linkText(action2));
-		
+
 		assert text.contains(MSG_NOTIFICATION_EMAIL_BOTTOM);
 		waitForAndGetElement(By.linkText("click here"));
 	}

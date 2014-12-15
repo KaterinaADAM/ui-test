@@ -77,6 +77,7 @@ public class Social_Space_SpaceManagement_WikiPageAccess extends Permalink{
 		spaceMag.goToMySpacePage();
 		magMember.gotoEditSpace(spaceName);
 		spaceMag.goToSpaceMenu("Wiki");
+		waitForAndGetElement(ELEMENT_WIKI_HOME_LINK);
 		addBlankWikiPage(title, content, 0);
 
 		//- From the list "More", choose the link "Permalink" and copy this link

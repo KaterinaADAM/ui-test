@@ -26,7 +26,7 @@ public class Social_Space_MemberManagement extends Activity{
 
 	//Space
 	SpaceManagement spaceMag;
-	
+
 	String user1="Mary Williams";
 	String user2="Jack Miller";
 
@@ -60,7 +60,7 @@ public class Social_Space_MemberManagement extends Activity{
 
 		//Create data
 		//Add new space
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, "");
 
 		/*Step 1: Change member's role*/ 
@@ -104,7 +104,7 @@ public class Social_Space_MemberManagement extends Activity{
 
 		//Create data
 		//Add new space
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, "");
 
 		/*Step 1: Invite/Accept user*/ 
@@ -113,7 +113,7 @@ public class Social_Space_MemberManagement extends Activity{
 		//- Click on User icon, select some users from list and click on Invite icon
 		magMember.managerInviteUserToJoinSpace(userType.ADMIN,spaceName,userType.PUBLISHER,false);
 		magMember.managerInviteUserToJoinSpace(userType.ADMIN,spaceName,userType.DEVELOPER,false);
-		
+
 		//- Login by invited users:
 		//+ Go to My space -> Invitations Received tab and click on Accept 
 		//- Space settings is displayed, focus on Member tab
@@ -125,7 +125,7 @@ public class Social_Space_MemberManagement extends Activity{
 		//- Space settings is displayed, focus on Member tab
 		//- Name of invited user is displayed on invited list.
 		magMember.userAcceptInvitationToJoinSpace(false,userType.DEVELOPER,spaceName);
-		
+
 		//-  Accepted user is displayed on Member List
 		//- After user ignored, the invitation is removed from Received Invitations list and this user does not displayed on Member list of space
 		magAcc.userSignIn(userType.ADMIN);
@@ -150,7 +150,7 @@ public class Social_Space_MemberManagement extends Activity{
 
 		//Create data
 		//Add new space
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, "");
 
 		//Invite/Accept user
@@ -188,10 +188,9 @@ public class Social_Space_MemberManagement extends Activity{
 
 		//Create data
 		//Add new space
-		magMember.goToMySpacePage();
+			magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, "");
-
-		/*Step 1: Remove user*/ 
+		/*Step 1: Remove user */
 		//- Invite a user become member of space
 		Utils.pause(3000);
 		magMember.managerInviteUserToJoinSpace(userType.ADMIN,spaceName,userType.PUBLISHER,false);
@@ -224,11 +223,11 @@ public class Social_Space_MemberManagement extends Activity{
 
 		//Create data
 		//Add new space
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName1, "");
 		magMember.goToMySpacePage();
 		magMember.addNewSpace(spaceName2, "");
-		
+
 		/*Step 1: Request/Accept user*/ 
 		//- Go to My space page and select All Spaces tab
 		//- Click on Request to Join button corresponding of a specific Space
@@ -236,7 +235,7 @@ public class Social_Space_MemberManagement extends Activity{
 		//- After send request, the button Request to Join is changed to Cancel
 		magMember.userRequestToJoinSpace(userType.PUBLISHER, spaceName1);
 		magMember.userRequestToJoinSpace(userType.PUBLISHER, spaceName2,false);
-		
+
 		//- Login by manager of requested space: Access space -> space setting -> member tab
 		//- Accept request by clicking on Validate or Decline icon
 		//- Verify requested user is displayed Member List
@@ -244,7 +243,7 @@ public class Social_Space_MemberManagement extends Activity{
 		//- After manager accept the request, sent user is member of space
 		//- Accepted user is displayed Member List
 		magMember.managerAcceptRequestFromUser(true,userType.ADMIN, userType.PUBLISHER,spaceName1);
-		
+
 		//Deny request by clicking on Validate or Decline icon
 		magMember.managerAcceptRequestFromUser(false,userType.ADMIN, userType.PUBLISHER,spaceName2,false);
 

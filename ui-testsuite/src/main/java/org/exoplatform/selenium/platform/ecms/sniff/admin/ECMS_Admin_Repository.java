@@ -159,7 +159,10 @@ public class ECMS_Admin_Repository extends PlatformBase{
 
 		//Login with user in the selected group and un lock that node
 		driver.close();
+		if("firefox".equals(System.getProperty("browser")))
 		driver = new FirefoxDriver();
+		else if("iexplorer".equals(System.getProperty("browser")))
+				driver = initIEDriver();
 		driver.get(baseUrl);
 		nav = new NavigationToolbar(driver);
 		magAcc = new ManageAccount(driver);

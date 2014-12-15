@@ -42,6 +42,7 @@ public class SitesExplorer extends EcmsBase{
 	//Button on the top-bar menu
 	//public final By ELEMENT_BUTTON_BACK_PREVIOUS_NODE = By.className("uiIconEcmsGoBack");
 	public final By ELEMENT_BUTTON_REFRESH_TOPBAR_MENU = By.className("uiIconRefresh");
+	public final By ELEMENT_SITE_EXPLORER_PAGE = By.id("UIJCRExplorerPortlet");
 
 	//Simple Search
 	public final By ELEMENT_SIMPLESEARCH_TEXTBOX = By.id("simpleSearch");
@@ -87,6 +88,9 @@ public class SitesExplorer extends EcmsBase{
 	
 	//Icons view
 	public final String ELEMENT_ICON_VIEW_NODE = "//span[@class='nodeName' and text()='${node}']";
+	
+	//Views on Sites explorer
+	public final By ELEMENT_ADMIN_VIEW = By.xpath("//a[@data-original-title='Admin']");
 	
 	/*================***==================*/
 

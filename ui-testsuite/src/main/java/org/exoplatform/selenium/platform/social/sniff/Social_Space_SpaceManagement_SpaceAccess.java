@@ -57,7 +57,7 @@ public class Social_Space_SpaceManagement_SpaceAccess  extends SocialBase{
 
 		/*Step 1: Access space*/ 
 		//- Create new space
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, "");
 
 		//- On Space list, click on space's name or avatar of space
@@ -96,7 +96,7 @@ public class Social_Space_SpaceManagement_SpaceAccess  extends SocialBase{
 		//- Login as user1
 		//- Add new hidden space
 		//- Add new space successfully
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName,"","Hidden","","","");
 		String url = driver.getCurrentUrl();
 
@@ -143,7 +143,7 @@ public class Social_Space_SpaceManagement_SpaceAccess  extends SocialBase{
 		//- Login as user1
 		//- Add new space with visible/closed
 		//- Add new space successfully
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName,"","Visible","Close","","");
 		String url = driver.getCurrentUrl();
 
@@ -160,6 +160,8 @@ public class Social_Space_SpaceManagement_SpaceAccess  extends SocialBase{
 		info("-- Verify Access Denied page --");
 		waitForAndGetElement(spaceMag.ELEMENT_ACCESS_DENIED_SPACE_PAGE);
 		String verifyText = "You must be invited by an administrator to the space "+spaceName+" to access this page.";
+
+		info("Text need to be verify "+waitForAndGetElement(spaceMag.ELEMENT_SPACE_ACCESS_INFO).getText());
 		Assert.assertTrue(waitForAndGetElement(spaceMag.ELEMENT_SPACE_ACCESS_INFO).getText().contains(verifyText));
 		
 		/*Clear data*/
@@ -183,7 +185,7 @@ public class Social_Space_SpaceManagement_SpaceAccess  extends SocialBase{
 		//- Login as user1
 		//- Add new space with visible/open
 		//- Add new space successfully
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName,"","Visible","Open","","");
 		String url = driver.getCurrentUrl();
 
@@ -230,7 +232,7 @@ public class Social_Space_SpaceManagement_SpaceAccess  extends SocialBase{
 		//- Login as user1
 		//- Add new space with visible/validation
 		//- Add new space successfully
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName,"","Visible","Validation","","");
 		String url = driver.getCurrentUrl();
 

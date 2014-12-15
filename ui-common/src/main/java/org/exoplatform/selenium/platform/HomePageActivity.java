@@ -910,7 +910,7 @@ public class HomePageActivity extends PlatformBase{
 			JavascriptExecutor executor = (JavascriptExecutor)driver;
 			executor.executeScript("document.getElementById('"+deleteActivityIconID+"').click();");
 			waitForAndGetElement(ELEMENT_MESSAGE_CONFIRM_DELETE_ACTIVITY);
-			button.ok();
+			waitForAndGetElement(button.ELEMENT_OK_BUTTON).click();
 			if(verifyElement)
 				//	waitForElementNotPresent(By.xpath(ELEMENT_ACTIVITY_AUTHOR_ACTIVITY.replace("${activityText}", activityText)));
 				waitForElementNotPresent(By.xpath(ELEMENT_ACTIVITY_DELETE.replace("${activityText}", activityText)), DEFAULT_TIMEOUT,1,2);
@@ -929,7 +929,7 @@ public class HomePageActivity extends PlatformBase{
 		if (waitForAndGetElement(ELEMENT_LIKE_ICON.replace("${activityText}", activityText), DEFAULT_TIMEOUT, 0) != null){
 			info("-- Like activity --");
 			int numLike = Integer.parseInt(waitForAndGetElement(ELEMENT_LIKE_ICON.replace("${activityText}", activityText)).getText().trim());
-			click(ELEMENT_LIKE_ICON.replace("${activityText}", activityText));
+			waitForAndGetElement(ELEMENT_LIKE_ICON.replace("${activityText}", activityText)).click();
 			info("-- Verify Like button is highlighted --");
 			waitForAndGetElement(ELEMENT_UNLIKE_ICON.replace("${activityText}", activityText)+"/i[@class='uiIconThumbUp uiIconBlue']");
 			info("-- Like successfully and Verify number of like is updated --");

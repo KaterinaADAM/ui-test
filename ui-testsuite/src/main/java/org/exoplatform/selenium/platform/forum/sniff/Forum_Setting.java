@@ -171,7 +171,7 @@ public class Forum_Setting extends ForumBase {
 		waitForElementNotPresent(ELEMENT_LEGEN_PANEL);
 		click(By.linkText(catName1));
 		String url = driver.getCurrentUrl();
-		assert url.contains("http://localhost:8080/portal/intranet/forum/category/forumCategory");
+		assert url.contains(baseUrl + "/intranet/forum/category/forumCategory");
 		
 		info("Reset Data");
 		navTool.goToEditPageEditor();

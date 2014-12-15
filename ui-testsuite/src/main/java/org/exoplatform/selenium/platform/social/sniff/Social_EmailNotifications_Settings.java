@@ -70,6 +70,8 @@ public class Social_EmailNotifications_Settings extends Notification {
 		- Include in a digest email : contains a combo boxwith one of the following values :+ Never : to not include this notification in any digest 
 		+ Daily : to include notifications of this type in the daily digestemail 
 		+ Weekly : to include the notifications of this type in the weekly digest email		*/
+		navToolBar.goToNotificationAdministration();
+		enableNotification(MSG_TITLE_NEW_USER, true);
 		navToolBar.goToNotificationSettings();
 		waitForAndGetElement(ELEMENT_NEVER_NOTIFY_ME,DEFAULT_TIMEOUT,1,2);
 		Utils.pause(2000);
@@ -119,15 +121,17 @@ public class Social_EmailNotifications_Settings extends Notification {
 		String fullName2 = username2 + " "+ username2;
 		String email2 = username2 + "@gmail.com";
 		By eEmail2 = By.xpath(ELEMENT_GMAIL_TITLE.replace("${title}", fullName2+" has joined eXo"));
+		String handle = driver.getWindowHandle();
 		/*
 		- Click username on the right of top navigation
 		- Click Notification
 		- In column [Send me an email right away], select 1 option then tick it, eg "Someone joins the social intranet"
 		- As admin, Create new user successfully
 		 *Expected Outcome: An notification email is sent.		*/
-		navToolBar.goToMyProfile();
 		magAcc.updateUserProfile(null, null, null, EMAIL_ADDRESS1);
-
+		navToolBar.goToNotificationAdministration();
+		enableNotification("New User",true);
+		
 		navToolBar.goToNotificationSettings();
 		enableSendNotificationRight(MSG_ACTIVITY_JOIN_INTRANET, true);
 
@@ -137,7 +141,7 @@ public class Social_EmailNotifications_Settings extends Notification {
 		goToMail(EMAIL_ADDRESS1, EMAIL_PASS);
 		String handle1 = driver.getWindowHandle();
 		checkAndDeleteMail(eEmail, MSG_CONTENT_EMAIL_NEW_USER.replace("${user}", fullName));
-		switchToParentWindow();
+		driver.switchTo().window(handle);
 
 		/*- Go to Notification Setting screen again
 		- Untick option in step 1
@@ -151,8 +155,8 @@ public class Social_EmailNotifications_Settings extends Notification {
 		magAcc.addNewUserAccount(username2, password, password, username2, username2, null, email2, "", null,true);
 
 		driver.switchTo().window(handle1);
-		assert waitForAndGetElement(eEmail2,60000,0) == null : "Still receive email";
-		switchToParentWindow();
+		assert waitForAndGetElement(eEmail2,30000,0) == null : "Still receive email";
+		driver.switchTo().window(handle);
 
 		//Restore data
 		navToolBar.goToUsersAndGroupsManagement();
@@ -172,38 +176,42 @@ public class Social_EmailNotifications_Settings extends Notification {
 	public  void test03_CheckTheBoxNeverNotifyMe() {
 		info("Test 3: Check the box Never Notify me");
 		By eEmail = By.xpath(ELEMENT_GMAIL_TITLE.replace("${title}", "Mary Williams wants to connect with you on eXo')]"));
-		navToolBar.goToMyProfile();
+		String handle = driver.getWindowHandle();
 		magAcc.updateUserProfile(null, null, null, EMAIL_ADDRESS1);
 		navToolBar.goToNotificationSettings();
 		check(ELEMENT_NEVER_NOTIFY_ME,2);
 		waitForElementNotPresent(ELEMENT_NOTIFY_COLUMN.replace("${column}", MSG_SETTINGS_COLUMN_NOFITY_WHEN));
 
 		magAcc.userSignIn(userType.PUBLISHER);
-		/*
-		- Login
+		
+		/*- Login
 		- Click full name of user and select [Notifications] on the menu
 		 *Expected Outcome: 
 		- Notification Settings page is appeared		*/
 
 		navToolBar.goToNotificationSettings();
 
-		/*
-		- Check the check box[Never notify me]
+		
+		/*- Check the check box[Never notify me]
 		 *Input Data: 
 		 *Expected Outcome: 
-		- The notification settings table is hidden. The user will not receive any email notification.		*/ 
+		- The notification settings table is hidden. The user will not receive any email notification.	*/	 
 
 		navToolBar.goToConnectionPage();
 		peo.connectPeople(user);
 
 		goToMail(EMAIL_ADDRESS1, EMAIL_PASS);
-		assert waitForAndGetElement(eEmail,60000,0) == null : "Still receive email";
+		assert waitForAndGetElement(eEmail,30000,0) == null : "Still receive email";
 		
 		//Restore data
-		switchToParentWindow();
+		driver.switchTo().window(handle);
 		peo.cancelRequest(user);
 
+		magAcc.userSignIn(userType.ADMIN);
 		navToolBar.goToNotificationSettings();
 		uncheck(ELEMENT_NEVER_NOTIFY_ME,2);
+		Utils.pause(7000);
+		
+		waitForAndGetElement(ELEMENT_NOTIFY_ACTIVITY.replace("${activity}", "Someone sends me a connection request"));
 	}
 }

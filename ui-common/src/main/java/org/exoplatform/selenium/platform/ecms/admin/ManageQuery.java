@@ -125,7 +125,7 @@ public class ManageQuery extends EcmsBase{
 	public void deleteQuery(String queryName){
 		info("-- Deleting Query... --" + queryName);
 		Utils.pause(500);
-		click(ELEMENT_DELETE_QUERY_ICON.replace("${queryName}", queryName));
+		waitForAndGetElement(ELEMENT_DELETE_QUERY_ICON.replace("${queryName}", queryName)).click();
 		magAlert.acceptAlert();
 		waitForTextNotPresent(queryName);
 	}

@@ -13,7 +13,6 @@ import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.exoplatform.selenium.platform.ecms.EcmsBase;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -218,7 +217,7 @@ public class ManageTemplate extends EcmsBase{
 			click(ELEMENT_DIALOG_TAB);
 			String content = Utils.getFileContent(dialogContent);
 			Utils.pause(500);
-			type(ELEMENT_DIALOG_CONTENT, content, true);
+			type(ELEMENT_DIALOG_CONTENT, content, true,0,false);
 			type(ELEMENT_DIALOG_NAME, dialogName, true);
 			click(ELEMENT_DIALOG_PERMISSION_ICON);
 			userGroup.selectGroup(dialogGroupPer, false);
@@ -232,7 +231,7 @@ public class ManageTemplate extends EcmsBase{
 			click(ELEMENT_VIEW_TAB);
 			String content = Utils.getFileContent(viewContent);
 			Utils.pause(500);
-			type(ELEMENT_VIEW_CONTENT, content, true);
+			type(ELEMENT_VIEW_CONTENT, content, true,0,false);
 			type(ELEMENT_VIEW_NAME, viewName, true);
 			click(ELEMENT_VIEW_PERMISSION_ICON);
 			userGroup.selectGroup(viewGroupPer, false);
@@ -246,7 +245,7 @@ public class ManageTemplate extends EcmsBase{
 			click(ELEMENT_CSS_TAB);
 			String content = Utils.getFileContent(cssContent);
 			Utils.pause(500);
-			type(ELEMENT_CSS_CONTENT, content, true);
+			type(ELEMENT_CSS_CONTENT, content, true,0,false);
 			type(ELEMENT_CSS_NAME, cssName, true);
 			click(ELEMENT_CSS_PERMISSION_ICON);
 			userGroup.selectGroup(cssGroupPer, false);
@@ -274,7 +273,8 @@ public class ManageTemplate extends EcmsBase{
 		By locator = By.xpath(ELEMENT_DELETE_TEMPLATE_ICON.replace("${templateName}", templateName));
 		//click(locator);
 		WebElement delete = driver.findElement(locator);
-		((JavascriptExecutor)driver).executeScript("arguments[0].click();", delete);
+		delete.click();
+//		((JavascriptExecutor)driver).executeScript("arguments[0].click();", delete);
 		//alt.waitForConfirmation(confirmMessage);
 		if (notDeleteTem){
 			alt.acceptAlert();
@@ -321,7 +321,7 @@ public class ManageTemplate extends EcmsBase{
 			if (getFile){
 				String cTemp = Utils.getFileContent(templateContent);
 				Utils.pause(500);
-				type(ELEMENT_LIST_TEMPLATE_CONTENT, cTemp, true);
+				type(ELEMENT_LIST_TEMPLATE_CONTENT, cTemp, true,0,false);
 			}else {
 				type(ELEMENT_LIST_TEMPLATE_CONTENT, templateContent, true);
 			}
@@ -329,7 +329,7 @@ public class ManageTemplate extends EcmsBase{
 		type(ELEMENT_LIST_TEMPLATE_TITLE, templateTitle, false);
 		type(ELEMENT_LIST_TEMPLATE_NAME, templateName, false);
 		select(ELEMENT_LIST_TEMPLATE_TYPE, templateType);
-		button.save();
+		waitForAndGetElement(button.ELEMENT_SAVE_BUTTON).click();
 		if ( ExpectedConditions.alertIsPresent() != null ){
 			alt.acceptAlert();
 		}
@@ -370,7 +370,7 @@ public class ManageTemplate extends EcmsBase{
 			if (getFile){
 				String cTemp = Utils.getFileContent(templateContent);
 				Utils.pause(500);
-				type(ELEMENT_LIST_TEMPLATE_CONTENT, cTemp, true);
+				type(ELEMENT_LIST_TEMPLATE_CONTENT, cTemp, true,0,false);
 			}else {
 				type(ELEMENT_LIST_TEMPLATE_CONTENT, templateContent, true);
 			}
@@ -383,7 +383,8 @@ public class ManageTemplate extends EcmsBase{
 
 		//Select Template Type
 		select(ELEMENT_LIST_TEMPLATE_TYPE, templateType);
-		button.save();
+//		button.save();
+		waitForAndGetElement(button.ELEMENT_SAVE_BUTTON).click();
 		if ( ExpectedConditions.alertIsPresent() != null ){
 			alt.acceptAlert();
 		}
@@ -411,9 +412,9 @@ public class ManageTemplate extends EcmsBase{
 			click(ELEMENT_EDIT_METADATA_TEMPLATE_ICON.replace("${templateName}", metadata));
 			waitForAndGetElement(ELEMENT_METADATA_TAB.replace("${tab}", "Metadata Type"));
 		}else if (option.equals("Delete")){
-			click(ELEMENT_DELETE_METADATA_TEMPLATE_ICON.replace("${templateName}", metadata));
+			waitForAndGetElement(ELEMENT_DELETE_METADATA_TEMPLATE_ICON.replace("${templateName}", metadata)).click();
 			alt.acceptAlert();
-			click(button.ELEMENT_OK_BUTTON);
+			waitForAndGetElement(button.ELEMENT_OK_BUTTON).click();
 			waitForElementNotPresent(ELEMENT_DELETE_METADATA_TEMPLATE_ICON.replace("${templateName}", metadata));
 		}
 		Utils.pause(500);	
@@ -450,7 +451,7 @@ public class ManageTemplate extends EcmsBase{
 			click(ELEMENT_METADATA_TAB.replace("${tab}", "Dialog Template"));
 			String cTemp = Utils.getFileContent(dialogTemplate);
 			Utils.pause(500);
-			type(ELEMENT_INPUT_DIALOG_TEMPLATE, cTemp, true);
+			type(ELEMENT_INPUT_DIALOG_TEMPLATE, cTemp, true,0,false);
 		}else {
 			info("-- Edit a dialog template --");
 			click(ELEMENT_METADATA_TAB.replace("${tab}", "Dialog Template"));
@@ -463,7 +464,7 @@ public class ManageTemplate extends EcmsBase{
 			click(ELEMENT_METADATA_TAB.replace("${tab}", "View Template"));
 			String cTemp = Utils.getFileContent(viewTemplate);
 			Utils.pause(500);
-			type(ELEMENT_INPUT_VIEW_TEMPLATE, cTemp, true);
+			type(ELEMENT_INPUT_VIEW_TEMPLATE, cTemp, true,0,false);
 		}else{
 			info("-- Edit a view template --");
 			click(ELEMENT_METADATA_TAB.replace("${tab}", "View Template"));
