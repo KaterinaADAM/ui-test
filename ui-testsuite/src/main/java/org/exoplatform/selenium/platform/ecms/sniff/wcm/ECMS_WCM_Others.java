@@ -46,7 +46,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 	SitesExplorer siteExp;
 	PageEditor pEditor;
 	SEO seo;
-	String acmeURL = DEFAULT_BASEURL + "/acme/"; 
+	String acmeURL ; 
 
 	/**
 	 * CaseID 65874 Show draft/public content from page
@@ -365,6 +365,7 @@ public class ECMS_WCM_Others extends PlatformBase{
 		pages = new PageManagement(driver, this.plfVersion);
 		seo = new SEO(driver);
 		magAcc.signIn(DATA_USER1, DATA_PASS);
+		acmeURL = baseUrl + "/acme/";
 		driver.get(acmeURL);
 		driver.navigate().refresh();
 		waitForAndGetElement(ecms.ELEMENT_ACME_WELCOME_TEXT);	

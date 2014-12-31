@@ -377,7 +377,7 @@ public class ContentTemplate extends EcmsBase {
 								+ "')]"), DEFAULT_TIMEOUT, 1, 2);
 			}
 			if (!lines) {
-				inputDataToFrame(eWebContentSum, sum);
+				inputDataToFrame(eWebContentSum, sum,false);
 				switchToParentWindow();
 			} else {
 				if (waitForAndGetElement(ELEMENT_WEBCONTENT_SUMMARY_FRAME_41,
@@ -611,11 +611,11 @@ public class ContentTemplate extends EcmsBase {
 			if (!lines) {
 				if (waitForAndGetElement(ELEMENT_PRODUCT_SUMMARY_FRAME, 5000,
 						0, 2) != null)
-					inputDataToFrame(ELEMENT_PRODUCT_SUMMARY_FRAME, sum, true);
+					inputDataToFrame(ELEMENT_PRODUCT_SUMMARY_FRAME, sum, false);
 				else
 					// if(waitForAndGetElement(ELEMENT_PRODUCT_SUMMARY_FRAME_41,5000,0,2)!=null)
 					inputDataToFrame(ELEMENT_PRODUCT_SUMMARY_FRAME_41, sum,
-							true);
+							false);
 				switchToParentWindow();
 			} else {
 				if (waitForAndGetElement(ELEMENT_PRODUCT_SUMMARY_FRAME, 5000,

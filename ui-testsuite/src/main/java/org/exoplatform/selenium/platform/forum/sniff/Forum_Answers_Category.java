@@ -106,11 +106,12 @@ public class Forum_Answers_Category extends AnswerBase {
 		magCat.addNewCategoryInAnswer(categoryName, null, description, 2, userGroup, true, false);
 		magCat.openCategoryInAnswer(categoryName);
 		magQuest.submitQuestion(null, questionName, questionContent, null, false, null);
-		
 		info("Export category and new question");
 		magCat.exportAnswerCategory(fileName);
+		if("iexplorer".equals(System.getProperty("browser")))
+			downloadFile(fileName + ".zip");
 		Utils.pause(3000);
-		assert checkFileExisted("TestOutput/" +fileFull);
+		assert checkFileExisted(fileFull);
 		
 		info("Delete category and question");
 		magCat.deleteCategoryInAnswer(categoryName);

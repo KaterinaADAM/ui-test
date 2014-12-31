@@ -75,7 +75,8 @@ public class HomePageActivity extends PlatformBase{
 	public final String ELEMENT_CONTENT_SUMMARY = "//*[@title='@{fileName}']/..//p[1 or 2]";
 	public final String ELEMENT_CONTENT_SUMMARY_41 = "//*[@data-original-title='@{fileName}']/..//p[1 or 2]";
 	public final String ELEMENT_CONTENT_SUMMARY_WEBCONTENT = "//*[@title='@{fileName}']/../../div[@class='text']//p[${index}]";
-	public final String eLEMENT_CONTENT_SUMMARY_WEBCONTENT_41 = "//*[contains(text(),'@{fileName}')]/../../div[@class='text']//p[${index}]";
+	public final String ELEMENT_CONTENT_SUMMARY_PRODUCT = "//*[@title='@{fileName}']/../../div[@class='text']//p";
+	public final String ELEMENT_CONTENT_SUMMARY_WEBCONTENT_41 = "//*[contains(text(),'@{fileName}')]/../../div[@class='text']//p[${index}]";
 	//	public final String ELEMENT_CONTENT_COMMENT_EDIT_TITLE = "//*[@title='@{fileName}']/../../../..//*[@class='commentRight']//*[contains(text(),'Title has been updated to: ${title}')]";
 	public final String ELEMENT_CONTENT_COMMENT_EDIT_TITLE = "//*[contains(text(), '@{fileName}')]";
 	public final String ELEMENT_CONTENT = "//a[@title='@{fileName}']/..//*[contains(text(), '${text}')]";
@@ -208,6 +209,10 @@ public class HomePageActivity extends PlatformBase{
 	 */
 	public void checkInforAfterAddingDocument(String name, String iconType, String contentType, String size, String content, 
 			String version, String des, String status){
+		String text = waitForAndGetElement(ELEMENT_CONTENT_SUMMARY_PRODUCT.replace("@{fileName}", name)).getAttribute("innerHTML");
+		info("text is " + text);
+		String[] sum = null;
+		sum = text.split("<br>");
 		info("Check name of content");
 		if(waitForAndGetElement(ELEMENT_CONTENT_NAME.replace("@{fileName}", name), 5000, 0,2) == null)
 			waitForAndGetElement(ELEMENT_CONTENT_NAME_41.replace("@{fileName}", name));
@@ -223,47 +228,23 @@ public class HomePageActivity extends PlatformBase{
 		}
 		if (content != ""){
 			info("Check content summary");
-			String[] sum = null;
-			if(waitForAndGetElement(ELEMENT_CONTENT_SUMMARY.replace("@{fileName}", name),5000,0,2)!=null)
-				sum = getText(ELEMENT_CONTENT_SUMMARY.replace("@{fileName}", name)).split("\n");
-			else //if(waitForAndGetElement(ELEMENT_CONTENT_SUMMARY_41.replace("@{fileName}", name),5000,0,2)!=null)
-				sum = getText(ELEMENT_CONTENT_SUMMARY_41.replace("@{fileName}", name)).split("\n");
 
-			String[] cont = content.split("/");
-			if(sum.length>2){
+			String[] cont = content.split(System.getProperty("line.separator"));
+			if(sum.length>3){
 				if (cont.length > 4){
 					assert sum[4].equalsIgnoreCase("...");
 					for (int i = 0; i < 4; i++){
-						assert sum[i].equalsIgnoreCase(cont[i]);
+						assert sum[i].equalsIgnoreCase(cont[i]) : "sum " + sum[i] + " not equals " + cont[i];
 					}
 				}else {
 					for (int i = 0; i < cont.length; i ++){
-						assert sum[i].equalsIgnoreCase(cont[i]);
+						assert sum[i].equalsIgnoreCase(cont[i]) : "sum " + sum[i] + " not equals " + cont[i];
 					}
 				}
 			}
 			else{
-				if (cont.length > 4){
-					assert getText(ELEMENT_CONTENT_SUMMARY_WEBCONTENT.replace("@{fileName}", name).replace("${index}", "6")).equalsIgnoreCase("...");
-					int contentIndex = 2;
-					for (int i = 0; i < 4; i++){
-						assert getText(ELEMENT_CONTENT_SUMMARY_WEBCONTENT.replace("@{fileName}", name).replace("${index}", String.valueOf(contentIndex))).equalsIgnoreCase(cont[i]);
-						contentIndex++;
-					}
-				}else {
-					int contentIndex = 1;
-					for (int i = 0; i < cont.length; i ++){
-						if(this.plfVersion.equalsIgnoreCase("4.0")){
-							info("check on 4.0 home");
-							assert getText(ELEMENT_CONTENT_SUMMARY_WEBCONTENT.replace("@{fileName}", name).replace("${index}", String.valueOf(contentIndex))).equalsIgnoreCase(cont[i]);
-							
-						}else{
-							info("check on 4.1 home");//if(waitForAndGetElement(eLEMENT_CONTENT_SUMMARY_WEBCONTENT_41.replace("@{fileName}", name).replace("${index}", String.valueOf(contentIndex)),5000,0,2)!=null)
-						
-							assert getText(eLEMENT_CONTENT_SUMMARY_WEBCONTENT_41.replace("@{fileName}", name).replace("${index}", String.valueOf(contentIndex))).equalsIgnoreCase(cont[i]);
-						}
-							contentIndex++;
-					}
+				for (int i = 0; i < sum.length; i++){
+					assert sum[i].equalsIgnoreCase(cont[i]) : "sum " + sum[i] + " not equals " + cont[i];
 				}
 			}
 		}
@@ -561,27 +542,27 @@ public class HomePageActivity extends PlatformBase{
 	 */
 	public void checkNumberOfLineOfContent(String activityContent, String content, boolean...checkActivity){
 		boolean check = checkActivity.length > 0 ? checkActivity[0] : true;
-		String[] sum = activityContent.split("\n");
-		String[] cont = content.split("<br>");
-		char[] character = activityContent.toCharArray();
+		String[] sum = activityContent.split("<br>");
+		String[] cont = content.split("\r\n|\r|\n|%n");
+		char[] character = activityContent.replace("<br>", System.getProperty("line.separator")).toCharArray();
 		char[] contChar = content.toCharArray();
 
 		info("Check content and number of lines of content on activity");
 
-		if(content.contains("<br>")){
-			cont = content.split("<br>");
+		if(content.contains(System.getProperty("line.separator"))){
+			cont = content.split(System.getProperty("line.separator"));
 			contChar= content.toCharArray();
 		}else{
-			cont = content.split("<br/>");
+			cont = content.split(System.getProperty("line.separator"));
 		}
 
 		if (activityContent.contains("...")){
 			String sumary = activityContent.replace("...", "");
-			sum = sumary.split("\n");
+			sum = sumary.split("<br>");
 			character = sumary.toCharArray();
 			if(content.contains("...")){
 				String contentTemp = content.replace("...", "");
-				cont = contentTemp.split("<br>");
+				cont = contentTemp.split(System.getProperty("line.separator"));
 
 			}
 		}
@@ -589,9 +570,9 @@ public class HomePageActivity extends PlatformBase{
 			Assert.assertFalse(false, "This content has more than 4 lines");
 
 		}else {
-			if(content.contains("<br>") || content.contains("<br/>")){
+			if(activityContent.contains("<br>")){
 				for (int i = 0; i < sum.length; i ++){
-					assert sum[i].equalsIgnoreCase(cont[i]);
+					assert sum[i].equalsIgnoreCase(cont[i]) : "Character test " + i + sum[i] + " and " + cont[i];
 				} 
 				return;
 			}
@@ -601,7 +582,7 @@ public class HomePageActivity extends PlatformBase{
 					assert (character[i]==contChar[i]);
 				}
 			}else{
-				for (int i = 0; i < contChar.length; i ++){
+				for (int i = 0; i < character.length; i ++){
 					assert (character[i]==contChar[i]):"Character " + i +" ("+contChar[i]+","+character[i]+") is different";
 				}
 			}
@@ -751,7 +732,8 @@ public class HomePageActivity extends PlatformBase{
 
 		info("Check activity after updating a topic");
 		//Check content
-		checkNumberOfLineOfContent(getText((ELEMENT_FORUM_ACT_CONTENT.replace("${title}", topicTitle))), newContent);
+		String activity = waitForAndGetElement(ELEMENT_FORUM_ACT_CONTENT.replace("${title}", topicTitle)).getAttribute("innerHTML");
+		checkNumberOfLineOfContent(activity, newContent);
 		//Check comment
 		waitForAndGetElement(ELEMENT_ACTIVITY_COMMENT_CONTENT.replace("${title}", topicTitle).replace("${comment}", "Content has been edited."));
 

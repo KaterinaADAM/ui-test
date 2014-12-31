@@ -22,8 +22,7 @@
 				name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_Topic_ManagePoll" />
 			<class
 				name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_Topic_OtherAction" />
-			<class
-				name="org.exoplatform.selenium.platform.forum.sniff.Forum_Administration" />
+			
 			<class
 				name="org.exoplatform.selenium.platform.forum.sniff.Forum_Answers_Answers" />
 			<class
@@ -47,6 +46,8 @@
 				name="org.exoplatform.selenium.platform.forum.sniff.Forum_Forum_MoreAction" />
 			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Search" />
 			<class name="org.exoplatform.selenium.platform.forum.sniff.Forum_Setting" />
+			<class
+				name="org.exoplatform.selenium.platform.forum.sniff.Forum_Administration" />
 		</classes>
 	</test>
 	<listeners>

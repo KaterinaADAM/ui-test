@@ -36,7 +36,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 
 	@BeforeMethod
 	public void beforeMethods(){
-//		initSeleniumTest();
+		//		initSeleniumTest();
 		getDriverAutoSave();
 		driver.get(baseUrl);
 		magAcc = new ManageAccount(driver,this.plfVersion);
@@ -64,7 +64,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 
 		info("Add new web content ");
 		actBar.goToAddNewContent();
-		temp.createNewWebContent(name, "", "", sum, "", "", true);
+		temp.createNewWebContent(name, "", "", sum, "", "");
 		navTool.goToHomePage(); 					  
 		activity.checkInforAfterAddingDocument(name, "uiIcon64x64Templateexo_webContent", "Web Content", "", sum, "0", "", "Draft");
 	}
@@ -73,7 +73,12 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		navToolBar.goToSiteExplorer();
 
 		info("Upload new file");
-		ecms.uploadFile("TestData/" + fileUpload);
+		if("firefox".equalsIgnoreCase(System.getProperty("browser")))
+			ecms.uploadFile("TestData/" + fileUpload);
+		else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			click(actBar.ELEMENT_UPLOAD_BUTTON);
+			uploadFile("TestData/" +fileUpload);
+		}
 
 		info("Check activity");
 		navTool.goToHomePage();
@@ -117,14 +122,15 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test(groups="error")
 	public void test02_CheckIntranetHomePage_afterAddingWebContent(){
 		String name = "Public_activity_web_content_02";
-		String sum = "line1/line2/line3/line4/line5";
+		String sum = "line1"+System.getProperty("line.separator") +"line2"+System.getProperty("line.separator") +"line3"+System.getProperty("line.separator")
+				+"line4"+System.getProperty("line.separator") +"line5";
 		By elementWeb = By.linkText(name);
 
 		navTool.goToSiteExplorer();
 
 		info("Add new web content ");
 		actBar.goToAddNewContent();
-		temp.createNewWebContent(name, "", "", sum, "", "", true);
+		temp.createNewWebContent(name, "", "", sum, "", "");
 
 		info("Make version for this file document");
 		cMenu.contextMenuAction(elementWeb, cMenu.ELEMENT_MENU_CHECKIN);
@@ -145,14 +151,15 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test (groups="error")
 	public void test03_CheckIntranetHomePage_AfterAddingProduct(){
 		String name = "Public_activity_product_03";
-		String sum = "line1/line2/line3/line4/line5";
+		String sum = "line1"+System.getProperty("line.separator") +"line2"+System.getProperty("line.separator") +"line3"+System.getProperty("line.separator")
+				+"line4"+System.getProperty("line.separator") +"line5";
 		By elementProduct = By.linkText(name);
 
 		navTool.goToSiteExplorer();
 
 		info("Add new web content ");
 		actBar.goToAddNewContent();
-		temp.createFullNewProduct(name, "", sum, "", "", true);
+		temp.createFullNewProduct(name, "", sum, "", "");
 		click(By.linkText("acme"));
 
 		info("Make version for this file document");
@@ -210,7 +217,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test05_CheckIntranetHomePage_AfterAddingTagToContent(){
 		String name = "Public_activity_web_content_05";
-		String sum = "line1/line2/line3";
+		String sum = "line1"+System.getProperty("line.separator") +"line2"+System.getProperty("line.separator") +"line3";
 		By elementWeb = By.linkText(name);
 		String tag1[] = {"Activity_Tag1"};
 		String tag2[] = {"Activity_Tag2", "Activity_Tag3"};
@@ -253,7 +260,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test06_CheckIntranetHomepage_AfterDeletingContent(){
 		String name = "Public_activity_web_content_06";
-		String sum = "line1/line2/line3";
+		String sum = "line1"+System.getProperty("line.separator") +"line2"+System.getProperty("line.separator") +"line3";
 		By elementWeb = By.linkText(name);
 
 		createWebContentThenCheckActivity(name, sum);
@@ -271,7 +278,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test07_CheckIntranetHomePage_AfterPublishingContent(){
 		String name = "Public_activity_web_content_07";
-		String sum = "line1/line2/line3";
+		String sum = "line1"+System.getProperty("line.separator") +"line2"+System.getProperty("line.separator") +"line3";
 		By elementWeb = By.linkText(name);
 
 		createWebContentThenCheckActivity(name, sum);
@@ -393,7 +400,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test12_EditAContentFromContentActivity(){
 		String name = "webcontent75294";
-		String sum = "line1/line2/line3";
+		String sum = "line1"+System.getProperty("line.separator") +"line2"+System.getProperty("line.separator") +"line3";
 		By elementWeb = By.linkText(name);
 
 		createWebContentThenCheckActivity(name, sum);
@@ -414,14 +421,15 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	public void test13_ViewContentFromContentActivity(){
 		String name = "publicactivitywebcontent12";
 		String cont = "Public_activity_content_12";
-		String sum = "line1/line2/line3/line4/line5";
+		String sum = "line1"+System.getProperty("line.separator") +"line2"+System.getProperty("line.separator") +"line3"+System.getProperty("line.separator")
+				+"line4"+System.getProperty("line.separator") +"line5";
 		By elementWeb = By.linkText(name);
 
 		navTool.goToSiteExplorer();
 
 		info("Add new web content ");
 		actBar.goToAddNewContent();
-		temp.createNewWebContent(name, cont, "", sum, "", "", true);
+		temp.createNewWebContent(name, cont, "", sum, "", "");
 
 		info("Click View icon in activity");
 		navTool.goToHomePage();
@@ -485,7 +493,12 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		temp.createNewFolder(folder, folderType.Content);
 
 		info("Upload new file");
-		ecms.uploadFile("TestData/" + fileUpload);
+		if("firefox".equalsIgnoreCase(System.getProperty("browser"))){
+			ecms.uploadFile("TestData/" + fileUpload);
+		}else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			click(actBar.ELEMENT_UPLOAD_BUTTON);
+			uploadFile("TestData/" + fileUpload);
+		}
 
 		info("Move file to folder");
 		cMenu.cutAndPasteNode(elementUploadFile, elementFolder);
@@ -507,7 +520,7 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 	@Test
 	public void test17_CheckIntranetHomePage_AfterMovingContent(){
 		String name = "publicactivitywebcontent17";
-		String sum = "line1/line2/line3";
+		String sum = "line1"+System.getProperty("line.separator") +"line2"+System.getProperty("line.separator") +"line3";
 		By elementWeb = By.linkText(name);
 		String folder = "contentfolder17";
 		By elementFolder = By.linkText(folder);

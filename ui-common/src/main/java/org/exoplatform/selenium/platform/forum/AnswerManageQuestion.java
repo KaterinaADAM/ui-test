@@ -227,9 +227,6 @@ public class AnswerManageQuestion extends AnswerBase {
 	public void submitQuestion(String language, String questionName, String content, String email, 
 			boolean upload, String filePaths, boolean...verify){
 
-		driver.navigate().refresh();
-		Utils.pause(2000);
-
 		info("Submit a question with name " + questionName);
 		if (waitForAndGetElement(ELEMENT_SUBMIT_QUESTION_BUTTON, 10000, 0) != null ){
 			click(ELEMENT_SUBMIT_QUESTION_BUTTON);

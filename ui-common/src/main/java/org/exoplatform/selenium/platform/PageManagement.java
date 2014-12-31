@@ -134,7 +134,7 @@ public class PageManagement extends PlatformBase {
 		String pageDeleteIcon = ELEMENT_PAGE_DELETE_ICON.replace("${page}", pageTitle);
 		searchPageInManagementPage(type, pageTitle, true);
 		waitForAndGetElement(pageDeleteIcon).click();
-		Utils.pause(1000);
+		Utils.pause(2000);
 		alt.waitForConfirmation(MESSAGE_DELETE_PAGE);
 		//waitForMessage("No result found.",waitTime);
 		dialog.closeMessageDialog();

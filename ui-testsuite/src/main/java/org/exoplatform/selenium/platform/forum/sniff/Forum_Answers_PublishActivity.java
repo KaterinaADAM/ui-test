@@ -55,7 +55,8 @@ public class Forum_Answers_PublishActivity extends AnswerBase{
 		String categoryName = "Category74754";
 		String description = "Add new category for answer";	
 		String questionName = "Question 74754" ;
-		String questionContent = "line1<br>line2<br>line3<br>line4<br>line5<br>";
+		String questionContent = "line1" +System.getProperty("line.separator")+ "line2" +System.getProperty("line.separator")+ "line3" 
+		+System.getProperty("line.separator")+ "line4" +System.getProperty("line.separator")+ "line5";
 		String answerContent = "AnswerQuestion1";
 		String comment = "Comment for this question: good";
 
@@ -64,14 +65,14 @@ public class Forum_Answers_PublishActivity extends AnswerBase{
 		mAns.answerQuestion(1, questionName, null, answerContent, true, true, false, "", false, "");
 		click(By.linkText(questionName));
 		mCom.addComment4Question(questionName, comment);
-
+		
 		mQuest.rateQuestion(2);
 
 		info("Check activity on homepage");
 		navTool.goToHomePage();
 		waitForAndGetElement(By.linkText(questionName));
-		
-		HPAct.checkNumberOfLineOfContent(getText(HPAct.ELEMENT_QUESTION_CONTENT.replace("${title}", questionName)), questionContent);
+		String activity = waitForAndGetElement(HPAct.ELEMENT_QUESTION_CONTENT.replace("${title}", questionName)).getAttribute("innerHTML");
+		HPAct.checkNumberOfLineOfContent(activity, questionContent);
 		HPAct.checkRateQuestion(questionName, 2.0);
 		HPAct.checkCommentOfQuestion(questionName, comment);
 		HPAct.checkAnswerOfQuestion(questionName, answerContent);
@@ -89,7 +90,8 @@ public class Forum_Answers_PublishActivity extends AnswerBase{
 		String categoryName = "CategoryAnswer2";
 		String description = "Add new category for answer";	
 		String questionName = "test01_Question 02" ;
-		String questionContent = "line1<br>line2<br>line3<br>line4<br>line5<br>";
+		String questionContent = "line1" +System.getProperty("line.separator")+ "line2" +System.getProperty("line.separator")+ 
+				"line3" +System.getProperty("line.separator")+ "line4" +System.getProperty("line.separator")+ "line5";
 
 		info("Create a question");
 		mQuest.quickAddCategoryAndQuestion(categoryName, description, questionName, questionContent);
@@ -100,8 +102,8 @@ public class Forum_Answers_PublishActivity extends AnswerBase{
 		info("Check activity on homepage");
 		navTool.goToHomePage();
 		waitForAndGetElement(By.linkText(questionName));
-		
-		HPAct.checkNumberOfLineOfContent(getText(HPAct.ELEMENT_QUESTION_CONTENT.replace("${title}", questionName)), questionContent);
+		String activity = waitForAndGetElement(HPAct.ELEMENT_QUESTION_CONTENT.replace("${title}", questionName)).getAttribute("innerHTML");
+		HPAct.checkNumberOfLineOfContent(activity, questionContent);
 
 		//Delete data
 		goToAnswer();

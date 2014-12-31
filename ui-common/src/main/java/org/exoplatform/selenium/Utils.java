@@ -234,7 +234,10 @@ public class Utils {
 					}
 				}
 				info("IP address: "+ IP.toString());
-				inter.put(ni.getName(), IP.toString());
+				if(ni.isVirtual())
+					info("This is virtual");
+				else
+					inter.put(ni.getName(), IP.toString());
 			}
 		}
 		catch (Exception e) {

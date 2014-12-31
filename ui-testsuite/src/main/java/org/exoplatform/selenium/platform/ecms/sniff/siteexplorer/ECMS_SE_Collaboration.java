@@ -106,7 +106,12 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 		ecms.goToNode(siteExp.ELEMENT_SIDEBAR_SITES_MANAGEMENT);
 
 		info("Upload new file and add comment");
-		actBar.uploadFile("TestData/" + fileUpload);
+		if("firefox".equalsIgnoreCase(System.getProperty("browser")))
+			actBar.uploadFile("TestData/" + fileUpload);
+		else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			click(actBar.ELEMENT_UPLOAD_BUTTON);
+			uploadFile("TestData/" + fileUpload);
+		}
 		ecms.goToNode(elementUploadFile);
 		actBar.addComment(oldComment);
 
@@ -162,7 +167,12 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 		navToolBar.goToSiteExplorer();
 
 		info("Upload new file and add tag");
-		actBar.uploadFile("TestData/" + fileUpload);
+		if("firefox".equalsIgnoreCase(System.getProperty("browser")))
+			actBar.uploadFile("TestData/" + fileUpload);
+		else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			click(actBar.ELEMENT_UPLOAD_BUTTON);
+			uploadFile("TestData/" + fileUpload);
+		}
 		ecms.goToNode(elementUploadFile);
 		siteExp.addTagForNode(tagName);
 
@@ -208,7 +218,12 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 		navToolBar.goToSiteExplorer();
 
 		info("Upload new file and vote");
-		actBar.uploadFile("TestData/" + fileUpload);
+		if("firefox".equalsIgnoreCase(System.getProperty("browser")))
+			actBar.uploadFile("TestData/" + fileUpload);
+		else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			click(actBar.ELEMENT_UPLOAD_BUTTON);
+			uploadFile("TestData/" + fileUpload);
+		}
 		ecms.goToNode(elementUploadFile);
 		actBar.voteDocument(2);
 		waitForAndGetElement(By.xpath(ecms.ELEMENT_VOTE_RATING_INFOR.replace("${rate}", "2.0")));
@@ -298,8 +313,15 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 		navToolBar.goToSiteExplorer();
 
 		info("Upload 2 file");
-		actBar.uploadFile("TestData/" + fileEnglish);
-		actBar.uploadFile("TestData/" + fileFrench);
+		if("firefox".equalsIgnoreCase(System.getProperty("browser"))){
+			actBar.uploadFile("TestData/" + fileEnglish);
+			actBar.uploadFile("TestData/" + fileFrench);
+		}else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			click(actBar.ELEMENT_UPLOAD_BUTTON);
+			uploadFile("TestData/" + fileEnglish);
+			click(actBar.ELEMENT_UPLOAD_BUTTON);
+			uploadFile("TestData/" + fileFrench);
+		}
 
 		info("Public 2 files");
 		ecms.goToNode(elementFileEnglish);

@@ -68,7 +68,7 @@ public class TestBase {
 	//public final By ELEMENT_MENU_EDIT_LINK = By.xpath("//i[@class='uiIconPLF24x24Edit']");
 	//public final By ELEMENT_MENU_PAGE_LINK = By.linkText("Page");
 	//public final String AJAX_LOADING_MASK = "//div[@id='AjaxLoadingMask']";
-	public final String DEFAULT_BASEURL="http://localhost:8080/portal";
+	public String DEFAULT_BASEURL="http://192.168.3.45:8080/portal";
 
 	/*======= Welcome Screen (Term and Conditions) =====*/
 	public final By ELEMENT_FIRSTNAME_ACCOUNT = By.name("firstNameAccount");
@@ -108,6 +108,7 @@ public class TestBase {
 
 	/*======== End of Term and conditions =====*/	
 	public void initSeleniumTestWithOutTermAndCondition(Object... opParams){
+		System.setProperty("browser", "iexplorer");
 		String browser = System.getProperty("browser");
 
 		baseUrl = System.getProperty("baseUrl");
@@ -132,11 +133,6 @@ public class TestBase {
 			driver = new FirefoxDriver(capabilities);
 
 		}
-
-		baseUrl = System.getProperty("baseUrl");
-		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
-		info("Base url is " + baseUrl);
-
 		action = new Actions(driver);
 
 	}
@@ -398,6 +394,21 @@ public class TestBase {
 		}
 	}
 
+	public String getTextContent(Object locator,int...opts){
+		WebElement element = null;
+		int display = opts.length > 0 ? opts[0] : 1;
+		try {
+			element = waitForAndGetElement(locator,DEFAULT_TIMEOUT,1,display);
+			return (String)((JavascriptExecutor) driver).executeScript("return  arguments[0].textContent;",element);
+		} catch (StaleElementReferenceException e) {
+			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
+			Utils.pause(WAIT_INTERVAL);
+			return getText(locator);
+		} finally {
+			loopCount = 0;
+		}
+	}
+
 	public List<WebElement> getElements(String xpath) {
 		try {
 			return driver.findElements(By.xpath(xpath));
@@ -637,7 +648,7 @@ public class TestBase {
 
 	public void type(Object locator, String value, boolean validate, Object...opParams) {	
 		int notDisplay = (Integer) (opParams.length > 0 ? opParams[0]: 0);
-		boolean verify = (boolean) (opParams.length > 1 ? opParams[1]: true);
+		Boolean verify = (Boolean) (opParams.length > 1 ? opParams[1]: true);
 		try {
 			for (int loop = 1;; loop++) {
 				if (loop >= ACTION_REPEAT) {
@@ -826,7 +837,8 @@ public class TestBase {
 	 * @author lientm
 	 */
 	public void getDriverAutoSave(){
-		String pathFile = System.getProperty("user.dir") + "/src/main/resources/TestData/TestOutput";
+		System.setProperty("browser", "iexplorer");
+		String pathFile = System.getProperty("user.dir") + "/src/main/resources/TestData";
 		String browser = System.getProperty("browser");
 
 		baseUrl = System.getProperty("baseUrl");
@@ -894,6 +906,7 @@ public class TestBase {
 	 * @author lientm
 	 */
 	public void getDriverAutoOpenWindow(){
+		System.setProperty("browser", "iexplorer");
 		String browser = System.getProperty("browser");
 
 		baseUrl = System.getProperty("baseUrl");
@@ -911,8 +924,7 @@ public class TestBase {
 			fp.setPreference("browser.link.open_newwindow.restriction", 2);
 			driver = new FirefoxDriver(fp);
 		}
-		baseUrl = System.getProperty("baseUrl");
-		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
+
 		action = new Actions(driver);
 		termsAndConditions();
 		checkPLFVersion();
@@ -1315,7 +1327,9 @@ public class TestBase {
 	protected void uploadFile(String file){
 		String fs = File.separator;
 		try {
+			info(Utils.getAbsoluteFilePath(file.replace("/", fs)));
 			Process proc=Runtime.getRuntime().exec(Utils.getAbsoluteFilePath("TestData\\uploadFile.exe") + " " + Utils.getAbsoluteFilePath(file.replace("/", fs)));
+			info("path is " + Utils.getAbsoluteFilePath(file.replace("/", fs)));
 			InputStream is = proc.getInputStream();
 			int retCode = 0;
 			while(retCode != -1)
@@ -1332,7 +1346,7 @@ public class TestBase {
 	}
 
 	/**
-	 * Download fileon IE
+	 * Download file on IE
 	 * @param file
 	 */
 	public void downloadFile(String file){
@@ -1340,14 +1354,16 @@ public class TestBase {
 		String fs = File.separator;
 		String pathDownload = Utils.getAbsoluteFilePath(download);
 		try {
-			Process proc=Runtime.getRuntime().exec(pathDownload + " " + Utils.getAbsoluteFilePath("TestData" +fs + "TestOutput" + fs + file));
+			Process proc=Runtime.getRuntime().exec(pathDownload + " " + Utils.getAbsoluteFilePath("TestData" + " " + fs + file));
 			InputStream is = proc.getInputStream();
 			int retCode = 0;
 			while(retCode != -1)
 			{
 				retCode = is.read();
-				info("Now Exiting");
+				if(retCode == -1)
+					info("Now Exiting");
 			} 
+			info("Finish download");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

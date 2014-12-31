@@ -112,6 +112,7 @@ public class Forum_Forum_BasicAction extends ForumBase{
 		String topic1 = "Topic_68914_01";
 		String topic2 = "Topic_68914_02";
 		String handle = driver.getWindowHandle();
+
 		info("Watch&Unwatch forum");
 		waitForAndGetElement(ELEMENT_WHAT_GOING_ON);
 		magAc.updateUserProfile(null,null, null, EMAIL_ADDRESS1);
@@ -125,7 +126,7 @@ public class Forum_Forum_BasicAction extends ForumBase{
 		
 		//Check email after watching
 		goToMail(EMAIL_ADDRESS1, EMAIL_PASS);
-		String mailHandle = driver.getWindowHandle();
+		String handle1 = driver.getWindowHandle();
 		checkAndDeleteMail(By.xpath(ELEMENT_GMAIL_EMAIL.replace("${category}",category).replace("${forum}", forum).replace("${topic}", topic1)), forum);
 
 		driver.switchTo().window(handle);
@@ -135,7 +136,7 @@ public class Forum_Forum_BasicAction extends ForumBase{
 		mngTopic.startTopic(topic2, topic2, "", 0, permission, false, false, false);
 
 		//Check email after unwatching
-		driver.switchTo().window(mailHandle);
+		driver.switchTo().window(handle1);
 		Utils.pause(30000);
 		waitForElementNotPresent(ELEMENT_GMAIL_EMAIL.replace("${category}",category).replace("${forum}", forum).replace("${topic}", topic2));
 

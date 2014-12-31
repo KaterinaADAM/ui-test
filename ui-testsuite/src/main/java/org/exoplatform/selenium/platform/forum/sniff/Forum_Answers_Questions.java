@@ -231,13 +231,13 @@ public class Forum_Answers_Questions extends AnswerBase {
 	 */
 	@Test (groups = {"email"})
 	public void test06_SendQuestion() {
-		String categoryName = "Category6";
-		String description = "Description for category6";
-		String questionName = "Question6";
-		String questionContent = "Content of question 6";
+		String categoryName = "Category68959";
+		String description = "Description for category68959";
+		String questionName = "Question68959";
+		String questionContent = "Content of question 68959";
 		String email = "exomailtest01@gmail.com";
-		By mail = By.xpath("//b[text()= 'Question6']");
-		String contentMail = "Hi,/You may be interested in this question:/Question Question6/Details/Content of question 6/Click here for more details.";
+		By mail = By.xpath(ELEMENT_GMAIL_TITLE.replace("{$title}", questionName));
+		String contentMail = "Hi,/You may be interested in this question:/Question Question68959/Details/Content of question 68959/Click here for more details.";
 		
 		info("Add category and question");
 		

@@ -89,7 +89,7 @@ public class ManageTag extends EcmsBase{
 	 */
 	public void deleteTag(String styleName){
 		info("-- Removing a tag... " + styleName);
-		click(ELEMENT_REMOVE_TAG_ICON.replace("${styleName}", styleName));
+		waitForAndGetElement(ELEMENT_REMOVE_TAG_ICON.replace("${styleName}", styleName)).click();
 		alt.acceptAlert();
 		waitForTextNotPresent(styleName);
 	}

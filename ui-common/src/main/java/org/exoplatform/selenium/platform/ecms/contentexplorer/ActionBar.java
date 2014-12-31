@@ -209,6 +209,7 @@ public class ActionBar extends EcmsBase{
 	public By ELEMENT_ADD_ACTION_LINK = By.linkText("Add Action");
 	public By ELEMENT_UPLOAD_FILE = By.linkText("Upload");
 	public By ELEMENT_PUBLISH_FILE = By.linkText("Publish");
+	public By ELEMENT_UPLOAD_BUTTON = By.cssSelector("i[class='uiIconEcmsUpload uiIconEcmsLightGray']");
 	public String ELEMENT_STATUS_FILE = "//span[@class='nodeName' and text()='${title}']/../../../..//div[@data-original-title= 'status' and text() = '${status}']";
 	public final By ELEMENT_MORE_LINK = By.linkText("More");
 	public final By ELEMENT_NAVIGATION_LINK = By.xpath("//*[contains(text(),'Content Navigation')]");//By.linkText("Content Navigation");
@@ -1324,7 +1325,7 @@ public class ActionBar extends EcmsBase{
 			button.close();
 
 		}else if (option.equals("Delete")){
-			click(ELEMENT_DELETE_PROPERTY_ICON.replace("${property}", property));
+			waitForAndGetElement(ELEMENT_DELETE_PROPERTY_ICON.replace("${property}", property)).click();
 			alt.acceptAlert();
 			waitForElementNotPresent(ELEMENT_DELETE_PROPERTY_ICON.replace("${property}", property));
 			button.close();
@@ -1589,7 +1590,7 @@ public class ActionBar extends EcmsBase{
 			button.close();
 
 		}else if (option.equals("Delete")){
-			click(ELEMENT_DELETE_ACTION_ICON.replace("${actionname}", actionName));
+			waitForAndGetElement(ELEMENT_DELETE_ACTION_ICON.replace("${actionname}", actionName)).click();
 			alt.acceptAlert();
 			waitForElementNotPresent(ELEMENT_ACTION_AVAILABLE_ACTION.replace("${actionname}", actionName));
 			button.close();

@@ -128,9 +128,9 @@ public class SitesExplorer extends EcmsBase{
 			info("-- Deleting the tag: " + tagName[i]);
 			By ELEMENT_REMOVE_TAG = By.xpath(REMOVE_TAG.replace("${TagsName}", tagName[i]));
 			if (isElementPresent(ELEMENT_REMOVE_TAG)){
-				click(ELEMENT_REMOVE_TAG);
+				waitForAndGetElement(ELEMENT_REMOVE_TAG).click();
 			}else if (isElementPresent(By.xpath("//*[text()='Edit Tag']/../..//*[text()='"+ tagName[i] +"']/../..//*[@data-original-title='Remove Tag']"))){
-				click(By.xpath("//*[text()='Edit Tag']/../..//*[text()='"+ tagName[i] +"']/../..//*[@data-original-title='Remove Tag']"));
+				waitForAndGetElement(By.xpath("//*[text()='Edit Tag']/../..//*[text()='"+ tagName[i] +"']/../..//*[@data-original-title='Remove Tag']")).click();
 			}
 			//magAlert.waitForConfirmation(MESSAGE_WARNING_AFTER_DELETE_TAG);
 			magAlert.acceptAlert();

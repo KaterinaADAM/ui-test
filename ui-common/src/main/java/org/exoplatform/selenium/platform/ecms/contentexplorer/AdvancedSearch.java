@@ -224,7 +224,7 @@ public class AdvancedSearch extends EcmsBase{
 		click(ELEMENT_SAVED_SEARCH_ICON);
 		click(ELEMENT_ADVANCED_SEARCH_ICON);
 		click(ELEMENT_SAVED_QUERY_TAB);
-		click(ELEMENT_DELETE_QUERY_ICON.replace("${query}", name));
+		waitForAndGetElement(ELEMENT_DELETE_QUERY_ICON.replace("${query}", name)).click();
 		alert.waitForConfirmation(MSG_DELETE_QUERY);
 		waitForElementNotPresent(ELEMENT_SEARCH_RESULT_TEXT.replace("${result}",name));
 	}

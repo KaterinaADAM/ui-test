@@ -38,8 +38,8 @@ public class ECMS_WCM_Viewer extends PlatformBase{
 	ContentTemplate cTemplate;
 	ContextMenu cMenu;
 	ContentListPreference cList;
-
-	String acmeURL = DEFAULT_BASEURL + "/acme";
+	String acmeURL;
+	
 
 	@BeforeMethod
 	public void beforeMethod() {
@@ -57,6 +57,7 @@ public class ECMS_WCM_Viewer extends PlatformBase{
 		cMenu = new ContextMenu(driver, this.plfVersion);
 		cList = new ContentListPreference(driver);
 		magAcc.signIn(DATA_USER1, DATA_PASS);
+		acmeURL = baseUrl + "/acme";
 		driver.get(acmeURL);
 		driver.navigate().refresh();
 		waitForElementNotPresent(ELEMENT_PERSONAL_DOCUMENTS);
@@ -81,7 +82,7 @@ public class ECMS_WCM_Viewer extends PlatformBase{
 	public void test01_CreateAndEditSingleContentViewerPage(){	
 		String pageName = "Sniff_Ecms_SCV01";
 		String contentPath = "General Drives/Sites Management/acme/documents/offices.jpg";
-		String editContentPath = "conditions.doc";
+		String editContentPath = "General Drives/Sites Management/acme/documents/conditions.doc";
 
 		info("-- Create Single Content Viewer page --");
 		pEditor.addSCVPageAndContentFolderPaths(pageName, contentPath);
@@ -89,10 +90,8 @@ public class ECMS_WCM_Viewer extends PlatformBase{
 
 		info("-- Edit Single Content Viewer page --");
 		navToolBar.goToEditPageEditor();
-		pEditor.openAddContentPathForm();
-		click(By.linkText(editContentPath));
-		button.save();
-		button.close();
+		pEditor.selectContentPath(editContentPath);
+
 		click(ELEMENT_PAGE_FINISH_BUTTON);
 		waitForTextNotPresent("offices.jpg");
 		waitForTextPresent("conditions.doc");

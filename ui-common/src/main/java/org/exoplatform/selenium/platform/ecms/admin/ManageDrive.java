@@ -217,9 +217,9 @@ public class ManageDrive extends EcmsBase{
 		}
 		info("Delete driver");
 		if (isElementPresent(ELEMENT_DRIVE_DELETE.replace("${DATA_DRIVE_NAME}", driver))){
-			click(ELEMENT_DRIVE_DELETE.replace("${DATA_DRIVE_NAME}", driver));
+			waitForAndGetElement(ELEMENT_DRIVE_DELETE.replace("${DATA_DRIVE_NAME}", driver)).click();
 		}else {
-			click(By.xpath(ELEMENT_DRIVE_DELETE_AUX.replace("${DATA_DRIVE_NAME}", driver)));
+			waitForAndGetElement(By.xpath(ELEMENT_DRIVE_DELETE_AUX.replace("${DATA_DRIVE_NAME}", driver))).click();
 		}
 		alt.acceptAlert();
 		waitForElementNotPresent(ELEMENT_DRIVER);

@@ -239,7 +239,7 @@ public class Activity extends SocialBase {
 				alert.inputAlertText(newFolder);
 				Utils.pause(3000);
 				try{
-				click(By.linkText(newFolder));
+					click(By.linkText(newFolder));
 				}catch(org.openqa.selenium.UnhandledAlertException e){
 					alert.inputAlertText(newFolder);
 					Utils.pause(3000);
@@ -264,15 +264,16 @@ public class Activity extends SocialBase {
 			Utils.pause(2000);
 			WebElement eX = (WebElement) ((JavascriptExecutor)driver).executeScript("return document.getElementsByClassName('BrowseLink')[0];");
 			eX.click();
+			if("iexplorer".equals(System.getProperty("browser"))){
+				uploadFile("TestData/"+uploadFileName);
+				driver.switchTo().defaultContent();
+			}else{
 
-			uploadFile("TestData/"+uploadFileName);
-			driver.switchTo().defaultContent();
+				if(eX.isDisplayed())
+					eX.sendKeys(Utils.getAbsoluteFilePath("TestData\\" +uploadFileName));
+				else info("Not show element "+ eX);
+			}
 			waitForAndGetElement(By.linkText(uploadFileName));
-
-			//			if(eX.isDisplayed())
-			//				eX.sendKeys(Utils.getAbsoluteFilePath("TestData\\" +uploadFileName));
-			//			else info("Not show element "+ eX);
-
 			Utils.pause(1000);
 			info("Upload finished");
 			clickByJavascript(By.linkText(uploadFileName));
@@ -343,7 +344,7 @@ public class Activity extends SocialBase {
 		}
 		waitForAndGetElement(ELEMENT_SHARE_BUTTON);
 		info("----Click share button----");
-//		click(ELEMENT_SHARE_BUTTON);
+		//		click(ELEMENT_SHARE_BUTTON);
 		waitForAndGetElement(ELEMENT_SHARE_BUTTON).click();
 		Utils.pause(1000);
 		info("-- Verify that an activity has been added --");
@@ -590,12 +591,12 @@ public class Activity extends SocialBase {
 			String text = inputText.getText();
 			assert text.equals("@");
 			inputText.clear();
-			
+
 			inputText.sendKeys("@"+userName);
 			inputText.sendKeys(Keys.BACK_SPACE);
 			Utils.pause(2000);
 			getElementByJavascript("avatarSmall").click();
-//			waitForAndGetElement(ELEMENT_MENTION_USER_AVATAR.replace("${userName}", userName)).click();
+			//			waitForAndGetElement(ELEMENT_MENTION_USER_AVATAR.replace("${userName}", userName)).click();
 			Utils.pause(1000);
 			click(hpActivity.ELEMENT_ACTIVITY_TEXTBOX);
 			Utils.pause(1000);			

@@ -34,12 +34,12 @@ public class ECMS_SE_Create extends PlatformBase {
 	EcmsBase ecms;
 	ContentTemplate cTemp;
 	Button button;
-    ManageMember magMember;
-	
+	ManageMember magMember;
+
 	public final String file1 = "ECMS_Admin_ManageCategories_Display.jpg";
 	public final String file2 = "ECMS_Admin_SendMailScript_Template.txt";
 	public final String ELEMENT_LINK_IN_CE = "//*[@id='UIDocumentWorkspace']//img[contains(@src, '${file}')]";
-	
+
 	@BeforeMethod
 	public void beforeMethods() {
 		initSeleniumTest();
@@ -53,7 +53,7 @@ public class ECMS_SE_Create extends PlatformBase {
 		button = new Button(driver,this.plfVersion);
 		ecms = new EcmsBase(driver,this.plfVersion);
 		magAcc.signIn(DATA_USER1, DATA_PASS);
-        magMember = new ManageMember(driver,this.plfVersion);
+		magMember = new ManageMember(driver,this.plfVersion);
 	}
 
 	@AfterMethod
@@ -61,7 +61,7 @@ public class ECMS_SE_Create extends PlatformBase {
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}
-	
+
 	/**CaseId: 67855 + 67856 + 65835
 	 * Create + edit + delete (undo) file document
 	 */
@@ -71,30 +71,30 @@ public class ECMS_SE_Create extends PlatformBase {
 		String content = "File_document_content";
 		String title = "File_docment_title";
 		By elementFile = By.linkText(file);
-		
+
 		String contentEdit = "File_document_content_edit";
 		String titleEdit = "File_docment_title_edit";
-		
+
 		navToolBar.goToSiteExplorer();
 		actBar.goToAddNewContent();
-		
+
 		info("Create new file document");
 		template.createNewFile(file, content, title);
-		
+
 		info("Edit file document");
 		template.editFile(file, titleEdit, contentEdit);
-		
+
 		info("Delete file document");
 		cMenu.deleteData(elementFile);
-		
+
 		info("Restore data");
 		actBar.undoDeletion(file);
 		waitForAndGetElement(elementFile);
-		
+
 		info("Delete file after restore");
 		cMenu.deleteData(elementFile);
 	}
-	
+
 	/**CaseId: 65836 + 67857 + 67858
 	 * create - edit - delete a web content
 	 */
@@ -104,31 +104,31 @@ public class ECMS_SE_Create extends PlatformBase {
 		String content = "content65836";
 		By elementWeb = By.linkText(name);
 		String contentEdit = "Web_content_edit";
-		
+
 		navToolBar.goToSiteExplorer();
 		actBar.goToAddNewContent();
-		
+
 		info("Create new web content");
 		template.createNewWebContent(name, content, "", "", "", "");
-		
+
 		info("Edit web content");
 		template.editWebContent(name, contentEdit, "", "", "", "");
-		
+
 		info("Delete web content");
 		cMenu.deleteData(elementWeb);
 		Utils.pause(3000);
-		
+
 		info("Restore data");
 		actBar.undoDeletion(name);
 		waitForAndGetElement(elementWeb);
-		
+
 		info("Delete web content after restore");
 		cMenu.deleteData(elementWeb);
 	}
-	
-	
+
+
 	public void uploadMultiFileSerial(String...file){
-		
+
 		if (file.length > 0){
 			if (isTextNotPresent("Upload")){
 				click(ecms.ELEMENT_MORE_LINK_WITHOUT_BLOCK);
@@ -153,12 +153,12 @@ public class ECMS_SE_Create extends PlatformBase {
 		info("Upload files in site explorer");
 		navToolBar.goToSiteExplorer();
 		uploadMultiFileSerial(file1, file2);
-		
+
 		info("Delete uploaded files");
 		cMenu.deleteData(By.linkText(file1));
 		cMenu.deleteData(By.linkText(file2));
 	}
-	
+
 	/**CaseId: 75241 + 75244: Upload then delete uploaded files in persional document
 	 */
 	@Test(groups="pending")
@@ -166,18 +166,18 @@ public class ECMS_SE_Create extends PlatformBase {
 		info("Upload files in personal document");
 		navToolBar.goToPersonalDocuments();
 		uploadMultiFileSerial(file1, file2);
-		
+
 		info("Delete Uploaded files");
 		//actBar.deleteDataInAdminView(file1);
 		//actBar.deleteDataInAdminView(file2);
 		actBar.actionsOnElement(file1, actionType.DELETE);
 		actBar.actionsOnElement(file2, actionType.DELETE);
 	}
-	
+
 	/**CaseId: 75242 : Upload then delete uploaded files in space document
 	 * pending: do not merge the functions to create space
 	 */
-	
+
 	/**CaseId: 65831 + 67859
 	 * Create - delete a content folder
 	 */
@@ -185,22 +185,22 @@ public class ECMS_SE_Create extends PlatformBase {
 	public void test25_26_CreateDeleteContentFolder(){
 		String folder = "Content_folder";
 		By elementFolder = By.linkText(folder);
-		
+
 		info("Create new content folder");
 		navToolBar.goToSiteExplorer();
 		template.createNewFolder(folder, folderType.Content);
-		
+
 		info("Delete content folder");
 		cMenu.deleteData(elementFolder);
-		
+
 		info("Restore content folder");
 		actBar.undoDeletion(folder);
 		waitForAndGetElement(elementFolder);
-		
+
 		info("Delete content folder after restored");
 		cMenu.deleteData(elementFolder);
 	}
-	
+
 	/** CaseId: 65846 
 	 * Create content link when add new a document that contains FCK Editor
 	 * Pending: following issue ECMS-5283
@@ -209,19 +209,23 @@ public class ECMS_SE_Create extends PlatformBase {
 	public void test27_CheckFCKEditor(){
 		//String file1 = "KS_Wiki_Attachment_AllMyLove.mp3";
 		String file2 = "Winter.jpg";
-		
+
 		String webContent = "Web_content_FCKEditor";
 		By elementWeb = By.linkText(webContent);
-		
+
 		info("Upload files in site explorer");
 		navToolBar.goToSiteExplorer();
 		//actBar.uploadFile("TestData/" + file1);
-		actBar.uploadFile("TestData/" + file2);
-		
+		if("firefox".equalsIgnoreCase(System.getProperty("browser"))){
+			actBar.uploadFile("TestData/" + file2);
+		}else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			click(actBar.ELEMENT_UPLOAD_BUTTON);
+			uploadFile("TestData/" + file2);
+		}
 		actBar.goToAddNewContent();
 		click(cTemp.ELEMENT_WEBCONTENT_LINK);
 		type(cTemp.ELEMENT_WEBCONTENT_NAME_TEXTBOX, webContent, true);
-		
+
 		//cTemp.addContentLinkInFCKEditor("GeneralDrives_/GeneralDrives_ManagedSites_", file1);
 		cTemp.addContentLinkInFCKEditor("GeneralDrives_/GeneralDrives_ManagedSites_", file2);
 		click(button.ELEMENT_SAVE_CLOSE_BUTTON);
@@ -230,40 +234,43 @@ public class ECMS_SE_Create extends PlatformBase {
 		//ecms.goToNode(elementWeb);
 		waitForAndGetElement(By.xpath(ELEMENT_LINK_IN_CE.replace("${file}", file2)));
 		//waitForElementPresent(By.xpath(ELEMENT_LINK_IN_CE.replace("${file}", file1)));
-		
+
 		info("Delete uploaded files");
 		cMenu.deleteData(elementWeb);
 		//cMenu.deleteData(By.linkText(file1));
 		cMenu.deleteData(By.linkText(file2));
 	}
 
-    /**CaseId: 75243 : Delete an uploaded file in Space/Document
-     * @author hzekri
-     */
-    @Test
-    public void test28_DeleteUploadedFileInSpaceDocument(){
-        //Declare variables
-        String spacename = "SpaceTestUploadDelete";
-        String spacedesc = "Description Of SpaceTestUploadDelete";
+	/**CaseId: 75243 : Delete an uploaded file in Space/Document
+	 * @author hzekri
+	 */
+	@Test
+	public void test28_DeleteUploadedFileInSpaceDocument(){
+		//Declare variables
+		String spacename = "SpaceTestUploadDelete";
+		String spacedesc = "Description Of SpaceTestUploadDelete";
 
-        //Add new space
-        magMember.goToMySpacePage();
-        magMember.addNewSpace(spacename, spacedesc);
+		//Add new space
+		magMember.goToMySpacePage();
+		magMember.addNewSpace(spacename, spacedesc);
 
-        //Open Documents in this space
-        waitForAndGetElement(magMember.ELEMENT_DOCUMENTS_TAB);
-        click(magMember.ELEMENT_DOCUMENTS_TAB);
+		//Open Documents in this space
+		waitForAndGetElement(magMember.ELEMENT_DOCUMENTS_TAB);
+		click(magMember.ELEMENT_DOCUMENTS_TAB);
 
+		info("Upload file in space document");
+		if("firefox".equalsIgnoreCase(System.getProperty("browser"))){
+			actBar.uploadFile("TestData/" + file1, true);
+		}else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			click(actBar.ELEMENT_UPLOAD_BUTTON);
+			uploadFile("TestData/" + file1);
+		}
+		info("Delete Uploaded file");
+		click(actBar.ELEMENT_VIEW_MODE_LINK.replace("${viewName}", "List"));
+		actBar.actionsOnElement(file1, actionType.DELETE, false, true);
 
-        info("Upload file in space document");
-        actBar.uploadFile("TestData/" + file1, true);
-
-        info("Delete Uploaded file");
-        click(actBar.ELEMENT_VIEW_MODE_LINK.replace("${viewName}", "List"));
-        actBar.actionsOnElement(file1, actionType.DELETE, false, true);
-
-        // remove space after using it
-        magMember.goToMySpacePage();
-        magMember.deleteSpace(spacename,300000);
-    }
+		// remove space after using it
+		magMember.goToMySpacePage();
+		magMember.deleteSpace(spacename,300000);
+	}
 }

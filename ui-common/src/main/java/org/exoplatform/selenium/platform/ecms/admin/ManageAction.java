@@ -78,7 +78,7 @@ public class ManageAction extends EcmsBase{
 	public void deleteActionType(String actionTypeName){
 		info("-- Deleting Action Type...-- " + actionTypeName);
 		Utils.pause(500);
-		click(ELEMENT_DELETE_ACTION_TYPE_ICON.replace("${actionTypeName}", actionTypeName));
+		waitForAndGetElement(ELEMENT_DELETE_ACTION_TYPE_ICON.replace("${actionTypeName}", actionTypeName)).click();
 		magAlert.acceptAlert();
 		waitForTextNotPresent(actionTypeName);
 	}

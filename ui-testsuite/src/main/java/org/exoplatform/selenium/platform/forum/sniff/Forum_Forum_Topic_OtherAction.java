@@ -132,33 +132,32 @@ public class Forum_Forum_Topic_OtherAction extends ForumBase{
 		String titleTop = "Topic 68915";
 		String newTopic = "New topic 68915";
 		String post2 = "New post 68915";
-
+		String handle = driver.getWindowHandle();
 		info("Watch & Unwatch topic");
 		//create category, forum, topic
 		magAc.updateUserProfile(null,null, null, EMAIL_ADDRESS1);
 		goToForums();
 		mngTopic.addCategoryForumTopic(titleCat, titleForum, titleTop, titleTop);
-		
 
-		
-			click(mngFru.ELEMENT_TOPIC_LINK.replace("${topic}", titleTop));
+		click(mngFru.ELEMENT_TOPIC_LINK.replace("${topic}", titleTop));
 		waitForAndGetElement(mngPost.ELEMENT_POST_REPLY_BUTTON);
 		mngTopic.watchItem(true);
 		mngPost.postReply(newTopic, newTopic, "", "", "");
 
 		goToMail(EMAIL_ADDRESS1,EMAIL_PASS);
+		String handle1 = driver.getWindowHandle();
 		checkAndDeleteMail(By.xpath(ELEMENT_GMAIL_EMAIL.replace("${category}",titleCat).replace("${forum}", titleForum).replace("${topic}", titleTop)), titleTop);
-		switchToParentWindow();
+		driver.switchTo().window(handle);
 
 		mngTopic.watchItem(false);
 		mngPost.postReply(post2, post2, "", "", "");
 
-		switchToNewWindow();
+		driver.switchTo().window(handle1);
 		Utils.pause(30000);
 		waitForElementNotPresent(ELEMENT_GMAIL_EMAIL.replace("${category}",titleCat).replace("${forum}", titleForum).replace("${topic}", titleTop));
-		
-		switchToParentWindow();
-		
+
+		driver.switchTo().window(handle);
+
 		//Delete data
 		click(By.linkText(titleCat));
 		mngCat.deleteCategoryInForum(titleCat, true); 

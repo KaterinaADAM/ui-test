@@ -204,7 +204,7 @@ public class AnswerManageCategory extends AnswerBase {
 	public void deleteCategoryInAnswer(String categoryName, boolean...verify){
 		boolean check = verify.length > 0 ? verify[0]:true;
 		action = new Actions(driver);
-		if (waitForAndGetElement(ELEMENT_CATEGORY_LINK.replace("${category}", categoryName),DEFAULT_TIMEOUT,0) != null){
+		if (waitForAndGetElement(ELEMENT_CATEGORY_LINK.replace("${category}", categoryName),10000,0) != null){
 			info("Delete category by right click");
 			rightClickOnElement(ELEMENT_CATEGORY_LINK.replace("${category}", categoryName));
 			click(ELEMENT_DELETE_CATEGORY_LINK);
@@ -255,19 +255,25 @@ public class AnswerManageCategory extends AnswerBase {
 	 */
 	public void importAnswerCategory(String fileName){
 		info("Import category from file " + fileName);
-
+		ForumManageCategory forum = new ForumManageCategory(driver);
 		String[] links = fileName.split("/");
 		click(ELEMENT_CATEGORY_BUTTON);
 		click(ELEMENT_IMPORT_CATEGORY_LINK);
-
+		if("firefox".equals(System.getProperty("browser"))){
 		WebElement element = waitForAndGetElement(ELEMENT_IMPORT_CATEGORY_INPUT, DEFAULT_TIMEOUT, 1, 2);
 		((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block';", element);
 		element.sendKeys(Utils.getAbsoluteFilePath("TestData/" + fileName));
 		switchToParentWindow();
+		}else{
+			waitForAndGetElement(forum.ELEMENT_SELECT_FILE).click();
+			uploadFile("TestData/"+fileName);
+		}
 		waitForAndGetElement(ELEMENT_CONTAINS_TEXT.replace("${text}", links[links.length-1]), DEFAULT_TIMEOUT, 1, 2);
-		button.save();
-		waitForMessage(ELEMENT_IMPORT_SUCCESS_MESSAGE,100000);
-		click(ELEMENT_OK_INFOR_POPUP);
+		waitForAndGetElement(button.ELEMENT_SAVE_BUTTON).click();
+		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
+		Utils.pause(3000);
+//		waitForMessage(ELEMENT_IMPORT_SUCCESS_MESSAGE,100000);
+		clickByJavascriptWithClassName("btn");
 		Utils.pause(2000);
 	}
 

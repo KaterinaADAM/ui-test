@@ -419,7 +419,7 @@ public class ForumBase extends PlatformBase {
 	public void goToForums(){
 		info("--Go to Forums--");
 		click(ELEMENT_FORUM_LINK);
-		waitForAndGetElement(ELEMENT_FORUM_STATE,DEFAULT_TIMEOUT,0);
+		waitForAndGetElement(ELEMENT_FORUM_STATE,20000,0);
 	}
 
 	public void goToForumHome(){
@@ -1032,7 +1032,7 @@ public class ForumBase extends PlatformBase {
 		String[] content = contentMail.split("/");
 		if(waitForAndGetElement(ELEMENT_MAIL_CONTENT,DEFAULT_TIMEOUT,0) == null)
 			click(ELEMENT_FIRST_MAIL);
-		String[] temp = getText(ELEMENT_MAIL_CONTENT).split(System.getProperty("line.separator"));
+		String[] temp = getText(ELEMENT_MAIL_CONTENT).split("\r\n|\r|\n|%n");
 
 		compareString(removeEmptyElementOfArray(temp), removeEmptyElementOfArray(content));
 		info("Email content is true");

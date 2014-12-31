@@ -66,7 +66,7 @@ public class Forum_FAQ extends FAQ {
 		
 		goToFaq();
 		info("Click category to view question");
-		click(ELEMENT_FAQ_CATEGORY.replace("${cat}", categoryName));
+		waitForAndGetElement(ELEMENT_FAQ_CATEGORY.replace("${cat}", categoryName)).click();
 		waitForAndGetElement(elementQuest);
 		
 		info("Click question to view answer");

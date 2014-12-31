@@ -1273,18 +1273,20 @@ public class PlatformBase extends TestBase {
 					if (validate[0]){
 						inputsummary.clear();
 						inputsummary.sendKeys(data);
-//						((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "'");
 						if (inputsummary.getText().contains(data))
 							break;
 					}
 					else{
-						inputsummary.sendKeys(data);
+						String text = inputsummary.getText();
+						inputsummary.clear();
+						inputsummary.sendKeys(data + text);
 						//						((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "' + document.body.innerHTML;");
 						break;
 					}
 				else {
-
-					((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "' + document.body.innerHTML;");
+					inputsummary.clear();
+					inputsummary.sendKeys(data);
+//					((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "' + document.body.innerHTML;");
 					if (inputsummary.getText().contains(data)) 
 						break;
 				}
@@ -1444,10 +1446,13 @@ public class PlatformBase extends TestBase {
 					if(i==0)
 						newStr = "<p>" + lines[i]+"</p>";
 					else{
-						newStr = "<p>"+inputsummary.getText().replace("\n","</p><p>")+ "</p>";
+						newStr = inputsummary.getText().replace("\n","</p><p>");
 						newStr +="<p>" + lines[i]+"</p>";
 					}
-					((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + newStr + "'");
+//					((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + newStr + "'");
+					inputsummary.clear();
+					inputsummary.sendKeys(newStr);
+					inputsummary.sendKeys(Keys.END);
 				}
 				Utils.pause(500);
 			}
@@ -1493,7 +1498,7 @@ public class PlatformBase extends TestBase {
 	 */
 	public void checkAndDeleteMail(By mail, String content){
 		info("Check and delete mail");
-		waitForAndGetElement(mail,300000);
+		waitForAndGetElement(mail,350000);
 
 		click(mail);	
 		if(waitForAndGetElement(ELEMENT_GMAIL_CONTENT.replace("${content}",content),20000,0) == null )
@@ -1620,6 +1625,23 @@ public class PlatformBase extends TestBase {
 	 * @return
 	 */
 	public WebElement getElementFromTextByJquery(String text){
+
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		Utils.pause(2000);
+		try{
+			WebElement web = (WebElement) js.executeScript("return $(\"a:contains('" + text + "')\").get(0);");
+			return web;
+		}catch(org.openqa.selenium.WebDriverException e){
+			WebElement web = (WebElement) js.executeScript("return $(\"a:contains('" + text + "')\").get(0);");
+			return web;
+		}
+	}
+	/**
+	 * function get an element from link text when cannot get by text in xpath
+	 * @param text
+	 * @return
+	 */
+	public WebElement getTextByJquery(String text){
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		Utils.pause(2000);

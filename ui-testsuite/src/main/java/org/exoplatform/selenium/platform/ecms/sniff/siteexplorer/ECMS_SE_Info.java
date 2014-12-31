@@ -191,7 +191,12 @@ public class ECMS_SE_Info extends PlatformBase {
 		info("View metadata for a node");
 
 		//Create node1, node2
-		ecms.uploadFile(link);
+		if("firefox".equalsIgnoreCase(System.getProperty("browser"))){
+			ecms.uploadFile(link);
+		}else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			click(actBar.ELEMENT_UPLOAD_BUTTON);
+			uploadFile(link);
+		}
 		cMenu.goToNode(bNode1);
 		//Add View metadata icon to action bar if it is not on action bar
 		actBar.addItem2ActionBar("viewMetadatas", actBar.ELEMENT_VIEW_METADATA_ICON);

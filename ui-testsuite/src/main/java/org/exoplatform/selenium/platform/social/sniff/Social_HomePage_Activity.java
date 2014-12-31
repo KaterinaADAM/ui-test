@@ -535,7 +535,7 @@ public class Social_HomePage_Activity extends Activity {
 		//- Click [Add new space] button
 		//- Fill the information and click create
 		//- a new space is created
-		magMember.goToMySpacePage();
+		magMember.goToAllSpaces();
 		magMember.addNewSpace(spaceName, spaceDesc);
 
 		//- Check homepage

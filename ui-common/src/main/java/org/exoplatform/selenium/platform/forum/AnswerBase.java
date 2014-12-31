@@ -181,7 +181,7 @@ public class AnswerBase extends ForumBase {
 		button = new Button(driver);
 		String[] cat = categoryScope.split("/");
 
-		click(ELEMENT_CATEGORY_SCOPING_TAB);
+		waitForAndGetElement(ELEMENT_CATEGORY_SCOPING_TAB).click();
 		for (int i = 0; i < cat.length; i++){
 			if (display){
 				check(ELEMENT_CATEGORY_IN_SCOPE_TAB.replace("${catName}", cat[i]), 2);
@@ -191,6 +191,7 @@ public class AnswerBase extends ForumBase {
 		}
 		button.save();
 		click(ELEMENT_OK_INFOR_POPUP);
+		waitForElementNotPresent(ELEMENT_OK_INFOR_POPUP);
 		Utils.pause(1000);
 	}
 
@@ -267,7 +268,7 @@ public class AnswerBase extends ForumBase {
 	public void settingDiscussion(boolean discuss, String forumPath){
 		userGroup = new UserGroupManagement(driver);
 
-		click(ELEMENT_DISCUSSION_TAB);
+		waitForAndGetElement(ELEMENT_DISCUSSION_TAB).click();
 		if (discuss){
 			check(ELEMENT_ENABLE_DISCUSSION_CHECKBOX, 2);
 			click(ELEMENT_ADD_FORUM);

@@ -33,6 +33,7 @@ public class ForumPermission extends ForumBase {
 	public final String MSG_PERMISSION_NOT_FOUND =" not found, please enter a valid value.";
 	public final By ELEMENT_CATEGORY_CANCEL_BUTTON = By.xpath("//form[@id='UICategoryForm']//button[text()='Cancel']");
 	public final By ELEMENT_CATEGORY_PERMISSION_BLANK = By.xpath("//div[@id='PermissionTab']");
+	public final By ELEMENT_ADD_PERMISSION_BUTTON = By.cssSelector("button[class='btn addButton']");
 
 	//Set permission for category of forum
 	public final String ELEMENT_MODERATOR_FORUM_CATEGORY_CHECKBOX = "//*[contains(text(), '${user}')]/../../td[2]//input[@type='checkbox']";
@@ -116,7 +117,8 @@ public class ForumPermission extends ForumBase {
 		setPermissionWithOption(type, userGroup);
 		click(ELEMENT_CATEGORY_PERMISSION_BLANK);
 		Utils.pause(1000);
-		click(button.ELEMENT_ADD_BUTTON,2);
+		click(ELEMENT_ADD_PERMISSION_BUTTON,DEFAULT_TIMEOUT,1,2);
+		Utils.pause(2000);
 		boolean notF = notFound.length > 0 ? notFound[0] : false;
 		if (notF){
 			waitForMessage(userGroup[0]+MSG_PERMISSION_NOT_FOUND);

@@ -110,7 +110,7 @@ public class ManageNodeType extends EcmsBase{
 		    Utils.pause(200);
 		}	
 		click(ELEMENT_ADD_TYPE_BUTTON);
-		button.save();
+		waitForAndGetElement(button.ELEMENT_SAVE_BUTTON).click();
 		alt.verifyAlertMessage(MESSAGE_NODE_REGISTERED_SUCCESSFULLY.replace("${nodeName}", nodeTypeName));
 	}
 	

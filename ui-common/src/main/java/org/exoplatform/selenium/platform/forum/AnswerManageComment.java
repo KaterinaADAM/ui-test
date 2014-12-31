@@ -62,12 +62,13 @@ public class AnswerManageComment extends AnswerBase {
 		}
 		if (comment != null){
 			if(this.plfVersion.equalsIgnoreCase("4.1"))
-				inputDataToFrame(ELEMENT_COMMENT_CONTENT_FRAME_41, comment, true,false);
+				inputDataToFrame(ELEMENT_COMMENT_CONTENT_FRAME_41, comment, false);
 			else//(this.plfVersion.equalsIgnoreCase("4.0"))
 				inputDataToFrameInFrame(ELEMENT_COMMENT_CONTENT_FRAME_1, ELEMENT_COMMENT_CONTENT_FRAME_2, comment, true);
 			switchToParentWindow();	
 		}
 		button.save();
+		
 		if(!comment.contains("<br/>"))
 			waitForAndGetElement(ELEMENT_COMMENT_IN_QUESTION.replace("${comment}", comment));
 		else{

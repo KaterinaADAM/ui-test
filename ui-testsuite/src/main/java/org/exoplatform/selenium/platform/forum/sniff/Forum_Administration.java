@@ -2,7 +2,9 @@ package org.exoplatform.selenium.platform.forum.sniff;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
-import org.exoplatform.selenium.Utils;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.forum.ForumBase;
 import org.exoplatform.selenium.platform.forum.ForumManageCategory;
@@ -19,12 +21,12 @@ import org.testng.annotations.Test;
  * @date 6 Sep 2013
  */
 public class Forum_Administration extends ForumBase {
-	
+
 	ManageAccount magAc;
 	ForumManageCategory cat;
 	ForumManageForum forum;
 	ForumManageTopic magtopic;
-	
+
 	@BeforeMethod
 	public void setUpBeforeTest(){
 		setPreferenceRunTime();
@@ -33,7 +35,7 @@ public class Forum_Administration extends ForumBase {
 		cat = new ForumManageCategory(driver, this.plfVersion);
 		forum = new ForumManageForum(driver, this.plfVersion);
 		magtopic = new ForumManageTopic(driver, this.plfVersion);
-		
+
 		magAc.signIn(DATA_USER1,DATA_PASS);;
 		goToForums();
 	}
@@ -43,22 +45,22 @@ public class Forum_Administration extends ForumBase {
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}
-	
+
 	/**CaseId: 70926 + 70932 + 70936 -> Add, edit, delete bbCode
 	 * 
 	 */
-	@Test
+	@Test(groups="first")
 	public void test01_AddEditDeleteBBCode(){
 		String tag = "TAGMOT";
 		String replace = "<TAGMOT>{replace}</TAGMOT>";
 		String description = "TAGMOT";
 		String example = "<TAGMOT>tag01</TAGMOT>";
-		
+
 		String tagnew = "TAGMOTUPDATE";
 		String replaceUpdate = "<TAGMOTUPDATE>{replace}</TAGMOTUPDATE>";
 		String descriptionUpdate = "TAGMOTUPDATE";
 		String exampleUpdate = "<TAGMOTUPDATE=option>tag01update</TAGMOTUPDATE>";
-		
+
 		info("Add edit delete BBCode");
 		goToBBCodeManagement();
 		addBBCode(tag, replace, description, example, false);
@@ -66,31 +68,37 @@ public class Forum_Administration extends ForumBase {
 		deleteBBcode(tagnew);
 
 	}
-	
+
 	/**CaseId: 68917 -> Ban IP
 	 * 
 	 */
-	@Test
+	@Test()
 	public void test02_BanIP(){
 		String catName = "CategoryBanIP_02";
 		String description = "Add new category in forum";
 		String forumName = "ForumBanIP_02";
 		String topic = "TopicBanIP_02";
 		String message = "New topic 02";
-		
+		String currentUrl = driver.getCurrentUrl();
 		info("Add new category, forum, topic with user admin");
 		cat.addNewCategoryInForum(catName, "1", 0, null, description, 0, null);
 		forum.quickAddForum(forumName);
 		magtopic.quickStartTopic(topic, message);
-		
-		String ip = Utils.getIPOfLocal();
-		
+		InetAddress localIP = null;
+		try {
+			localIP = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		info("Set banIP is localhost");
-		setBanIp(ip);
+		setBanIp(localIP.getHostAddress());
 		magAc.signOut();
-		
+
 		info("Check banIp with user demo");
-		driver.get("http://" + ip + ":8080/portal");
+		if(currentUrl.contains("localhost"))
+			driver.get("http://" + localIP.getHostAddress() + ":8080/portal");
 		magAc.signIn(DATA_USER4, DATA_PASS);
 		goToForums();
 		click(By.linkText(forumName));
@@ -99,20 +107,21 @@ public class Forum_Administration extends ForumBase {
 		waitForTextPresent(MSG_BLOCK_POST);
 		waitForTextPresent(MSG_BLOCK_POST_ATTACHMENT);
 		waitForTextPresent(MSG_BLOCK_EDIT_YOUR_POST);
-		
+
 		click(By.linkText(topic));
 		waitForAndGetElement(ELEMENT_POST_DISABLE);
 		waitForTextPresent(MSG_BLOCK_CREATE_TOPIC);
 		waitForTextPresent(MSG_BLOCK_POST);
 		waitForTextPresent(MSG_BLOCK_POST_ATTACHMENT);
 		waitForTextPresent(MSG_BLOCK_EDIT_YOUR_POST);
-		magAc.signOut();
-		
-		driver.get(baseUrl);
+//		magAc.signOut();
+
+		//Now the admin (john) cannot do anything after ban IP
+		/*driver.get(baseUrl);
 		magAc.signIn(DATA_USER1, DATA_PASS);
 		goToForums();
-		deleteBanIp(ip);
+		deleteBanIp(localIP.getHostAddress());
 		click(By.linkText(catName));
-		cat.deleteCategoryInForum(catName);
+		cat.deleteCategoryInForum(catName);*/
 	}
 }

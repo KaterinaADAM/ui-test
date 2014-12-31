@@ -390,7 +390,7 @@ public class PageEditor extends PlatformBase {
 
 		if (waitForAndGetElement(elementPortlet, 5000, 0) != null){
 			mouseOver(elementPortlet, true);
-			click(iconDelete);
+			waitForAndGetElement(iconDelete).click();
 			magAlert.acceptAlert();
 			waitForElementNotPresent(ELEMENT_PORTLET_DRAGGED.replace("${portlet}", "Bookmarks"));
 			Utils.pause(1000);

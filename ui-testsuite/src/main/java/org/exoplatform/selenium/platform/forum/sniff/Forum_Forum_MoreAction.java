@@ -2,6 +2,9 @@ package org.exoplatform.selenium.platform.forum.sniff;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.forum.ForumBase;
@@ -42,7 +45,7 @@ public class Forum_Forum_MoreAction extends ForumBase{
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}
-	
+
 	/**
 	 * CaseID 93508
 	 * Lock / Unlock a forum
@@ -50,13 +53,13 @@ public class Forum_Forum_MoreAction extends ForumBase{
 	@Test
 	public void test01_LockUnlockForum() {
 		info("Lock / Unlock a forum");
-		
+
 		String cate = "test01_category_93508";
 		String forum = "test01_forum_93508";
-		
+
 		//Add category, forum
 		mngFru.addCategoryForum(cate, forum);
-		
+
 		//lock the forum
 		mngFru.actionOnForum(1);
 		goToCategory(DATA_USER2, cate);
@@ -64,25 +67,25 @@ public class Forum_Forum_MoreAction extends ForumBase{
 		waitForAndGetElement(ELEMENT_START_TOPIC_DISABLE);
 		click(ELEMENT_START_TOPIC_DISABLE);
 		assert (waitForAndGetElement(mngTopic.ELEMENT_POPUP_START_TOPIC,5000,0) == null);
- 
+
 		//Unlock the forum
 		goToCategory(DATA_USER1, cate);
 		click(By.linkText(forum));
 		mngFru.actionOnForum(2);
-		
+
 		//Check if normal user can start topic
 		goToCategory(DATA_USER2, cate);
 		click(By.linkText(forum));
 		click(mngTopic.ELEMENT_START_TOPIC_BUTTON);
 		waitForAndGetElement(mngTopic.ELEMENT_POPUP_START_TOPIC);
 		click(mngTopic.ElEMENT_CANCEL_ADD_TOPIC);
-		
+
 		//Delete data
 		goToCategory(DATA_USER1, cate);
 		mngCat.deleteCategoryInForum(cate, true);
 
 	}
-	
+
 	/**
 	 * CaseID 93509
 	 * Open / Close a forum
@@ -90,35 +93,35 @@ public class Forum_Forum_MoreAction extends ForumBase{
 	@Test
 	public void test02_OpenCloseForum() {
 		info("Open / Close a forum");
-		
+
 		String cate = "test02_category_93509";
 		String forum = "test02_forum_93509";
-		
+
 		//Add category, forum
 		mngFru.addCategoryForum(cate, forum);
-		
+
 		//Close the forum
 		mngFru.actionOnForum(3);
-		
+
 		//Check if normal user cannot see the forum
 		goToCategory(DATA_USER2, cate);
 		waitForElementNotPresent(By.linkText(forum));
-		
+
 		//Login as admin to open the forum
 		goToCategory(DATA_USER1, cate);
 		click(By.linkText(forum));
 		mngFru.actionOnForum(4);
-		
+
 		//Check if normal user can see the forum
 		goToCategory(DATA_USER2, cate);
 		waitForAndGetElement(By.linkText(forum));
-		
+
 		//Login as admin to delete data
 		goToCategory(DATA_USER1, cate);
 		mngCat.deleteCategoryInForum(cate, true);
 
 	}
-	
+
 	/**
 	 * CaseID 93510
 	 * Ban IP for a forum
@@ -126,33 +129,41 @@ public class Forum_Forum_MoreAction extends ForumBase{
 	@Test
 	public void test03_BanIPForForum() {
 		info("Ban IP for a forum");
-		
+
 		String cate = "test03_category_93510";
 		String forum = "test03_forum_93510";
-		String localIP = Utils.getIPOfLocal();
-		
+		InetAddress localIP = null;
+		try {
+			localIP = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String currentUrl = driver.getCurrentUrl();
+
 		//Add category, forum
 		mngFru.addCategoryForum(cate, forum);
-		
+		info("IP is " + localIP.getHostAddress());
 		//Ban IP for a forum
-		mngFru.banIPForum(localIP);
-		
+		mngFru.banIPForum(localIP.getHostAddress());
+
 		//Check if normal user with banned IP cannot access this forum
 		acc.signOut();
-		driver.get("http://" + localIP + ":8080/portal");
+		if(currentUrl.contains("localhost"))
+			driver.get("http://" + localIP + ":8080/portal");
 		acc.signIn(DATA_USER2, DATA_PASS);
 		goToForums();
 		click(By.linkText(forum));
 		waitForAndGetElement(ELEMENT_START_TOPIC_DISABLE);
 		click(ELEMENT_START_TOPIC_DISABLE);
 		waitForElementNotPresent(mngTopic.ELEMENT_POPUP_START_TOPIC);
-		
+
 		//Delete data
 		goToCategory(DATA_USER1, cate);
 		mngCat.deleteCategoryInForum(cate, true);
 
 	}
-	
+
 	public void goToCategory(String user, String category){
 		acc.signOut();
 		acc.signIn(user, DATA_PASS);

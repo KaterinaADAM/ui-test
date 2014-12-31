@@ -72,6 +72,7 @@ public class ForumManageCategory extends ForumBase {
 	public final By ELEMENT_IMPORT_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Import Category']");
 	public final By ELEMENT_IMPORT_FILE = By.name("file");
 	public final String MSG_IMPORT_CATEGORY = "Import successful.";
+	public final By ELEMENT_SELECT_FILE = By.xpath("//label[contains(text(),'Select File')]");
 
 	//-------------------Export category form-------------------------------------
 	public final By ELEMENT_EXPORT_CATEGORY_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Export Categories']");
@@ -84,7 +85,7 @@ public class ForumManageCategory extends ForumBase {
 	public final By ELEMENT_EXPORT_CATEGORY_ONLY = By.xpath("//*[@value='ExportCategories']");
 	public final String MSG_WARNING_EMPTY_CATEGORY_EXPORT = "You have to check at least one Category";
 	public final By ELEMENT_EXPORT_CHECK_ALL = By.id("checkAll");
-	
+
 	//-------------------Export forums in category form----------------------------
 	public final By ELEMENT_EXPORT_FORUMS_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Export Forums']");
 	public final String ELEMENT_EXPORT_FORUMS_CHECKBOX_LIST = "//*[@id='UIExportForm']//*[contains(@id,'forumcc')]";
@@ -111,7 +112,7 @@ public class ForumManageCategory extends ForumBase {
 	public String MESSAGE_CATEGORY_NOT_EXISTE ="The category isn't existed";
 	public String MESSAGE_RESTRICTED_AUDIENCE_INVALID="The field \"Restricted Audience\" is invalid: ";
 	public String MESSAGE_CATEGORY_MODERATOR_INVALID = "not found, please enter a valid value.";
-	
+
 	/*------------------------------------common function---------------------------------*/
 
 
@@ -256,13 +257,13 @@ public class ForumManageCategory extends ForumBase {
 		}
 		else{// if (plfVersion =="4.0"){
 			click(ELEMENT_DELETE_CATEGORY);
-			
+
 		}		
 		alert.waitForMessage("Are you sure you want to delete this category?");
 		click(ELEMENT_OK_DELETE_CATEGORY);
 		if(check){
 			//waitForTextNotPresent(title);
-			
+
 			waitForElementNotPresent("//strong[text()='"+title+"']");
 			waitForElementNotPresent(By.linkText(title)); 
 		}
@@ -289,7 +290,7 @@ public class ForumManageCategory extends ForumBase {
 		//click(ELEMENT_IMPORT);
 		if(plfVersion =="4.0"){
 			waitForMessage(MSG_IMPORT_CATEGORY);
-			
+
 			info("Import file " + file + "successfully");
 			click(ELEMENT_OK_INFOR_POPUP);
 			Utils.pause(1000);
@@ -373,19 +374,30 @@ public class ForumManageCategory extends ForumBase {
 	 * function import forums into a category
 	 * @param file
 	 */
-	public void importForums2Category(String file){
+	public void importForums2Category(String file, String idCategory){
 		button = new Button(driver);
 		click(ELEMENT_MANAGE_CATEGORY);
 		click(ELEMENT_IMPORT_FORUM_IN_CATEGORY);
+		
 		info("Import category");
-		WebElement element = waitForAndGetElement(ELEMENT_IMPORT_FILE, DEFAULT_TIMEOUT, 1, 2);
-		((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block';", element);
-		element.sendKeys(Utils.getAbsoluteFilePath("TestData/" + file));
-		switchToParentWindow();
+		if("firefox".equals(System.getProperty("browser"))){
+			WebElement element = waitForAndGetElement(ELEMENT_IMPORT_FILE, DEFAULT_TIMEOUT, 1, 2);
+			((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block';", element);
+			element.sendKeys(Utils.getAbsoluteFilePath("TestData/" + file));
+			switchToParentWindow();
+		} else{
+			waitForAndGetElement(ELEMENT_SELECT_FILE).click();
+			uploadFile("TestData/"+file);
+		}
 		waitForAndGetElement("//*[text()='" + file + "']", DEFAULT_TIMEOUT, 1, 2);
-		button.save();
+		waitForAndGetElement(button.ELEMENT_SAVE_BUTTON).click();
+		waitForElementNotPresent(button.ELEMENT_SAVE_BUTTON);
+		Utils.pause(3000);
+//		button.save();
 		info("Import file " + file + "successfully");
-		click(ELEMENT_OK_INFOR_POPUP);
+		((JavascriptExecutor) driver).executeScript("javascript:ajaxGet('/portal/intranet/forum/category/"+idCategory+"?portal:componentId=_1085175307&portal:action=Close&ajaxRequest=true')");
+		
+//		clickByJavascriptWithClassName("btn");
 		Utils.pause(1000);
 	}
 

@@ -102,7 +102,8 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 		String titleCat = "Category 75276";
 		String titleForum = "Forum 75276";
 		String titleTop = "Topic 75276";
-		String descTop = "line1<br>line2<br>line3<br>line4<br>line5";
+		String descTop = "line1" +System.getProperty("line.separator")+ "line2" +System.getProperty("line.separator")+ 
+				"line3" +System.getProperty("line.separator")+ "line4" +System.getProperty("line.separator")+ "line5";
 		String reply = "Reply on this topic";
 		
 		info("Create new Topic");
@@ -115,7 +116,8 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 			
 		navTool.goToHomePage();
 		waitForAndGetElement(By.linkText(titleTop));
-		hpgAct.checkNumberOfLineOfContent(getText(hpgAct.ELEMENT_FORUM_ACT_CONTENT.replace("${title}", titleTop)), descTop);
+		String activity = waitForAndGetElement(hpgAct.ELEMENT_FORUM_ACT_CONTENT.replace("${title}", titleTop)).getAttribute("innerHTML");
+		hpgAct.checkNumberOfLineOfContent(activity, descTop);
 		hpgAct.checkRateTopic(titleTop, 1.0);
 		hpgAct.checkReplyForum(titleTop, reply);
 		
@@ -134,7 +136,8 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 		String titleCat = "Category 75277";
 		String titleForum = "Forum 75277";
 		String titleTop = "Topic 75277";
-		String descTop = "line1<br>line2<br>line3<br>line4<br>line5";
+		String descTop = "line1" +System.getProperty("line.separator")+ "line2" +System.getProperty("line.separator")+ 
+				"line3" +System.getProperty("line.separator")+ "line4" +System.getProperty("line.separator")+ "line5";
 		String newTopic = "New Topic 75277";
 		String[] userGroup ={};
 		
@@ -163,8 +166,9 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 		String titleCat = "Category 75278";
 		String titleForum = "Forum 75278";
 		String titleTop = "Topic 75278";
-		String descTop = "line1<br>line2<br>line3<br>line4<br>line5";
-		String newDesc = "New<br>";
+		String descTop = "line1" +System.getProperty("line.separator")+ "line2" +System.getProperty("line.separator")+ 
+				"line3" +System.getProperty("line.separator")+ "line4" +System.getProperty("line.separator")+ "line5";
+		String newDesc = "New"+System.getProperty("line.separator");
 		String[] userGroup ={};
 		
 		info("Update topic title");
@@ -192,7 +196,8 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 		String titleCat = "Category 75279";
 		String titleForum = "Forum 75279";
 		String titleTop = "Topic 75279";
-		String descTop = "line1<br>line2<br>line3<br>line4<br>line5";
+		String descTop = "line1"+System.getProperty("line.separator")+"line2"+System.getProperty("line.separator")+"line3"+System.getProperty("line.separator")
+				+"line4"+System.getProperty("line.separator")+"line5";
 		
 		info("Lock/Unlock a topic");
 		//create category, forum, topic
@@ -228,7 +233,8 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 		String titleCat = "Category 75280";
 		String titleForum = "Forum 75280";
 		String titleTop = "Topic 75280";
-		String descTop = "line1<br>line2<br>line3<br>line4<br>line5";
+		String descTop = "line1"+System.getProperty("line.separator")+"line2"+System.getProperty("line.separator")+
+				"line3"+System.getProperty("line.separator")+"line4"+System.getProperty("line.separator")+"line5";
 		
 		info("Delete topic");
 		//create category, forum, topic
@@ -259,7 +265,8 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 		String titleCat = "Category 75286";
 		String titleForum = "Forum 75286";
 		String titleTop = "Topic 75286";
-		String descTop = "line1<br>line2<br>line3<br>line4<br>line5";
+		String descTop = "line1"+System.getProperty("line.separator")+"line2"+System.getProperty("line.separator")+"line3"+System.getProperty("line.separator")
+				+"line4"+System.getProperty("line.separator")+"line5";
 		
 		info("Jump into Reply form by clicking on Reply action");
 		
@@ -287,7 +294,8 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 		String titleCat = "Category 75287";
 		String titleForum = "Forum 75287";
 		String titleTop = "Topic 75287";
-		String descTop = "line1<br>line2<br>line3<br>line4<br>line5";
+		String descTop = "line1"+System.getProperty("line.separator")+"line2"+System.getProperty("line.separator")+"line3"+System.getProperty("line.separator")+
+				"line4"+System.getProperty("line.separator")+"line5";
 		String reply1 = "Reply to this topic 1";
 		String reply2 = "Reply to this topic 2";
 		
@@ -320,7 +328,8 @@ public class Forum_Forum_PublishActivity_TopicActivity extends ForumBase{
 		String titleCat = "Category 75288";
 		String titleForum = "Forum 75288";
 		String titleTop = "Topic 75288";
-		String descTop = "line1<br>line2<br>line3<br>line4<br>line5";
+		String descTop = "line1"+System.getProperty("line.separator")+"line2"+System.getProperty("line.separator")+"line3"+System.getProperty("line.separator")
+				+"line4"+System.getProperty("line.separator")+"line5";
 		String reply = "Reply to this topic 1";
 		
 		info("Jump to related reply");

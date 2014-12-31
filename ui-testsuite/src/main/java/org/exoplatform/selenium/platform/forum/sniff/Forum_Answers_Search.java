@@ -41,7 +41,7 @@ public class Forum_Answers_Search extends AnswerBase {
 	
 	/**CaseId: 68943 -> Quick search in answer
 	 */
-	@Test (groups = "error")
+	@Test 
 	public void test01_QuickSearch(){
 		String categoryName = "Answersearch1";
 		String description = "Add new category for answer";
