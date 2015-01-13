@@ -429,10 +429,11 @@ public class ContentTemplate extends EcmsBase {
 		}
 		Utils.pause(300);
 		if (!lines) {
+			info("Content is " + cont);
 			if(this.plfVersion.equalsIgnoreCase("4.1"))
-				inputDataToFrame(ELEMENT_NEWFILE_CONTENT_FRAME_41, cont, true);
+				inputDataToFrame(ELEMENT_NEWFILE_CONTENT_FRAME_41, cont,false);
 			else if(this.plfVersion.equalsIgnoreCase("4.0"))
-				inputDataToFrame(ELEMENT_NEWFILE_CONTENT_FRAME, cont, true);
+				inputDataToFrame(ELEMENT_NEWFILE_CONTENT_FRAME, cont,false);
 			else
 				type(ELEMENT_NEWFILE_TEXTAREA_ID, cont, true);
 

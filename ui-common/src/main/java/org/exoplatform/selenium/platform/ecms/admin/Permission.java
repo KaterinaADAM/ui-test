@@ -8,6 +8,7 @@ import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ecms.EcmsPermission;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
  * 
@@ -25,6 +26,7 @@ public class Permission extends EcmsPermission{
 	Button button = new Button(driver);
 
 	//Permission management screen
+	public final By ELEMENT_PERMISSION_MANAGEMENT_POPUP = By.cssSelector("form[id='UIUserSelector']");
 	public final String MESSAGE_INFO_DELETE_PERMISSION_SYSTEM = "You cannot remove the owner or the system user.";
 	public final String ELEMENT_PERMISSION_MANAGEMENT_ICON = "//*[@title='${categoryName}']/../..//*[@class='uiIconEcmsViewPermissions']";
 	public final By ELEMENT_READ_CHEKBOX = By.xpath("//div[@id='UITabContent' and @style='display: block;;']//*[@id='read']");
@@ -83,12 +85,19 @@ public class Permission extends EcmsPermission{
 			}
 		}
 		else if (selectUser){
+			
 			if (isElementPresent(ELEMENT_SELECT_USER_IN_PERMISSION_MANAGEMENT)){
 				click(ELEMENT_SELECT_USER_IN_PERMISSION_MANAGEMENT);
 			}else {
-				click(ELEMENT_SELECT_USER_IN_PERMISSION_MANAGEMENT_2);
+				Utils.pause(3000);
+//				click(ELEMENT_SELECT_USER_IN_PERMISSION_MANAGEMENT_2);
+				clickByJavascriptWithClassName("uiIconSelectUser uiIconLightGray",1);
 			}
-
+			WebElement e = waitForAndGetElement(ELEMENT_PERMISSION_MANAGEMENT_POPUP,DEFAULT_TIMEOUT,1,2);
+			String[]  temp = e.getAttribute("action").split("&");
+			String[] temp1 = temp[0].split("=");
+			String id = temp1[temp1.length-1];
+			info("id is " + id);
 			if (waitForAndGetElement(ELEMENT_TEXT_ADD_PERMISSION.replace("${text}", "Add permissions to this node"), 5000, 0) != null){
 				if (waitForAndGetElement(By.xpath("//*[@title='" + user + "']/../..//*[@class='SelectPageIcon']"), 5000, 0) !=null ){
 					click(By.xpath("//*[@title='" + user + "']/../..//*[@class='SelectPageIcon']"));
@@ -97,11 +106,13 @@ public class Permission extends EcmsPermission{
 				} 
 			}
 			else if (waitForAndGetElement(ELEMENT_TEXT_ADD_PERMISSION.replace("${text}", "Add permission to that node"), 5000, 0) != null){
-				if (waitForAndGetElement(By.xpath("//div[@id='UITabContent' and @style='display: block;;']//*[@title='" + user + "']/../..//*[@class='SelectPageIcon']"), 5000, 0) != null){
+				info("javascript click");
+				/*if (waitForAndGetElement(By.xpath("//div[@id='UITabContent' and @style='display: block;;']//*[@title='" + user + "']/../..//*[@class='SelectPageIcon']"), 5000, 0) != null){
 					click(By.xpath("//div[@id='UITabContent' and @style='display: block;;']//*[@title='" + user + "']/../..//*[@class='SelectPageIcon']"));
-				}else {
-					click(By.xpath("//div[@id='UITabContent' and @style='display: block;;']//*[text()='" + user + "']/../..//*[contains(@class, 'uiIconPlus')]"));
-				}
+				}else {*/
+//					((JavascriptExecutor)driver).executeScript("javascript:eXo.webui.UIForm.submitEvent('"+id+"#UIUserSelector','AddUser','&objectId="+user+"'); return false;"); 
+					waitForAndGetElement(By.xpath("//div[@id='UITabContent' and @style='display: block;;']//*[text()='" + user + "']/../..//*[contains(@class, 'uiIconPlus')]")).click();
+//				}
 			}	
 		}
 		else if (selectMembership){

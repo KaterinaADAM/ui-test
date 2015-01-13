@@ -78,28 +78,28 @@ public class EcmsPermission extends EcmsBase{
 		//By ELEMENT_DELETE_USER_PERMISSION = By.xpath("//div[@title='"+ user +"']/../../td/div/img[@class='DeleteIcon']");
 		//By ELEMENT_DELETE_USER_PERMISSION_AUX = By.xpath("//div[@id='UITabContent' and @style='display: block;;']//div[@title='"+ user +"']/../../td/div/img[@class='DeleteIcon']");
 		if (waitForAndGetElement(ELEMENT_DELETE_USER_PERMISSION_AUX.replace("${userOrGroupName}", user), 5000, 0) != null){
-			click(ELEMENT_DELETE_USER_PERMISSION_AUX.replace("${userOrGroupName}", user));
+			waitForAndGetElement(ELEMENT_DELETE_USER_PERMISSION_AUX.replace("${userOrGroupName}", user)).click();
 			magAlert.acceptAlert();
 			if(verify){
 				waitForElementNotPresent(ELEMENT_DELETE_USER_PERMISSION_AUX.replace("${userOrGroupName}", user));
 			}
 			info("Delete a permission is successful");
 		}else if (waitForAndGetElement(ELEMENT_DELETE_USER_PERMISSION.replace("${userOrGroupName}", user), 5000, 0) != null){
-			click(ELEMENT_DELETE_USER_PERMISSION.replace("${userOrGroupName}", user));
+			waitForAndGetElement(ELEMENT_DELETE_USER_PERMISSION.replace("${userOrGroupName}", user)).click();
 			magAlert.acceptAlert();
 			if(verify){
 				waitForElementNotPresent(ELEMENT_DELETE_USER_PERMISSION.replace("${userOrGroupName}", user));
 			}
 			info("Delete a permission is successful");
 		}else if (waitForAndGetElement(ELEMENT_DELETE_USER_PERMISSION_AUX_1.replace("${userOrGroupName}", user), 5000, 0) != null){
-			click(ELEMENT_DELETE_USER_PERMISSION_AUX_1.replace("${userOrGroupName}", user));
+			waitForAndGetElement(ELEMENT_DELETE_USER_PERMISSION_AUX_1.replace("${userOrGroupName}", user)).click();
 			magAlert.acceptAlert();
 			if(verify){
 				waitForElementNotPresent(ELEMENT_DELETE_USER_PERMISSION_AUX_1.replace("${userOrGroupName}", user));
 			}
 			info("Delete a permission is successful");
 		}else if (waitForAndGetElement(ELEMENT_DELETE_USER_PERMISSION_1.replace("${userOrGroupName}", user), 5000, 0) != null){
-			click(ELEMENT_DELETE_USER_PERMISSION_1.replace("${userOrGroupName}", user));
+			waitForAndGetElement(ELEMENT_DELETE_USER_PERMISSION_1.replace("${userOrGroupName}", user)).click();
 			magAlert.acceptAlert();
 			if(verify){
 				waitForElementNotPresent(ELEMENT_DELETE_USER_PERMISSION_1.replace("${userOrGroupName}", user));

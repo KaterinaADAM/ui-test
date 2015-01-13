@@ -302,7 +302,7 @@ public class NavigationToolbar extends PlatformBase {
 					break;
 			}
 			//mouseOverAndClick(ELEMENT_LINK_SETUP);
-			mouseOver(ELEMENT_LINK_SETUP, true);
+			click(ELEMENT_LINK_SETUP);
 			if (waitForAndGetElement(ELEMENT_MENU_CONTENT_LINK, 5000, 0)!= null) {
 				mouseOver(ELEMENT_MENU_CONTENT_LINK, true);
 				if (waitForAndGetElement(ELEMENT_LINK_CONTENT_ADMIN, 5000, 0)!= null){
@@ -337,6 +337,7 @@ public class NavigationToolbar extends PlatformBase {
 		//mouseOver(ELEMENT_LINK_SETUP, true);
 		clickByJavascript(ELEMENT_MENU_CONTENT_LINK,2);
 		waitForAndGetElement(siteE.ELEMENT_SITE_EXPLORER_PAGE);
+		waitForAndGetElement(siteE.ELEMENT_ACTION_BAR);
 		//click(ELEMENT_MENU_SITE_EXPLORER);
 		Utils.pause(2000);
 	}
@@ -352,7 +353,7 @@ public class NavigationToolbar extends PlatformBase {
 				driver.get(url);
 				break;
 			}
-			mouseOver(ELEMENT_LINK_SETUP, true);
+			click(ELEMENT_LINK_SETUP);
 			if (waitForAndGetElement(ELEMENT_MENU_CONTENT_LINK, 5000, 0)!= null) {	
 				mouseOver(ELEMENT_MENU_CONTENT_LINK, true);
 				if (waitForAndGetElement(ELEMENT_MENU_SEARCH, 5000, 0)!= null){
@@ -424,7 +425,7 @@ public class NavigationToolbar extends PlatformBase {
 				mouseOverAndClick(ELEMENT_MENU_EDIT_LINK);
 				break;
 			}
-			mouseOver(ELEMENT_MENU_EDIT_LINK, true);
+			click(ELEMENT_MENU_EDIT_LINK, true);
 			if (waitForAndGetElement(ELEMENT_MENU_PAGE_LINK, 5000, 0)!= null) {	
 				mouseOver(ELEMENT_MENU_PAGE_LINK, true);
 				if (waitForAndGetElement(ELEMENT_MENU_ADD_PAGE_LINK, 5000, 0)!= null){

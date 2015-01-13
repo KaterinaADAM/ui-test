@@ -68,7 +68,7 @@ public class TestBase {
 	//public final By ELEMENT_MENU_EDIT_LINK = By.xpath("//i[@class='uiIconPLF24x24Edit']");
 	//public final By ELEMENT_MENU_PAGE_LINK = By.linkText("Page");
 	//public final String AJAX_LOADING_MASK = "//div[@id='AjaxLoadingMask']";
-	public String DEFAULT_BASEURL="http://192.168.3.45:8080/portal";
+	public String DEFAULT_BASEURL="http://localhost:8080/portal";
 
 	/*======= Welcome Screen (Term and Conditions) =====*/
 	public final By ELEMENT_FIRSTNAME_ACCOUNT = By.name("firstNameAccount");
@@ -108,7 +108,6 @@ public class TestBase {
 
 	/*======== End of Term and conditions =====*/	
 	public void initSeleniumTestWithOutTermAndCondition(Object... opParams){
-		System.setProperty("browser", "iexplorer");
 		String browser = System.getProperty("browser");
 
 		baseUrl = System.getProperty("baseUrl");
@@ -342,6 +341,21 @@ public class TestBase {
 		return null;
 	}
 
+	public WebElement waitForAndGetElementByJavascript(String className, String text, int...index){
+		WebElement elem = null;
+		int i = index.length > 0 ? index[0] : 0;
+//		int timeout = (Integer) (opParams.length>0 ? opParams[0] : DEFAULT_TIMEOUT);
+		for (int tick = 0; tick < DEFAULT_TIMEOUT/WAIT_INTERVAL; tick++) {
+			elem = (WebElement)((JavascriptExecutor) driver).executeScript("return document.getElementsByClassName('"+className+"')["+i+"];");
+				//elem = getDisplayedElement(locator);
+			if (null != elem) {
+				if(elem.getText().contains(text))
+					break;
+			}
+			Utils.pause(WAIT_INTERVAL);
+		}
+		return elem;
+	}
 
 	/*
 	 * @opPram[0]: timeout
@@ -837,7 +851,6 @@ public class TestBase {
 	 * @author lientm
 	 */
 	public void getDriverAutoSave(){
-		System.setProperty("browser", "iexplorer");
 		String pathFile = System.getProperty("user.dir") + "/src/main/resources/TestData";
 		String browser = System.getProperty("browser");
 
@@ -897,6 +910,7 @@ public class TestBase {
 	public WebDriver initIEDriver(){
 		System.setProperty("webdriver.ie.driver","D:\\java\\eXoProjects\\IEDriverServer\\IEDriverServer.exe") ;
 		DesiredCapabilities  capabilitiesIE = DesiredCapabilities.internetExplorer();
+		capabilitiesIE.setCapability("nativeEvents",false);
 		//		capabilitiesIE.setCapability("ignoreProtectedModeSettings", true);
 		capabilitiesIE.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
 		return new InternetExplorerDriver(capabilitiesIE);
@@ -906,7 +920,6 @@ public class TestBase {
 	 * @author lientm
 	 */
 	public void getDriverAutoOpenWindow(){
-		System.setProperty("browser", "iexplorer");
 		String browser = System.getProperty("browser");
 
 		baseUrl = System.getProperty("baseUrl");
@@ -1329,7 +1342,6 @@ public class TestBase {
 		try {
 			info(Utils.getAbsoluteFilePath(file.replace("/", fs)));
 			Process proc=Runtime.getRuntime().exec(Utils.getAbsoluteFilePath("TestData\\uploadFile.exe") + " " + Utils.getAbsoluteFilePath(file.replace("/", fs)));
-			info("path is " + Utils.getAbsoluteFilePath(file.replace("/", fs)));
 			InputStream is = proc.getInputStream();
 			int retCode = 0;
 			while(retCode != -1)

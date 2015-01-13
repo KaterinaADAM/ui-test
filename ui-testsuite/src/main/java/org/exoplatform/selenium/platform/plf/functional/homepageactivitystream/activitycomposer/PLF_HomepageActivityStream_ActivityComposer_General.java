@@ -2,8 +2,6 @@ package org.exoplatform.selenium.platform.plf.functional.homepageactivitystream.
 
 import static org.exoplatform.selenium.TestLogger.info;
 
-import java.awt.event.KeyEvent;
-
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.Utils;

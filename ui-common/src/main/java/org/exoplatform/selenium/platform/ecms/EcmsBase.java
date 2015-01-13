@@ -55,6 +55,7 @@ public class EcmsBase extends ManageAccount {
 	//public final String ELEMENT_VIEW_MODE_LINK = "//i[contains(@class,'uiIconEcmsViewDefault')]/../..//*[@data-original-title='${viewName}']";
 	public final By ELEMENT_BACK_PREVIOUS_NODE = By.className("uiIconEcmsGoBack");
 	public final By ELEMENT_ADDRESS_BAR = By.id("address");
+	public final By ELEMENT_ACTION_BAR = By.cssSelector("form[id='UIActionBar']");
 
 	//New Folder
 	public final By ELEMENT_NEW_FOLDER_LINK = By.xpath("//*[@class='actionIcon']//*[contains(@class,'uiIconEcmsAddFolder')]");

@@ -662,6 +662,8 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_UPLOAD_IMG_FRAME_XPATH = By.xpath("//iframe[contains(@id,'iFrameUpload')]");
 	public final By ELEMENT_UPLOAD_IMG_ID = By.name("file");
 	public final By ELEMENT_UPLOAD_VERSION_ID = By.xpath("//div[@id='versionHistory']//input[@name='file']");
+	public final By ELEMENT_SELECT_FILE = By.xpath("//label[contains(text(),'Upload File')]/..//label[@class='btn' and text()='Select File']");
+	public final By ELEMENT_SELECT_FILE_VERSION = By.xpath("//label[contains(text(),'Version History:')]/..//label[@class='btn' and text()='Select File']");
 
 	//Space > Wiki link
 	public final By ELEMENT_WIKI_LINK_IN_SPACE = By.cssSelector("i[class='uiIconAppWikiPortlet uiIconDefaultApp']");
@@ -1279,7 +1281,10 @@ public class PlatformBase extends TestBase {
 					else{
 						String text = inputsummary.getText();
 						inputsummary.clear();
+						info("Test is " + data);
 						inputsummary.sendKeys(data + text);
+						info("Text is " + inputsummary.getText());
+						
 						//						((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + data + "' + document.body.innerHTML;");
 						break;
 					}

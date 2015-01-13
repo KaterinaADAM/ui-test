@@ -77,7 +77,7 @@ public class ECMS_SE_Admin extends PlatformBase {
 			
 		//Check if Category button is shown on action bar
 		actBar.addItem2ActionBar("addCategory", actBar.ELEMENT_CATEGORIES_LINK);
-		
+		cTemplate.goToNode(bNode);
 		//Add category for node
 		actBar.addCategoryForNode(categoryTree, false, categoryPath, "Healing");
 		
@@ -188,6 +188,7 @@ public class ECMS_SE_Admin extends PlatformBase {
 		actBar.addItem2ActionBar("addCategory", actBar.ELEMENT_CATEGORIES_LINK);
 		
 		//Add category for node
+		cTemplate.goToNode(bNode);
 		actBar.addCategoryForNode(catePath, false, "Defense", "Healing");
 		
 		//Delete category
@@ -216,7 +217,8 @@ public class ECMS_SE_Admin extends PlatformBase {
 		actBar.addItem2ActionBar("importNode",actBar.ELEMENT_IMPORT_LINK);
 		
 		//Import node 
-		actBar.importNode(filePath,"","Create New",true);
+		cTemplate.goToNode(bNode);
+		actBar.importNode(filePath,"","Create New",false);
 		
 		//Delete data
 		cMenu.deleteDocument(bNode);

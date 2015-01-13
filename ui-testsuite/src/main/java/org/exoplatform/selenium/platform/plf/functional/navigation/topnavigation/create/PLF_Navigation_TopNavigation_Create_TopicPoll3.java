@@ -16,7 +16,6 @@ import org.exoplatform.selenium.platform.forum.ForumPermission;
 import org.exoplatform.selenium.platform.social.ManageMember;
 import org.exoplatform.selenium.platform.social.SpaceManagement;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.testng.annotations.*;
 
 

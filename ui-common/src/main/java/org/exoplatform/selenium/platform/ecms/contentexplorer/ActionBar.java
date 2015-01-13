@@ -95,6 +95,7 @@ public class ActionBar extends EcmsBase{
 	public By ELEMENT_UPLOAD_VERSION_FRAME = By.xpath("//label[contains(text(),'Version History:')]/following::div/iframe[contains(@id,'uploadFrame')]");
 	public By ELEMENT_BEHAVIOR = By.name("behavior");
 	public By ELEMENT_IMPORT = By.xpath("//button[text()='Import']");
+	public By ELEMENT_PROGRESS_BAR = By.xpath("//div[@class='bar']");
 
 	//Publication > Add Category Form
 	public By ELEMENT_CATEGORIES_LINK = By.xpath("//*[@class='actionIcon']//*[contains(@class,'uiIconEcmsManageCategories')]"); 
@@ -417,7 +418,7 @@ public class ActionBar extends EcmsBase{
 	 */
 	public void importNode(String linkFile, String linkVersion, String behavior, boolean version) {
 		WebElement eProperties = waitForAndGetElement(ELEMENT_VIEW_PROPERTIES_ICON,10000,0);
-		WebElement more = waitForAndGetElement(ELEMENT_MORE_LINK_WITHOUT_BLOCK,5000,0);
+		WebElement more = waitForAndGetElement(ELEMENT_MORE_LINK_WITHOUT_BLOCK,2000,0);
 		String[] files = linkFile.split("/");
 		int length = files.length;
 		if(eProperties == null)
@@ -426,23 +427,32 @@ public class ActionBar extends EcmsBase{
 		//Click import button
 		waitForAndGetElement(ELEMENT_IMPORT_LINK);
 		click(ELEMENT_IMPORT_LINK);
-		//Switch to frame upload file
-		//		driver.switchTo().frame(waitForAndGetElement(ELEMENT_UPLOAD_FILE_FRAME));
-		WebElement upload = waitForAndGetElement(ELEMENT_UPLOAD_IMG_ID, DEFAULT_TIMEOUT,1,2);
-		((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block';", upload);
-		upload.sendKeys(Utils.getAbsoluteFilePath(linkFile));	
-		//		type(ELEMENT_UPLOAD_IMG_ID, Utils.getAbsoluteFilePath(linkFile), false);
-		Utils.pause(500);
+		if("firefox".equalsIgnoreCase(System.getProperty("browser"))){
+			//Switch to frame upload file
+			//		driver.switchTo().frame(waitForAndGetElement(ELEMENT_UPLOAD_FILE_FRAME));
+			WebElement upload = waitForAndGetElement(ELEMENT_UPLOAD_IMG_ID, DEFAULT_TIMEOUT,1,2);
+			((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block';", upload);
+			upload.sendKeys(Utils.getAbsoluteFilePath(linkFile));	
+			//		type(ELEMENT_UPLOAD_IMG_ID, Utils.getAbsoluteFilePath(linkFile), false);
+			Utils.pause(500);
+		}else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			waitForAndGetElement(ELEMENT_SELECT_FILE).click();
+			uploadFile(linkFile);
+		}
 		//		switchToParentWindow();
 
 		select(ELEMENT_BEHAVIOR, behavior);
-		if (version)
-		{		
-			//			driver.switchTo().frame(waitForAndGetElement(ELEMENT_UPLOAD_VERSION_FRAME));
-			WebElement uploadVersion = waitForAndGetElement(ELEMENT_UPLOAD_VERSION_ID, DEFAULT_TIMEOUT,1,2);
-			((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block';", uploadVersion);
-			uploadVersion.sendKeys(Utils.getAbsoluteFilePath(linkVersion));
-			Utils.pause(500);
+		if (version){		
+			if("firefox".equalsIgnoreCase(System.getProperty("browser"))){
+				//			driver.switchTo().frame(waitForAndGetElement(ELEMENT_UPLOAD_VERSION_FRAME));
+				WebElement uploadVersion = waitForAndGetElement(ELEMENT_UPLOAD_VERSION_ID, DEFAULT_TIMEOUT,1,2);
+				((JavascriptExecutor)driver).executeScript("arguments[0].style.display = 'block';", uploadVersion);
+				uploadVersion.sendKeys(Utils.getAbsoluteFilePath(linkVersion));
+				Utils.pause(500);
+			}else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+				waitForAndGetElement(ELEMENT_SELECT_FILE_VERSION).click();
+				uploadFile(linkVersion);
+			}
 			//			switchToParentWindow();
 			click(ELEMENT_IMPORT);
 			Utils.pause(500);
@@ -451,7 +461,10 @@ public class ActionBar extends EcmsBase{
 		}
 		else 
 		{
-			waitForAndGetElement(ELEMENT_IMPORT_FILE_LABEL.replace("${fileName}", files[length-1]));
+			Utils.pause(7000);
+			waitForAndGetElementByJavascript("fileNameLabel", files[length-1]);
+			waitForElementNotPresent(ELEMENT_PROGRESS_BAR);
+//			waitForAndGetElement(ELEMENT_IMPORT_FILE_LABEL.replace("${fileName}", files[length-1]));
 			Utils.pause(1000);
 			click(ELEMENT_IMPORT);
 
@@ -469,7 +482,7 @@ public class ActionBar extends EcmsBase{
 		// By ELEMENT_CATEGORY_LIST = By.xpath("//th[text()='Category']")
 		By ELEMENT_ADD_CATEGORY_SPECIFIC_OTHER = By.xpath("//div[contains(text(),'"+categoryName+"')]/following::a[@data-original-title='select']");
 
-		if (waitForAndGetElement(ELEMENT_CATEGORIES_LINK, 5000, 0) == null){
+		if (waitForAndGetElement(ELEMENT_CATEGORIES_LINK, 2000, 0) == null){
 			click(ELEMENT_MORE_LINK_WITHOUT_BLOCK);
 			waitForAndGetElement(ELEMENT_CATEGORIES_LINK);
 		}

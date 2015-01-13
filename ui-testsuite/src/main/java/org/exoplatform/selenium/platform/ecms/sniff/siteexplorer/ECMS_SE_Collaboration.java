@@ -58,7 +58,7 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 	/**CaseID: 65853 + 67864 + 67865: 
 	 * Add + Edit + Delete comment for document/uploaded file
 	 */
-	@Test
+	@Test(groups="first")
 	public void test38_39_40_AddEditDeleteComment_Document(){
 		String file = "File_document_name_add_comment_38";
 		String fileContent = "File_document_content_sniff_38";
@@ -90,7 +90,7 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 		cMenu.deleteData(elementFile);
 	}
 
-	@Test
+	@Test(groups="first")
 	public void test38_39_40_AddEditDeleteComment_UploadedFile(){
 		String fileUpload = "ECMS_Admin_ManageCategories_Display.jpg";
 		String oldComment = "Comment to uploaded file";
@@ -109,6 +109,8 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 		if("firefox".equalsIgnoreCase(System.getProperty("browser")))
 			actBar.uploadFile("TestData/" + fileUpload);
 		else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			if (waitForAndGetElement(ecms.ELEMENT_MORE_LINK_WITHOUT_BLOCK, 2000,0) != null)
+				click(ecms.ELEMENT_MORE_LINK_WITHOUT_BLOCK);
 			click(actBar.ELEMENT_UPLOAD_BUTTON);
 			uploadFile("TestData/" + fileUpload);
 		}
@@ -129,7 +131,7 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 	/**CaseId: 65860 + 65868 + 65869
 	 * Add - Edit - Delete tag for document/uploaded file
 	 */
-	@Test
+	@Test(groups="first")
 	public void test45_46_47_AddEditDeleteTag_Document(){
 		String file = "File_document_name_add_tag_45";
 		String fileContent = "File_document_content_add_tag_45";
@@ -157,7 +159,7 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 		cMenu.deleteData(elementFile);
 	}
 
-	@Test
+	@Test(groups="first")
 	public void test45_46_47_AddEditDelete_UploadedFile(){
 		String fileUpload = "ECMS_Admin_ManageCategories_Display.jpg";
 		String[] tagName = {"Tag_2"};
@@ -165,11 +167,13 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 		By elementUploadFile = By.linkText(fileUpload);
 
 		navToolBar.goToSiteExplorer();
-
+		waitForAndGetElement(ecms.ELEMENT_ACTION_BAR);
 		info("Upload new file and add tag");
 		if("firefox".equalsIgnoreCase(System.getProperty("browser")))
 			actBar.uploadFile("TestData/" + fileUpload);
 		else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			if (waitForAndGetElement(ecms.ELEMENT_MORE_LINK_WITHOUT_BLOCK, 2000,0) != null)
+				click(ecms.ELEMENT_MORE_LINK_WITHOUT_BLOCK);
 			click(actBar.ELEMENT_UPLOAD_BUTTON);
 			uploadFile("TestData/" + fileUpload);
 		}
@@ -193,7 +197,7 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 	/**CaseId: 65882
 	 * Vote for a document or uploaded file
 	 */
-	@Test
+	@Test(groups="first")
 	public void test48_VoteForDocument(){
 		String file = "File_document_name_vote_48";
 		String fileContent = "File_document_content_vote_48";
@@ -210,17 +214,19 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 		cMenu.deleteData(elementFile);
 	}
 
-	@Test
+	@Test(groups="first")
 	public void test48_VoteForUploadedFile(){
 		String fileUpload = "Winter.jpg";
 		By elementUploadFile = By.linkText(fileUpload);
 
 		navToolBar.goToSiteExplorer();
-
+		waitForAndGetElement(ecms.ELEMENT_ACTION_BAR);
 		info("Upload new file and vote");
 		if("firefox".equalsIgnoreCase(System.getProperty("browser")))
 			actBar.uploadFile("TestData/" + fileUpload);
 		else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			if (waitForAndGetElement(ecms.ELEMENT_MORE_LINK_WITHOUT_BLOCK, 2000,0) != null)
+				click(ecms.ELEMENT_MORE_LINK_WITHOUT_BLOCK);
 			click(actBar.ELEMENT_UPLOAD_BUTTON);
 			uploadFile("TestData/" + fileUpload);
 		}
@@ -238,7 +244,7 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 	 * make translation between them
 	 * check translation is applied in a content detail portlet
 	 */
-	@Test
+	@Test(dependsOnGroups = {"first"},alwaysRun=true)
 	public void test41_AddTranslation_Document(){
 		String fileEnglish = "File_document_English";
 		String fileContentEnglish = "File_document_content_English";
@@ -251,7 +257,6 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 			eContentDetail = ELEMENT_CONTENT_IN_CONTENT_DETAIL_PORTLET_41;
 		else
 			eContentDetail = ELEMENT_CONTENT_IN_CONTENT_DETAIL_PORTLET;
-
 
 		navToolBar.goToSiteExplorer();
 		actBar.goToAddNewContent();
@@ -269,7 +274,7 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 
 		info("Add translation for file English to file French");
 		ecms.goToNode(elementFileEnglish);
-		actBar.addTranslationForDocument("", fileFrench);
+		actBar.addTranslationForDocument("General Drives/Sites Management", fileFrench);
 		click(siteExp.ELEMENT_SITEBAR_RELATION);
 		waitForAndGetElement(By.xpath(ecms.ELEMENT_TRANSLATION_IN_RELATION_TAB.replace("${fileName}", fileFrench)));
 
@@ -298,7 +303,7 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 		cMenu.deleteData(elementFileEnglish);
 	}
 
-	@Test
+	@Test(dependsOnGroups = {"first"},alwaysRun=true)
 	public void test41_AddTranslation_UploadedFile(){
 		String fileEnglish = "English.docx";
 		By elementFileEnglish = By.linkText(fileEnglish);
@@ -311,12 +316,13 @@ public class ECMS_SE_Collaboration extends PlatformBase {
 			eContentDetail = ELEMENT_CONTENT_IN_CONTENT_DETAIL_PORTLET;
 
 		navToolBar.goToSiteExplorer();
-
+		
 		info("Upload 2 file");
 		if("firefox".equalsIgnoreCase(System.getProperty("browser"))){
 			actBar.uploadFile("TestData/" + fileEnglish);
 			actBar.uploadFile("TestData/" + fileFrench);
 		}else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			
 			click(actBar.ELEMENT_UPLOAD_BUTTON);
 			uploadFile("TestData/" + fileEnglish);
 			click(actBar.ELEMENT_UPLOAD_BUTTON);

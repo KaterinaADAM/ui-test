@@ -209,10 +209,7 @@ public class HomePageActivity extends PlatformBase{
 	 */
 	public void checkInforAfterAddingDocument(String name, String iconType, String contentType, String size, String content, 
 			String version, String des, String status){
-		String text = waitForAndGetElement(ELEMENT_CONTENT_SUMMARY_PRODUCT.replace("@{fileName}", name)).getAttribute("innerHTML");
-		info("text is " + text);
-		String[] sum = null;
-		sum = text.split("<br>");
+		
 		info("Check name of content");
 		if(waitForAndGetElement(ELEMENT_CONTENT_NAME.replace("@{fileName}", name), 5000, 0,2) == null)
 			waitForAndGetElement(ELEMENT_CONTENT_NAME_41.replace("@{fileName}", name));
@@ -227,6 +224,9 @@ public class HomePageActivity extends PlatformBase{
 				waitForAndGetElement(ELEMENT_CONTENT_TYPE_PLF41.replace("${activityText}", name).replace("${type}", contentType));
 		}
 		if (content != ""){
+			String text = waitForAndGetElement(ELEMENT_CONTENT_SUMMARY_PRODUCT.replace("@{fileName}", name)).getAttribute("innerHTML");
+			String[] sum = null;
+			sum = text.split("<br>");
 			info("Check content summary");
 
 			String[] cont = content.split(System.getProperty("line.separator"));
@@ -625,7 +625,6 @@ public class HomePageActivity extends PlatformBase{
 				waitForAndGetElement(ELEMENT_QUESTION_COMMENT.replace("${title}", question).replace("${comment}", MSG_ANSWER_QUESTION.replace("${answer}", answer[i])));
 			}
 		}
-
 
 	}
 

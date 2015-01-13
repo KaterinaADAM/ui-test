@@ -72,7 +72,7 @@ public class Forum_Administration extends ForumBase {
 	/**CaseId: 68917 -> Ban IP
 	 * 
 	 */
-	@Test()
+	@Test(dependsOnGroups="first",alwaysRun=true)
 	public void test02_BanIP(){
 		String catName = "CategoryBanIP_02";
 		String description = "Add new category in forum";

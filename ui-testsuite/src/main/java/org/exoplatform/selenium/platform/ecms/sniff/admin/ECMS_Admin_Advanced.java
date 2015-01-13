@@ -179,6 +179,7 @@ public class ECMS_Admin_Advanced extends PlatformBase{
 		magCa.deleteCategory(newCategoryName_1);
 		button.close();
 		waitForTextPresent(categoryTreeName);
+		click(magCa.ELEMENT_EDIT_CATEGORY_TREE.replace("${categoryTreeName}", categoryTreeName));
 
 		//Edit a category
 		magCa.addNewCategoryTree_Step4(categoryTreeName, categoryName_2, newCategoryName_2, DATA_USER2, true, true, true);

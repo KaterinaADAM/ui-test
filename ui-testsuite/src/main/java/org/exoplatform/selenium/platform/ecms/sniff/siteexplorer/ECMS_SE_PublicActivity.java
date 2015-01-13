@@ -71,12 +71,15 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 
 	public void uploadFileThenCheckActivity(String fileUpload, String size){
 		navToolBar.goToSiteExplorer();
+		waitForAndGetElement(ecms.ELEMENT_ACTION_BAR);
 
 		info("Upload new file");
 		if("firefox".equalsIgnoreCase(System.getProperty("browser")))
 			ecms.uploadFile("TestData/" + fileUpload);
 		else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
-			click(actBar.ELEMENT_UPLOAD_BUTTON);
+			if (waitForAndGetElement(ecms.ELEMENT_MORE_LINK_WITHOUT_BLOCK, 2000,0) != null)
+				click(ecms.ELEMENT_MORE_LINK_WITHOUT_BLOCK);
+			waitForAndGetElement(actBar.ELEMENT_UPLOAD_BUTTON).click();
 			uploadFile("TestData/" +fileUpload);
 		}
 
@@ -496,6 +499,8 @@ public class ECMS_SE_PublicActivity extends PlatformBase {
 		if("firefox".equalsIgnoreCase(System.getProperty("browser"))){
 			ecms.uploadFile("TestData/" + fileUpload);
 		}else if("iexplorer".equalsIgnoreCase(System.getProperty("browser"))){
+			if (waitForAndGetElement(ecms.ELEMENT_MORE_LINK_WITHOUT_BLOCK, 2000,0) != null)
+				click(ecms.ELEMENT_MORE_LINK_WITHOUT_BLOCK);
 			click(actBar.ELEMENT_UPLOAD_BUTTON);
 			uploadFile("TestData/" + fileUpload);
 		}
