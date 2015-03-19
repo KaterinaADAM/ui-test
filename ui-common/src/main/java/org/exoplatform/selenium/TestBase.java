@@ -437,9 +437,10 @@ public class TestBase {
 	//	baseURL="http://192.168.1.19:4444/grid/register";
 		nodeURL="http://builder2.testlab1.exoplatform.vn:4444/wd/hub";
 		DesiredCapabilities capibility = DesiredCapabilities.firefox();
+		capibility.setCapability("binary", "/usr/bin/firefox");
 		capibility.setBrowserName("firefox");
 		capibility.setPlatform(Platform.LINUX);
-		capibility.setCapability("binary", "/usr/bin/firefox");
+
 		driver= new RemoteWebDriver( new URL(nodeURL),capibility);
 		
 		//driver.manage().window().maximize();
