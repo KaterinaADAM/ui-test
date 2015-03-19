@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,6 +34,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
@@ -43,6 +46,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
@@ -352,16 +356,16 @@ public class TestBase {
 	public void initSeleniumTestWithOutTermAndCondition(Object... opParams){
 
 		getSystemProperty();
-		if("chrome".equals(browser)){
-			driver = new ChromeDriver();
-			chromeFlag = true;
-		} else if ("iexplorer".equals(browser)){
-			driver = initIEDriver();
-			ieFlag = true;
-		} else {
-			driver = initFFDriver();
-		}
-		action = new Actions(driver);
+//		if("chrome".equals(browser)){
+//			driver = new ChromeDriver();
+//			chromeFlag = true;
+//		} else if ("iexplorer".equals(browser)){
+//			driver = initIEDriver();
+//			ieFlag = true;
+//		} else {
+//			driver = initFFDriver();
+//		}
+//		action = new Actions(driver);
 	}
 
 	/**
@@ -422,17 +426,26 @@ public class TestBase {
 		click(ELEMENT_START_BUTTON);
 		waitForAndGetElement(ELEMENT_ACCOUNT_NAME_LINK);
 	}
-
 	/**
 	 * init browser
 	 * @param opParams
 	 */
-	public void initSeleniumTest(Object... opParams){
+	String baseURL, nodeURL;
+	public void initSeleniumTest(Object... opParams) throws MalformedURLException{
 		initSeleniumTestWithOutTermAndCondition();
-		driver.manage().window().maximize();
-		driver.navigate().refresh();
+		
+		baseURL="http://192.168.1.19:4444/grid/register";
+		nodeURL="http://192.168.3.46:5555/wd/hub";
+		DesiredCapabilities capibility = DesiredCapabilities.firefox();
+		capibility.setBrowserName("firefox");
+		capibility.setPlatform(Platform.LINUX);
+		driver= new RemoteWebDriver( new URL(nodeURL),capibility);
+		
+		//driver.manage().window().maximize();
+		//driver.navigate().refresh();
 		termsAndConditions(opParams);
 	}
+
 
 	/**
 	 * initNewIEBrowserWithNativeEvent

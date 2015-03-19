@@ -27,6 +27,8 @@ import org.exoplatform.selenium.platform.wiki.RichTextEditor;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
+import com.thoughtworks.selenium.Selenium;
+
 public class SOC_TestConfig extends PlatformBase {
 	HomePagePlatform hp;
 	
@@ -63,6 +65,7 @@ public class SOC_TestConfig extends PlatformBase {
 	public void setUpBeforeClass() throws Exception{
 		info("Start setUpBeforeClass");
 		initSeleniumTest();
+		
 		getDefaultUserPass(userDataFilePath,defaultSheet,isUseFile,jdbcDriver,dbUrl,user,pass,sqlUser);
 		magAc = new ManageLogInOut(driver);
 		magAc.signIn(DATA_USER1, DATA_PASS);
