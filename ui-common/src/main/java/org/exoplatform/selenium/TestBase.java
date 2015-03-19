@@ -439,6 +439,7 @@ public class TestBase {
 		DesiredCapabilities capibility = DesiredCapabilities.firefox();
 		capibility.setBrowserName("firefox");
 		capibility.setPlatform(Platform.LINUX);
+		capibility.setCapability("binary", "/usr/bin/firefox");
 		driver= new RemoteWebDriver( new URL(nodeURL),capibility);
 		
 		//driver.manage().window().maximize();
