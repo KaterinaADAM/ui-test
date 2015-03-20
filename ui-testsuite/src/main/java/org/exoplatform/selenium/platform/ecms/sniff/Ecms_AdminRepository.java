@@ -62,7 +62,7 @@ public class Ecms_AdminRepository extends ECMS_TestConfig_Part1{
 
 		String name = txData.getContentByArrayTypeRandom(1)+getRandomNumber();
 		String superTypes ="exo:calendar";
-
+		driver.get(baseUrl);
 		navTool.goToContentAdministration();
 		caPage.goToSpecificMainFunctions(mainEcmFunctions.REPOSITORY);
 		caPage.goToSpecificFunctions(specificEcmFunctions.NODESTYPES);
@@ -105,6 +105,7 @@ public class Ecms_AdminRepository extends ECMS_TestConfig_Part1{
 			- Click Save button
 		 *Expected Outcome: 
 			New namespace is registered successfully.*/ 
+		driver.get(baseUrl);
 		navTool.goToContentAdministration();
 		caPage.goToSpecificMainFunctions(mainEcmFunctions.REPOSITORY);
 		caPage.goToSpecificFunctions(specificEcmFunctions.NAMESPACES);
@@ -135,6 +136,7 @@ public class Ecms_AdminRepository extends ECMS_TestConfig_Part1{
 		 *Expected Outcome: 
 			- Group is added permission. All users In the group will be able unlock a locked node
 			- Group is removed permission*/ 
+		driver.get(baseUrl);
 		navTool.goToSiteExplorer();
 		SEHome.goToAddNewContent();
 		info("Create new file document");

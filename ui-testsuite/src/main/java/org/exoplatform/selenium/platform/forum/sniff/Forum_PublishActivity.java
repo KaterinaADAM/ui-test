@@ -612,7 +612,7 @@ import org.testng.annotations.*;
 		info("Verifyt that View is shown");
 		waitForAndGetElement(aHome.ELEMENT_ACTIVITY_COMMENT_VIEW_HOVEROVER.replace("${comment}",comment),3000,0);
 		info("Click on the View icon");
-		click(aHome.ELEMENT_ACTIVITY_COMMENT_VIEW_HOVEROVER.replace("${comment}",comment));
+		click(aHome.ELEMENT_ACTIVITY_COMMENT_VIEW_HOVEROVER.replace("${comment}",comment),0,true);
 		info("Verify that the page redirects to related reply in the forum");
 		waitForAndGetElement(foTopic.ELEMENT_TOPIC_REPPLY_CONTENT.replace("${content}",comment));
 		info("The related reply is shown in forum successfully");

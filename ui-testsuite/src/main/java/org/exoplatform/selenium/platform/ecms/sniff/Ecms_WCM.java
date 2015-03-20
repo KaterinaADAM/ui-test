@@ -285,6 +285,7 @@ public class Ecms_WCM extends ECMS_TestConfig_Part1 {
 			-In published mode, only list the published contents (not list Draft content)
 			- In Edit mode, show all contents matching keyword
 			- Can click link on search result to see content*/ 
+		this.driver.get(baseUrl+"/acme");
 		navTool.goToSiteExplorer();
 		SEHome.goToPath("acme", "Sites Management");
         //Create node
@@ -339,7 +340,8 @@ public class Ecms_WCM extends ECMS_TestConfig_Part1 {
 		 *Input Data: 
 
 		 *Expected Outcome: 
-			- Documents/web contents in the selected category are displayed in Parameterized content list viewer portlet*/ 
+			- Documents/web contents in the selected category are displayed in Parameterized content list viewer portlet*/
+		 this.driver.get(baseUrl+"/acme");
 		navTool.goToSiteExplorer();
 		SEHome.goToPath("acme/categories/powers/Defense", "Sites Management");
 
@@ -373,7 +375,7 @@ public class Ecms_WCM extends ECMS_TestConfig_Part1 {
 	public  void test07_ShowDraftpublicContentFromPage() {
 		info("Test 7: Show draft/public content from page");
 		String content = txData.getContentByArrayTypeRandom(1)+getRandomNumber();
-		
+		this.driver.get(baseUrl+"/acme");
 		navTool.goToSiteExplorer();
 		SEHome.goToPath("acme", "Sites Management");
 		//Create node
@@ -465,7 +467,7 @@ public class Ecms_WCM extends ECMS_TestConfig_Part1 {
 			-Click Finish icon in Page editor
 		 *Expected Outcome: 
 			All selected web content/documents are displayed as list in List Content Viewer page*/
-
+		this.driver.get(baseUrl+"/acme");
 		navTool.goToSiteExplorer();
 		SEHome.goToPath("acme", "Sites Management");
 
@@ -550,7 +552,7 @@ public class Ecms_WCM extends ECMS_TestConfig_Part1 {
 		String title = txData.getContentByArrayTypeRandom(1)+getRandomNumber();
 		String content1 = txData.getContentByArrayTypeRandom(1)+getRandomNumber();
 		String content2 = txData.getContentByArrayTypeRandom(1)+getRandomNumber();
-		
+		this.driver.get(baseUrl+"/acme");
 		/*Step Number: 1
 		 *Step Name: -
 		 *Step Description: 
@@ -645,6 +647,7 @@ public class Ecms_WCM extends ECMS_TestConfig_Part1 {
 
 		 *Expected Outcome: 
 			- The selected web content/document is displayed*/
+		this.driver.get(baseUrl+"/acme");
 		navTool.goToSiteExplorer();
 		SEHome.goToPath("acme", "Sites Management");
 

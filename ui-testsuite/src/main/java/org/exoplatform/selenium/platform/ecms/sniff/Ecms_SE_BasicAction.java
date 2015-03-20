@@ -280,7 +280,8 @@ public class Ecms_SE_BasicAction extends ECMS_TestConfig_Part2{
 		rightClickOnElement(SEHome.ELEMENT_SITEEXPLORER_LEFTBOX_NODENAME.replace("${title}", titleCommonNode));
 		click(SEHome.ELEMENT_SITEEXPLORER_ACTION_COPY);
 		click(SEHome.ELEMENT_SITEEXPLORER_CLIPBOARD);
-		click(SEHome.ELEMENT_CLIPBOARD_DELETE_NODE.replace("{$node}",titleCommonNode));
+		waitForAndGetElement(SEHome.ELEMENT_CLIPBOARD_DELETE_NODE.replace("{$node}",titleCommonNode));
+		click(SEHome.ELEMENT_CLIPBOARD_DELETE_NODE.replace("{$node}",titleCommonNode),0,true);
 		
 		waitForElementNotPresent(SEHome.ELEMENT_CLIPBOARD_DELETE_NODE.replace("{$node}",titleCommonNode));
 		SEHome.deleteData(titleCommonNode);
