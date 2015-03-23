@@ -536,7 +536,7 @@ public class ForumTopicManagement extends PlatformBase {
 			waitForElementNotPresent(ELEMENT_UPLOAD_POPUP_FILE);
 		}
 		info("click on Submit button");
-		click(ELEMENT_SUBMIT_BUTTON);
+		click(ELEMENT_SUBMIT_BUTTON,0,true);
 		info("Verify that the topic is created");
 		waitForAndGetElement(By.linkText(title));
 		info("Start topic successfully");
@@ -562,7 +562,7 @@ public class ForumTopicManagement extends PlatformBase {
 		if(!newContent.isEmpty())
 		  inputFrame(ELEMENT_START_TOPIC_MESSAGE_FRAME_CKEDITOR,newContent);
 		info("Click on Submit button");
-		click(ELEMENT_SUBMIT_BUTTON);
+		click(ELEMENT_SUBMIT_BUTTON,0,true);
 		info("All changes are saved");
 	}
 }

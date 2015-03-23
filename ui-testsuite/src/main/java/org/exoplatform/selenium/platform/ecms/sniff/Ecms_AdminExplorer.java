@@ -82,7 +82,6 @@ public class Ecms_AdminExplorer extends ECMS_TestConfig_Part1{
 		
 		navTool.goToContentAdministration();
 		caPage.goToSpecificMainFunctions(mainEcmFunctions.EXPLORER);
-		this.driver.navigate().refresh();
 		caPage.goToSpecificFunctions(specificEcmFunctions.VIEW);
 		info("add a view");
 		caPage.addView(title, tabName, tab, oldPermission);

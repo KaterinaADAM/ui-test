@@ -137,8 +137,8 @@ public class TestBase {
 	/*========Default System Property=============*/
 	public final String DEFAULT_NATIVE_EVENT = "true";
 	public final String DEFAULT_BASEURL="http://localhost:8080/portal";
-	public final String DEFAULT_BROWSER="firefox";//iexplorer, firefox, chrome
-	public final String DEFAULT_SERVER="ubuntu"; //win, ubuntu
+	public final String DEFAULT_BROWSER="iexplorer";//iexplorer, firefox, chrome
+	public final String DEFAULT_SERVER="win"; //win, ubuntu
 
 	public final  Boolean DEFAULT_ISRANDOM = true;
 	public final  Boolean DEFAULT_ISUSEFILE = true;
@@ -177,6 +177,7 @@ public class TestBase {
 
 	public final String DEFAULT_GADGETURL = "DataDriven/"+"gatein_gadget.xls";
 	public final String DEFAULT_CONTAINERURL="DataDriven/"+"containers_layout.xls";
+
 	public final String DEFAULT_LANGUAGEURL="DataDriven/"+"language.xls";
 	public final String DEFAULT_SELECTPATHURL="DataDriven/"+"selectPath.xls";
 	public final String DEFAULT_MEMBERSHIPURL="DataDriven/"+"membership.xls";
@@ -346,6 +347,7 @@ public class TestBase {
 		if (getStartFilePath==null) getStartFilePath = DEFAULT_GETTINGSTARTEDURL;
 		if (wikiMessageFilePath==null) wikiMessageFilePath = DEFAULT_WIKIMESSAGEURL;
 		if (linkPath==null) linkPath = DEFAULT_LINKSURL;
+
 		if (gateinDefaultGroupsFilePath==null) gateinDefaultGroupsFilePath = DEFAULT_GATEINDEFAULTGROUPSURL;
 		if (gateinNodesFilePath==null) gateinNodesFilePath = DEFAULT_GATEINNODESURL;
 		
@@ -489,7 +491,7 @@ public class TestBase {
 		}
 		action = new Actions(driver);
 	}
-	
+
 	/**
 	 * init newDriver
 	 */
@@ -518,7 +520,7 @@ public class TestBase {
 		info("Agreement page");
 		if (waitForAndGetElement(ELEMENT_AGREEMENT_CHECKBOX, 3000, 0, 2) != null) {
 			info("-- Checking the terms and conditions agreement... --");
-			click(ELEMENT_AGREEMENT_CHECKBOX, 2);
+			check(ELEMENT_AGREEMENT_CHECKBOX, 2);
 			click(ELEMENT_CONTINUE_BUTTON);
 			waitForTextNotPresent("terms and conditions agreement");
 			info("-- Creating an Admin account: FQA... --");
@@ -891,19 +893,30 @@ public class TestBase {
 		Actions actions = new Actions(driver);
 		try {
 			WebElement element = waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE);
-			if (!element.isSelected()) {
-				actions.click(element).perform();
-				if(waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE).getAttribute("type")!=null && waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE).getAttribute("type")!="checkbox"){
-					info("Checkbox is not checked");
-					if (!element.isSelected()) {
-						info("check by javascript");
-						waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE);
-						JavascriptExecutor js = (JavascriptExecutor)driver; 
-						js.executeScript("arguments[0].click();", element);  
+			if(waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE).getAttribute("checked")==null 
+					&& waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE).getAttribute("value")!=null 
+					&& waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE).getAttribute("type").contains("checkbox")
+					&& !waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE).getAttribute("value").contains("true")){
+				info("check by javascript with value");
+				waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE);
+				JavascriptExecutor js = (JavascriptExecutor)driver; 
+				js.executeScript("arguments[0].click();", element);  
+			}else{
+				if (!element.isSelected()) {
+					actions.click(element).perform();
+					if(waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE).getAttribute("type")!=null && !waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE).getAttribute("type").contains("checkbox")){
+						info("Checkbox is not checked");
+						if (!element.isSelected()) {
+							info("check by javascript");
+							waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE);
+							JavascriptExecutor js = (JavascriptExecutor)driver; 
+							js.executeScript("arguments[0].click();", element);  
+						}
 					}
+
+				} else {
+					info("Element " + locator + " is already checked.");
 				}
-			} else {
-				info("Element " + locator + " is already checked.");
 			}
 		} catch (StaleElementReferenceException e) {
 			checkCycling(e, DEFAULT_TIMEOUT/WAIT_INTERVAL);
