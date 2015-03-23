@@ -181,7 +181,7 @@ public class TestBase {
 	public final String DEFAULT_LANGUAGEURL="DataDriven/"+"language.xls";
 	public final String DEFAULT_SELECTPATHURL="DataDriven/"+"selectPath.xls";
 	public final String DEFAULT_MEMBERSHIPURL="DataDriven/"+"membership.xls";
-	
+
 	public final String DEFAULT_APPLAYOUTURL="DataDriven/"+"applications_layout.xls";
 
 	public final String DEFAULT_APPLISTGETINURL="DataDriven/"+"gatein_applications_list.xls";
@@ -389,13 +389,13 @@ public class TestBase {
 
 		siteExpDrivePath = getAbsoluteFilePath(siteExpDrivePath);
 		siteExpPathPath = getAbsoluteFilePath(siteExpPathPath);
+
 		siteExpContentTypeFilePath = getAbsoluteFilePath(siteExpContentTypeFilePath);
 		
 		dataTestFilePath = getAbsoluteFilePath(dataTestFilePath);
 		linkPath = getAbsoluteFilePath(linkPath);
 		gateinDefaultGroupsFilePath = getAbsoluteFilePath(gateinDefaultGroupsFilePath);
 		gateinNodesFilePath = getAbsoluteFilePath(gateinNodesFilePath);
-
 		gadgetFilePath = getAbsoluteFilePath(gadgetFilePath);
 		containerFilePath = getAbsoluteFilePath(containerFilePath);
 		appLayoutFilePath = getAbsoluteFilePath(appLayoutFilePath);

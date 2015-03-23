@@ -1131,7 +1131,7 @@ public class ContentAdministration extends PlatformBase{
 			break;
 		case WATCH_DOCUMENTS:
 			info("WATCH_DOCUMENTS");
-			check(ELEMENT_ECM_EXPLORER_ACTIONS_POPUP_ADD_CATEGORY,2);
+			check(ELEMENT_ECM_EXPLORER_ACTIONS_POPUP_WATCH_DOCUMENT,2);
 			break;
 		}
 	}
