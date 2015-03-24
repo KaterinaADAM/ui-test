@@ -24,6 +24,7 @@ public class NavigationToolbar extends PlatformBase {
 	public By ELEMENT_UPLOAD_FILE_TOOLBAR_PERSONNAL_DOCUMENTS = By.xpath("//*[@id='ListRecords']//*[contains(text(),'Personal Documents')]");
 	public By ELEMENT_UPLOAD_FILE_GO_TO_UPLOAD = By.xpath("//*[@id='UIDocumentSelector']//*[@class='UIDSUploadInput']");
 	public final By ELEMENT_ACTIVITY_UPLOAD_POPUP_UPLOAD_BUTTON = By.xpath(".//input[@type='file']");
+	public final By ELEMENT_UPLOAD_FILE_BUTTON=By.xpath("//*[@class='uiIconUpload uiIconLightGray']");
 
 	//Administration Menu
 	// users 
@@ -428,9 +429,9 @@ public class NavigationToolbar extends PlatformBase {
 	 */
 	public void goToAddPoll(String location,String forum){
 		info("Go to add poll from tootlbar");
-		waitForAndGetElement(ELEMENT_ADD_TOOTLBAR,3000,0).click();
+		click(ELEMENT_ADD_TOOTLBAR,0,true);
 		info("Click on Poll link");
-		waitForAndGetElement(ELEMENT_ADD_POOL_TOOLBAR,3000,0).click();
+		click(ELEMENT_ADD_POOL_TOOLBAR,0,true);
 		if (!location.isEmpty()){
 			info("Set location for the poll");
 			click(ELEMENT_ADD_POLL_SET_LOCATION);
@@ -439,8 +440,8 @@ public class NavigationToolbar extends PlatformBase {
 		click(ELEMENT_NEXT_BUTTON);
 		Utils.pause(2000);
 		info("Select a forum for poll");
-		waitForAndGetElement(ELEMENT_SELECT_FORUM_COMBOBOX,3000,0).click();
-		waitForAndGetElement(ELEMENT_SELECT_FORUM_NAME.replace("${forum}",forum),2000,0).click();
+		click(ELEMENT_SELECT_FORUM_COMBOBOX,0,true);
+		click(ELEMENT_SELECT_FORUM_NAME.replace("${forum}",forum),0,true);
 		info("Click on next button");
 		click(ELEMENT_NEXT_BUTTON);
 		Utils.pause(2000);
@@ -512,10 +513,8 @@ public class NavigationToolbar extends PlatformBase {
 
 		WebElement frame = waitForAndGetElement(ELEMENT_UPLOAD_FILE_FRAME_XPATH);
 		driver.switchTo().frame(frame);
-		Utils.pause(2000);
-		((JavascriptExecutor)driver).executeScript("document.getElementsByTagName('input')[0].style.display = 'block';");
-		Utils.pause(2000);
-		driver.findElement(ELEMENT_ACTIVITY_UPLOAD_POPUP_UPLOAD_BUTTON).sendKeys(getAbsoluteFilePath(linkFile));
+		click(ELEMENT_UPLOAD_FILE_BUTTON);
+		uploadFileUsingRobot(linkFile);
 		Utils.pause(1000);
 		switchToParentWindow();
 		info("Upload finished");

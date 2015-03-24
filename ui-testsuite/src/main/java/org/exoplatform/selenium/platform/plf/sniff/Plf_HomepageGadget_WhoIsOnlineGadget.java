@@ -151,9 +151,9 @@ import org.testng.annotations.*;
 
 		driver.navigate().refresh();
 		Utils.pause(2000);
-		magAc.mouseOver(hp.ELEMENT_WHO_ONLINE_PEOPLE_AVATAR.replace("${name}","mary"),true);
+		magAc.mouseOver(hp.ELEMENT_WHO_ONLINE_PEOPLE_AVATAR.replace("${name}",DATA_USER2),true);
 		Utils.pause(2000);
-		magAc.waitForAndGetElement(hp.ELEMENT_WHO_ONLINE_CONNECT,3000,0).click();
+		click(hp.ELEMENT_WHO_ONLINE_CONNECT,0,true);
 		magAc.waitForAndGetElement(hp.ELEMENT_WHO_ONLINE_POP_UP_NAME.replace("{$name}", "Mary"),3000,0);
 		/*Step number: 2
 		*Step Name: Verify if connection request is sent
@@ -165,13 +165,13 @@ import org.testng.annotations.*;
 		*Expected Outcome: 
 			- Invitation of John is shown at Invitation gadget*/ 
 		driver2.navigate().refresh();
-		magAc2.waitForAndGetElement(hp.ELEMENT_INVITATIONS_NAME_OF_PEOPLE_WHO_SEND_REQUEST.replace("{$name}", "John"),2000,0);
+		magAc2.waitForAndGetElement(hp.ELEMENT_INVITATIONS_NAME_OF_PEOPLE_WHO_SEND_REQUEST.replace("{$name}", DATA_USER1),2000,0);
 		
 		driver.navigate().refresh();
 		Utils.pause(2000);
-		magAc.mouseOver(hp.ELEMENT_WHO_ONLINE_PEOPLE_AVATAR.replace("${name}","mary"),true);
+		magAc.mouseOver(hp.ELEMENT_WHO_ONLINE_PEOPLE_AVATAR.replace("${name}",DATA_USER2),true);
 		Utils.pause(2000);
-		magAc.waitForAndGetElement(hp.ELEMENT_WHO_ONLINE_CANCEL_CONNECT,3000,0).click();
+		click(hp.ELEMENT_WHO_ONLINE_CANCEL_CONNECT,0,true);
 		//closeBrowsers();
 	}
 

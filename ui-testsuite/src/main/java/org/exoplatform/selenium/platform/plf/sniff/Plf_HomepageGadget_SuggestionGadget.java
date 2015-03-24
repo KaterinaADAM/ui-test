@@ -27,28 +27,28 @@ import org.testng.annotations.*;
 			info("Sign in with mary account");
 			magAc.signIn(DATA_USER2, DATA_PASS);
 			hp.goToConnections();
-			connMg.resetConnection("John Smith");
+			connMg.resetConnection(DATA_USER1);
 			
 			info("Sign out");
 			magAc.signOut();
 			info("Sign in with james account");
 			magAc.signIn(DATA_USER3, DATA_PASS);
 			hp.goToConnections();
-			connMg.resetConnection("John Smith");
+			connMg.resetConnection(DATA_USER1);
 			
 			info("Sign out");
 			magAc.signOut();
 			info("Sign in with demo account");
 			magAc.signIn(DATA_USER4, DATA_PASS);
 			hp.goToConnections();
-			connMg.resetConnection("John Smith");
+			connMg.resetConnection(DATA_USER1);
 			
 			info("Sign out");
 			magAc.signOut();
 			info("Sign in with FQAVN account");
 			magAc.signIn("fqa","gtngtn");
 			hp.goToConnections();
-			connMg.resetConnection("John Smith");
+			connMg.resetConnection(DATA_USER1);
 			
 			
 			magAc.signOut();
@@ -191,10 +191,10 @@ import org.testng.annotations.*;
 			*Expected Outcome: 
 				Connect user successfully*/
 			hp.goToConnections();
-			connMg.connectToAUser("Jack Miller");
-			connMg.connectToAUser("Mary Williams");
-			connMg.connectToAUser("James Davis");
-			connMg.connectToAUser("FQA VN");
+			connMg.connectToAUser(DATA_USER4);
+			connMg.connectToAUser(DATA_USER2);
+			connMg.connectToAUser(DATA_USER3);
+			connMg.connectToAUser("fqa");
 			
 			/*Step number: 7
 			*Step Name: Check when this gadget disappears
@@ -209,10 +209,10 @@ import org.testng.annotations.*;
 			
 			info("delete data");
 			hp.goToConnections();
-			connMg.cancelConnection("Jack Miller");
-			connMg.cancelConnection("Mary Williams");
-			connMg.cancelConnection("James Davis");
-			connMg.cancelConnection("FQA VN");
+			connMg.cancelConnection(DATA_USER4);
+			connMg.cancelConnection(DATA_USER2);
+			connMg.cancelConnection(DATA_USER3);
+			connMg.cancelConnection("fqa");
 			
 			magAc.signOut();
 			magAc.signIn(DATA_USER2, DATA_PASS);

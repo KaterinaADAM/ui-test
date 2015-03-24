@@ -399,7 +399,7 @@ public class Plf_UnifiedSearch extends Plf_TestConfig{
 		info("Verify that number reply is shown");
 		waitForAndGetElement(quickSearch.ELEMENT_SEARCHRESULT_CONTENT_DISCUSSIONS_NUMBER_REPLY.replace("${topic}",topic).replace("${number}","0 replies"),2000,0);
 		info("Verify that Item in search result is clickable and open it when user click ");
-		click(quickSearch.ELEMENT_SEARCHRESULT_CONTENT_DISCUSSIONS_POST_TITLE.replace("${name}",topic));
+		click(quickSearch.ELEMENT_SEARCHRESULT_CONTENT_DISCUSSIONS_POST_TITLE.replace("${name}",topic),0,true);
 		waitForAndGetElement(foTopic.ELEMENT_POST_TITLE.replace("${title}", topic),5000,0);
 	}
 

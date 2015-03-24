@@ -328,5 +328,6 @@ import org.testng.annotations.*;
 		String actualUrl=driver.getCurrentUrl();
 		String url="PLFUserGuide.GettingStarted.SocialIntranetHomepage.html";
 		assert actualUrl.contains(url);
+		switchToParentWindow();
  	}
 }

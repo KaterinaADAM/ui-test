@@ -8,11 +8,11 @@ import static org.exoplatform.selenium.TestLogger.info;
 public class ConnectionsManagement extends PlatformBase {
 
 	public final By ELEMENT_CONNECTION_EVERYONE_TITLE=By.xpath(".//*[@id='UIAllPeople']//h4[contains(text(),'Contacts Directory')]");
-    public final String ELEMENT_CONNECTION_EVERYONE_CONNECT_BTN = ".//a[contains(text(),'${user}')]/../../..//*[text()='Connect']";
-	public final String ELEMENT_CONNECTION_EVERYONE_CANCEL_BTN = ".//a[contains(text(),'${user}')]/../../..//*[text()='Cancel Request']";
-	public final String ELEMENT_CONNECTION_EVERYONE_REVOVE_BTN = ".//a[contains(text(),'${user}')]/../../..//*[text()='Remove Connection']";
-    public final String ELEMENT_CONNECTION_EVERYONE_IGNORE_BTN =" .//a[contains(text(),'${user}')]/../../..//*[text()='Ignore']";
-    public final String ELEMENT_CONNECTION_EVERYONE_CONFIRM_BTN =" .//a[contains(text(),'${user}')]/../../..//*[text()='Confirm']";
+    public final String ELEMENT_CONNECTION_EVERYONE_CONNECT_BTN = ".//*[contains(@href,'${user}')]/parent::*//*[text()='Connect']";
+	public final String ELEMENT_CONNECTION_EVERYONE_CANCEL_BTN = ".//*[contains(@href,'${user}')]/parent::*//*[text()='Cancel Request']";
+	public final String ELEMENT_CONNECTION_EVERYONE_REVOVE_BTN = ".//*[contains(@href,'${user}')]/parent::*//*[text()='Remove Connection']";
+    public final String ELEMENT_CONNECTION_EVERYONE_IGNORE_BTN =".//*[contains(@href,'${user}')]/parent::*//*[text()='Ignore']";
+    public final String ELEMENT_CONNECTION_EVERYONE_CONFIRM_BTN =".//*[contains(@href,'${user}')]/parent::*//*[text()='Confirm']";
     
     public ConnectionsManagement(WebDriver dr){
 		driver = dr;
@@ -20,70 +20,70 @@ public class ConnectionsManagement extends PlatformBase {
 
     /**
      * Connect to a user
-     * @param fullname
+     * @param username
      */
-    public void connectToAUser(String fullname){
+    public void connectToAUser(String username){
     	info("--Connect to a user--");
     	info("Click on connect button");
-    	click(ELEMENT_CONNECTION_EVERYONE_CONNECT_BTN.replace("${user}",fullname));
-    	waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_CANCEL_BTN.replace("${user}",fullname),2000,0);
+    	click(ELEMENT_CONNECTION_EVERYONE_CONNECT_BTN.replace("${user}",username),0,true);
+    	waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_CANCEL_BTN.replace("${user}",username),2000,0);
     	info("Connected to the user");
     }
     
     /**
      * Remove a connection of user
-     * @param fullname
+     * @param username
      */
-    public void removeConnection(String fullname){
+    public void removeConnection(String username){
     	info("--Remove a connection of a user--");
     	info("Click on remove button");
-    	click(ELEMENT_CONNECTION_EVERYONE_REVOVE_BTN.replace("${user}",fullname));
-    	waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_CONNECT_BTN.replace("${user}",fullname),2000,0);
+    	click(ELEMENT_CONNECTION_EVERYONE_REVOVE_BTN.replace("${user}",username));
+    	waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_CONNECT_BTN.replace("${user}",username),2000,0);
     	info("Removed to the user");
     }
     /**
      * Cancel a connection to a user
-     * @param fullname
+     * @param username
      */
-    public void cancelConnection(String fullname){
+    public void cancelConnection(String username){
     	info("--Cancel a connection of a user--");
     	info("Click on Cancel button");
-    	click(ELEMENT_CONNECTION_EVERYONE_CANCEL_BTN.replace("${user}",fullname));
-    	waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_CONNECT_BTN.replace("${user}",fullname),2000,0);
+    	click(ELEMENT_CONNECTION_EVERYONE_CANCEL_BTN.replace("${user}",username));
+    	waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_CONNECT_BTN.replace("${user}",username),2000,0);
     	info("Canceled to the user");
     }
     /**
      * Ignore a connection that is sent from a user
-     * @param fullname
+     * @param username
      */
-    public void ignoreConnection(String fullname){
+    public void ignoreConnection(String username){
     	info("--Ignore a connection of a user--");
     	info("Click on Ignore button");
-    	click(ELEMENT_CONNECTION_EVERYONE_IGNORE_BTN.replace("${user}",fullname));
-    	waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_CONNECT_BTN.replace("${user}",fullname),2000,0);
+    	click(ELEMENT_CONNECTION_EVERYONE_IGNORE_BTN.replace("${user}",username));
+    	waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_CONNECT_BTN.replace("${user}",username),2000,0);
     	info("Canceled to the user");
     }
     /**
      * Reset all connections to default status
-     * @param fullname
+     * @param username
      */
-    public void resetConnection(String fullname){
-    	if(waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_REVOVE_BTN.replace("${user}",fullname),3000,0)!=null)
-    		removeConnection(fullname);
-       if(waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_CANCEL_BTN.replace("${user}",fullname),3000,0)!=null)
-    	   cancelConnection(fullname);
-       if(waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_IGNORE_BTN.replace("${user}",fullname),3000,0)!=null)
-    	   ignoreConnection(fullname);
+    public void resetConnection(String username){
+    	if(waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_REVOVE_BTN.replace("${user}",username),3000,0)!=null)
+    		removeConnection(username);
+       if(waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_CANCEL_BTN.replace("${user}",username),3000,0)!=null)
+    	   cancelConnection(username);
+       if(waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_IGNORE_BTN.replace("${user}",username),3000,0)!=null)
+    	   ignoreConnection(username);
 	}
     /**
      * Accept a connection from a user in Connection page
-     * @param fullname
+     * @param username
      */
-    public void acceptAConnection(String fullname){
+    public void acceptAConnection(String username){
     	info("--Accept a connection of a user--");
     	info("Click on Confirm button");
-    	click(ELEMENT_CONNECTION_EVERYONE_CONFIRM_BTN.replace("${user}",fullname));
-    	waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_REVOVE_BTN.replace("${user}",fullname),2000,0);
+    	click(ELEMENT_CONNECTION_EVERYONE_CONFIRM_BTN.replace("${user}",username));
+    	waitForAndGetElement(ELEMENT_CONNECTION_EVERYONE_REVOVE_BTN.replace("${user}",username),2000,0);
     	info("Canceled to the user");
     }
 }

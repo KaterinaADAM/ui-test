@@ -31,7 +31,7 @@ public class QuickSearchResult extends PlatformBase{
     public final String ELEMENT_QUICKSEARCH_LIST_CONTENT=".//*[@class='uiQuickSearchResult']//a[contains(.,'${name}')]";
 	
     ///Searched results page-->task,event
-	public final String ELEMENT_SEARCHRESULT_CONTENT_TASK_NAME_NOTE= ".//*[@id='result']//*[contains(text(),'${name}')]";
+	public final String ELEMENT_SEARCHRESULT_CONTENT_TASK_NAME_NOTE= ".//*[@id='result']//a//*[contains(text(),'${name}')]";
 	public final String ELEMENT_SEARCHRESULT_CONTENT_TASK_DUEDATE= ".//*[@id='result']//*[contains(text(),'${name}')]/../../..//*[contains(text(),'Due for')]";
 	public final String ELEMENT_SEARCHRESULT_CONTENT_TASK_ICON = ".//h6//*[contains(text(),'${name}')]/../../..//*[@class='avatar pull-left']";
 	public final String ELEMENT_SEARCHRESULT_CONTENT_EVENT_NAME_NOTE= ".//*[@id='result']//*[contains(text(),'${name}')]";
@@ -49,7 +49,7 @@ public class QuickSearchResult extends PlatformBase{
 	
 	//Searched results page -->discussion
 	public final String ELEMENT_SEARCHRESULT_CONTENT_DISCUSSIONS_ICON = ".//*[contains(text(),'${name}')]/../../..//*[@class='uiIconApp64x64Forum']";
-	public final String ELEMENT_SEARCHRESULT_CONTENT_DISCUSSIONS_POST_TITLE = "//*[contains(text(),'${name}')]";
+	public final String ELEMENT_SEARCHRESULT_CONTENT_DISCUSSIONS_POST_TITLE = "//a/*[contains(text(),'${name}')]";
 	public final String ELEMENT_SEARCHRESULT_CONTENT_DISCUSSIONS_EXCERPT = ".//*[contains(text(),'${name}')]/../../..//*[@class='excerpt']";
 	public final String ELEMENT_SEARCHRESULT_CONTENT_DISCUSSIONS_FORUM_NAME = ".//*[contains(text(),'${topic}')]/../../..//*[@class='detail'][contains(text(),'${forum}')]";
 	public final String ELEMENT_SEARCHRESULT_CONTENT_DISCUSSIONS_POST_DATE = ".//*[contains(text(),'${topic}')]/../../..//*[@class='detail'][contains(text(),'${date}')]";

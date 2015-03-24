@@ -15,7 +15,7 @@ public class SOC_HomePage extends SOC_TestConfig {
 		magAc.signOut();
 		magAc.signIn(DATA_USER1, DATA_PASS);
 		hp.goToConnections();
-		connMag.resetConnection("Mary Williams");
+		connMag.resetConnection(DATA_USER2);
 	}
 	/**
 	 *<li> Case ID:121888.</li>
@@ -782,7 +782,7 @@ public class SOC_HomePage extends SOC_TestConfig {
 		 *Expected Outcome: 
 			- Request is sent to the user B*/
 		hp.goToConnections();
-		connMag.connectToAUser("Mary Williams");
+		connMag.connectToAUser(DATA_USER2);
 
 		/*Step number: 2
 		 *Step Name: - Accept request
@@ -797,7 +797,7 @@ public class SOC_HomePage extends SOC_TestConfig {
 		magAc.signOut();
 		magAc.signIn(DATA_USER2, DATA_PASS);
 		hp.goToConnections();
-		connMag.acceptAConnection("John Smith");
+		connMag.acceptAConnection(DATA_USER1);
 		hp.goToHomePage();
 		waitForAndGetElement(hpAct.ELEMENT_PUBLICATION_ACTIVITYTEXT_CONNECTED.replace("${user}","John Smith"));
 	    

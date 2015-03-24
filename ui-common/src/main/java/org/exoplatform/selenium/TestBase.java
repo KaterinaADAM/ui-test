@@ -137,8 +137,8 @@ public class TestBase {
 	/*========Default System Property=============*/
 	public final String DEFAULT_NATIVE_EVENT = "true";
 	public final String DEFAULT_BASEURL="http://localhost:8080/portal";
-	public final String DEFAULT_BROWSER="firefox";//iexplorer, firefox, chrome
-	public final String DEFAULT_SERVER="ubuntu"; //win, ubuntu
+	public final String DEFAULT_BROWSER="iexplorer";//iexplorer, firefox, chrome
+	public final String DEFAULT_SERVER="win"; //win, ubuntu
 
 	public final  Boolean DEFAULT_ISRANDOM = true;
 	public final  Boolean DEFAULT_ISUSEFILE = true;
@@ -563,7 +563,7 @@ public class TestBase {
 	 */
 	public void accountSetup(){
 		accountSetupWithoutGreeting();
-		click(ELEMENT_START_BUTTON);
+		click(ELEMENT_START_BUTTON,0,true);
 		waitForAndGetElement(ELEMENT_ACCOUNT_NAME_LINK);
 	}
 

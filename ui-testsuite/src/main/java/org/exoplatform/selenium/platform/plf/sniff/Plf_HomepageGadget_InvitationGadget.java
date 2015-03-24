@@ -24,28 +24,28 @@ import org.testng.annotations.*;
 			info("Sign in with mary account");
 			magAc.signIn(DATA_USER2, DATA_PASS);
 			hp.goToConnections();
-			connMg.resetConnection("John Smith");
+			connMg.resetConnection(DATA_USER1);
 			
 			info("Sign out");
 			magAc.signOut();
 			info("Sign in with james account");
 			magAc.signIn(DATA_USER3, DATA_PASS);
 			hp.goToConnections();
-			connMg.resetConnection("John Smith");
+			connMg.resetConnection(DATA_USER1);
 			
 			info("Sign out");
 			magAc.signOut();
 			info("Sign in with demo account");
 			magAc.signIn(DATA_USER4, DATA_PASS);
 			hp.goToConnections();
-			connMg.resetConnection("John Smith");
+			connMg.resetConnection(DATA_USER1);
 			
 			info("Sign out");
 			magAc.signOut();
 			info("Sign in with FQAVN account");
 			magAc.signIn("fqa","gtngtn");
 			hp.goToConnections();
-			connMg.resetConnection("John Smith");
+			connMg.resetConnection(DATA_USER1);
 			
 			magAc.signOut();
 			info("Sign in with john account");
@@ -63,7 +63,7 @@ import org.testng.annotations.*;
 		info("Sign in with mary account");
 		magAc.signIn(DATA_USER2, DATA_PASS);
 		hp.goToConnections();
-		connMg.connectToAUser("John Smith");
+		connMg.connectToAUser(DATA_USER1);
 		
 		info("Create 1 spaces and invit John");
 		space1=txData.getContentByArrayTypeRandom(1)+getRandomNumber();
@@ -79,7 +79,7 @@ import org.testng.annotations.*;
 		info("Sign in with james account");
 		magAc.signIn(DATA_USER3, DATA_PASS);
 		hp.goToConnections();
-		connMg.connectToAUser("John Smith");
+		connMg.connectToAUser(DATA_USER1);
 		
 		hp.goToMySpaces();
 		spaceMg.addNewSpaceSimple(space2,space2);
@@ -92,7 +92,7 @@ import org.testng.annotations.*;
 		info("Sign in with demo account");
 		magAc.signIn(DATA_USER4, DATA_PASS);
 		hp.goToConnections();
-		connMg.connectToAUser("John Smith");
+		connMg.connectToAUser(DATA_USER1);
 		
 		info("--Login back to John");
 		info("Sign out");
@@ -209,7 +209,7 @@ import org.testng.annotations.*;
 		info("Sign in with mary account");
 		magAc.signIn(DATA_USER2, DATA_PASS);
 		hp.goToConnections();
-		connMg.connectToAUser("John Smith");
+		connMg.connectToAUser(DATA_USER1);
 		
 		info("--Send request 2 to John");
 		info("Sign out");
@@ -217,7 +217,7 @@ import org.testng.annotations.*;
 		info("Sign in with james account");
 		magAc.signIn(DATA_USER3, DATA_PASS);
 		hp.goToConnections();
-		connMg.connectToAUser("John Smith");
+		connMg.connectToAUser(DATA_USER1);
 		
 		magAc.signOut();
 		info("Sign in with john account");
@@ -261,7 +261,7 @@ import org.testng.annotations.*;
 		info("Sign in with demo account");
 		magAc.signIn(DATA_USER4, DATA_PASS);
 		hp.goToConnections();
-		connMg.connectToAUser("John Smith");
+		connMg.connectToAUser(DATA_USER1);
 		
 		info("--Send request 2 to John");
 		info("Sign out");
@@ -269,7 +269,7 @@ import org.testng.annotations.*;
 		info("Sign in with james account");
 		magAc.signIn(DATA_USER3, DATA_PASS);
 		hp.goToConnections();
-		connMg.connectToAUser("John Smith");
+		connMg.connectToAUser(DATA_USER1);
         
 		magAc.signOut();
 		info("Sign in with john account");
