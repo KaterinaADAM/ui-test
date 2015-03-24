@@ -270,6 +270,7 @@ public class Wiki_Basic_Action_OtherActions extends Wiki_TestConfig {
 		magAc.signOut();
 		magAc.signIn(DATA_USER2, DATA_PASS);
 		driver.get(perLink);
+		Utils.pause(5000);
 		waitForAndGetElement(wHome.ELEMENT_WIKI_HOME_PAGENOTFOUND);
 		
 		info("Delete page");

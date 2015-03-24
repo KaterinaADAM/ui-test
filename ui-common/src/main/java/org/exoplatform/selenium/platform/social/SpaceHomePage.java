@@ -65,7 +65,7 @@ public class SpaceHomePage extends PlatformBase{
 	 */
 	public void goToSpace(String name){
 		info("Go to the Space:"+name);
-		waitForAndGetElement(ELEMENT_SPACE_LEFT_MENU_SPACE_NAME.replace("${name}",name),2000,0).click();
+		click(ELEMENT_SPACE_LEFT_MENU_SPACE_NAME.replace("${name}",name),0,true);
 		waitForAndGetElement(ELEMENT_SPACE_NAME.replace("${name}",name),2000,0);
 		info("The space is shown");
 	}

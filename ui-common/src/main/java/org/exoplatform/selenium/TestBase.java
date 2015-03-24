@@ -1135,11 +1135,27 @@ public class TestBase {
 		Actions actions = new Actions(driver);
 		try {
 			WebElement element = waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE);
+			if(waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE).getAttribute("checked")!=null){
+				info("check by javascript with value");
+				waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE);
+				JavascriptExecutor js = (JavascriptExecutor)driver; 
+				js.executeScript("arguments[0].click();", element);  
+			}else{
+				if (element.isSelected()) {
+					actions.click(element).perform();
+					if(waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE).getAttribute("type")!=null && !waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE).getAttribute("type").contains("checkbox")){
+						info("Checkbox is not checked");
+						if (element.isSelected()) {
+							info("check by javascript");
+							waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplayE);
+							JavascriptExecutor js = (JavascriptExecutor)driver; 
+							js.executeScript("arguments[0].click();", element);  
+						}
+					}
 
-			if (element.isSelected()) {
-				actions.click(element).perform();
-			} else {
-				info("Element " + locator + " is already unchecked.");
+				} else {
+					info("Element " + locator + " is already unchecked.");
+				}
 			}
 		} catch (StaleElementReferenceException e) {
 			checkCycling(e, 5);
@@ -1150,6 +1166,8 @@ public class TestBase {
 		}
 		Utils.pause(2000);
 	}
+	
+	
 
 	/**
 	 * rightClickOnElement

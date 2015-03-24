@@ -597,7 +597,7 @@ public class WikiManagement extends WikiHomePage{
 	 */
 	public void movePageDiffDestination(String page1, String page2, String locator){
 		info("Open a wiki page 1");
-		click(ELEMENT_TREE_WIKI_NAME.replace("${name}",page1),2000,0);
+		click(ELEMENT_TREE_WIKI_NAME.replace("${name}",page1),0,true);
 		info("Click on More link");
 		click(ELEMENT_MORE_LINK);
 		info("Click on Move page link");
@@ -624,9 +624,9 @@ public class WikiManagement extends WikiHomePage{
 	 */
 	public void viewInformationTable(String page, String version){
 		info("Open a wiki page 1");
-		waitForAndGetElement(ELEMENT_TREE_WIKI_NAME.replace("${name}",page),2000,0).click();
+		click(ELEMENT_TREE_WIKI_NAME.replace("${name}",page),0,true);
 		info("Open information table");
-		waitForAndGetElement(ELEMENT_WIKI_PAGE_INFOMATION_VERSION.replace("${version}", version),2000,0).click();
+		click(ELEMENT_WIKI_PAGE_INFOMATION_VERSION.replace("${version}", version),0,true);
 		info("Verify that the table is shown");
 		waitForAndGetElement(ELEMENT_WIKI_PAGE_INFORMATION_TABLE_TITLE,2000,0);
 	}
