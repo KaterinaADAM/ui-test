@@ -597,7 +597,7 @@ public class WikiManagement extends WikiHomePage{
 	 */
 	public void movePageDiffDestination(String page1, String page2, String locator){
 		info("Open a wiki page 1");
-		waitForAndGetElement(ELEMENT_TREE_WIKI_NAME.replace("${name}",page1),2000,0).click();
+		click(ELEMENT_TREE_WIKI_NAME.replace("${name}",page1),2000,0);
 		info("Click on More link");
 		click(ELEMENT_MORE_LINK);
 		info("Click on Move page link");
