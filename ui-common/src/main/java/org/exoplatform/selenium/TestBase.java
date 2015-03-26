@@ -75,6 +75,7 @@ public class TestBase {
 
 	/*========System Property====================*/
 	public static String baseUrl;
+	public static String nodeUrl;
 	public static String browser;
 	public static String server;
 
@@ -116,7 +117,8 @@ public class TestBase {
 	protected String appLayoutFilePath;
 
 	/*========Default System Property=============*/
-	public final String DEFAULT_BASEURL="http://192.168.3.49:8080";
+	public final String DEFAULT_BASEURL="http://http://may38.l.exoplatform.vn:8080/portal";
+	public final String DEFAULT_NODEURL="http://builder2.testlab1.exoplatform.vn:4444/wd/hub";
 	public final String DEFAULT_BROWSER="firefox";//iexplorer, firefox, chrome
 	public final String DEFAULT_SERVER="ubuntu"; //win, ubuntu
 
@@ -199,6 +201,7 @@ public class TestBase {
 		browser = System.getProperty("browser");
 		server = System.getProperty("server");
 		baseUrl = System.getProperty("baseUrl");
+		nodeUrl = System.getProperty("nodeUrl");
 
 		jdbcDriver = System.getProperty("jdbcDriver");
 		dbUrl = System.getProperty("dbUrl");
@@ -233,6 +236,7 @@ public class TestBase {
 
 		if (browser==null) browser = DEFAULT_BROWSER;
 		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
+		if (nodeUrl==null) nodeUrl = DEFAULT_NODEURL;
 		if (server==null) server = DEFAULT_SERVER;
 
 		if (isRandom==null) isRandom = DEFAULT_ISRANDOM;
@@ -430,29 +434,45 @@ public class TestBase {
 	 * init browser
 	 * @param opParams
 	 */
-	String baseURL, nodeURL;
-	public void initSeleniumTest(Object... opParams) throws MalformedURLException{
-		initSeleniumTestWithOutTermAndCondition();
-		
-	//	baseURL="http://192.168.3.49:8080";
-		info("youyou");
-		nodeURL="http://ubuntu12.04-4.testlab1.exoplatform.vn:4444/wd/hub";
-		info("youyou");
-		DesiredCapabilities capibility = DesiredCapabilities.firefox();
-		info("youyou");
-		capibility.setCapability("binary", "/usr/bin/firefox");
-		info("youyou");
-		capibility.setBrowserName("firefox");
-		info("youyou");
-		capibility.setPlatform(Platform.LINUX);
-		info("youyou");
-		driver= new RemoteWebDriver( new URL(nodeURL),capibility);
-		info("youyou");
-		//driver.manage().window().maximize();
-		//driver.navigate().refresh();
-		termsAndConditions(opParams);
-	}
+//	String baseURL, nodeURL;
+//	public void initSeleniumTest(Object... opParams) throws MalformedURLException{
+//		initSeleniumTestWithOutTermAndCondition();
+//		
+//	//	baseURL="http://192.168.3.49:8080";
+//		info("youyou");
+//		nodeURL="http://ubuntu12.04-4.testlab1.exoplatform.vn:4444/wd/hub";
+////				"http://builder2.testlab1.exoplatform.vn:4444/wd/hub";
+//		info("youyou");
+//		DesiredCapabilities capibility = DesiredCapabilities.firefox();
+//		info("youyou");
+//		capibility.setCapability("binary", "/usr/bin/firefox");
+//		info("youyou");
+//		capibility.setBrowserName("firefox");
+//		info("youyou");
+//		capibility.setPlatform(Platform.LINUX);
+//		info("youyou");
+//		driver= new RemoteWebDriver( new URL(nodeURL),capibility);
+//		info("youyou");
+//		//driver.manage().window().maximize();
+//		//driver.navigate().refresh();
+//		termsAndConditions(opParams);
+//	}
 
+	//Init remote for selemium grid
+	public WebDriver initRemoteWebDriverFF(Object... opParams) throws MalformedURLException {
+		getSystemProperty();
+		DesiredCapabilities capability = DesiredCapabilities.firefox();
+//		capability.setCapability("jenkins.label","redhat5 && amd64");
+		capability.setBrowserName("firefox");
+//		capability.setCapability("version", "28.0");
+//		capability.setCapability("binary", "/usr/bin/firefox");
+		capability.setPlatform(Platform.LINUX);
+		driver = new RemoteWebDriver(new URL(nodeUrl), capability);
+		action = new Actions(driver);
+		termsAndConditions(opParams);
+		return driver;
+	}
+	
 
 	/**
 	 * initNewIEBrowserWithNativeEvent
