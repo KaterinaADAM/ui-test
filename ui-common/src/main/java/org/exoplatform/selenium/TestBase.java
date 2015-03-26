@@ -434,8 +434,8 @@ public class TestBase {
 	public void initSeleniumTest(Object... opParams) throws MalformedURLException{
 		initSeleniumTestWithOutTermAndCondition();
 		
-	//	baseURL="http://192.168.1.19:4444/grid/register";
-		nodeURL="http://builder2.testlab1.exoplatform.vn:4444/wd/hub";
+		baseURL="http://192.168.3.49:8080/portal";
+		nodeURL="http://ubuntu14.04-2.testlab1.exoplatform.vn:4444/wd/hub";
 		DesiredCapabilities capibility = DesiredCapabilities.firefox();
 		capibility.setCapability("binary", "/usr/bin/firefox");
 		capibility.setBrowserName("firefox");
