@@ -434,15 +434,20 @@ public class TestBase {
 	public void initSeleniumTest(Object... opParams) throws MalformedURLException{
 		initSeleniumTestWithOutTermAndCondition();
 		
-		baseURL="http://192.168.3.49:8080/portal";
-		nodeURL="http://ubuntu14.04-2.testlab1.exoplatform.vn:4444/wd/hub";
+		baseURL="http://192.168.3.49:8080";
+		info("youyou");
+		nodeURL="http://ubuntu14.04-2.testlab1.exoplatform.vn:5555/wd/hub";
+		info("youyou");
 		DesiredCapabilities capibility = DesiredCapabilities.firefox();
+		info("youyou");
 		capibility.setCapability("binary", "/usr/bin/firefox");
+		info("youyou");
 		capibility.setBrowserName("firefox");
+		info("youyou");
 		capibility.setPlatform(Platform.LINUX);
-
+		info("youyou");
 		driver= new RemoteWebDriver( new URL(nodeURL),capibility);
-		
+		info("youyou");
 		//driver.manage().window().maximize();
 		//driver.navigate().refresh();
 		termsAndConditions(opParams);
