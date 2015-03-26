@@ -434,29 +434,29 @@ public class TestBase {
 	 * init browser
 	 * @param opParams
 	 */
-//	String baseURL, nodeURL;
-//	public void initSeleniumTest(Object... opParams) throws MalformedURLException{
-//		initSeleniumTestWithOutTermAndCondition();
-//		
-//	//	baseURL="http://192.168.3.49:8080";
-//		info("youyou");
-//		nodeURL="http://ubuntu12.04-4.testlab1.exoplatform.vn:4444/wd/hub";
-////				"http://builder2.testlab1.exoplatform.vn:4444/wd/hub";
-//		info("youyou");
-//		DesiredCapabilities capibility = DesiredCapabilities.firefox();
-//		info("youyou");
-//		capibility.setCapability("binary", "/usr/bin/firefox");
-//		info("youyou");
-//		capibility.setBrowserName("firefox");
-//		info("youyou");
-//		capibility.setPlatform(Platform.LINUX);
-//		info("youyou");
-//		driver= new RemoteWebDriver( new URL(nodeURL),capibility);
-//		info("youyou");
-//		//driver.manage().window().maximize();
-//		//driver.navigate().refresh();
-//		termsAndConditions(opParams);
-//	}
+	String baseURL, nodeURL;
+	public void initSeleniumTest(Object... opParams) throws MalformedURLException{
+		initSeleniumTestWithOutTermAndCondition();
+		
+	//	baseURL="http://192.168.3.49:8080";
+		info("youyou");
+		nodeURL="http://ubuntu12.04-4.testlab1.exoplatform.vn:4444/wd/hub";
+//				"http://builder2.testlab1.exoplatform.vn:4444/wd/hub";
+		info("youyou");
+		DesiredCapabilities capibility = DesiredCapabilities.firefox();
+		info("youyou");
+		capibility.setCapability("binary", "/usr/bin/firefox");
+		info("youyou");
+		capibility.setBrowserName("firefox");
+		info("youyou");
+		capibility.setPlatform(Platform.LINUX);
+		info("youyou");
+		driver= new RemoteWebDriver( new URL(nodeURL),capibility);
+		info("youyou");
+		//driver.manage().window().maximize();
+		//driver.navigate().refresh();
+		termsAndConditions(opParams);
+	}
 
 	//Init remote for selemium grid
 	public WebDriver initRemoteWebDriverFF(Object... opParams) throws MalformedURLException {

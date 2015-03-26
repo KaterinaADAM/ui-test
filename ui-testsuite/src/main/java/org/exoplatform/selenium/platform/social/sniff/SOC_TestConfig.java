@@ -64,8 +64,8 @@ public class SOC_TestConfig extends PlatformBase {
 	@BeforeClass
 	public void setUpBeforeClass() throws Exception{
 		info("Start setUpBeforeClass");
-		initSeleniumTest();
-		
+	//	initSeleniumTest();
+		initRemoteWebDriverFF();
 		getDefaultUserPass(userDataFilePath,defaultSheet,isUseFile,jdbcDriver,dbUrl,user,pass,sqlUser);
 		magAc = new ManageLogInOut(driver);
 		magAc.signIn(DATA_USER1, DATA_PASS);
