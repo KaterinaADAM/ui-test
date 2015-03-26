@@ -116,7 +116,7 @@ public class TestBase {
 	protected String appLayoutFilePath;
 
 	/*========Default System Property=============*/
-	public final String DEFAULT_BASEURL="http://localhost:8080";
+	public final String DEFAULT_BASEURL="http://192.168.3.49:8080";
 	public final String DEFAULT_BROWSER="firefox";//iexplorer, firefox, chrome
 	public final String DEFAULT_SERVER="ubuntu"; //win, ubuntu
 
