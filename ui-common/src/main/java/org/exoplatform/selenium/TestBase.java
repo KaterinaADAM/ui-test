@@ -117,7 +117,7 @@ public class TestBase {
 	protected String appLayoutFilePath;
 
 	/*========Default System Property=============*/
-	public final String DEFAULT_BASEURL="http://http://192.168.3.49:4444/portal";
+	public final String DEFAULT_BASEURL="http://192.168.3.49:4444/portal";
 	public final String DEFAULT_NODEURL="http://builder2.testlab1.exoplatform.vn:4444/wd/hub";
 	public final String DEFAULT_BROWSER="firefox";//iexplorer, firefox, chrome
 	public final String DEFAULT_SERVER="ubuntu"; //win, ubuntu
@@ -445,11 +445,11 @@ public class TestBase {
 		info("youyou");
 		DesiredCapabilities capibility = DesiredCapabilities.firefox();
 		info("youyou");
-		capibility.setCapability("binary", "/usr/bin/firefox");
+//		capibility.setCapability("binary", "/usr/bin/firefox");
 		info("youyou");
 		capibility.setBrowserName("firefox");
 		info("youyou");
-		capibility.setPlatform(Platform.LINUX);
+		capibility.setPlatform(Platform.ANY);
 		info("youyou");
 		driver= new RemoteWebDriver( new URL(nodeURL),capibility);
 		info("youyou");
