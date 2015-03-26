@@ -436,7 +436,7 @@ public class TestBase {
 		
 		baseURL="http://192.168.3.49:8080";
 		info("youyou");
-		nodeURL="http://ubuntu14.04-2.testlab1.exoplatform.vn:4444/wd/hub";
+		nodeURL="http://ubuntu12.04-4.testlab1.exoplatform.vn:5555/wd/hub";
 		info("youyou");
 		DesiredCapabilities capibility = DesiredCapabilities.firefox();
 		info("youyou");
