@@ -446,7 +446,7 @@ public class TestBase {
 		info("youyou");
 		capibility.setPlatform(Platform.LINUX);
 		info("youyou");
-		driver= new RemoteWebDriver( new URL(nodeURL),capibility);
+		driver= new RemoteWebDriver( new URL(baseURL),capibility);
 		info("youyou");
 		//driver.manage().window().maximize();
 		//driver.navigate().refresh();
