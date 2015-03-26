@@ -116,7 +116,7 @@ public class TestBase {
 	protected String appLayoutFilePath;
 
 	/*========Default System Property=============*/
-	public final String DEFAULT_BASEURL="http://192.168.3.49:8080";
+	public final String DEFAULT_BASEURL="http://localhost:8080";
 	public final String DEFAULT_BROWSER="firefox";//iexplorer, firefox, chrome
 	public final String DEFAULT_SERVER="ubuntu"; //win, ubuntu
 
@@ -434,7 +434,7 @@ public class TestBase {
 	public void initSeleniumTest(Object... opParams) throws MalformedURLException{
 		initSeleniumTestWithOutTermAndCondition();
 		
-		baseURL="http://192.168.3.49:8080";
+	//	baseURL="http://192.168.3.49:8080";
 		info("youyou");
 		nodeURL="http://ubuntu12.04-4.testlab1.exoplatform.vn:4444/wd/hub";
 		info("youyou");
