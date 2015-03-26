@@ -434,7 +434,7 @@ public class TestBase {
 	 * init browser
 	 * @param opParams
 	 */
-	String baseURL, nodeURL;
+	String nodeURL;
 	public void initSeleniumTest(Object... opParams) throws MalformedURLException{
 		initSeleniumTestWithOutTermAndCondition();
 		
@@ -465,7 +465,7 @@ public class TestBase {
 //		capability.setCapability("jenkins.label","redhat5 && amd64");
 		capability.setBrowserName("firefox");
 //		capability.setCapability("version", "28.0");
-//		capability.setCapability("binary", "/usr/bin/firefox");
+		capability.setCapability("binary", "/usr/bin/firefox");
 		capability.setPlatform(Platform.LINUX);
 		driver = new RemoteWebDriver(new URL(nodeUrl), capability);
 		action = new Actions(driver);
