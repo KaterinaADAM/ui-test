@@ -440,8 +440,7 @@ public class TestBase {
 		
 	//	baseURL="http://192.168.3.49:8080";
 		info("youyou");
-		nodeURL="http://ubuntu12.04-4.testlab1.exoplatform.vn:4444/wd/hub";
-//				"http://builder2.testlab1.exoplatform.vn:4444/wd/hub";
+		nodeURL="http://builder2.testlab1.exoplatform.vn:4444/wd/hub";
 		info("youyou");
 		DesiredCapabilities capibility = DesiredCapabilities.firefox();
 		info("youyou");
@@ -453,8 +452,6 @@ public class TestBase {
 		info("youyou");
 		driver= new RemoteWebDriver( new URL(nodeURL),capibility);
 		info("youyou");
-		//driver.manage().window().maximize();
-		//driver.navigate().refresh();
 		termsAndConditions(opParams);
 	}
 
