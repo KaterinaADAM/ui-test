@@ -444,9 +444,6 @@ public class TestBase {
 		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
 		capabilities.setBrowserName("firefox");
 		capabilities.setPlatform(Platform.LINUX);
-		capabilities.setCapability("seleniumProtocol", "Selenium");
-		capabilities.setCapability("jenkins.nodeName","Ubuntu-VM46");
-		capabilities.setCapability("maxInstances","5");
 		driver= new RemoteWebDriver( new URL(nodeUrl),capabilities);
 		info("youyou");
 		termsAndConditions(opParams);
