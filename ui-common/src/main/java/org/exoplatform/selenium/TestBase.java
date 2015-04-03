@@ -441,7 +441,13 @@ public class TestBase {
 		profile.setPreference("dom.max_script_run_time", 0);
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
+		capabilities.setBrowserName("*firefox");
+		capabilities.setPlatform(Platform.LINUX);
+		capabilities.setCapability("seleniumProtocol", "Selenium");
+		capabilities.setCapability("jenkins.nodeName","Ubuntu-VM46");
+		capabilities.setCapability("maxInstances","5");
 		driver= new RemoteWebDriver( new URL(nodeUrl),capabilities);
+		//{seleniumProtocol=Selenium, platform=LINUX, browserName=*firefox, maxInstances=5, jenkins.nodeName=Ubuntu-VM46}
 		info("youyou");
 		termsAndConditions(opParams);
 	}
