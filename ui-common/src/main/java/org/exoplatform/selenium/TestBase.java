@@ -444,7 +444,7 @@ public class TestBase {
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
 		capabilities.setCapability("platform", Platform.ANY);
-		capabilities.setCapability("binary", "/usr/bin/firefox"); //for linux
+		capabilities.setCapability("binary", "/home/cmugnier/Downloads/firefox/firefox"); //for linux
 		driver= new RemoteWebDriver( new URL(nodeUrl),capabilities);
 		info("youyou");
 		termsAndConditions(opParams);
