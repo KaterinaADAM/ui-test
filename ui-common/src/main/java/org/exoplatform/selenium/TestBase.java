@@ -440,11 +440,11 @@ public class TestBase {
 		
 	//	baseURL="http://192.168.3.49:8080";
 		info("youyou");
-		nodeURL="http://builder2.testlab1.exoplatform.vn:4444/wd/hub";
+		nodeURL="http://ubuntu12.04-4.testlab1.exoplatform.vn:4444/wd/hub";
 		info("youyou");
 		DesiredCapabilities capibility = DesiredCapabilities.firefox();
 		info("youyou");
-//		capibility.setCapability("binary", "/usr/bin/firefox");
+		capibility.setCapability("binary", "/usr/bin/firefox");
 		info("youyou");
 		capibility.setBrowserName("firefox");
 		info("youyou");
