@@ -79,6 +79,7 @@ public class TestBase {
 	public static String nodeUrl;
 	public static String browser;
 	public static String server;
+	public static String firefoxUrl;
 
 	protected Boolean isRandom;
 	protected Boolean isUseFile;
@@ -122,7 +123,7 @@ public class TestBase {
 	public final String DEFAULT_NODEURL="http://localhost:4444/wd/hub/";
 	public final String DEFAULT_BROWSER="firefox";//iexplorer, firefox, chrome
 	public final String DEFAULT_SERVER="ubuntu"; //win, ubuntu
-
+	public final String DEFAULT_FIREFOX="/usr/bin/firefox";
 	public final  Boolean DEFAULT_ISRANDOM = true;
 	public final  Boolean DEFAULT_ISUSEFILE = true;
 
@@ -203,7 +204,7 @@ public class TestBase {
 		server = System.getProperty("server");
 		baseUrl = System.getProperty("baseUrl");
 		nodeUrl = System.getProperty("nodeUrl");
-
+		firefoxUrl = System.getProperty("firefoxUrl");
 		jdbcDriver = System.getProperty("jdbcDriver");
 		dbUrl = System.getProperty("dbUrl");
 		user = System.getProperty("user");
@@ -239,7 +240,7 @@ public class TestBase {
 		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
 		if (nodeUrl==null) nodeUrl = DEFAULT_NODEURL;
 		if (server==null) server = DEFAULT_SERVER;
-
+		if (firefoxUrl==null) server = DEFAULT_FIREFOX;
 		if (isRandom==null) isRandom = DEFAULT_ISRANDOM;
 		if (isUseFile==null) isUseFile = DEFAULT_ISUSEFILE;
 
@@ -444,7 +445,7 @@ public class TestBase {
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
 		capabilities.setCapability("platform", Platform.ANY);
-		capabilities.setCapability("binary", "/home/cmugnier/Downloads/firefox/firefox"); //for linux
+		capabilities.setCapability("binary", firefoxUrl); //for linux
 		driver= new RemoteWebDriver( new URL(nodeUrl),capabilities);
 		info("youyou");
 		termsAndConditions(opParams);
