@@ -444,7 +444,7 @@ public class TestBase {
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
 		capabilities.setCapability("binary", "/usr/lib/firefox");
-		WebDriver driver = new FirefoxDriver(new FirefoxBinary(new File("/usr/lib/firefox")), profile);
+		WebDriver driver = new FirefoxDriver(new FirefoxBinary(new File("/usr/bin/firefox")), profile);
 		capabilities.setBrowserName("firefox");
 		capabilities.setPlatform(Platform.LINUX);
 		driver= new RemoteWebDriver( new URL(nodeUrl),capabilities);
