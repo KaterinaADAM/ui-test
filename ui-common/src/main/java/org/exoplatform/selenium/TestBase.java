@@ -360,16 +360,16 @@ public class TestBase {
 	public void initSeleniumTestWithOutTermAndCondition(Object... opParams){
 
 		getSystemProperty();
-//		if("chrome".equals(browser)){
-//			driver = new ChromeDriver();
-//			chromeFlag = true;
-//		} else if ("iexplorer".equals(browser)){
-//			driver = initIEDriver();
-//			ieFlag = true;
-//		} else {
-//			driver = initFFDriver();
-//		}
-//		action = new Actions(driver);
+		if("chrome".equals(browser)){
+			driver = new ChromeDriver();
+			chromeFlag = true;
+		} else if ("iexplorer".equals(browser)){
+			driver = initIEDriver();
+			ieFlag = true;
+		} else {
+			driver = initFFDriver();
+		}
+		action = new Actions(driver);
 	}
 
 	/**
@@ -379,7 +379,8 @@ public class TestBase {
 	public void termsAndConditions(Object... opParams){
 		info("Term and conditions");
 		Boolean isCreateAccount = (Boolean)(opParams.length>0 ? opParams[0]:true);
-		driver.get(baseUrl);
+		driver.navigate().to(baseUrl);
+		//driver.get(baseUrl);/
 		ManageLogInOut acc = new ManageLogInOut(driver);
 		info("Agreement page");
 		if (waitForAndGetElement(ELEMENT_AGREEMENT_CHECKBOX, 3000, 0, 2) != null) {
@@ -441,13 +442,12 @@ public class TestBase {
 		profile.setPreference("dom.max_script_run_time", 0);
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
-		capabilities.setBrowserName("*firefox");
+		capabilities.setBrowserName("firefox");
 		capabilities.setPlatform(Platform.LINUX);
 		capabilities.setCapability("seleniumProtocol", "Selenium");
 		capabilities.setCapability("jenkins.nodeName","Ubuntu-VM46");
 		capabilities.setCapability("maxInstances","5");
 		driver= new RemoteWebDriver( new URL(nodeUrl),capabilities);
-		//{seleniumProtocol=Selenium, platform=LINUX, browserName=*firefox, maxInstances=5, jenkins.nodeName=Ubuntu-VM46}
 		info("youyou");
 		termsAndConditions(opParams);
 	}
