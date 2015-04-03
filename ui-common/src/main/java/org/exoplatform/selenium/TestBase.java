@@ -119,7 +119,7 @@ public class TestBase {
 
 	/*========Default System Property=============*/
 	public final String DEFAULT_BASEURL="http://localhost:8080/portal";
-	public final String DEFAULT_NODEURL="http://builder2.testlab1.exoplatform.vn:4444/wd/hub";
+	public final String DEFAULT_NODEURL="http://localhost:4444/wd/hub/";
 	public final String DEFAULT_BROWSER="firefox";//iexplorer, firefox, chrome
 	public final String DEFAULT_SERVER="ubuntu"; //win, ubuntu
 
