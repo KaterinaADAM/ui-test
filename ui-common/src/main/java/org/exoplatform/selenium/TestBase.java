@@ -443,7 +443,7 @@ public class TestBase {
 		profile.setPreference("dom.max_script_run_time", 0);
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
-		capabilities.setCapability("platform", Platform.LINUX);
+		capabilities.setCapability("platform", Platform.ANY);
 		capabilities.setCapability("binary", "/home/cmugnier/Downloads/firefox/firefox"); //for linux
 		driver= new RemoteWebDriver( new URL(nodeUrl),capabilities);
 		info("youyou");
