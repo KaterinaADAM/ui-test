@@ -437,20 +437,14 @@ public class TestBase {
 	String nodeURL;
 	public void initSeleniumTest(Object... opParams) throws MalformedURLException{
 		initSeleniumTestWithOutTermAndCondition();
-		
-	//	baseURL="http://192.168.3.49:8080";
-		info("youyou");
+		FirefoxProfile profile = new FirefoxProfile();
+		profile.setPreference("plugins.hide_infobar_for_missing_plugin", true);
+		profile.setPreference("dom.max_script_run_time", 0);
 		nodeURL="http://ubuntu12.04-4.testlab1.exoplatform.vn:4444/wd/hub";
 		info("youyou");
-		DesiredCapabilities capibility = DesiredCapabilities.firefox();
-		info("youyou");
-		capibility.setCapability("binary", "/usr/bin/firefox");
-		info("youyou");
-		capibility.setBrowserName("firefox");
-		info("youyou");
-		capibility.setPlatform(Platform.ANY);
-		info("youyou");
-		driver= new RemoteWebDriver( new URL(nodeURL),capibility);
+		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
+		driver= new RemoteWebDriver( new URL(nodeURL),capabilities);
 		info("youyou");
 		termsAndConditions(opParams);
 	}
