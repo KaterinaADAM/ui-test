@@ -443,9 +443,7 @@ public class TestBase {
 		profile.setPreference("dom.max_script_run_time", 0);
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
-		capabilities.setCapability("binary", "/usr/lib/firefox");
 		WebDriver driver = new FirefoxDriver(new FirefoxBinary(new File("/home/cmugnier/Downloads/firefox/firefox")), profile);
-		capabilities.setBrowserName("firefox");
 		capabilities.setPlatform(Platform.LINUX);
 		driver= new RemoteWebDriver( new URL(nodeUrl),capabilities);
 		info("youyou");
