@@ -9,7 +9,6 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -25,6 +24,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+
 import org.apache.commons.io.FileUtils;
 import org.exoplatform.selenium.platform.ManageLogInOut;
 import org.openqa.selenium.Alert;
@@ -41,6 +41,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -443,6 +444,7 @@ public class TestBase {
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
 		capabilities.setCapability("binary", "/usr/lib/firefox");
+		WebDriver driver = new FirefoxDriver(new FirefoxBinary(new File("/usr/lib/firefox")), profile);
 		capabilities.setBrowserName("firefox");
 		capabilities.setPlatform(Platform.LINUX);
 		driver= new RemoteWebDriver( new URL(nodeUrl),capabilities);
