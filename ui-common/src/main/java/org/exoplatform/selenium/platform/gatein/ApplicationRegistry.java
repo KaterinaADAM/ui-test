@@ -13,22 +13,22 @@ import org.openqa.selenium.WebDriver;
 
 public class ApplicationRegistry extends PlatformBase {
 
-	
+
 	public final By ELEMENT_APPLICATION_REGISTRY_PORTLET=By.id("UIApplicationRegistryPortlet");
 	public final By ELEMENT_MANAGE_APPLICATION_BUTTON=By.xpath("//*[@class='uiIconManageApplication uiIconLightGray']");
-    public final By ELEMENT_APPLICATION_REGISTRY_ADD_CATEGORY_BTN=By.xpath(".//*[contains(@class,'uiIconManageCategory uiIconLightGray')]");
-    
-	
-    //Add category page
-    public final By ELEMENT_ADD_CATEGORY_NAME=By.id("name");
-    public final By ELEMENT_ADD_CATEGORY_DISPLAY_NAME=By.id("displayName");
-    public final By ELEMENT_ADD_CATEGORY_DESCRIPTION=By.id("description");
-    public final By ELEMENT_ADD_CATEGORY_SAVE_BTN=By.xpath(".//*[@id='UICategoryForm']//button[text()='Save']");
-    public final By ELEMENT_ADD_CATEGORY_CANCEL_BTN=By.xpath(".//*[@id='UICategoryForm']//button[text()='Cancel']");
-    public final By ELEMENT_ADD_CATEGORY_PERMISSION_TAB = By.xpath(".//*[contains(@data-target,'#categoryPermission-tab')]");
-    public final By ELEMENT_ADD_CATEGORY_PERMISSION_PUBLIC_CHECKBOX= By.xpath(".//*[@id='publicMode']");
-    
-    //Application registry page
+	public final By ELEMENT_APPLICATION_REGISTRY_ADD_CATEGORY_BTN=By.xpath(".//*[contains(@class,'uiIconManageCategory uiIconLightGray')]");
+
+
+	//Add category page
+	public final By ELEMENT_ADD_CATEGORY_NAME=By.id("name");
+	public final By ELEMENT_ADD_CATEGORY_DISPLAY_NAME=By.id("displayName");
+	public final By ELEMENT_ADD_CATEGORY_DESCRIPTION=By.id("description");
+	public final By ELEMENT_ADD_CATEGORY_SAVE_BTN=By.xpath(".//*[@id='UICategoryForm']//button[text()='Save']");
+	public final By ELEMENT_ADD_CATEGORY_CANCEL_BTN=By.xpath(".//*[@id='UICategoryForm']//button[text()='Cancel']");
+	public final By ELEMENT_ADD_CATEGORY_PERMISSION_TAB = By.xpath(".//*[contains(@data-target,'#categoryPermission-tab')]");
+	public final By ELEMENT_ADD_CATEGORY_PERMISSION_PUBLIC_CHECKBOX= By.xpath(".//*[@id='publicMode']");
+
+	//Application registry page
 	public final By ELEMENT_SHOW_IMPORT_APPLICATION = By.id("showImport");
 	public final By ELEMENT_IMPORT_ALL_APPLICATION=By.xpath("//*[@class='uiIconImport uiIconLightGray']");
 	public final By ELEMENT_APPLICATION_GADGETBTN = By.cssSelector(".uiIconGadgets.uiIconLightGray");
@@ -38,6 +38,8 @@ public class ApplicationRegistry extends PlatformBase {
 	public final String ELEMENT_LEFT_PANEL_APPLICATION_NAME = ".//*[@id='${category}']//*[contains(@data-original-title,'${application}')]";
 	public final String ELEMENT_LEFT_PANEL_APPLICATION_DELETE_BTN =".//*[contains(@data-original-title,'${application}')]/..//*[contains(@class,'uiIconTrashMini uiIconLightGray')]";
 	public final String ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_TAB=".//*[@id='ApplicationRegistryCategory']//*[@href='#${category}']";
+	public final String ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_TAB_DOWN=".//*[@id='ApplicationRegistryCategory']//*[@href='#${category}' and not (contains(@class, 'collapsed'))]/*[contains(@class,'uiIconArrowDown')]";
+	public final String ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_TAB_RIGHT=".//*[@id='ApplicationRegistryCategory']//*[@href='#${category}']/*[contains(@class,'uiIconArrowRight')]";
 	public final String ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_DELETE_BTN=".//*[@href='#${category}']/../..//*[contains(@class,'uiIconDelete uiIconLightGray')]";
 	public final String ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_EDIT_BTN=".//*[@href='#${category}']/../..//*[contains(@class,'uiIconEdit uiIconLightGray')]";
 	//Right panel Add Application
@@ -46,7 +48,7 @@ public class ApplicationRegistry extends PlatformBase {
 	public final By ELEMENT_RIGHT_PANEL_ADD_APPLICATION_SELECTMENU=By.xpath(".//*[@id='UIAddApplicationForm']//*[@class='selectbox']");
 	public final String ELEMENT_RIGHT_PANEL_ADD_APPLICATION_RADIOBTN=".//*[contains(@id,'description')][text()='${des}']/../..//*[contains(@id,'label')][text()='${name}']/../..//input[@type='radio']";
 	public final String ELEMENT_RIGHT_PANEL_ADD_APPLICATION_NAME=".//*[contains(@id,'description')][text()='${des}']/../..//*[contains(@id,'label')][text()='${name}']";
-	
+
 	//paging control
 	public final String ELEMENT_PAGING_CONTROL_NUMBER = ".//*[@id='UIAddApplicationForm']//a[text()='${number}']";
 	public final By ELEMENT_PAGING_CONTROL_NEXT_PAGE_ENABLED=By.xpath(".//*[@data-original-title='Next Page' and @href='javascript:void(0);']");
@@ -57,14 +59,14 @@ public class ApplicationRegistry extends PlatformBase {
 	public final String ELEMENT_DETAIL_PORTLET_APPLICATION_NAME =".//*[contains(@title,'${appName}')]";
 	public final String ELEMENT_DETAIL_PORTLET_DESCRIPTION = ".//span[contains(@title,'${des}')]";
 	public final By ELEMENT_PERMISSION_FORM = By.cssSelector(".UIPermissionForm");
-	
+
 	NavigationToolbar navTool;
 	PageEditor pagEditor;
 	HomePagePlatform hp;
 	ManageAlert alert;
 	PortalManagePages pagMag;
-	
-	
+
+
 	public ApplicationRegistry(WebDriver dr){
 		driver = dr;
 		navTool = new NavigationToolbar(dr);
@@ -114,7 +116,7 @@ public class ApplicationRegistry extends PlatformBase {
 		info("Verify that import all application is shown");
 		waitForAndGetElement(ELEMENT_IMPORT_ALL_APPLICATION,3000,0);
 	}
-	
+
 	/**
 	 * Hide import application button
 	 */
@@ -122,7 +124,7 @@ public class ApplicationRegistry extends PlatformBase {
 		info("Show all import application");
 		if ("iexplorer".equals(browser)){
 			navTool.goToPotalPages();
-			pagMag.editPage("registry","");
+			pagMag.editPage("registry","group");
 		}
 		else{
 			navTool.goToApplication();
@@ -146,7 +148,7 @@ public class ApplicationRegistry extends PlatformBase {
 		Utils.pause(2000);
 		info("All applications are imported");
 	}
-	
+
 	/**
 	 * Open Gadget page
 	 */
@@ -173,17 +175,12 @@ public class ApplicationRegistry extends PlatformBase {
 		waitForAndGetElement(ELEMENT_RIGHT_PANEL_ADD_APPLICATION_DISPLAY_FILED);
 		info("Type the name for the application");
 		type(ELEMENT_RIGHT_PANEL_ADD_APPLICATION_DISPLAY_FILED, nameApp, true);
-        info("Des:"+des);
+		info("Des:"+des);
 		while(waitForAndGetElement(ELEMENT_RIGHT_PANEL_ADD_APPLICATION_NAME.replace(
-				"${des}", des).replace("${name}",nameApp), 5000, 0)==null){
-
+				"${des}", des).replace("${name}",nameApp), 5000, 0,2)==null){
 			if(waitForAndGetElement(ELEMENT_PAGING_CONTROL_NEXT_PAGE_ENABLED, 2000, 0)!=null)
 				click(ELEMENT_PAGING_CONTROL_NEXT_PAGE_ENABLED);
 			else assert false:"Not found application with the name:"+nameApp;
-
-			if(waitForAndGetElement(ELEMENT_RIGHT_PANEL_ADD_APPLICATION_NAME.replace(
-					"${des}", des).replace("${name}",nameApp), 5000, 0)!=null)
-				break;
 		}
 
 		check(ELEMENT_RIGHT_PANEL_ADD_APPLICATION_RADIOBTN.replace(
@@ -207,7 +204,7 @@ public class ApplicationRegistry extends PlatformBase {
 		alert.acceptAlert();
 		waitForElementNotPresent(ELEMENT_LEFT_PANEL_APPLICATION_DELETE_BTN.replace("${application}", application));
 	}
-	
+
 	/**
 	 * Check all imported Applications is shown in the left list
 	 * after click on Import Application button
@@ -219,13 +216,12 @@ public class ApplicationRegistry extends PlatformBase {
 		for (int i = 0; i < categoryList.size(); i++) {
 			info("Category:"+categoryList.get(i));
 			info("Application's name:"+nameList.get(i));
-			//if the category is not Application category
-			if (categoryList.get(i) != categoryList.get(0))
-				//if the category is a new category
-				if (categoryList.get(i) != categoryList.get(i - 1))
-					click(ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_TAB
-							.replace("${category}",categoryList.get(i)));
-            info("Verify that the imported application is shown in correct category");
+			scrollBarToGetElement(By.xpath(ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_TAB.replace("${category}", categoryList.get(i))));
+			if(waitForAndGetElement(ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_TAB_DOWN.replace("${category}", categoryList.get(i)),5000,0)==null){
+				info("Open category "+categoryList.get(i));
+				click(ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_TAB.replace("${category}",categoryList.get(i).trim()));
+			}
+			info("Verify that the imported application is shown in correct category");
 			waitForAndGetElement(ELEMENT_LEFT_PANEL_APPLICATION_NAME
 					.replace("${category}",categoryList.get(i))
 					.replace("${application}",nameList.get(i)));
@@ -256,7 +252,8 @@ public class ApplicationRegistry extends PlatformBase {
 		check(ELEMENT_ADD_CATEGORY_PERMISSION_PUBLIC_CHECKBOX,2);
 		click(ELEMENT_ADD_CATEGORY_SAVE_BTN);
 		info("Verify that the new category is added successfully");
-		waitForAndGetElement( ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_TAB.replace("${category}", categoryName),2000,0);
+		scrollBarToGetElement(ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_TAB.replace("${category}",categoryName));
+		waitForAndGetElement( ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_TAB.replace("${category}", categoryName),2000,1);
 	}
 	/**
 	 * Edit a simple Category
@@ -266,10 +263,11 @@ public class ApplicationRegistry extends PlatformBase {
 	 */
 	public void editCategory(String name,String newDisplayName,String newDes){
 		info("Click on Edit button");
+		scrollBarToGetElement(ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_EDIT_BTN.replace("${category}",name));
 		click(ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_EDIT_BTN.replace("${category}",name));
 		if(!newDisplayName.isEmpty()){
 			info("Input display name");
-		    type(ELEMENT_ADD_CATEGORY_DISPLAY_NAME, newDisplayName, true);
+			type(ELEMENT_ADD_CATEGORY_DISPLAY_NAME, newDisplayName, true);
 		}
 		if(!newDes.isEmpty()){
 			info("Input description");
@@ -285,6 +283,7 @@ public class ApplicationRegistry extends PlatformBase {
 	 */
 	public void deleteCategory(String nameCategory){
 		info("Click on Delete button");
+		scrollBarToGetElement(ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_EDIT_BTN.replace("${category}",nameCategory));
 		click(ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_DELETE_BTN.replace("${category}", nameCategory));
 		alert.acceptAlert();
 		info("Verify that the category is deleted");
@@ -296,30 +295,30 @@ public class ApplicationRegistry extends PlatformBase {
 	 * @param category
 	 * @param displayName
 	 */
-    public void selectAPortlet(String category,String displayName,boolean isOpenTab){
+	public void selectAPortlet(String category,String displayName,boolean isOpenTab){
 		info("Cick on the category tab");
 		if(isOpenTab==true)
-		click(ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_TAB.replace("${category}",category));
+			click(ELEMENT_LEFT_PANEL_APPLICATION_CATEGORY_TAB.replace("${category}",category));
 		info("Select an application");
 		click(ELEMENT_LEFT_PANEL_APPLICATION_NAME.replace("${category}",category).replace("${application}",displayName));
-	    Utils.pause(2000);
+		Utils.pause(2000);
 	}
-    /**
-     * Checking a viewing detail of a portlet
-     * @param displayName
-     * @param appName
-     * @param des
-     */
-    public void viewDetailPortlet(String displayName,String appName,String des){
-    	info("Check Bread crumb");
-    	waitForAndGetElement(ELEMENT_DETAIL_PORTLET_BREADCRUMB.replace("${disName}", displayName),2000,0);
-    	info("Check display name, Application name and description");
-    	waitForAndGetElement(ELEMENT_DETAIL_PORTLET_DISPLAY_NAME.replace("${disName}",displayName),2000,0);
-    	info("Check Application name");
-    	waitForAndGetElement(ELEMENT_DETAIL_PORTLET_APPLICATION_NAME.replace("${appName}", appName),2000,0);
-    	info("Check description");
-    	waitForAndGetElement(ELEMENT_DETAIL_PORTLET_DESCRIPTION.replace("${des}",des),2000,0);
-    	info("Check title of Permission table");
-    	waitForAndGetElement(ELEMENT_PERMISSION_FORM,2000,0);
-    }
+	/**
+	 * Checking a viewing detail of a portlet
+	 * @param displayName
+	 * @param appName
+	 * @param des
+	 */
+	public void viewDetailPortlet(String displayName,String appName,String des){
+		info("Check Bread crumb");
+		waitForAndGetElement(ELEMENT_DETAIL_PORTLET_BREADCRUMB.replace("${disName}", displayName),2000,0);
+		info("Check display name, Application name and description");
+		waitForAndGetElement(ELEMENT_DETAIL_PORTLET_DISPLAY_NAME.replace("${disName}",displayName),2000,0);
+		info("Check Application name");
+		waitForAndGetElement(ELEMENT_DETAIL_PORTLET_APPLICATION_NAME.replace("${appName}", appName),2000,0);
+		info("Check description");
+		waitForAndGetElement(ELEMENT_DETAIL_PORTLET_DESCRIPTION.replace("${des}",des),2000,0);
+		info("Check title of Permission table");
+		waitForAndGetElement(ELEMENT_PERMISSION_FORM,2000,0);
+	}
 }

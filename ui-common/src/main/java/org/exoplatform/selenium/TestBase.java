@@ -23,6 +23,8 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.text.html.Option;
+
 import org.apache.commons.io.FileUtils;
 import org.exoplatform.selenium.platform.ManageLogInOut;
 import org.openqa.selenium.Alert;
@@ -132,7 +134,7 @@ public class TestBase {
 	protected String portalPermisMemFilePath;
 	protected String gateinDefaultGroupsFilePath;
 	protected String gateinNodesFilePath;
-	
+
 
 	/*========Default System Property=============*/
 	public final String DEFAULT_NATIVE_EVENT = "true";
@@ -189,17 +191,17 @@ public class TestBase {
 	public final String DEFAULT_CREATENEWGATEINURL="DataDriven/"+"create_new_gatein.xls";
 	public final String DEFAULT_CATEGORIGATEINURL="DataDriven/"+"gatein_categories.xls";
 	public final String DEFAULT_PAGE_MANAGEMENT_LIST_URL="DataDriven/"+"gatein_page_management_list.xls";
-    public final String DEFAULT_PORTAL_DEFAULT_GATEIN_URL="DataDriven/"+"gatein_portal_defaults.xls";
-    public final String DEFAULT_PORTAL_PERMISSION_GROUP_URL="DataDriven/"+"gatein_portal_groups.xls";
-    public final String DEFAULT_PORTAL_PERMISSION_MEMBERSHIPS_URL="DataDriven/"+"gatein_portal_memberships.xls";
+	public final String DEFAULT_PORTAL_DEFAULT_GATEIN_URL="DataDriven/"+"gatein_portal_defaults.xls";
+	public final String DEFAULT_PORTAL_PERMISSION_GROUP_URL="DataDriven/"+"gatein_portal_groups.xls";
+	public final String DEFAULT_PORTAL_PERMISSION_MEMBERSHIPS_URL="DataDriven/"+"gatein_portal_memberships.xls";
 
 	public final String DEFAULT_USERINFOURL="DataDriven/"+"userinfo.xls";
 	public final String DEFAULT_MAILSUFFIXURL="DataDriven/"+"mail_suffix.xls";
 	public final String DEFAULT_USERSEARCHOPTIONURL="DataDriven/"+"gatein_user_search_options.xls";
-	
-    public final String DEFAULT_GATEINDEFAULTGROUPSURL="DataDriven/"+"gatein_default_groups.xls";
-    public final String DEFAULT_GATEINNODESURL="DataDriven/"+"gatein_nodes.xls";
-    
+
+	public final String DEFAULT_GATEINDEFAULTGROUPSURL="DataDriven/"+"gatein_default_groups.xls";
+	public final String DEFAULT_GATEINNODESURL="DataDriven/"+"gatein_nodes.xls";
+
 	public final String DEFAULT_LINKSURL="DataDriven/"+"links.xls";
 	public final String DEFAULT_GROUPNAMEURL="DataDriven/"+"gatein_group_name.xls";
 
@@ -277,24 +279,24 @@ public class TestBase {
 		wikiMessageFilePath = System.getProperty("wikiMessageFilePath");
 		gateinDefaultGroupsFilePath = System.getProperty("gateinDefaultGroupsFilePath");
 		gateinNodesFilePath = System.getProperty("gateinNodesFilePath");
-		
+
 		siteExpDrivePath=System.getProperty("siteExpDrivePath");
 		siteExpPathPath=System.getProperty("siteExpPathPath");
 		siteExpContentTypeFilePath = System.getProperty("siteExpContentTypeFilePath");
-		
+
 		dataTestFilePath = System.getProperty("dataTestPath");
 		linkPath=System.getProperty("linkPath");
 
 		gadgetFilePath = System.getProperty("gadgetFilePath");
 		containerFilePath = System.getProperty("containerFilePath");
 		appLayoutFilePath = System.getProperty("appLayoutFilePath");
-		
+
 		groupNameDataFilePath = System.getProperty("groupNameDataFilePath");
 
-		
+
 		appListGateinFilePath = System.getProperty("appListGateinFilePath");
 		appAddGateinFilePath = System.getProperty("appAddGateinFilePath");
-		
+
 		createNewGateinFilePath =System.getProperty("createNewGateinFilePath");
 		categoriesGateinFilePath = System.getProperty("categoriesGateinFilePath");
 		pageMagListFilePath = System.getProperty("pageMagListFilePath");
@@ -350,7 +352,7 @@ public class TestBase {
 
 		if (gateinDefaultGroupsFilePath==null) gateinDefaultGroupsFilePath = DEFAULT_GATEINDEFAULTGROUPSURL;
 		if (gateinNodesFilePath==null) gateinNodesFilePath = DEFAULT_GATEINNODESURL;
-		
+
 		if (gadgetFilePath==null) gadgetFilePath = DEFAULT_GADGETURL;
 		if (containerFilePath==null) containerFilePath = DEFAULT_CONTAINERURL;
 		if (appLayoutFilePath==null) appLayoutFilePath = DEFAULT_APPLAYOUTURL;
@@ -358,16 +360,16 @@ public class TestBase {
 
 		if (appListGateinFilePath==null) appListGateinFilePath = DEFAULT_APPLISTGETINURL;
 		if (appAddGateinFilePath==null) appAddGateinFilePath = DEFAULT_APPADDGATEINURL;
-		
+
 		if (createNewGateinFilePath==null) createNewGateinFilePath = DEFAULT_CREATENEWGATEINURL;
 		if (categoriesGateinFilePath==null) categoriesGateinFilePath = DEFAULT_CATEGORIGATEINURL;
 		if (pageMagListFilePath==null) pageMagListFilePath = DEFAULT_PAGE_MANAGEMENT_LIST_URL;
-   
+
 		if (portalDefaultFilePath==null) portalDefaultFilePath = DEFAULT_PORTAL_DEFAULT_GATEIN_URL;
 		if (portalPermisGroupFilePath==null) portalPermisGroupFilePath = DEFAULT_PORTAL_PERMISSION_GROUP_URL;
-        if (portalPermisMemFilePath==null) portalPermisMemFilePath = DEFAULT_PORTAL_PERMISSION_MEMBERSHIPS_URL;
-        if (videoLinksFilePath==null) videoLinksFilePath = DEFAULT_VIDEO_EMBBED_LINKS_PATH;
-		
+		if (portalPermisMemFilePath==null) portalPermisMemFilePath = DEFAULT_PORTAL_PERMISSION_MEMBERSHIPS_URL;
+		if (videoLinksFilePath==null) videoLinksFilePath = DEFAULT_VIDEO_EMBBED_LINKS_PATH;
+
 		userDataFilePath = getAbsoluteFilePath(userDataFilePath);
 		userInfoFilePath = getAbsoluteFilePath(userInfoFilePath);
 		mailSuffixFilePath = getAbsoluteFilePath(mailSuffixFilePath);
@@ -391,7 +393,7 @@ public class TestBase {
 		siteExpPathPath = getAbsoluteFilePath(siteExpPathPath);
 
 		siteExpContentTypeFilePath = getAbsoluteFilePath(siteExpContentTypeFilePath);
-		
+
 		dataTestFilePath = getAbsoluteFilePath(dataTestFilePath);
 		linkPath = getAbsoluteFilePath(linkPath);
 		gateinDefaultGroupsFilePath = getAbsoluteFilePath(gateinDefaultGroupsFilePath);
@@ -1072,7 +1074,8 @@ public class TestBase {
 				}
 				WebElement element = waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplay);		
 				if (element != null){
-					if (validate) element.clear();
+					if (validate) 
+						element.clear();
 					element.click();
 					element.sendKeys(value);
 					if (!validate || value.equals(getValue(locator))) {
@@ -1166,8 +1169,8 @@ public class TestBase {
 		}
 		Utils.pause(2000);
 	}
-	
-	
+
+
 
 	/**
 	 * rightClickOnElement
@@ -1572,12 +1575,21 @@ public class TestBase {
 	 * @param object
 	 * @param opParams
 	 */
-	public void scrollBarToGetElement(By object, int...opParams) {
+	public void scrollBarToGetElement(Object object, int...opParams) {
 		int display = opParams.length > 0 ? opParams[0]: 0;
 		WebElement element = waitForAndGetElement(object,5000,1,display);
 		JavascriptExecutor jse;
 		jse = (JavascriptExecutor) driver;
 		jse.executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+
+	/**
+	 * scroll page to get element
+	 * @param length
+	 */
+	public void scrollPage(int length){
+		JavascriptExecutor jsx = (JavascriptExecutor)driver;
+		jsx.executeScript("window.scrollBy("+length+")", "");
 	}
 
 	/**
@@ -1885,7 +1897,7 @@ public class TestBase {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		jse.executeScript("arguments[0].scrollIntoView(true);", element);
 	}
-	
+
 	/**
 	 *This function will try to get an element. if after timeout, the element is not found.
 	 *The function will refresh the page and find the element again.
@@ -1908,5 +1920,45 @@ public class TestBase {
 		}
 		Utils.pause(2000);
 		info("The elemnt is shown successfully");
+	}
+	
+	/**
+	 * insertTextUsingRobot
+	 * @param textElement
+	 * @param insertText
+	 * @param offset
+	 */
+	public void insertTextUsingRobot(Object locator, String insertText, Option...opParams) {
+		info("insertTextUsingRobot");
+		int notDisplay = (Integer) (opParams.length > 0 ? opParams[0]: 0);
+		WebElement textElement = waitForAndGetElement(locator, DEFAULT_TIMEOUT, 1, notDisplay);	
+	    Robot robot = null;
+	    try {
+	        robot = new Robot();
+	    } catch (AWTException e) {
+	        e.printStackTrace();
+	    }
+	    robot.setAutoDelay(20);
+	    // On focus.
+	    textElement.click();
+	    // Move cursor for head.
+	    typeUsingRobot(robot, KeyEvent.VK_CONTROL, KeyEvent.VK_HOME);
+	    typeUsingRobot(robot, KeyEvent.VK_CONTROL, KeyEvent.VK_A);
+	    setClipboardData(insertText);
+	    typeUsingRobot(robot, KeyEvent.VK_CONTROL, KeyEvent.VK_V);
+	}
+
+	/**
+	 * typeUsingRobot
+	 * @param robot
+	 * @param keycodes
+	 */
+	public void typeUsingRobot(Robot robot, int... keycodes) {
+	    for (int keycode : keycodes) {
+	        robot.keyPress(keycode);
+	    }
+	    for (int keycode : keycodes) {
+	        robot.keyRelease(keycode);
+	    }
 	}
 }

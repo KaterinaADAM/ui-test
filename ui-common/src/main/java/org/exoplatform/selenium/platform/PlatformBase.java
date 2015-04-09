@@ -1,6 +1,7 @@
 package org.exoplatform.selenium.platform;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.exoplatform.selenium.ManageAlert;
@@ -29,7 +30,7 @@ public class PlatformBase extends TestBase {
 	public static String DATA_NAME_USER2 = "Marry Williams";
 	public static String DATA_NAME_USER3 = "Jame Davis";
 	public static String DATA_NAME_USER4 = "Jack Miller";
-	
+
 	//Gmail
 	public final String GMAIL_URL = "https://mail.google.com";
 	public final String EMAIL_ADDRESS1 = "exomailtest01@gmail.com";
@@ -55,7 +56,7 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_GMAIL_PREVIOUS_EMAIL = By.xpath(".//*[@class='gE hI']");
 
 	public ManageAlert alert = new ManageAlert(driver);
-	
+
 	//page navigation
 	public By ELEMENT_NEXT_PAGE=By.xpath("//*[@class='uiIconNextArrow']");
 	public By ELEMENT_PREVIOUS_PAGE=By.xpath("//*[@class='uiIconPrevArrow']");
@@ -63,11 +64,11 @@ public class PlatformBase extends TestBase {
 	public By ELEMENT_CURRENT_PAGE=By.xpath("//*[@class='active']/*[contains(@href,'objectId') or contains(@href,'javascript')]");
 	public String ELEMENT_ANY_PAGE="//*[contains(@href,'ShowPage') and text()='$page']";
 	public String ELEMENT_PAGINATOR_PAGE_LINK = "//*[@class='pagination uiPageIterator clearfix']//a[contains(Text(),'${number}')]";
-	
+
 	//frame
 	public final By ELEMENT_FILEFORM_BLANK_CONTENT = By.xpath("//iframe[@class='cke_wysiwyg_frame cke_reset']");
 	public final By ELEMENT_FILEFORM_BLANK_NAME = By.id("name");
-	
+
 	/**
 	 * Available option
 	 */
@@ -127,7 +128,22 @@ public class PlatformBase extends TestBase {
 		info("Back to parent window");
 		switchToParentWindow();
 	}
-	
+
+	/**
+	 * Select option from combo box using list option 
+	 * @param locator
+	 * @param option
+	 */
+	public void selectOptionUsingList(Object locator, String option) {
+		List<WebElement> options=new Select(waitForAndGetElement (locator)).getOptions();
+		for(WebElement option1 : options){
+			if(option1.getAttribute("value").equals(option)){
+				option1.click();
+				break;
+			}
+		}
+	}
+
 	/**
 	 * Select option from combo box
 	 * @param locator
@@ -140,7 +156,7 @@ public class PlatformBase extends TestBase {
 					Assert.fail("Timeout at select: " + option + " into "
 							+ locator);
 				}
-			
+
 				Select select = new Select(waitForAndGetElement(locator));
 				select.selectByValue(option);
 				if (option.equals(select.getFirstSelectedOption().getAttribute(
@@ -171,7 +187,7 @@ public class PlatformBase extends TestBase {
 			info("Switch to new windown successfully");
 		} 
 	}
-	
+
 	/**
 	 * Switch to new browser window
 	 * @param user
@@ -192,7 +208,7 @@ public class PlatformBase extends TestBase {
 			Utils.pause(1000);
 		}
 	}
-	
+
 	/**
 	 * Add by @author vuna2
 	 * Open a new browser by Javascript
@@ -207,7 +223,7 @@ public class PlatformBase extends TestBase {
 		driver.navigate().refresh();
 		driver.navigate().to(baseUrl);
 	}
-	
+
 	/**
 	 * Go to gmail and login
 	 * @param email
@@ -238,7 +254,7 @@ public class PlatformBase extends TestBase {
 		click(ELEMENT_GMAIL_INBOX);
 		Utils.pause(1000);
 	}
-	
+
 	/**
 	 * function: check content of mail then delete mail
 	 * @param mail element title of mail
@@ -264,8 +280,8 @@ public class PlatformBase extends TestBase {
 		waitForElementNotPresent(mail);
 		Utils.pause(1000);
 	}
-	
-	
+
+
 	public void usePaginator(Object locator, String exceptionMessage) {
 		String page1 = ELEMENT_PAGINATOR_PAGE_LINK.replace("${number}", "1");
 		//String page1Namespace = ELEMENT_PAGINATOR_PAGE_NAMESPACE_LINK.replace("${number}", "1"); 

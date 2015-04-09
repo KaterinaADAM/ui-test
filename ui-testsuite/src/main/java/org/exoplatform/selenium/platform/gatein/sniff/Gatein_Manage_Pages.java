@@ -128,13 +128,12 @@ import org.testng.annotations.*;
 			- New page is created successfully*/
 		navToolBar.goToMyDashboard();
 		navToolBar.goToAddPage();
-		pagCW.inputPageInfoStep1(title, true, "English",title, true,false);
+		pagCW.inputPageInfoStep1(title, true, "English",title, null,null);
 		click(pagCW.ELEMENT_ADDNEWPAGE_BTNNEXT);
 		click(pagCW.ELEMENT_ADDNEWPAGE_BTNNEXT);
 		pagCW.addApp("",name,pagCW.ELEMENT_APPLICATION_APPLICATION.replace("${name}",idName),pagCW.ELEMENT_PAGEEDITOR_VIEWPAGE);
 		info("Verify that the page is added successfully");
-		portMg.searchPage(title, "","",true);
-		portMg.deletePage(title,"");
+		myDash.deleteTab(title);
 	}
 
 	/**
@@ -260,7 +259,6 @@ import org.testng.annotations.*;
 		*Expected Outcome: 
 			- The page is removed from the list
 			*/ 
-		navToolBar.goToPotalPages();
 		portMg.deletePage(title,"");
 	}
 

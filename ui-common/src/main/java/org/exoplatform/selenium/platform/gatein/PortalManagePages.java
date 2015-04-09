@@ -25,21 +25,23 @@ public class PortalManagePages extends PlatformBase {
 	public final By ELEMENT_MANAGEPAGES_SEARCH_BUTTON = By.xpath(".//*[@class='uiIconSearch uiIconLightGray']");
 	public final By ELEMENT_MANGEPAGES_INFORM_POPUP_OK= By.xpath(".//*[text()='OK']");
 	public final By ELEMENT_MANAGEPAGES_ADD_NEW_PAGE_BTN = By.cssSelector("#UIPageManagementPortlet .btn");
-	
+
 	//Results search
 	public final String ELEMENT_MANAGEPAGES_CONTENT_TITLE_COLUMN=".//*[contains(text(),'${title}')]";
 	public final String ELEMENT_MANAGEPAGES_CONTENT_SEARCH_TABLE=".//*[contains(@title,'${type}::${siteName}')]/../..//*[contains(text(),'${title}')]";
 	public final By ELEMENT_MAGEPAGES_CONTENT_ACTION_COLUMN_DELETE=By.xpath(".//*[@class='uiIconDelete uiIconLightGray']");
 	public final By ELEMENT_MAGEPAGES_CONTENT_ACTION_COLUMN_EDIT=By.xpath(".//*[@class='uiIconEditInfo uiIconLightGray']");
-	
-	
+
+
 	//Add new page popup
 	public final By ELEMENT_MANAGEPAGES_ADD_NEW_PAGES_POPUP_SAVE_BTN=By.cssSelector("#UIMaskWorkspace .btn[onclick~=\"javascript:eXo.webui.UIForm.submitForm('UIPageForm','Save',true)\"]");
 	public final By ELEMENT_MANAGEPAGES_ADD_NEW_PAGE_POPUP_PAGE_NAME =By.cssSelector("#UIMaskWorkspace #name");
 	public final By ELEMENT_MANAGEPAGES_ADD_NEW_PAGE_POPUP_TITLE = By.cssSelector("#UIMaskWorkspace #title");
 	public final By ELEMENT_MANAGEPAGES_ADD_NEW_PAGE_POPUP_CHECKBOX = By.cssSelector("#UIMaskWorkspace #showMaxWindow");
-	public final By ELEMENT_MANAGEPAGES_ADD_NEW_PAGE_POPUP_TYPE_DROPBOX =By.xpath(".//*[@name='ownerType']"); 
-	
+	public final By ELEMENT_MANAGEPAGES_ADD_NEW_PAGE_POPUP_TYPE_DROPBOX =By.xpath(".//*[@name='ownerType']");
+	public final By ELEMENT_MANAGEPAGES_ADD_NEW_PAGE_POPUP_TYPE_DROPBOX_OPTION =By.xpath(".//*[@name='ownerType']/option"); 
+	public final String ELEMENT_MANAGEPAGES_ADD_NEW_PAGE_POPUP_TYPE_DROPBOX_VALUE="//*[@name='ownerType']//*[@value='${value}']";
+
 	//Search Page
 	public final By ELEMENT_INPUT_SEARCH_TITLE = By.id("pageTitle");
 	public final String ELEMENT_SELECT_SEARCH_OPTION = "//*[@class='selectbox' and @name='searchOption']";
@@ -51,7 +53,7 @@ public class PortalManagePages extends PlatformBase {
 	public final String ELEMENT_PAGE_DELETE_ICON = "//*[contains(@title,'${page}')]/../..//*[@class='uiIconDelete uiIconLightGray']";
 	public final String MESSAGE_DELETE_PAGE = "Do you want to delete this page?";
 	public final String ELEMENT_NODE_LINK = ".//*[@id='UINavigationNodeSelector']//*[@title='${nodeLabel}']/i";
-	
+
 	//Edit properties of page
 	public final String ELEMENT_VIEW_PAGE_PROPERTIES = ".//*[@id='UIPageEditor']//*[contains(text(),'View Page properties')]";
 	public final By ELEMENT_VIEWPAGE_PAGETITLE = By.id("title");
@@ -62,11 +64,11 @@ public class PortalManagePages extends PlatformBase {
 	public final String ELEMENT_SELECT_EDIT_MEMBERSHIP_ITEM = ".//*[@id='PermissionSelector']//*[@title='${membership}']";
 	public final String ELEMENT_SELECTED_EDIT_PERMISSION_MEMBERSHIP = ".//*[@id='UIPermissionSelector']//*[contains(text(),'Membership')]/../*[contains(text(),'${membership}')]";
 	public final String ELEMENT_PAGE_FINISH_BUTTON = ".//*[@id='UIPageEditor']//*[@data-original-title='Finish']";
-	
+
 	ManageAlert alert;
 	Button button;
 	Dialog dialog;
-	
+
 	public PortalManagePages(WebDriver dr){
 		driver = dr;
 		alert = new ManageAlert(dr);
@@ -74,7 +76,7 @@ public class PortalManagePages extends PlatformBase {
 		dialog = new Dialog(driver);
 	} 
 
-	
+
 	/**
 	 * Search a page
 	 * @param titlePage
@@ -94,7 +96,7 @@ public class PortalManagePages extends PlatformBase {
 		}
 		if(!type.isEmpty()){
 			info("Select a type");
-			select(ELEMENT_MANAGEPAGES_TYPE_DROPBOX, type,2);
+			selectOption(ELEMENT_MANAGEPAGES_TYPE_DROPBOX, type);
 		}
 		info("Click on Search button");
 		click(ELEMENT_MANAGEPAGES_SEARCH_BUTTON);
@@ -106,13 +108,13 @@ public class PortalManagePages extends PlatformBase {
 			if (!siteName.isEmpty() & !type.isEmpty())
 				waitForAndGetElement(
 						ELEMENT_MANAGEPAGES_CONTENT_SEARCH_TABLE
-								.replace("${type}", type)
-								.replace("${siteName}", siteName)
-								.replace("${title}", title), 2000, 0);
+						.replace("${type}", type)
+						.replace("${siteName}", siteName)
+						.replace("${title}", title), 2000, 0);
 		}
 	}
 
-	
+
 	/**
 	 * Delete a page
 	 * @param titlePage
@@ -125,11 +127,11 @@ public class PortalManagePages extends PlatformBase {
 		waitForAndGetElement(ELEMENT_MANGEPAGES_INFORM_POPUP_OK);
 		click(ELEMENT_MANGEPAGES_INFORM_POPUP_OK);
 		waitForElementNotPresent(ELEMENT_MANAGEPAGES_CONTENT_TITLE_COLUMN.replace("${tilte}",titlePage));
-	    Utils.pause(2000);
+		Utils.pause(2000);
 	}
-	
 
-	
+
+
 	/**
 	 * Go to edit a page
 	 * @param titilePage
@@ -161,7 +163,7 @@ public class PortalManagePages extends PlatformBase {
 		}
 		if (!type.isEmpty()){
 			info("Select a type");
-			select(ELEMENT_MANAGEPAGES_ADD_NEW_PAGE_POPUP_TYPE_DROPBOX, type,2);
+			selectOptionUsingList(ELEMENT_MANAGEPAGES_ADD_NEW_PAGE_POPUP_TYPE_DROPBOX, type);
 		}
 		if(isMaxWindow.length>0){
 			info("Tick on show Max Window checkbox");
