@@ -362,7 +362,6 @@ public class PageCreationWizard extends PlatformBase {
 	 */
 	public void editContainer(String oldTitle,String newTitle,String width, String height){
 		info("Edit container");
-		click(ELEMENT_SWITCH_VIEW_MODE);
 		if(!oldTitle.isEmpty())
 			mouseOver(ELEMENT_DROP_SOURCE_HAS_LAYOUT_BY_NAME.replace("${name}",oldTitle),true);
 		else

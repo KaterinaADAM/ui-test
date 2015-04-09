@@ -108,8 +108,22 @@ import org.testng.annotations.*;
 		
 		info("Get information of an application");
 		int index2 = appLayData.getRandomIndexByType(1);
-		String idName = appLayData.newId.get(index2);
-		String name = appLayData.newTitle.get(index2);
+		int index1 = appLayData.getRandomIndexByType(1);
+		String idName2 = appLayData.newId.get(index2);
+		String name2 = appLayData.newTitle.get(index2);
+		String name1 = appLayData.newTitle.get(index1);
+		String idName1 = appLayData.newId.get(index1);
+		String num=getRandomNumber();
+		String pageName =txData.getContentByArrayTypeRandom(1)+num;
+		String title = txData.getContentByArrayTypeRandom(1)+num;
+		int index = pagMgListData.getRandomIndexByType(1);
+		String type = pagMgListData.newModel.get(index);
+		
+		//Add new page
+		navToolBar.goToPotalPages();
+		info("Add a new page with group type");
+		portMg.addPage(pageName, title,type);
+		
 		/*Step Number: 1
 		*Step Name: Step 1: Move application when edit layout for portal's page
 		*Step Description: 
@@ -124,21 +138,22 @@ import org.testng.annotations.*;
 			- The Layout of page is displayed in the view mode with all changes
 			*/
 		
-		hp.goToHomePage();
-		
 		info("Add an application to the layout");
-		navToolBar.goToEditLayout();
-		pagCW.addApp("",name,pagCW.ELEMENT_APPLICATION_APPLICATION.replace("${name}",idName),pagCW.ELEMENT_PAGEEDITOR_VIEWPAGE);
- 
+		portMg.editPage(title,type);
+		pagCW.addApp("",name2,pagCW.ELEMENT_APPLICATION_APPLICATION.replace("${name}",idName2),pagCW.ELEMENT_PAGEEDITOR_VIEWPAGE);
+		portMg.editPage(title,type);
+		pagCW.addApp("",name1,pagCW.ELEMENT_APPLICATION_APPLICATION.replace("${name}",idName1),pagCW.ELEMENT_PAGEEDITOR_VIEWPAGE);
+		portMg.editPage(title,type);
+		pagCW.checkPositions(pagCW.ELEMENT_APPLICATION_PRECEDING_PORTLET.replace("${app1}",name2).replace("${app2}",name1),
+				pagCW.ELEMENT_APPLICATION_FOLLOWING_PORTLET.replace("${app1}",name2).replace("${app2}",name1));
+		
 		info("Move an application to new place");
-		navToolBar.goToEditLayout();
-		pagCW.moveApplication(name,"Announcement",87);
-		navToolBar.goToEditLayout();
-		pagCW.checkPositions(pagCW.ELEMENT_APPLICATION_PRECEDING_PORTLET.replace("${app1}","Announcement").replace("${app2}",name),pagCW.ELEMENT_APPLICATION_FOLLOWING_PORTLET.replace("${app1}","Announcement").replace("${app2}",name));
-
-		info("Delete an application");
-		navToolBar.goToEditLayout();
-		pagCW.deleteApplication(name);
+		portMg.editPage(title,type);
+		pagCW.moveApplication(name2,name1,87);
+		portMg.editPage(title,type);
+		
+		info("Delete page");
+		portMg.deletePage(title,type);
  	}
 
 	/**
@@ -182,6 +197,18 @@ import org.testng.annotations.*;
 		int index2 = appLayData.getRandomIndexByType(1);
 		String idName = appLayData.newId.get(index2);
 		String name = appLayData.newTitle.get(index2);
+		
+		String num=getRandomNumber();
+		String pageName =txData.getContentByArrayTypeRandom(1)+num;
+		String title = txData.getContentByArrayTypeRandom(1)+num;
+		int index = pagMgListData.getRandomIndexByType(1);
+		String type = pagMgListData.newModel.get(index);
+		
+		//Add new page
+		navToolBar.goToPotalPages();
+		info("Add a new page with group type");
+		portMg.addPage(pageName, title,type);
+		
 		/*Step Number: 1
 		*Step Name: Step 1: Add application when edit layout for portal's page
 		*Step Description: 
@@ -194,21 +221,18 @@ import org.testng.annotations.*;
 		*Expected Outcome: 
 			- Add application successfully
 			- The Layout of page is displayed in the view mode with all changes*/
-        hp.goToHomePage();
 		
 		info("Add an application to the layout");
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		pagCW.addApp("",name,pagCW.ELEMENT_APPLICATION_APPLICATION.replace("${name}",idName),pagCW.ELEMENT_PAGEEDITOR_VIEWPAGE);
  
 		info("Verify that the application is added successfully in the container");
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		waitForAndGetElement(pagCW.ELEMENT_APPLICATION_IN_LAYOUT_PAGE.replace("${name}",name),3000,0);
-		pagCW.switchViewMode(true);
 		pagCW.saveChangesPageEditor();
 		
-		info("Delete an application");
-		navToolBar.goToEditLayout();
-		pagCW.deleteApplication(name);
+		info("Delete page");
+		portMg.deletePage(title,type);
 	
 	}
 
@@ -226,6 +250,17 @@ import org.testng.annotations.*;
 		String idName = appLayData.newId.get(index2);
 		String name = appLayData.newTitle.get(index2);
 		String newTitle = txData.getContentByArrayTypeRandom(1)+getRandomNumber();
+		
+		String num=getRandomNumber();
+		String pageName =txData.getContentByArrayTypeRandom(1)+num;
+		String title = txData.getContentByArrayTypeRandom(1)+num;
+		int index = pagMgListData.getRandomIndexByType(1);
+		String type = pagMgListData.newModel.get(index);
+		
+		//Add new page
+		navToolBar.goToPotalPages();
+		info("Add a new page with group type");
+		portMg.addPage(pageName, title,type);
 		/*Step Number: 1
 		*Step Name: Step 1: Change application when edit layout for portal's page
 		*Step Description: 
@@ -241,19 +276,18 @@ import org.testng.annotations.*;
 			- The Layout of page is displayed in the view mode with all changes*/
 
 		info("Add an application to the layout");
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		pagCW.addApp("",name,pagCW.ELEMENT_APPLICATION_APPLICATION.replace("${name}",idName),pagCW.ELEMENT_PAGEEDITOR_VIEWPAGE);
 		
 		info("Edit an application");
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		pagCW.editApplication(name,newTitle,"","");
 		pagCW.saveChangesApplication();
 		pagCW.saveChangesPageEditor();
 		
 		info("Verify that the application is added successfully in the container");
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		waitForAndGetElement(pagCW.ELEMENT_APPLICATION_IN_LAYOUT_PAGE.replace("${name}",newTitle),3000,0);
-		pagCW.switchViewMode(true);
 		pagCW.saveChangesPageEditor();
 		
 		info("Test 08:Remove application when edit layout for portal's page");
@@ -270,8 +304,11 @@ import org.testng.annotations.*;
 			- The application  is removed successfully
 			- The Layout of page is displayed in the view mode with all changes
 			*/
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		pagCW.deleteApplication(newTitle);
+		
+		info("Delete page");
+		portMg.deletePage(title,type);
 	}
 
 	/**
@@ -286,23 +323,25 @@ import org.testng.annotations.*;
 	*/
 	@Test
 	public  void test09_10_11_12_Add_Edit_Move_Delete_ContainerWhenEditLayoutForPortalPage() {
-		String num=getRandomNumber();
-		String title = txData.getContentByArrayTypeRandom(1)+num;
-		info("Get information of an application");
+
+		info("test09_10_11_12_Add_Edit_Move_Delete_ContainerWhenEditLayoutForPortalPage");
 		int index2 = appLayData.getRandomIndexByType(1);
 		String idName = appLayData.newId.get(index2);
 		String name = appLayData.newTitle.get(index2);
 		
-		hp.goToHomePage();
-		navToolBar.goToAddPage();
-		info("Create a new page");
-		pagCW.inputPageInfoStep1(title, true, "English",title, true,false);
-		click(pagCW.ELEMENT_ADDNEWPAGE_BTNNEXT);
-		click(pagCW.ELEMENT_ADDNEWPAGE_BTNNEXT);
-		pagCW.saveChangesPageEditor();
+		String num=getRandomNumber();
+		String pageName =txData.getContentByArrayTypeRandom(1)+num;
+		String title = txData.getContentByArrayTypeRandom(1)+num;
+		int index = pagMgListData.getRandomIndexByType(1);
+		String type = pagMgListData.newModel.get(index);
+		
+		//Add new page
+		navToolBar.goToPotalPages();
+		info("Add a new page with group type");
+		portMg.addPage(pageName, title,type);
 		
 		info("Add an application to the layout");
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		pagCW.addApp("",name,pagCW.ELEMENT_APPLICATION_APPLICATION.replace("${name}",idName),pagCW.ELEMENT_PAGEEDITOR_VIEWPAGE);
 		
 		info("Test 09: Add container when edit layout for portal's page");
@@ -320,7 +359,7 @@ import org.testng.annotations.*;
 			- Add container successfully
 			- The Layout of page is displayed in the view mode with all changes
 			*/
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		pagCW.addContainer("oneRow");
 	
 		info("Test 10: Edit container when edit layout for portal's page");
@@ -338,7 +377,7 @@ import org.testng.annotations.*;
 			- The container is updated with the change value
 			- The Layout of page is displayed in the view mode with all changes*/
         info("Edit a container");
-		navToolBar.goToEditLayout();
+        portMg.editPage(title,type);
 		pagCW.editContainer("Container",title, "","");
 		
 		info("Test 11: Move container when edit layout for portal's page");
@@ -355,11 +394,11 @@ import org.testng.annotations.*;
 			- The Layout of page is displayed in the view mode with all changes
 			*/
 		info("Move a container to new place");
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		pagCW.moveContainer(title,pagCW.ELEMENT_CONTAINER_HOLDER_MOVE,pagCW.ELEMENT_PORTLET,87);
 		
 		info("Verify that the container is changed the position");
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		pagCW.checkPositions(pagCW.ELEMENT_CONTAINER_PRECEDING_PORTLET,pagCW.ELEMENT_CONTAINER_FOLLOWING_PORTLET);
 		
 		info("Test 12: Delete container when edit layout for portal's page");
@@ -377,9 +416,11 @@ import org.testng.annotations.*;
 			- The Layout of page is displayed in the view mode with all changes
 			*/
 		info("Delete a container");
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		pagCW.deleteContainer(title);
 		
+		info("Delete page");
+		portMg.deletePage(title,type);
 	}
 	/**
 	*<li> Case ID:99434.</li>
@@ -388,16 +429,22 @@ import org.testng.annotations.*;
 	@Test
 	public  void test03_AddApplicationIntoContainerInLayoutOfPortal() {
 		info("Test 03: Add application into container in layout of portal");
-		String num=getRandomNumber();
-		String title = txData.getContentByArrayTypeRandom(1)+num;
-		info("Get value of group type");
-		int index = pagMgListData.getRandomIndexByType(1);
-		String type = pagMgListData.newModel.get(index);
-		
 		info("Get information of an application");
 		int index2 = appLayData.getRandomIndexByType(1);
 		String idName = appLayData.newId.get(index2);
 		String name = appLayData.newTitle.get(index2);
+		
+		String num=getRandomNumber();
+		String pageName =txData.getContentByArrayTypeRandom(1)+num;
+		String title = txData.getContentByArrayTypeRandom(1)+num;
+		int index = pagMgListData.getRandomIndexByType(1);
+		String type = pagMgListData.newModel.get(index);
+		
+		//Add new page
+		navToolBar.goToPotalPages();
+		info("Add a new page with group type");
+		portMg.addPage(pageName, title,type);
+		
 		/*Step Number: 1
 		*Step Name: Step 1: Add application into container in layout of portal
 		*Step Description: 
@@ -413,25 +460,16 @@ import org.testng.annotations.*;
 			- The portal is displayed in the view mode with all changes
 			*/
 		
-		hp.goToHomePage();
-		navToolBar.goToAddPage();
-		info("Create a new page");
-		pagCW.inputPageInfoStep1(title, true, "English",title, true,false);
-		click(pagCW.ELEMENT_ADDNEWPAGE_BTNNEXT);
-		click(pagCW.ELEMENT_ADDNEWPAGE_BTNNEXT);
-		pagCW.saveChangesPageEditor();
-		
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		pagCW.addContainer("oneRow");
 		
 		info("Add an application to the container");
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		pagCW.addApp("",name,pagCW.ELEMENT_APPLICATION_APPLICATION.replace("${name}",idName),pagCW.ELEMENT_DROP_SOURCE_HAS_LAYOUT_BY_NAME.replace("${name}","Container"));
  
 		info("Verify that the application is added successfully in the container");
-		navToolBar.goToEditLayout();
+		portMg.editPage(title,type);
 		waitForAndGetElement(pagCW.ELEMENT_APPLICATION_IN_LAYOUT_PAGE.replace("${name}",name),3000,0);
-		pagCW.switchViewMode(true);
 		pagCW.saveChangesPageEditor();
 		
 		navToolBar.goToPotalPages();

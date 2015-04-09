@@ -52,7 +52,6 @@ public class Gatein_Group_Navigation_EditLayout extends GateIn_TestConfig {
 		info("Verify that the application is added successfully");
 		navToolBar.goToEditLayout();
 		waitForAndGetElement(pagCW.ELEMENT_APPLICATION_IN_LAYOUT_PAGE.replace("${name}",portletName),3000,0);
-		pagCW.switchViewMode(true);
 		pagCW.saveChangesPageEditor();
 		
 		/*Step Number: 2
@@ -77,7 +76,6 @@ public class Gatein_Group_Navigation_EditLayout extends GateIn_TestConfig {
 		info("Verify that the application is added successfully");
 		navToolBar.goToEditLayout();
 		waitForAndGetElement(pagCW.ELEMENT_APPLICATION_IN_LAYOUT_PAGE.replace("${name}",newPortletName),3000,0);
-		pagCW.switchViewMode(true);
 		pagCW.saveChangesPageEditor();
 		
 		/*Step Number: 3
