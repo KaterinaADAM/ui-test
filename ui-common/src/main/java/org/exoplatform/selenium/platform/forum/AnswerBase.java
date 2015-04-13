@@ -29,7 +29,9 @@ public class AnswerBase extends ForumBase {
 	UserGroupManagement userGroup;
 	ManageAccount account;
 
-	public final By ELEMENT_ANSWER_LINK = By.linkText("Answer");
+	//public final By ELEMENT_ANSWER_LINK = By.linkText("Answer");
+	//public final By ELEMENT_ANSWER_LINK = By.className("uiIconFile uiIconExt-answers");
+	public final By ELEMENT_ANSWER_LINK = By.xpath("//*[@data-original-title='Answers']");
 	public final String ELEMENT_ANSWER_BREADCUMB = "//*[@id='UIBreadcumbs']//*[text()='${category}']";
 	public final By ELEMENT_ANSWER_HOME_LINK = By.xpath("//*[@id='UIBreadcumbs']//*[text()='Home']");
 	public final By ELEMENT_CONFIMATION_OK_POPUP = By.xpath("//*[@id='UIForumPopupConfirmation']//*[text()='OK']");
@@ -106,6 +108,7 @@ public class AnswerBase extends ForumBase {
 		driver = dr;
 		button = new Button(driver,this.plfVersion);
 		alert = new ManageAlert(driver,this.plfVersion);
+		
 	}
 	
 	public AnswerBase()
@@ -118,8 +121,10 @@ public class AnswerBase extends ForumBase {
 	 */
 	public void goToAnswer(){
 		info("--Go to Answer--");
+		driver.navigate().refresh();
 		WebElement answer = waitForAndGetElement(ELEMENT_ANSWER_LINK, 10000, 0);
 		if (answer == null){
+			info("Create answer page");
 			createAnswerPageAtRootPath();                        
 		} else {
 			click(ELEMENT_ANSWER_LINK);
@@ -138,8 +143,8 @@ public class AnswerBase extends ForumBase {
 	 * @author hakt
 	 */
 	public void createAnswerPageAtRootPath() {
-		navTool = new NavigationToolbar(driver);
-		page = new PageManagement(driver);
+		page = new PageManagement(driver, this.plfVersion);
+		navTool = new NavigationToolbar(driver, this.plfVersion);
 
 		Map<String, String> ANSWER_PORTLET_ID = new HashMap<String, String>();
 		ANSWER_PORTLET_ID.put("Collaboration/AnswersPortlet", "");
@@ -148,7 +153,8 @@ public class AnswerBase extends ForumBase {
 		navTool.goToHomePage();
 
 		info("Go to Add page editor");
-		navTool.goToPageCreationWizard();
+		//navTool.goToPageCreationWizard();
+		navTool.goToAddPageManagement();
 
 		info("Up level");
 		click(ELEMENT_UP_LEVEL);

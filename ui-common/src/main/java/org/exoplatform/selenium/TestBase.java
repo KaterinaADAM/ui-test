@@ -106,7 +106,7 @@ public class TestBase {
 	public final By ELEMENT_ACCOUNT_ERROR = By.xpath("//*[@class='accountSetupError']");
 
 	public final By ELEMENT_GOOGLE_PAGE_LOGO = By.id("hplogo");
-
+	public final By ELEMENT_SIGN_OUT_LINK = By.className("uiIconPLFLogout");
 	//Driver path
 	public String uploadfile= Utils.getAbsoluteFilePath("TestData\\attachFile.exe");
 	public String downloadfile=Utils.getAbsoluteFilePath("TestData\\downloadIE9.exe");
@@ -376,6 +376,11 @@ public class TestBase {
 		accountSetupWithoutGreeting();
 		click(ELEMENT_START_BUTTON);
 		waitForAndGetElement(ELEMENT_ACCOUNT_NAME_LINK);
+		driver.navigate().refresh();
+		click(ELEMENT_ACCOUNT_NAME_LINK);
+		waitForAndGetElement(ELEMENT_SIGN_OUT_LINK);
+		click(ELEMENT_SIGN_OUT_LINK);
+		waitForAndGetElement(ELEMENT_INPUT_USERNAME);
 	}
 
 	/**

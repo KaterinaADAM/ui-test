@@ -329,8 +329,9 @@ public class Forum_Forum_Poll_AddEditDelete extends ForumBase {
 	/**
 	 * Case ID: 72313
 	 * Edit Poll
+	 * This case relates to issue: https://jira.exoplatform.org/browse/FORUM-998
 	 */
-	@Test
+	@Test (groups = "pending")
 	public void test10_EditPoll() {
 		String categoryName = "category72313";
 		String forumName = "forum72313";

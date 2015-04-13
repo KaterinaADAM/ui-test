@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Platform Functional Test" verbose="1" preserve-order="true">
-	<test name="forum-forum-1" enabled="true">
+	<test name="forum-forum-1-part2" enabled="true">
 		<groups>
 			<run>
 				<exclude name="pending" />
@@ -9,12 +9,6 @@
 			</run>
 		</groups>
 		<packages>
-			<package
-				name="org.exoplatform.selenium.platform.forum.functional.forum.administration" />
-			<package
-				name="org.exoplatform.selenium.platform.forum.functional.forum.usersettings" />
-			<package
-				name="org.exoplatform.selenium.platform.forum.functional.forum.forumportletsettings" />
 			<package
 				name="org.exoplatform.selenium.platform.forum.functional.forum.otheraction" />
 			<package

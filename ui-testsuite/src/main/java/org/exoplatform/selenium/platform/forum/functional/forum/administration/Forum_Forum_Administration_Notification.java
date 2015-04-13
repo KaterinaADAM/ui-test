@@ -70,7 +70,7 @@ public class Forum_Forum_Administration_Notification extends ForumBase{
 		String[] addForum = {"Forum 001", "1", "Open", "Unlocked", "Description of forum 001"}; 	
 		String title = "Title topic 001"; 
 		String message = "Topic 001"; 
-
+		
 		/*
 		- Login by the Administrator
 		- Go to Forum porlet
@@ -116,7 +116,6 @@ public class Forum_Forum_Administration_Notification extends ForumBase{
 		switchToParentWindow();
 		click(By.linkText(catName));
 		cat.deleteCategoryInForum(catName, true);	
-		
 	}
 
 	/** Set notification when Content moved notification field is blank

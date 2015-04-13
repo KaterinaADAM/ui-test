@@ -282,8 +282,9 @@ public class Forum_Forum_CKEditor_Formating extends ForumBase {
 		// input 4 texts into the content
 
 		//String text = post+newPost+editTopic+tex_message;
-		cke.cke_InsertRemoveBulletList();
 		inputFrame(mngTopic.ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR,text);
+		pressGroupKeysUsingRobot(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
+		cke.cke_InsertRemoveBulletList();
 		mngPost.savePostContent();
 
 		info("-- Verify the content of the post--");
@@ -339,7 +340,6 @@ public class Forum_Forum_CKEditor_Formating extends ForumBase {
 		mngPost.openReplyPostPopUp();
 		// input 4 texts into the content
 		//cke.inputDataInContent(post);
-		cke.cke_InsertRemoveNumList();
 		inputFrame(mngTopic.ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR,text);
 		/*inputDataToFrame(
 				mngTopic.ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR, post,
@@ -365,6 +365,8 @@ public class Forum_Forum_CKEditor_Formating extends ForumBase {
 		switchToParentWindow();*/
 
 		// save the post
+		pressGroupKeysUsingRobot(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
+		cke.cke_InsertRemoveNumList();
 		mngPost.savePostContent();
 
 		info("-- Verify the content of the post--");
@@ -511,20 +513,23 @@ public class Forum_Forum_CKEditor_Formating extends ForumBase {
 
 		// Create a post with align right decoreated
 		mngPost.openReplyPostPopUp();
-		cke.cke_Bold();
 		inputFrame(mngTopic.ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR,newPost);
+		pressGroupKeysUsingRobot(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
+		cke.cke_Bold();
 		mngPost.savePostContent();
 
 		// Create a post with align left decoreated
 		mngPost.openReplyPostPopUp();
-		cke.cke_Italic();
 		inputFrame(mngTopic.ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR,post);
+		pressGroupKeysUsingRobot(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
+		cke.cke_Italic();
 		mngPost.savePostContent();
 
 		// Create a post with center decoreated
 		mngPost.openReplyPostPopUp();
+		inputFrame(mngTopic.ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR,editTopic);	
+		pressGroupKeysUsingRobot(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
 		cke.cke_Underline();
-		inputFrame(mngTopic.ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR,editTopic);		
 		mngPost.savePostContent();
 
 		info("-- Verify the content of the post--");
@@ -579,11 +584,11 @@ public class Forum_Forum_CKEditor_Formating extends ForumBase {
 		mngPost.openReplyPostPopUp();
 		// input 4 texts into the content
 		inputFrame(mngTopic.ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR,text);
-		WebElement e = waitForAndGetElement(mngTopic.ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR,DEFAULT_TIMEOUT,1,2);
+		/*WebElement e = waitForAndGetElement(mngTopic.ELEMENT_TOPIC_MESSAGE_FRAME_CKEDITOR,DEFAULT_TIMEOUT,1,2);
 		driver.switchTo().frame(e);
-		pressGroupKeysUsingRobot(KeyEvent.VK_CONTROL, KeyEvent.VK_HOME);
+		pressGroupKeysUsingRobot(KeyEvent.VK_CONTROL, KeyEvent.VK_HOME);*/
 		pressGroupKeysUsingRobot(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
-		switchToParentWindow();
+		//switchToParentWindow();
 		cke.cke_InscrIndent();
 
 		// save the post
@@ -610,6 +615,7 @@ public class Forum_Forum_CKEditor_Formating extends ForumBase {
 				"${postContent}", post).replace("\n", ""));
 		click(EDIT_POST);
 		waitForAndGetElement(mngPost.ELEMENT_POST_POPUP_EDIT);
+		pressGroupKeysUsingRobot(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
 		cke.cke_DescrIndent();
 		mngPost.savePostContent();
 

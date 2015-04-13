@@ -306,6 +306,36 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>forum-forum-part1</id>
+			<properties>
+				<testSuite>forum-forum-part1.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>forum-forum-part2</id>
+			<properties>
+				<testSuite>forum-forum-part2.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>forum-forum-part3</id>
+			<properties>
+				<testSuite>forum-forum-part3.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>forum-forum-part4</id>
+			<properties>
+				<testSuite>fforum-forum-part4.xml</testSuite>
+			</properties>
+		</profile>
+		<profile>
+			<id>forum-forum-part5</id>
+			<properties>
+				<testSuite>forum-forum-part5</testSuite>
+			</properties>
+		</profile>
+		<profile>
 			<id>forum-forum</id>
 			<properties>
 				<testSuite>forum-forum.xml</testSuite>

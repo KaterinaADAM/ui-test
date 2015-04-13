@@ -1576,6 +1576,7 @@ public class PlatformBase extends TestBase {
 		}
 		waitForElementNotPresent(mail);
 		Utils.pause(1000);
+		info("Check and delete mail successfully");
 	}
 	
     /**

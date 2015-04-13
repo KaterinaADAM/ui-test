@@ -329,7 +329,8 @@ public class ForumBase extends PlatformBase {
 
 	//Gmail
 	public String ELEMENT_GMAIL_EMAIL = ".//*/b[contains(text(),'[${category}][${forum}]')]";
-	public String ELEMENT_GMAIL_EMAIL2 = "//span/b[text()='[${category}][${forum}]${topic}']";
+	public String ELEMENT_GMAIL_EMAIL2 = "//span/b[text()='[${category}][${forum}] ${topic}']";
+	public String ELEMENT_GMAIL_EMAIL3 = ".//*[@id=':s3' and contains(text(),'[${category}][${forum}]')]";
 	public String ELEMENT_GMAIL_EMAIL_PREFIX = "//span/b[text()='${prefix}[${category}][${forum}] ${topic}']";
 
 	//Pending job

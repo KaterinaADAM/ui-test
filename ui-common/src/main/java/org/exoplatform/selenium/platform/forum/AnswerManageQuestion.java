@@ -179,8 +179,12 @@ public class AnswerManageQuestion extends AnswerBase {
 		if (content != null){
 			if(this.plfVersion.equalsIgnoreCase("4.1"))
 				inputDataToFrame(ELEMENT_QUESTION_CONTENTFRAME_41, content, false);
-			else//(this.plfVersion.equalsIgnoreCase("4.0"))
-				inputDataToFrameInFrame(ELEMENT_QUESTION_CONTENTFRAME_1, ELEMENT_QUESTION_CONTENTFRAME_2, content,true,false);
+			else{
+				if(waitForAndGetElement(ELEMENT_QUESTION_CONTENTFRAME_41, 3000, 0) != null)
+					inputDataToFrame(ELEMENT_QUESTION_CONTENTFRAME_41, content, false);
+				else
+					inputDataToFrameInFrame(ELEMENT_QUESTION_CONTENTFRAME_1, ELEMENT_QUESTION_CONTENTFRAME_2, content,true,false);
+			}
 			switchToParentWindow();	
 		}
 		if (author != null ){

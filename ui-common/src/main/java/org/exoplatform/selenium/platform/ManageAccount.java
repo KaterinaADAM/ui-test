@@ -309,6 +309,7 @@ public class ManageAccount extends PlatformBase {
 			}
 			click(ELEMENT_EDIT_BASIC_INFO_SAVE_BUTTON);
 		}
+		info("User profile updated successfully");
 	}
 
 	/**

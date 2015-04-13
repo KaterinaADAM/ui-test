@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Platform Functional Test" verbose="1" preserve-order="true">
+	<test name="forum-forum-2-part2" enabled="true">
+		<groups>
+			<run>
+				<exclude name="pending" />
+				<!-- <exclude name="error" /> -->
+			</run>
+		</groups>
+		<packages>
+			<package
+				name="org.exoplatform.selenium.platform.forum.functional.forum.forum" />
+			<package
+				name="org.exoplatform.selenium.platform.forum.functional.forum.post" />
+			<package
+				name="org.exoplatform.selenium.platform.forum.functional.forum.administration" />
+		</packages>
+	</test>
+	<listeners>
+		<listener class-name="org.exoplatform.selenium.TestReportListener" />
+	</listeners>
+</suite>

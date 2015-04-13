@@ -190,10 +190,11 @@ public class Forum_Forum_Forum_Add extends ForumBase {
 	public  void test04_AddNewForumWithSendNotifyMailForNewPostOption() {
 		info("Test 4: Add new forum with send notify mail for new Post option"); 
 
-		String catName = "Category 106092";
-		String[] fmName={"Test 4 new forum",null,null,null,null};
-		String topic = "Test 4 new topic";
-		String post = "Test 4 new post";
+		String catName = "Category 106092" + getRandomNumber();
+		String[] fmName={"Test 4 new forum" + getRandomNumber(),null,null,null,null};
+		String topic = "Test 4 new topic" + getRandomNumber();
+		String post = "Test 4 new post" + getRandomNumber();
+		String noti = "ChangeContentNotificaiton";
 
 		/*Step 1: Add category
 		 *Expected Outcome: 
@@ -232,7 +233,7 @@ public class Forum_Forum_Forum_Add extends ForumBase {
 		info("Check if e-mail is sent");
 		goToMail(EMAIL_ADDRESS1, EMAIL_PASS);
 		checkAndDeleteMail(By.xpath(ELEMENT_GMAIL_EMAIL.replace("${category}",catName).replace("${forum}",
-				fmName[0]).replace("${topic}", topic)), post);		
+				fmName[0]).replace("${topic}", topic)), noti);		
 
 		//Delete data test
 		switchToParentWindow();
