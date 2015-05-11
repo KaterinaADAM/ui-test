@@ -679,6 +679,24 @@ public class Calendar_Setting extends PlatformBase {
 		String newName = txData.getContentByArrayTypeRandom(1)+"new115657";
 
 		String calendar=fullName;
+		
+		String titleEvent = txData.getContentByArrayTypeRandom(1)+"e115656";
+		String titleTask = txData.getContentByArrayTypeRandom(1)+"t115656";
+		String content = txData.getContentByArrayTypeRandom(1)+"115656";
+		String defaultFormatDate="MM/dd/yyyy";
+
+		info("create data test");
+		hp.goToCalendarPage();
+		event.goToAddEventFromActionBar();
+		event.inputDataEventInQuickForm(titleEvent, content, getDate(0,defaultFormatDate), getDate(0,defaultFormatDate),false);
+		event.saveQuickAddEvent();
+		cHome.verifyIsPresentEventTask(titleEvent, selectViewOption.LIST, selectDayOption.ONEDAY);
+
+		task.goToAddTaskFromActionBar();
+		task.inputDataTaskInQuickForm(titleTask, content, getDate(0,defaultFormatDate), getDate(0,defaultFormatDate),false);
+		task.saveQuickAddTask();
+		cHome.verifyIsPresentEventTask(titleTask, selectViewOption.LIST, selectDayOption.ONEDAY);
+
 		info("Test 10 Add new feed");
 		/*Step Number: 1
 		 *Step Name: Step 1: Show calendar setting form
@@ -753,6 +771,11 @@ public class Calendar_Setting extends PlatformBase {
 		cMang.deleteFeed(newName, true);
 		waitForElementNotPresent(cMang.ELEMENT_FEED_LIST_ITEM_RSS_BUTTON.replace("$name", newName));
 		cMang.saveSetting();
+		
+		info("Reset data");
+		hp.goToCalendarPage();
+		cHome.deleteEventTask(titleEvent, selectViewOption.LIST, selectDayOption.ONEDAY,null);
+		cHome.deleteEventTask(titleTask, selectViewOption.LIST, selectDayOption.ONEDAY,null);
 	}
 
 }

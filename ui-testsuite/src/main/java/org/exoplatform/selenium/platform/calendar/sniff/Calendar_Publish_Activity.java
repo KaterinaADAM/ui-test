@@ -63,8 +63,8 @@ public class Calendar_Publish_Activity  extends PlatformBase {
 		txData.setContentData(texboxFilePath,defaultSheet,isUseFile,jdbcDriver,dbUrl,user,pass,sqlContent);
 		fData.setAttachFileData(attachmentFilePath,defaultSheet,isUseFile,jdbcDriver,dbUrl,user,pass,sqlAttach);
 		fullName = userData.fullName.get(0);
-		spaceName = txData.getContentByArrayTypeRandom(1)+"115630";
-		spaceDes = txData.getContentByArrayTypeRandom(1)+"115630";
+		spaceName = txData.getContentByArrayTypeRandom(1)+getRandomNumber();
+		spaceDes = txData.getContentByArrayTypeRandom(1)+getRandomNumber();
 		createDataTest();
 	}
 
@@ -591,7 +591,6 @@ public class Calendar_Publish_Activity  extends PlatformBase {
 			- The location of event in the activity stream is updated
 			- A comment is added to the activity with the following message: Location has been updated to: $value.*/ 
 		cHome.goToEditEventTaskFormByRightClick(titleEvent, selectViewOption.MONTH, selectDayOption.ONEDAY,getDate(0,"MMM dd yyyy"));
-		check(event.ELEMENT_ADD_EDIT_EVENT_REPEAT_CHECKBOX,2);
 		event.inputBasicDetailEvent(null,null,null,null,location);
 		event.saveAddEventDetails();
 		
@@ -665,8 +664,8 @@ public class Calendar_Publish_Activity  extends PlatformBase {
 	@Test (priority=10)
 	public  void test17_UpdateTaskForASpaceCalendarEditNote() {
 		String titleTask = txData.getContentByArrayTypeRandom(1)+"115668";
-		String content = txData.getContentByArrayTypeRandom(1)+"115668";
-		String newContent = txData.getContentByArrayTypeRandom(1)+"115668";
+		String content = txData.getContentByArrayTypeRandom(1)+getRandomNumber();
+		String newContent = txData.getContentByArrayTypeRandom(1)+getRandomNumber();
 		String comment = hpAct.ELEMENT_ACTIVITY_TASK_COMMENT_UPDATE_NOTE.replace("$note", newContent);
 		
 		info("Test 17 Update Task for a Space Calendar - edit note");

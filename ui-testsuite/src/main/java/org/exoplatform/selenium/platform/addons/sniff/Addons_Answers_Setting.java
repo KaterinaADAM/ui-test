@@ -4,6 +4,7 @@ import static org.exoplatform.selenium.TestLogger.info;
 
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.ManageAlert;
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.HomePagePlatform;
 import org.exoplatform.selenium.platform.ManageLogInOut;
 import org.exoplatform.selenium.platform.NavigationToolbar;
@@ -228,6 +229,9 @@ public class Addons_Answers_Setting  extends PlatformBase {
 		aPage.goToEditAnswerPortlet();
 		aPage.setDisplayCategoryScoping(paCat1, false);
 		aPage.settingEmailTemplate(1, content1);
+		click(pagEditor.ELEMENT_PAGE_EDITOR_CLOSE_BUTTON);
+		pagEditor.goToEditPortlet(pagEditor.ELEMENT_FRAME_CONTAIN_PORTLET);
+		Utils.pause(2000);
 		aPage.settingDisplayMode(true, true, true, true, true, true, true, true);
 		
 		info("Test 2: Set to discuss on forum");

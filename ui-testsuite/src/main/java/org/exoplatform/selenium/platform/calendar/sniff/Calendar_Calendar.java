@@ -311,8 +311,6 @@ public class Calendar_Calendar extends PlatformBase {
 		magAc.signOut();
 		magAc.signIn(DATA_USER2, DATA_PASS);
 		hp.goToCalendarPage();
-		waitForAndGetElement(cMang.ELEMENT_SHARED_CALENDAR_LIST_ITEM.replace("$calendar", newCalendar));
-		driver.navigate().refresh();
 		cMang.openMenuOfCalendar(newCalendar);
 		waitForAndGetElement(cMang.ELEMENT_CALENDAR_REMOVE_SHARE_CALENDAR);
 		waitForAndGetElement(cMang.ELEMENT_CALENDAR_IMPORT_MENU);

@@ -556,6 +556,7 @@ public class Calendar_Event extends PlatformBase {
 		click(event.ELEMENT_EVENT_PARTICIPANTS_TAB);
 		event.selectPrivacyParticipant(false);
 		event.selectAvailable(selectAvailableOption.AVAILABLE);
+		event.click(event.ELEMENT_INVITATION_PARTICITPANT_USER);
 		event.selectUserParticipants(users, content, 1);
 		click(event.ELEMETN_INVITATION_SAVE_BUTTON);
 		event.selectSendInvitation(selectInvitationOption.NEVER);

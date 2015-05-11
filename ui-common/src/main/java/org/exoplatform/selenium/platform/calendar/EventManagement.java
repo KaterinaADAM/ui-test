@@ -95,6 +95,7 @@ public class EventManagement extends PlatformBase {
 	public final By ELEMENT_SEND_INVITATION_ASK_CHECKBOX=By.xpath("//*[@value='ask']");
 	public final By ELEMENT_ADD_PARTICIPANTS_BUTTON_IN_PARTICIPANT_TAB = By.xpath("//*[@class='uiFormGrid']//*[@class='uiIconPlus uiIconLightGray']");
 	public final By ELEMENT_INVITATION_PARTICITPANT_USER=By.xpath("//*[@id='eventShare-tab']//*[@data-original-title='Add Participant' or @title='Add Participant']");
+	public final By ELEMENT_INVITATION_PARTICIPANT_TEXTBOX=By.id("participant");
 	public final By ELEMENT_INVITATION_PARTICITPANT_MSG=By.id("invitation-msg");
 	public final By ELEMENT_INVITATION_SELECT_USER_BUTTON=By.id("uiInvitationUser");
 	public final By ELEMETN_INVITATION_SAVE_BUTTON=By.xpath("//*[@id='UIInvitationContainer']//*[text()='Save']");
@@ -775,7 +776,7 @@ public class EventManagement extends PlatformBase {
 		if(type==1){
 			String[] temp = users.split("/");
 			for (int i = 0; i < temp.length; i ++){
-				type(ELEMENT_INVITATION_PARTICITPANT_USER,","+temp[i],false);
+				type(ELEMENT_INVITATION_PARTICIPANT_TEXTBOX,","+temp[i],false);
 			}
 		}
 		else{
