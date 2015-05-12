@@ -157,8 +157,8 @@ public class HomePagePlatform extends TestBase{
 	public final String ELEMENT_INVITATIONS_PEOPLE_AVATAR = ".//*[contains(text(),'${name}')]/../../../..//*[@class='peopleInvitePicture pull-left avatarXSmall']";
 	public final String ELEMENT_INVITAITONS_SPACE_ICON = ".//*[contains(text(),'${name}')]/../..//*[@class='spaceInvitePicture pull-left avatarXSmall']";
 	public final String ELEMENT_INVITAITONS_SPACE_STATUS_MEMBERS=".//*[contains(text(),'${name}')]/..//*[contains(text(),'${statusMember}')]";
-	public final String ELEMENT_INVITATIONS_PEOPLE_ACCEPT_BTN = "//div[@id='InvitationsPortlet']//div[@class='peopleInviteInfo']//a[text()='${name}']/../..//a[contains(text(),'Accept')]";
-	public final String ELEMENT_INVITATIONS_PEOPLE_REFUSE_BTN = "//div[@id='InvitationsPortlet']//div[@class='peopleInviteInfo']//a[text()='${name}']/../..//i[@class='uiIconClose']";
+	public final String ELEMENT_INVITATIONS_PEOPLE_ACCEPT_BTN = "//div[@id='InvitationsPortlet']//div[@class='peopleInviteInfo']//a[contains(@href,'${name}')]/../..//a[contains(text(),'Accept')]";
+	public final String ELEMENT_INVITATIONS_PEOPLE_REFUSE_BTN = "//div[@id='InvitationsPortlet']//div[@class='peopleInviteInfo']//a[contains(@href,'${name}')]/../..//i[@class='uiIconClose']";
 	public final By ELEMENT_INVITATIONS_GADGET = By.id("InvitationsPortlet");
 	public final String ELEMENT_INVITATIONS_NUMBER= "//*[@id='InvitationsPortlet']//*[contains(text(),'${number}')]";
 	
@@ -274,8 +274,8 @@ public class HomePagePlatform extends TestBase{
 		info("--Go to Home page--");
 		info("Click on Home link of intranet page");
 		click(ELEMENT_HOME_LINK_PLF);
-		info("Verify that the home page of intranet is shown");
-		waitForAndGetElement(ELEMENT_HOMPAGE_MIDDLE_PANEL);
+//		info("Verify that the home page of intranet is shown");
+//		waitForAndGetElement(ELEMENT_HOMPAGE_MIDDLE_PANEL);
 		info("the intranet is shown sucessfully"); 
 		Utils.pause(2000);
 	}

@@ -71,14 +71,14 @@ public class ForumCategoryManagement extends PlatformBase {
 	    info("input the title for the category");
 	    type(ELEMENT_ADDCATEGORY_POPUP_TITLE,nameCat,true);
 	    info("check and input Oder field");
-	    if(!order.isEmpty()){
+	    if(order!=null && order!=""){
 	    	 info("Clear all old order data");
 	    	 waitForAndGetElement(ELEMENT_ADDCATEGORY_POPUP_ORDER).clear();
 	    	 info("Input new order");
 	    	 type(ELEMENT_ADDCATEGORY_POPUP_ORDER,order,true);
 	    }
         info("check and input description");
-	    if (!description.isEmpty()){
+        if (description!=null && description!=""){
 	    	info("Clear all old description data");
 	    	waitForAndGetElement(ELEMENT_ADDCATEGORY_POPUP_DESCRIPTION).clear();
 	    	info("Input new description data");

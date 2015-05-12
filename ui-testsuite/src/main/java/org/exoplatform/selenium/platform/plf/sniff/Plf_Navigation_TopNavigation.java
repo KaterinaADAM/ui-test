@@ -70,9 +70,6 @@ import org.testng.annotations.*;
 		String forum = txData.getContentByArrayTypeRandom(1)+num ;
 		
 		hp.goToForum();
-		info("Verify that the forum home page is shown full");
-		waitForAndGetElement(forumHP.ELEMENT_FORUM_WHAT_GOING_ON,3000,0);
-		
 		info("Add a category");
 		forumCatMag.addCategorySimple(category,"",category);
 		
@@ -87,8 +84,7 @@ import org.testng.annotations.*;
 			- Connect to Intranet
 		*Input Data: 
 			- The Top Navigation bar is displayed*/
-		magAc.signOut();
-		magAc.signIn(DATA_USER3, DATA_PASS);
+		magAc.signIn(DATA_USER2, DATA_PASS);
 		navToolBar.goToAddPoll("",forum);
 		info("Verify that the poll popup is shown");
 		waitForAndGetElement(foTopic.ELEMENT_POLL_SUBMIT,3000,0);

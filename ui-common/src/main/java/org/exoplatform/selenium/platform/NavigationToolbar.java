@@ -497,7 +497,7 @@ public class NavigationToolbar extends PlatformBase {
 		waitForAndGetElement(ELEMENT_ADD_TOOTLBAR,3000,0).click();
 		info("Click on Poll link");
 		waitForAndGetElement(ELEMENT_ADD_POOL_TOOLBAR,3000,0).click();
-		if (!location.isEmpty()){
+		if (location!=""&&location!=null){
 			info("Set location for the poll");
 			click(ELEMENT_ADD_POLL_SET_LOCATION);
 		}

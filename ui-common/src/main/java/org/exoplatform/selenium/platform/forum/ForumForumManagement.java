@@ -75,14 +75,14 @@ public class ForumForumManagement extends PlatformBase {
 	    type(ELEMENT_ADDFORUM_POPUP_TITLE,nameForum,true);
 	    
 	    info("check and input Oder field");
-	    if(!order.isEmpty()){
+	    if(order!=null && order!=""){
 	    	info("Clear all old order data");
 	    	waitForAndGetElement(ELEMENT_ADDFORUM_POPUP_ORDER).clear();
 	    	info("Input new order data");
 	    	type(ELEMENT_ADDFORUM_POPUP_ORDER,order,true);
 	    }
         info("check and input description");
-	    if (!description.isEmpty()){
+	    if (description!=null && description!=""){
 	    	info("Clear all old description data");
 	    	waitForAndGetElement(ELEMENT_ADDFORUM_POPUP_DESCRIPTION).clear();
 	    	info("Input new description data");

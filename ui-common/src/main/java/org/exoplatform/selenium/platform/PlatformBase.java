@@ -27,7 +27,7 @@ public class PlatformBase extends TestBase {
 	public static String DATA_PASS = "gtn";
 	public static String DATA_NAME_USER1 = "John Smith";
 	public static String DATA_NAME_USER2 = "Mary Williams";
-	public static String DATA_NAME_USER3 = "Jame Davis";
+	public static String DATA_NAME_USER3 = "James Davis";
 	public static String DATA_NAME_USER4 = "Jack Miller";
 	
 	//Gmail

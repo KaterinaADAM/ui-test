@@ -106,55 +106,6 @@ public class Addons_Answers_Question extends PlatformBase {
 	}
 
 	/**
-	 * Case ID:116813.
-	 * Test Case Name: Send to friend.
-	 * Pre-Condition: 
-	 * Post-Condition: 
-	 */
-	@Test(priority=7)
-	public  void test02_SendToFriend() {
-		String title = txData.getContentByArrayTypeRandom(1)+"116813";
-		String content = txData.getContentByArrayTypeRandom(1)+"116813";
-		String contentMail = "Hi,/You may be interested in this question:/Question "+title+"/Details/Content of "+title+"/Click here for more details.";
-		By mail = By.xpath("//b[text()= '"+title+"']");
-		
-		info("Create question");
-		hp.goToAnswer();
-		qMang.goToSubmitQuestion();
-		qMang.inputDataToQuestionForm(title, content, null, null);
-		click(qMang.ELEMENT_SUBMIT_QUESTION_FORM_SAVE_BUTTON);
-		click(button.ELEMENT_OK_BUTTON_LINK);
-		waitForAndGetElement(By.xpath(aHome.ELEMENT_QUESTION_LIST_ITEM.replace("$question", title)));
-
-		info("Test 2: Send to friend");
-		/*Step Number: 1
-		 *Step Name: Send Question
-		 *Step Description: 
-			- Right click on question and send question
-			- Check mail Inbox to see question content, question link
-		 *Input Data: 
-
-		 *Expected Outcome: 
-			- Mail is sent successful to email address
-			- Content of mail includes Question content & Question link*/ 
-		qMang.goToActionOfQuestionByRightClick(title, actionQuestionOption.SEND);
-		type(qMang.ELEMENT_QUESTION_SEND_TO_INPUT,EMAIL_ADDRESS1,true);
-		click(qMang.ELEMENT_QUESTION_SEND_SEND_BUTTON);
-		click(qMang.ELEMENT_QUESTION_OK_BUTTON);
-		
-		//Check email
-		goToMail(EMAIL_ADDRESS1, EMAIL_PASS);
-		checkAndDeleteMail(mail, contentMail);
-		switchToParentWindow();
-		
-		info("clear data");
-		qMang.goToActionOfQuestionByRightClick(title,actionQuestionOption.DELETE);
-		waitForAndGetElement(qMang.ELEMENT_QUESTION_CONFIRM_DELETE);
-		click(qMang.ELEMENT_QUESTION_DELETE_FORM_OK_BUTTON);
-		waitForElementNotPresent(By.xpath(aHome.ELEMENT_QUESTION_LIST_ITEM.replace("$question", title)));
-	}
-
-	/**
 	 * Case ID:116828.
 	 * Test Case Name: Add a question.
 	 * Case ID:116829.
@@ -165,7 +116,7 @@ public class Addons_Answers_Question extends PlatformBase {
 	 * Post-Condition: 
 	 */
 	@Test(priority=2)
-	public  void test03_04_05_AddEditDeleteAQuestion() {
+	public  void test02_03_04_AddEditDeleteAQuestion() {
 		String title = txData.getContentByArrayTypeRandom(1)+"116828";
 		String content = txData.getContentByArrayTypeRandom(1)+"116828";
 		String newtitle = txData.getContentByArrayTypeRandom(1)+"n116828";
@@ -301,7 +252,7 @@ public class Addons_Answers_Question extends PlatformBase {
 	 * Post-Condition: 
 	 */
 	@Test(priority=4)
-	public  void test07_08_EditDeleteAQuestionInManageAnswerForm() {
+	public  void test05_06_EditDeleteAQuestionInManageAnswerForm() {
 		String title = txData.getContentByArrayTypeRandom(1)+"116833";
 		String content = txData.getContentByArrayTypeRandom(1)+"116833";
 		String newtitle = txData.getContentByArrayTypeRandom(1)+"n116833";
@@ -372,7 +323,7 @@ public class Addons_Answers_Question extends PlatformBase {
 	 * Post-Condition: 
 	 */
 	@Test(priority=5)
-	public  void test09_ActivateDeactivateAQuestion() {
+	public  void test08_ActivateDeactivateAQuestion() {
 		String title = txData.getContentByArrayTypeRandom(1)+"116835";
 		String content = txData.getContentByArrayTypeRandom(1)+"116835";
 		info("Test 9: Activate / Deactivate a question");
@@ -445,7 +396,7 @@ public class Addons_Answers_Question extends PlatformBase {
 	 * Post-Condition: 
 	 */
 	@Test(priority=6)
-	public  void test10_ApproveDisapproveAQuestion() {
+	public  void test09_ApproveDisapproveAQuestion() {
 		String title = txData.getContentByArrayTypeRandom(1)+"116836";
 		String content = txData.getContentByArrayTypeRandom(1)+"116836";
 		
@@ -509,5 +460,54 @@ public class Addons_Answers_Question extends PlatformBase {
 		magAc.signIn(DATA_USER1, DATA_PASS);
 		hp.goToAnswer();
 		qMang.deleteQuestion(title);
+	}
+	
+	/**
+	 * Case ID:116813.
+	 * Test Case Name: Send to friend.
+	 * Pre-Condition: 
+	 * Post-Condition: 
+	 */
+	@Test(priority=7)
+	public  void test10_SendToFriend() {
+		String title = txData.getContentByArrayTypeRandom(1)+"116813";
+		String content = txData.getContentByArrayTypeRandom(1)+"116813";
+		String contentMail = "Hi,/You may be interested in this question:/Question "+title+"/Details/Content of "+title+"/Click here for more details.";
+		By mail = By.xpath("//b[text()= '"+title+"']");
+		
+		info("Create question");
+		hp.goToAnswer();
+		qMang.goToSubmitQuestion();
+		qMang.inputDataToQuestionForm(title, content, null, null);
+		click(qMang.ELEMENT_SUBMIT_QUESTION_FORM_SAVE_BUTTON);
+		click(button.ELEMENT_OK_BUTTON_LINK);
+		waitForAndGetElement(By.xpath(aHome.ELEMENT_QUESTION_LIST_ITEM.replace("$question", title)));
+
+		info("Test 2: Send to friend");
+		/*Step Number: 1
+		 *Step Name: Send Question
+		 *Step Description: 
+			- Right click on question and send question
+			- Check mail Inbox to see question content, question link
+		 *Input Data: 
+
+		 *Expected Outcome: 
+			- Mail is sent successful to email address
+			- Content of mail includes Question content & Question link*/ 
+		qMang.goToActionOfQuestionByRightClick(title, actionQuestionOption.SEND);
+		type(qMang.ELEMENT_QUESTION_SEND_TO_INPUT,EMAIL_ADDRESS1,true);
+		click(qMang.ELEMENT_QUESTION_SEND_SEND_BUTTON);
+		click(qMang.ELEMENT_QUESTION_OK_BUTTON);
+		
+		//Check email
+		goToMail(EMAIL_ADDRESS1, EMAIL_PASS);
+		checkAndDeleteMail(mail, contentMail);
+		switchToParentWindow();
+		
+		info("clear data");
+		qMang.goToActionOfQuestionByRightClick(title,actionQuestionOption.DELETE);
+		waitForAndGetElement(qMang.ELEMENT_QUESTION_CONFIRM_DELETE);
+		click(qMang.ELEMENT_QUESTION_DELETE_FORM_OK_BUTTON);
+		waitForElementNotPresent(By.xpath(aHome.ELEMENT_QUESTION_LIST_ITEM.replace("$question", title)));
 	}
 }
