@@ -109,7 +109,7 @@ public class TextBoxDatabase {
 					arrayContent.add(this.content.get(i));
 			}
 		int index = randomGenerator.nextInt(arrayContent.size());
-		String Content = arrayContent.get(index);
+		String Content = arrayContent.get(index).trim();;
 		return Content;
 	}
 }

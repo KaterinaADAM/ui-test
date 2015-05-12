@@ -120,7 +120,7 @@ public class ECMS_TestConfig_Part1 extends PlatformBase{
 		
 		downloadHandler = new DownloadFileControl(driver);
 		
-		folderDataTestPath = dataTestPath.getDataTestPathByIndex(0);
+		folderDataTestPath = dataTestPath.getDataTestPathByIndex(1);
 		info("datTestPath:"+folderDataTestPath);
 		
 		info("End setUpBeforeClass");

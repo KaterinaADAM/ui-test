@@ -475,15 +475,8 @@ public class SiteExplorerHome extends PlatformBase{
 		if (waitForAndGetElement(ELEMENT_UPLOAD_BUTTON, DEFAULT_TIMEOUT, 0) == null) {
 			click(ELEMENT_MORE_LINK_WITHOUT_BLOCK);
 		}
-		((JavascriptExecutor) driver)
-				.executeScript(
-						"arguments[0].style.visibility = 'block'; arguments[0].style.height = '1px'; "
-								+ "arguments[0].style.width = '1px'; arguments[0].style.opacity = 1",
-						waitForAndGetElement(ELEMENT_UPLOAD_LINK,
-								DEFAULT_TIMEOUT, 1, 2));
-		
-		Utils.pause(10000);
-		driver.findElement(ELEMENT_UPLOAD_LINK).sendKeys(getAbsoluteFilePath(link));
+		click(ELEMENT_UPLOAD_LINK);
+		uploadFileUsingRobot(link);
 		info("Upload file " + getAbsoluteFilePath(link));
 		waitForElementNotPresent(ELEMENT_UPLOAD_PROGRESS_BAR,120000,0);
 				  
@@ -1321,5 +1314,4 @@ public class SiteExplorerHome extends PlatformBase{
 		info("Select All checkbox");
 		selectAllFiles();
 	}
-
 }

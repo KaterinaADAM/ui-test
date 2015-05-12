@@ -192,7 +192,7 @@ import org.testng.annotations.*;
 		waitForAndGetElement(docPrev.ELEMENT_ACTIONS_DOWNLOAD_BTN,1000,1);
 		waitForAndGetElement(docPrev.ELEMENT_ACTIONS_FULLSCREEN_BTN,1000,1);
 		waitForAndGetElement(docPrev.ELEMENT_ACTIONS_TOOLS_BTN,1000,1);
-		
+		docPrev.closeByClickCrossIcon();
 		/*Step Number: 3
 		*Step Name: Step 3. Upload an office file.
 		*Step Description: 

@@ -56,7 +56,7 @@ public class Ecms_SE_PublishActivities extends ECMS_TestConfig_Part2 {
 	 *<li> Test Case Name: Check intranet homepage after publishing a content.</li>
 	 */
 	@Test
-	public  void test03__04_CheckIntranetHomepageAfterAddingWebContent_CheckIntranetHomepageAfterPublishWebContent() {
+	public  void test03_04_CheckIntranetHomepageAfterAddingWebContent_CheckIntranetHomepageAfterPublishWebContent() {
 		info("Test 3: Check intranet homepage after adding Web Content");
 		String random=getRandomNumber();
 		String title =  txData.getContentByArrayTypeRandom(1)+random;
@@ -77,6 +77,7 @@ public class Ecms_SE_PublishActivities extends ECMS_TestConfig_Part2 {
 			- A new Content activity is added in the activity stream
 			- Informations displayed in the featured content are :1. Icon corresponding to the content type2. Name of the content3. First 4 lines of content's summary4. Type of the content5.Version6. Current status*/ 
 		navTool.goToSiteExplorer();
+		SEHome.selectNode("intranet");
 		SEHome.goToAddNewContent();
 		CreNewDoc.createNewDoc(selectDocumentType.WEBCONTENT);
 		CreNewDoc.addNewWebContent(title, content);
@@ -141,6 +142,7 @@ public class Ecms_SE_PublishActivities extends ECMS_TestConfig_Part2 {
 			- A new Content activity is added in the activity stream
 			- Information displayed in the featured content are:1. Icon corresponding to the content type2. Name of the content3. First 4 lines of content's summary4. Type of the content5.Version6. Current status*/ 
 		navTool.goToSiteExplorer();
+		SEHome.selectNode("intranet");
 		SEHome.goToAddNewContent();
 		CreNewDoc.createNewDoc(selectDocumentType.PRODUCT);
 		CreNewDoc.addNewProduct(title, summary);
@@ -182,6 +184,7 @@ public class Ecms_SE_PublishActivities extends ECMS_TestConfig_Part2 {
 			- A new Content activity is added in the activity stream
 			- Informations displayed in the featured content are :1. File icon 2.File's name3.File description if exist 4.Version (if exist) and file size*/
 		navTool.goToSiteExplorer();
+		SEHome.selectNode("intranet");
 		SEHome.goToAddNewContent();
 		CreNewDoc.createNewDoc(selectDocumentType.FILE);
 		CreNewDoc.addNewFile(title, content);
@@ -204,6 +207,7 @@ public class Ecms_SE_PublishActivities extends ECMS_TestConfig_Part2 {
 			- The content activity is updated in the activity stream with the new title
 			- A comment is added:File has been updated.*/ 
 		navTool.goToSiteExplorer();
+		SEHome.selectNode("intranet");
 		SEHome.selectNode(title);
 		SEHome.editDocument("",newContent);
 		CreNewDoc.saveAndClose();
@@ -244,6 +248,7 @@ public class Ecms_SE_PublishActivities extends ECMS_TestConfig_Part2 {
 		 *Expected Outcome: 
 			- A new Content activity is added in the activity stream*/
 		navTool.goToSiteExplorer();
+		SEHome.selectNode("intranet");
 		SEHome.goToAddNewContent();
 		CreNewDoc.createNewDoc(selectDocumentType.WEBCONTENT);
 		CreNewDoc.addNewFile(title, content);
@@ -320,6 +325,7 @@ public class Ecms_SE_PublishActivities extends ECMS_TestConfig_Part2 {
 		 *Expected Outcome: 
 			- A new Content activity is added in the activity stream*/
 		navTool.goToSiteExplorer();
+		SEHome.selectNode("intranet");
 		SEHome.goToAddNewContent();
 		CreNewDoc.createNewDoc(selectDocumentType.WEBCONTENT);
 		CreNewDoc.addNewFile(title, content);

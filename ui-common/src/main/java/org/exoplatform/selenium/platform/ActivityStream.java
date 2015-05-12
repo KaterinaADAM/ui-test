@@ -51,6 +51,7 @@ public class ActivityStream extends PlatformBase {
 	public final By ELEMENT_ACTIVITY_UPLOAD_POPUP_PROGRESS_UPLOAD = By.xpath(".//*[@id='UIDocumentSelector']//*[@class='pull-left percent']");
 	public final By ELEMENT_ACTIVITY_UPLOAD_POPUP_CLOSE_BTN =By.xpath(".//*[@id='UIPopupComposer']//*[contains(@title,'Close Window')]");
 	public final By ELEMENT_UPLOAD_FILE_FRAME_XPATH = By.xpath("//iframe[contains(@id,'uploadFrame')]");
+	public final By ELEMENT_UPLOAD_BUTTON=By.xpath("//*[@class='uiIconUpload uiIconLightGray']");
 	
 	//Upload popup
 	public final By ELEMENT_ACTIVITY_UPLOAD_POPUP=By.xpath(".//*[@id='DriveTypeDropDown']/div[@class='btn dropdown-toggle']");
@@ -556,10 +557,8 @@ public class ActivityStream extends PlatformBase {
 		info("-- Upload file --");
 		WebElement frame = waitForAndGetElement(ELEMENT_UPLOAD_FILE_FRAME_XPATH,3000,0);
 		driver.switchTo().frame(frame);
-		Utils.pause(2000);
-		((JavascriptExecutor)driver).executeScript("document.getElementsByTagName('input')[0].style.display = 'block';");
-		Utils.pause(2000);
-		driver.findElement(ELEMENT_ACTIVITY_UPLOAD_POPUP_UPLOAD_BUTTON).sendKeys(getAbsoluteFilePath(path+nameFile));
+		click(ELEMENT_UPLOAD_BUTTON);
+		uploadFileUsingRobot(path+nameFile);
 		switchToParentWindow();
 		waitForElementNotPresent(ELEMENT_ACTIVITY_UPLOAD_POPUP_PROGRESS_UPLOAD,3000,0);
 		click(ELEMENT_ACTIVITY_UPLOAD_POPUP_CLOSE_BTN);
@@ -696,7 +695,7 @@ public void addCommentWithMentionUser(String activity, String username, String t
 	
 	/**
 	 * Like/Unlike an activity
-	 * @param activityText: input a text (String) 
+	 * @param activityText input a text (String) 
 	 */
 	public void likeOrUnlikeActivity(String activityText){
 		info("-- Action: Like or Unlike an activity --");
