@@ -147,7 +147,7 @@ public class ConnectionsManagement extends PlatformBase {
 		info("Click on Confirm button");
 		searchPeople(username,null,null,null);
 		click(ELEMENT_CONNECTION_CONFIRM_BTN.replace("${user}",username));
-		waitForAndGetElement(ELEMENT_CONNECTION_REVOVE_BTN.replace("${user}",username),2000,1);
+		waitForElementNotPresent(ELEMENT_CONNECTION_CONFIRM_BTN.replace("${user}",username),2000,1);
 		info("Accepted to the user");
 	}
 
