@@ -237,7 +237,7 @@ public class Ecms_SE_Admin extends ECMS_TestConfig_Part2{
 	 *<li> Test Case Name: Import a node</li>
 	 */
 	@Test
-	public  void test04_05_ExportANode() {
+	public  void test04_05_ImportExportANode() {
 		info("Test 4: Export a Node");
 
 		/*Step Number: 1
@@ -301,7 +301,7 @@ public class Ecms_SE_Admin extends ECMS_TestConfig_Part2{
 		navTool.goToSiteExplorer();
 		SEHome.goToPath("intranet/documents", "Sites Management");
 		SEHome.deleteData(node2);
-		deleteFile("sysview.xml");
+		deleteFile("TestOutput/sysview.xml");
 	}
 
 	/**
