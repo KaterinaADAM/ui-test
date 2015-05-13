@@ -1381,7 +1381,7 @@ public class TestBase {
 	public void deleteFile(String file){
 		String fs = File.separator;
 		String pathFile = System.getProperty("user.dir") + "/src/main/resources/TestData/" + file;
-		pathFile=pathFile.replace("/", fs);
+		pathFile=pathFile.replace("/", fs).replace("\\", fs);
 		File Files = new File(pathFile);
 		if(checkFileExisted(file)){
 			Files.setWritable(true);

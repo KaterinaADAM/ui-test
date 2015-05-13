@@ -225,51 +225,20 @@ public class Ecms_SE_Admin extends ECMS_TestConfig_Part2{
 		
 		info("Delete all data test");
 		navTool.goToSiteExplorer();
-		SEHome.goToPath("acme/documents", "Sites Management");
+		SEHome.goToPath("intranet/documents", "Sites Management");
 		SEHome.deleteData(node1);
 		SEHome.deleteData(node2);
 	}
 
 	/**
+	 *<li> Case ID:116578.</li>
+	 *<li> Test Case Name: Export a node.</li>
 	 *<li> Case ID:116655.</li>
 	 *<li> Test Case Name: Import a node</li>
 	 */
 	@Test
-	public  void test04_ImportANode() {
-		info("Test 4: Import a Node");
-		info("Create data test");
-		String node1 = txData.getContentByArrayTypeRandom(1)+ getRandomNumber();
-		String filePath = fData.getAttachFileByArrayTypeRandom(11);
-		info("Finished data test");
-		
-		info("Add New folder");
-		navTool.goToSiteExplorer();
-		SEHome.goToPath("acme/documents", "Sites Management");
-		SEHome.goToAddNewFolder();
-		
-		info("Create Folder node");
-		CreNewDoc.createNewFolder(node1, folderType.Content);
-		info("Select folder");
-		SEHome.selectNode(node1);
-		
-		info("Import a node");
-		click(SEHome.ELEMENT_ACTIONBAR_MORE);
-		SEHome.goToImportNode();
-		SEHome.importNode("TestData/"+filePath,"Create New",false, "");
-		
-		info("Delete all data test");
-		navTool.goToSiteExplorer();
-		SEHome.goToPath("acme/documents", "Sites Management");
-		SEHome.deleteData(node1);
-	}
-
-	/**
-	 *<li> Case ID:116578.</li>
-	 *<li> Test Case Name: Export a node.</li>
-	 */
-	@Test
-	public  void test05_ExportANode() {
-		info("Test 5: Export a Node");
+	public  void test04_05_ExportANode() {
+		info("Test 4: Export a Node");
 
 		/*Step Number: 1
 		 *Step Name: Export a node
@@ -289,7 +258,7 @@ public class Ecms_SE_Admin extends ECMS_TestConfig_Part2{
 		
 		info("Add New folder");
 		navTool.goToSiteExplorer();
-		SEHome.goToPath("acme/documents","Sites Management");
+		SEHome.goToPath("intranet/documents","Sites Management");
 		SEHome.goToAddNewFolder();
 		
 		info("Create Folder node");
@@ -304,8 +273,35 @@ public class Ecms_SE_Admin extends ECMS_TestConfig_Part2{
 		
 		info("Delete all data test");
 		navTool.goToSiteExplorer();
-		SEHome.goToPath("acme/documents", "Sites Management");
+		SEHome.goToPath("intranet/documents", "Sites Management");
 		SEHome.deleteData(node1);
+		
+		info("Test 5: Import a Node");
+		info("Create data test");
+		String node2 = txData.getContentByArrayTypeRandom(1)+ getRandomNumber();
+		String filePath = "sysview.xml";
+		info("Finished data test");
+		
+		info("Add New folder");
+		navTool.goToSiteExplorer();
+		SEHome.goToPath("intranet/documents", "Sites Management");
+		SEHome.goToAddNewFolder();
+		
+		info("Create Folder node");
+		CreNewDoc.createNewFolder(node2, folderType.Content);
+		info("Select folder");
+		SEHome.selectNode(node2);
+		
+		info("Import a node");
+		click(SEHome.ELEMENT_ACTIONBAR_MORE);
+		SEHome.goToImportNode();
+		SEHome.importNode("TestData/"+filePath,"Create New",false, "");
+		
+		info("Delete all data test");
+		navTool.goToSiteExplorer();
+		SEHome.goToPath("intranet/documents", "Sites Management");
+		SEHome.deleteData(node2);
+		deleteFile("sysview.xml");
 	}
 
 	/**

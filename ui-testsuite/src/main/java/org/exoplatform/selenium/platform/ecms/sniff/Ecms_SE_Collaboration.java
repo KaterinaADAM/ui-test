@@ -210,8 +210,7 @@ import org.testng.annotations.*;
 		SEHome.uploadFile("TestData/"+fileName);
 		
 		click(SEHome.ELEMENT_SITEEXPLORER_LEFTBOX_NODENAME.replace("${title}", fileName));
-		click(SEHome.ELEMENT_ACTIONBAR_MORE);
-		click(SEHome.ELEMENT_ACTIONBAR_VOTE,0,true);
+		SEHome.voteDocument();
 		click(SEHome.ELEMENT_SITEEXPLORER_VOTE_AVERAGE);
 		waitForAndGetElement(SEHome.ELEMENT_SITEEXPLORER_VOTEONDOCUMENT);	
 		SEHome.deleteData(fileName);
