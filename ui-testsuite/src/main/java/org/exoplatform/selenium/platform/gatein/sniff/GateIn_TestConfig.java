@@ -45,7 +45,9 @@ import org.exoplatform.selenium.platform.social.SpaceHomePage;
 import org.exoplatform.selenium.platform.social.SpaceManagement;
 import org.exoplatform.selenium.platform.social.SpaceSettingManagement;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 
 public class GateIn_TestConfig extends PlatformBase {
 	ManageLogInOut magAc;
@@ -100,7 +102,7 @@ public class GateIn_TestConfig extends PlatformBase {
 	LanguageDatabase langData;
 	
 	
-	@BeforeMethod
+	@BeforeTest
 	public void setUpBeforeClass() throws Exception{
 		info("Start setUpBeforeClass");
 		initSeleniumTest();
@@ -204,7 +206,7 @@ public class GateIn_TestConfig extends PlatformBase {
 //    	driver.get(baseUrl);
 //    }
 	
-	@AfterMethod
+	@AfterTest
 	public void afterTest(){
 		info("Start setUpBeforeClass");
 		driver.manage().deleteAllCookies();
