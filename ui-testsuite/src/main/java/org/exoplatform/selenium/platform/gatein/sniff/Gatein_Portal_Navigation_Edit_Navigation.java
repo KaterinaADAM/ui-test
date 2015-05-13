@@ -31,7 +31,6 @@ import org.testng.annotations.*;
 		String newTitlePage= txData.getContentByArrayTypeRandom(1)+getRandomNumber();
 		String groupPath = portGroupPermisData.getContentByIndex(0);
 		String memberships = portMemPermisData.getContentByIndex(0);
-		
 		/*Step Number: 1
 		*Step Name: Step 1: Add node for portal
 		*Step Description: 

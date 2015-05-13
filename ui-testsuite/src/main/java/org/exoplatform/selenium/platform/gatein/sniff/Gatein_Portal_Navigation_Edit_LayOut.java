@@ -20,7 +20,8 @@ import org.testng.annotations.*;
 	public  void test02_ChangeSiteConfigOfPortal() {
 		info("Test 02:Change site's config of portal");
 		String num = getRandomNumber();
-		String portalName = portDeftData.getContentByIndex(0);
+		String portalName = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		addNewPortal(portalName);
 		String label = txData.getContentByArrayTypeRandom(1)+num;
 		String des   = txData.getContentByArrayTypeRandom(1)+num;
 		/*Step Number: 1
@@ -124,7 +125,8 @@ import org.testng.annotations.*;
 			- The Layout of page is displayed in the view mode with all changes
 			*/
 		
-		hp.goToHomePage();
+		String portalName = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		addNewPortal(portalName);
 		
 		info("Add an application to the layout");
 		navToolBar.goToEditLayout();
@@ -149,7 +151,8 @@ import org.testng.annotations.*;
 	public  void test04_EditPortalConfig() {
 		info("Test 04: Edit portal's config");
 		String num = getRandomNumber();
-		String portalName = portDeftData.getContentByIndex(0);
+		String portalName = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		addNewPortal(portalName);
 		String label = txData.getContentByArrayTypeRandom(1)+num;
 		String des   = txData.getContentByArrayTypeRandom(1)+num;
 		/*Step Number: 1
@@ -194,7 +197,8 @@ import org.testng.annotations.*;
 		*Expected Outcome: 
 			- Add application successfully
 			- The Layout of page is displayed in the view mode with all changes*/
-        hp.goToHomePage();
+		String portalName = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		addNewPortal(portalName);
 		
 		info("Add an application to the layout");
 		navToolBar.goToEditLayout();
@@ -226,6 +230,8 @@ import org.testng.annotations.*;
 		String idName = appLayData.newId.get(index2);
 		String name = appLayData.newTitle.get(index2);
 		String newTitle = txData.getContentByArrayTypeRandom(1)+getRandomNumber();
+		String portalName = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		addNewPortal(portalName);
 		/*Step Number: 1
 		*Step Name: Step 1: Change application when edit layout for portal's page
 		*Step Description: 

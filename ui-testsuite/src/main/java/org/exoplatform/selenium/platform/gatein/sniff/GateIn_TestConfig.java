@@ -2,6 +2,8 @@ package org.exoplatform.selenium.platform.gatein.sniff;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import java.util.Map;
+
 import org.exoplatform.selenium.Button;
 import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.platform.HomePagePlatform;
@@ -44,8 +46,9 @@ import org.exoplatform.selenium.platform.social.MyProfilePage;
 import org.exoplatform.selenium.platform.social.SpaceHomePage;
 import org.exoplatform.selenium.platform.social.SpaceManagement;
 import org.exoplatform.selenium.platform.social.SpaceSettingManagement;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 
 public class GateIn_TestConfig extends PlatformBase {
 	ManageLogInOut magAc;
@@ -99,13 +102,27 @@ public class GateIn_TestConfig extends PlatformBase {
 	PagesManagementListDatabase pagMgListData;
 	LanguageDatabase langData;
 	
+	public void addNewPortal(String portalName){
+		String editGroupId = portGroupPermisData.getContentByIndex(3);
+		String editMembership = permissData.getDesByIndex(3);
+		String language = langData.getLanguageByIndex(0);
+		
+		info("Add new portal");
+		Map<String, String> permissions = null;
+		navToolBar.goToPotalSites();
+		portSite.addNewPortal(portalName, null, null, language, null, "Always", true, permissions, editGroupId, editMembership);
+		waitForAndGetElement(portSite.ELEMENT_NEW_PORTAL_ADD.replace("${portalName}", portalName));
+		
+		info("Switch to new portal");
+		driver.get(baseUrl + "/" + portalName);
+		waitForAndGetElement(portSite.ELEMENT_NEW_PORTAL_SWITCH.replace("${portalName}", portalName),3000,0);
+	}
 	
-	@BeforeTest
+	@BeforeClass
 	public void setUpBeforeClass() throws Exception{
 		info("Start setUpBeforeClass");
 		initSeleniumTest();
 		getDefaultUserPass(userDataFilePath,defaultSheet,isUseFile,jdbcDriver,dbUrl,user,pass,sqlUser);
-		
 		magAc = new ManageLogInOut(driver);
 		magAc.signIn(DATA_USER1, DATA_PASS);
 		spaMg = new SpaceManagement(driver);
@@ -199,12 +216,14 @@ public class GateIn_TestConfig extends PlatformBase {
 		info("End setUpBeforeClass");
 	}
 	
-//	@AfterMethod
-//    public void afterMethod(){
-//    	driver.get(baseUrl);
-//    }
+	@AfterMethod
+    public void afterMethod(){
+		if(waitForAndGetElement(pagCW.ELEMENT_PAGE_ABORT_BUTTON,5000,0)!=null)
+			click(pagCW.ELEMENT_PAGE_ABORT_BUTTON);
+    	driver.get(baseUrl);
+    }
 	
-	@AfterTest
+	@AfterClass
 	public void afterTest(){
 		info("Start setUpBeforeClass");
 		driver.manage().deleteAllCookies();

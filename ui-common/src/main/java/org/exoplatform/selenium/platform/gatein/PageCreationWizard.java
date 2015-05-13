@@ -536,7 +536,6 @@ public class PageCreationWizard extends PlatformBase {
 			info("titleSource:"+titleSource);
 			info("titleTarget:"+titleTarget);
 			mouseOver(ELEMENT_APPLICATION_IN_LAYOUT_PAGE.replace("${name}",titleSource),true);
-			waitForAndGetElement(ELEMENT_APPLICATION_EDIT_ICON.replace("${name}",titleSource),3000,1);
 			Utils.pause(3000);
 		} 
 		WebElement elSource = waitForAndGetElement(ELEMENT_APPLICATION_HOLDER_MOVE.replace("${name}",titleSource),2000,0);
