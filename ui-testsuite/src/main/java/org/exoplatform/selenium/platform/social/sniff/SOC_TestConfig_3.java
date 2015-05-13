@@ -109,6 +109,7 @@ public class SOC_TestConfig_3 extends PlatformBase {
 	@AfterClass
 	public void afterTest(){
 		info("Start setUpBeforeClass");
+		isDriver=true;
 		driver.manage().deleteAllCookies();
 		driver.quit();
 		info("End setUpBeforeClass");

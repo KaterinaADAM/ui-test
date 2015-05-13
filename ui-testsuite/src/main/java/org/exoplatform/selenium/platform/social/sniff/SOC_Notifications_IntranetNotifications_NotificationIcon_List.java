@@ -9,8 +9,6 @@ import org.exoplatform.selenium.platform.ActivityStream;
 import org.exoplatform.selenium.platform.ConnectionsManagement;
 import org.exoplatform.selenium.platform.HomePagePlatform;
 import org.exoplatform.selenium.platform.ManageLogInOut;
-import org.exoplatform.selenium.platform.NavigationToolbar;
-import org.exoplatform.selenium.platform.gatein.UserAndGroupManagement;
 import org.testng.annotations.*;
 
 public class SOC_Notifications_IntranetNotifications_NotificationIcon_List extends SOC_TestConfig_3{
@@ -34,24 +32,24 @@ public class SOC_Notifications_IntranetNotifications_NotificationIcon_List exten
 	public void test01_CheckNotificationIconInTheTopNavigation(){
 		//set Data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
-		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		String password1 = username1;
 		String email1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber() + mailSuffixData.getMailSuffixRandom();
 	
 		String username2 = txData.getContentByArrayTypeRandom(4) + getRandomString();
-		String password2 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		String password2 = username2;
 		String email2 = txData.getContentByArrayTypeRandom(1) + getRandomNumber() + mailSuffixData.getMailSuffixRandom();
 
 		String username3 = txData.getContentByArrayTypeRandom(4) + getRandomString();
-		String password3 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		String password3 = username3;
 		String email3 = txData.getContentByArrayTypeRandom(1) + getRandomNumber() + mailSuffixData.getMailSuffixRandom();
 		
 		String username4 = txData.getContentByArrayTypeRandom(4) + getRandomString();
-		String password4 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		String password4 = username4;
 		String email4 = txData.getContentByArrayTypeRandom(1) + getRandomNumber() + mailSuffixData.getMailSuffixRandom();
 		/*Precondition:
 		 	- User A has received 3 notifications*/
 		info("Check number of notifications in badge before ccreate more notifications");
-		int numNotification = Integer.parseInt(waitForAndGetElement(navTool.ELEMENT_BADGE_NUMBER_NOT_DISPLAY.replace("${number}", "0")).getText().trim());
+		int numNotification = Integer.parseInt(waitForAndGetElement(navTool.ELEMENT_BADGE_NUMBER).getText().trim());
 		info("Create 3 notifications for add new user");
 		navTool.goToAddUser();
 		addUserPage.addUser(username1, password1, email1, username1, username1);
@@ -124,15 +122,15 @@ public class SOC_Notifications_IntranetNotifications_NotificationIcon_List exten
 	public void test02_CheckUIOfTheNotificationsList(){
 		//set Data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
-		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		String password1 = username1;
 		String email1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber() + mailSuffixData.getMailSuffixRandom();
 	
 		String username2 = txData.getContentByArrayTypeRandom(4) + getRandomString();
-		String password2 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		String password2 = username2;
 		String email2 = txData.getContentByArrayTypeRandom(1) + getRandomNumber() + mailSuffixData.getMailSuffixRandom();
 		
 		String username3 = txData.getContentByArrayTypeRandom(4) + getRandomString();
-		String password3 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		String password3 = username3;
 		String email3 = txData.getContentByArrayTypeRandom(1) + getRandomNumber() + mailSuffixData.getMailSuffixRandom();
 		
 		String activity = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -269,9 +267,10 @@ public class SOC_Notifications_IntranetNotifications_NotificationIcon_List exten
 	 */
 	@Test
 	public void test03_CheckUIOfTheNotificationsListForTheFirstConnection(){
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//set Data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
-		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		String password1 = username1;
 		String email1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber() + mailSuffixData.getMailSuffixRandom();
 	
 		String fullName = userData.getFullNameByIndex(0);
@@ -345,13 +344,14 @@ public class SOC_Notifications_IntranetNotifications_NotificationIcon_List exten
 	 */
 	@Test
 	public void test04_ClickMarkAsRead(){
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//set Data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
-		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		String password1 = username1;
 		String email1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber() + mailSuffixData.getMailSuffixRandom();
 	
 		String username2 = txData.getContentByArrayTypeRandom(4) + getRandomString();
-		String password2 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		String password2 = username2;
 		String email2 = txData.getContentByArrayTypeRandom(1) + getRandomNumber() + mailSuffixData.getMailSuffixRandom();
 	
 		String activity = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -391,6 +391,8 @@ public class SOC_Notifications_IntranetNotifications_NotificationIcon_List exten
 		
 		info("Log in user 1 and check 2 notifications above is unread");
 		magAc.signIn(username1, password1);
+		Utils.pause(50000);
+		driver.navigate().refresh();
 		navTool.goToIntranetNotification();
 		navTool.checkCommentNotificationReadOrUnread(false, false, username2, activity, "1");
 		navTool.checkLikeNotificationReadOrUnread(false, false, username2, activity, "1");
@@ -422,13 +424,14 @@ public class SOC_Notifications_IntranetNotifications_NotificationIcon_List exten
 	 */
 	@Test
 	public void test05_NotificationsArePushedInstantaneously() throws AWTException{
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//set Data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
-		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		String password1 = username1;
 		String email1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber() + mailSuffixData.getMailSuffixRandom();
 	
 		String username2 = txData.getContentByArrayTypeRandom(4) + getRandomString();
-		String password2 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
+		String password2 = username2;
 		String email2 = txData.getContentByArrayTypeRandom(1) + getRandomNumber() + mailSuffixData.getMailSuffixRandom();
 	
 		String activity = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -450,9 +453,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationIcon_List exten
 		info("log in as user1 and go to wiki");
 		magAc.signIn(username1, password1);
 		navTool.checkNUmberOfNotificationsInBadge(false, "1");
-		hp.goToWiki();
-		String title1 = driver.getTitle();
-		
+		driver.navigate().refresh();
 		/*Step Number: 2
 		 *Step Name: Step 2: 
 		 *Step Description: 
@@ -462,18 +463,19 @@ public class SOC_Notifications_IntranetNotifications_NotificationIcon_List exten
 		 *Expected Outcome: 
 			- The number of notifications of User A is updated as soon as the connection request notification is received*/
 		info("Log in with user2 and connect to user1");
-		initSeleniumTest();
-		driver.get(baseUrl);
-		magAc = new ManageLogInOut(driver);
-		hp = new HomePagePlatform(driver);
-		connMag = new ConnectionsManagement(driver);
-		magAc.signIn(username2, password2);
-		hp.goToConnections();
-		connMag.connectToAUser(username1);
-		String title2 = driver.getTitle();
+		initNewDriver();
+		newDriver.get(baseUrl);
+		ManageLogInOut newmagAc = new ManageLogInOut(newDriver);
+		HomePagePlatform newhp = new HomePagePlatform(newDriver);
+		ConnectionsManagement newconnMag = new ConnectionsManagement(newDriver);
+		isDriver = false;
+		newmagAc.signIn(username2, password2);
+		newhp.goToConnections();
+		newconnMag.connectToAUser(username1);
 		
 		info("Switch to user1 and check intranet notification");
-		switchBetweenWindowsUsingTitle(title1);
+		isDriver = true;
+		driver.navigate().refresh();
 		navTool.checkNUmberOfNotificationsInBadge(true, "1");
 		
 		/*Step Number: 3
@@ -487,7 +489,6 @@ public class SOC_Notifications_IntranetNotifications_NotificationIcon_List exten
 		info("User 1 check notification in notification list");
 		navTool.goToIntranetNotification();
 		intraNot.checkConnectionRequestNotification(username2);
-		
 		/*Step Number: 4
 		 *Step Name: Step 4: 
 		 *Step Description: 
@@ -497,19 +498,23 @@ public class SOC_Notifications_IntranetNotifications_NotificationIcon_List exten
 		 *Expected Outcome: 
 			- While User A is browsing the notification list, the number of notification and the content of the list is updated as soon as a new notifications is received. The new notification is displayed at the top of the list.*/
 		info("User2 mentions user1 in an activity");
-		switchBetweenWindowsUsingTitle(title2);
-		hpAct = new ActivityStream(driver);
-		hp.goToHomePage();
-		hpAct.addActivity(username1, activity);
-		hpAct.checkActivity(activity);
+		info("Check number of notifications in badge before ccreate more notifications");
+		int numNotification = 0;
+		isDriver = false;
+		ActivityStream newhpAct = new ActivityStream(newDriver);
+		newhp.goToHomePage();
+		newhpAct.addActivity(username1, activity);
+		newhpAct.checkActivity(activity);
+		newDriver.close();
 		
 		info("User1 check notification in intranet notification");
-		switchBetweenWindowsUsingTitle(title1);
-		navTool.checkNUmberOfNotificationsInBadge(true, "1");
-		intraNot.checkMentionNotification(username2, "1", activity);
-		magAc = new ManageLogInOut(driver);
-		navTool = new NavigationToolbar(driver);
-		userAndGroup = new UserAndGroupManagement(driver);
+		isDriver = true;
+		info("Check number of notifications after add more notifications");
+		driver.navigate().refresh();
+		int newNumNotification = Integer.parseInt(waitForAndGetElement(navTool.ELEMENT_BADGE_NUMBER).getText().trim());
+		assert (newNumNotification==(numNotification+1)):"Number of notification is not updated";
+		navTool.goToIntranetNotification();
+		intraNot.checkMentionNotification(username2, "1", activity.substring(0,2));
 		
 		info("Reset Data");
 		magAc.signIn(DATA_USER1, DATA_PASS);

@@ -44,9 +44,7 @@ import org.exoplatform.selenium.platform.social.MyProfilePage;
 import org.exoplatform.selenium.platform.social.SpaceHomePage;
 import org.exoplatform.selenium.platform.social.SpaceManagement;
 import org.exoplatform.selenium.platform.social.SpaceSettingManagement;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 
 public class GateIn_TestConfig extends PlatformBase {

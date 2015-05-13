@@ -37,7 +37,7 @@ public class NavigationToolbar extends PlatformBase {
 	public final String ELEMENT_NOTIFICATION_LIST_INVITATION_SPACE_STATUS=".//*[@id='NotificationPopup']//*[contains(@class,'text-bold')][contains(text(),'${space}')]/..";
 	public final String ELEMENT_NOTIFICATION_LIST_USER = "//*[@id='NotificationPopup']/../..//*[contains(@class,'user-name text-bold')][contains(text(),'${user}')]/..";
 	public final By ELEMENT_NOTIFICATION_REMOVE_ICON = By.xpath(".//*[@id='NotificationPopup']//i[contains(@class,'uiIconClose uiIconLightGray')]");
-	public final By ELEMENT_INTRANET_NOTIFICATION_BELL = By.className("uiIconPLF24x24Bell");
+	public final By ELEMENT_INTRANET_NOTIFICATION_BELL = By.xpath("//*[@class='uiIconPLF24x24Bell']");
 
 	public final By ELEMENT_POSITION_OF_INTRANET_NOTIFICATION = By.xpath("//*[@class='UITableColumnContainer']//*[@class='UserInfoPortletTDContainer pull-left']/../*[@class='NotificationPopoverPortletTDContainer pull-left']");
 	public final By ELEMENT_DOC_EXO_OF_HOME_GETTING_STARTED = By.xpath(".//*[@id='newBreadcrumbs']//*[contains(text(),'Getting Started')]");
@@ -45,7 +45,7 @@ public class NavigationToolbar extends PlatformBase {
 	// Intranet notification 
 	public final String ELEMENT_BADGE_NUMBER_DISPLAY = "//*[@class='badgeDefault badgePrimary mini badgeNotification' and @style='display: inline;' and text()='${number}']";
 	public final String ELEMENT_BADGE_NUMBER_NOT_DISPLAY = "//*[@class='badgeDefault badgePrimary mini badgeNotification' and @style='display: none;' and text()='${number}']";
-	public final String ELEMENT_BADGE_NUMBER = "//*[@class='badgeDefault badgePrimary mini badgeNotification' and @style='display: inline;']";
+	public final By ELEMENT_BADGE_NUMBER=By.xpath("//*[@class='badgeDefault badgePrimary mini badgeNotification']");
 	public final By ELEMENT_NOTIFICATION_MARK_ALL_AS_READ_WITH_POSITION = By.xpath(".//*[@id='NotificationPopup']//*[contains(text(),'Mark all as read')]");
 	public final By ELEMENT_VIEW_ALL_BUTTON = By.xpath(".//*[@id='NotificationPopup']//a[text()='View All']");
 	public final By ELEMENT_NO_NOTIFICATIONS= By.xpath(".//*[@id='NotificationPopup']//*[@class='no-items' and text()='No notifications']");
@@ -64,6 +64,7 @@ public class NavigationToolbar extends PlatformBase {
 	public final String ELEMENT_COMMENT_JUST_NOW_DELETE = "//*[contains(@alt,'${userName}')]/../..//*[contains(.,'has commented on your activity.')]//*[contains(text(), '${userName}')]/../..//*[contains(text(),'${activity}')]/..//*[@class='lastUpdatedTime' and contains(text(),'Just Now')]/../../../..//*[@class='uiIconClose uiIconLightGray']";
 	public final String ELEMENT_LIKE_NOTIFICATION_ONE_MINUTE_DELETE = "//*[contains(@alt,'${userName}')]/../..//*[contains(.,'likes your activity.')]//*[contains(text(), '${userName}')]/../..//*[contains(text(),'${activity}')]/..//*[@class='lastUpdatedTime' and contains(text(),'${time} minute ago')]/../../../..//*[@class='uiIconClose uiIconLightGray']";
 	public final String ELEMENT_LIKE_NOTIFICATION_JUST_NOW_DELETE = "//*[contains(@alt,'${userName}')]/../..//*[contains(.,'likes your activity.')]//[contains(text(), '${userName}')]/../..//*[contains(text(),'${activity}')]/..//*[@class='lastUpdatedTime' and contains(text(),'Just Now')]/../../../..//*[@class='uiIconClose uiIconLightGray']";
+	public final String ELEMENT_LIKE_NOTIFICATION_DELETE = "//*[contains(@alt,'${userName}')]/../..//*[contains(.,'likes your activity.')]//*[contains(text(), '${userName}')]/../..//*[contains(text(),'${activity}')]/..//*[@class='lastUpdatedTime']/../../../..//*[@class='uiIconClose uiIconLightGray']";
 	public final String ELEMENT_CONNECT_NOTIFICATION_DELETE = "//*[contains(@alt,'${fullName}')]/../..//*[ contains(text(),'${fullName}')]/../..//*[contains(.,'wants to connect with you')]/../../../..//*[@class='uiIconClose uiIconLightGray']";
 	public final String ELEMENT_NEW_USER_NOTIFICATION_DELETE = "//*[contains(@alt,'${userName}')]/../..//*[contains(text(),'${userName}')]/../..//*[contains(.,'has joined eXo')]/../../../..//*[@class='uiIconClose uiIconLightGray']";
 	// toolbar--> upload file
@@ -699,24 +700,10 @@ public class NavigationToolbar extends PlatformBase {
 	 */
 	public void goToIntranetNotification(){
 		info("Go to Intranet Notification");
-		waitForAndGetElement(ELEMENT_INTRANET_NOTIFICATION_BELL, 2000);
-		click(ELEMENT_INTRANET_NOTIFICATION_BELL);
-		info("-- Starting finding element --");
-		Utils.pause(500);
-		for(int repeat=0;; repeat ++){
-			if (repeat > 1){
-				if(waitForAndGetElement(ELEMENT_NOTIFICATION_MARK_ALL_AS_READ_WITH_POSITION,3000,0)!=null);
-				break;
-			}
-			if (waitForAndGetElement(ELEMENT_NOTIFICATION_MARK_ALL_AS_READ_WITH_POSITION, 5000, 0) != null){
-				info("Element "+ELEMENT_NOTIFICATION_MARK_ALL_AS_READ_WITH_POSITION+" is displayed");
-				break;
-			}
-			info("Retry...[" + repeat + "]");
-			this.driver.navigate().refresh();
-			click(ELEMENT_INTRANET_NOTIFICATION_BELL);
-		}
+		driver.navigate().refresh();
 		Utils.pause(2000);
+		click(ELEMENT_INTRANET_NOTIFICATION_BELL);
+		waitForAndGetElement(ELEMENT_NOTIFICATION_DROPDOWN);
 		info("The elemnt is shown successfully");
 	}
 	/**
@@ -816,9 +803,13 @@ public class NavigationToolbar extends PlatformBase {
 			click(ELEMENT_LIKE_NOTIFICATION_JUST_NOW_DELETE.replace("${userName}", userName).replace("${activity}", activity));
 			waitForElementNotPresent(ELEMENT_LIKE_NOTIFICATION_JUST_NOW_DELETE.replace("${userName}", userName).replace("${activity}", activity));
 		}
-		else if (waitForAndGetElement(ELEMENT_LIKE_NOTIFICATION_ONE_MINUTE_DELETE.replace("${userName}", userName).replace("${activity}", activity).replace("${time}", time)) != null){
+		else if (waitForAndGetElement(ELEMENT_LIKE_NOTIFICATION_ONE_MINUTE_DELETE.replace("${userName}", userName).replace("${activity}", activity).replace("${time}", time),5000,0) != null){
 			click(ELEMENT_LIKE_NOTIFICATION_ONE_MINUTE_DELETE.replace("${userName}", userName).replace("${activity}", activity).replace("${time}", time));
 			waitForElementNotPresent(ELEMENT_LIKE_NOTIFICATION_ONE_MINUTE_DELETE.replace("${userName}", userName).replace("${activity}", activity).replace("${time}", time));
+		}
+		else{
+			click(ELEMENT_LIKE_NOTIFICATION_DELETE.replace("${userName}", userName).replace("${activity}", activity));
+			waitForElementNotPresent(ELEMENT_LIKE_NOTIFICATION_DELETE.replace("${userName}", userName).replace("${activity}", activity));
 		}
 	}
 

@@ -129,6 +129,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test
 	public  void test02_CommentNotificationWhenANewNotificationIsPushed() {
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -238,6 +239,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test
 	public  void test03_CommentsIntranetNotificationMerged() {
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -384,6 +386,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test
 	public  void test04_ConnectionRequestIntranetNotification_Accept() {
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -464,6 +467,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test
 	public  void test05_ConnectionRequestIntranetNotification_Refuse() {
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -552,6 +556,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test 
 	public  void test06_LikeIntranetNotification() {
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -652,6 +657,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test 
 	public  void test07_LikeIntranetNotificationMerged(){
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
 		String email1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber() + mailSuffixData.getMailSuffixRandom();
@@ -796,6 +802,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test 
 	public  void test08_NotificationWhenANewLikeIsPushed(){
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -898,11 +905,11 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	/**
 	 *<li> Case ID:122995.</li>
 	 *<li> Test Case Name: Mention Intranet notifications (in activity message).</li>
-<<<<<<< HEAD
 	 * @throws AWTException 
 	 */
 	@Test 
 	public  void test09_MentionIntranetNotification_InactivityMessage() throws AWTException {
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -995,6 +1002,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test  
 	public  void test10_MentionIntranetNotification_InComment() {
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -1088,6 +1096,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test 
 	public  void test11_PostOnMyStreamIntranetNotification() {
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -1185,6 +1194,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test 
 	public  void test12_PostOnMySpaceIntranetNotification() {
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -1291,6 +1301,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test 
 	public  void test13_SpaceInvitationIntranetNotification_Accept() {
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -1376,6 +1387,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test 
 	public  void test14_SpaceInvitationIntranetNotification_Refuse() {
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -1466,6 +1478,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test 
 	public  void test15_SpaceJoinRequestIntranetNotification_Accept() {
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -1542,6 +1555,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test 
 	public  void test16_SpaceJoinRequestIntranetNotification_Refuse() {
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//Setup data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();
@@ -1629,6 +1643,7 @@ public class SOC_Notifications_IntranetNotifications_NotificationTypes extends S
 	 */
 	@Test
 	public void test17_NewUserIntranetNotification(){
+		magAc.signIn(DATA_USER1, DATA_PASS);
 		//set Data test
 		String username1 = txData.getContentByArrayTypeRandom(4) + getRandomString();
 		String password1 = txData.getContentByArrayTypeRandom(1) + getRandomNumber();

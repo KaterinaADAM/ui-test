@@ -53,6 +53,7 @@ public class TestBase {
 	private static Scanner scanner;
 	public WebDriver driver;
 	public WebDriver newDriver;
+	public Boolean isDriver = true;
 
 	protected int DEFAULT_TIMEOUT = 30000; //milliseconds = 30 seconds
 	protected int WAIT_INTERVAL = 1000; //milliseconds  
@@ -110,7 +111,7 @@ public class TestBase {
 	protected String changLangDataPath;
 	protected String wikiTemplateFilePath;
 	protected String wikiMessageFilePath;
-	
+
 	protected String contactIMFilePath;
 	protected String contactPhoneFilePath;
 	protected String activityMesFilePath;
@@ -143,13 +144,13 @@ public class TestBase {
 	protected String spaceVisibleFilePath;
 	protected String spaceRegistrationFilePath;
 	protected String spaceappFilePath;
-	
+
 	protected String notiDesFilePath;
-	
+
 	/*========Default System Property=============*/
 	public final String DEFAULT_NATIVE_EVENT = "true";
 	public final String DEFAULT_BASEURL="http://localhost:8080/portal";
-	public final String DEFAULT_BROWSER="chrome";//iexplorer, firefox, chrome
+	public final String DEFAULT_BROWSER="firefox";//iexplorer, firefox, chrome
 	public final String DEFAULT_SERVER="ubuntu"; //win, ubuntu
 
 	public final  Boolean DEFAULT_ISRANDOM = true;
@@ -170,7 +171,7 @@ public class TestBase {
 	public final String DEFAULT_ATTACHMENTFILEURL="DataDriven/" + "attachment_file.xls";
 	public final String DEFAULT_TEXTBOXFILEURL="DataDriven/" + "textbox.xls";
 	public final String DEFAULT_WIKITEMPLATEFILEURL="DataDriven/" + "wiki_template.xls";
-	
+
 
 	public final String DEFAULT_PERMISSIONURL="DataDriven/"+"permission.xls";
 	public final String DEFAULT_SITEEXPLORERDRIVE="DataDriven/" + "se_drive.xls";
@@ -196,7 +197,7 @@ public class TestBase {
 	public final String DEFAULT_LANGUAGEURL="DataDriven/"+"language.xls";
 	public final String DEFAULT_SELECTPATHURL="DataDriven/"+"selectPath.xls";
 	public final String DEFAULT_MEMBERSHIPURL="DataDriven/"+"membership.xls";
-	
+
 	public final String DEFAULT_APPLAYOUTURL="DataDriven/"+"applications_layout.xls";
 
 	public final String DEFAULT_APPLISTGETINURL="DataDriven/"+"gatein_applications_list.xls";
@@ -204,29 +205,29 @@ public class TestBase {
 	public final String DEFAULT_CREATENEWGATEINURL="DataDriven/"+"create_new_gatein.xls";
 	public final String DEFAULT_CATEGORIGATEINURL="DataDriven/"+"gatein_categories.xls";
 	public final String DEFAULT_PAGE_MANAGEMENT_LIST_URL="DataDriven/"+"gatein_page_management_list.xls";
-    public final String DEFAULT_PORTAL_DEFAULT_GATEIN_URL="DataDriven/"+"gatein_portal_defaults.xls";
-    public final String DEFAULT_PORTAL_PERMISSION_GROUP_URL="DataDriven/"+"gatein_portal_groups.xls";
-    public final String DEFAULT_PORTAL_PERMISSION_MEMBERSHIPS_URL="DataDriven/"+"gatein_portal_memberships.xls";
+	public final String DEFAULT_PORTAL_DEFAULT_GATEIN_URL="DataDriven/"+"gatein_portal_defaults.xls";
+	public final String DEFAULT_PORTAL_PERMISSION_GROUP_URL="DataDriven/"+"gatein_portal_groups.xls";
+	public final String DEFAULT_PORTAL_PERMISSION_MEMBERSHIPS_URL="DataDriven/"+"gatein_portal_memberships.xls";
 
 	public final String DEFAULT_USERINFOURL="DataDriven/"+"userinfo.xls";
 	public final String DEFAULT_MAILSUFFIXURL="DataDriven/"+"mail_suffix.xls";
 	public final String DEFAULT_USERSEARCHOPTIONURL="DataDriven/"+"gatein_user_search_options.xls";
-	
-    public final String DEFAULT_GATEINDEFAULTGROUPSURL="DataDriven/"+"gatein_default_groups.xls";
-    public final String DEFAULT_GATEINNODESURL="DataDriven/"+"gatein_nodes.xls";
-    
+
+	public final String DEFAULT_GATEINDEFAULTGROUPSURL="DataDriven/"+"gatein_default_groups.xls";
+	public final String DEFAULT_GATEINNODESURL="DataDriven/"+"gatein_nodes.xls";
+
 	public final String DEFAULT_LINKSURL="DataDriven/"+"links.xls";
 	public final String DEFAULT_GROUPNAMEURL="DataDriven/"+"gatein_group_name.xls";
-	
+
 	public final String DEFAULT_CHATSTATUS_URL = "DataDriven/"+"chat_status.xls";
 	public final String DEFAULT_NOTIFICATION_DESCRIPTION_URL = "DataDriven/"+"soc_notification_description.xls";
-	
+
 	//Social
 	public final String DEFAULT_SPACE_UI_URL ="DataDriven/"+"space_GUI.xls";
 	public final String DEFAULT_SPACEVISIBLEFILEURL="DataDriven/" + "space_visibility.xls";
 	public final String DEFAULT_SPACEREGISTRATIONFILEURL="DataDriven/" + "space_registration.xls";
 	public final String DEFAULT_SPACEAPPLICATIONURL="DataDriven/"+"space_application.xls";
-	
+
 	/*======= Welcome Screen (Term and Conditions) =====*/
 	public final By ELEMENT_FIRSTNAME_ACCOUNT = By.name("firstNameAccount");
 	public final By ELEMENT_LASTNAME_ACCOUNT = By.name("lastNameAccount");
@@ -292,7 +293,7 @@ public class TestBase {
 		languageFilePath = System.getProperty("languageFilePath");
 		permissionPath = System.getProperty("permissionPath");
 		wikiTemplateFilePath = System.getProperty("wikiTemplateFilePath");
-		
+
 		changLangDataPath = System.getProperty("changLangDataPath");
 		remoteGadgetDataFilePath = System.getProperty("remoteGadgetDataFilePath");
 		appGateinDataFilePath = System.getProperty("appGateinDataFilePath");
@@ -300,11 +301,11 @@ public class TestBase {
 		wikiMessageFilePath = System.getProperty("wikiMessageFilePath");
 		gateinDefaultGroupsFilePath = System.getProperty("gateinDefaultGroupsFilePath");
 		gateinNodesFilePath = System.getProperty("gateinNodesFilePath");
-		
+
 		siteExpDrivePath=System.getProperty("siteExpDrivePath");
 		siteExpPathPath=System.getProperty("siteExpPathPath");
 		siteExpContentTypeFilePath = System.getProperty("siteExpContentTypeFilePath");
-		
+
 		dataTestFilePath = System.getProperty("dataTestPath");
 		linkPath=System.getProperty("linkPath");
 
@@ -327,13 +328,13 @@ public class TestBase {
 		activityMesFilePath = System.getProperty("activityMesFilePath");
 		chatStatusFilePath = System.getProperty("chatStatusFilePath");
 		notiDesFilePath = System.getProperty("notiDesFilePath");
-		
+
 		//Social
 		spaceUIFilePath = System.getProperty("spaceUIFilePath");
 		spaceVisibleFilePath = System.getProperty("spaceVisibleFilePath");
 		spaceRegistrationFilePath = System.getProperty("spaceRegistrationFilePath");
 		spaceappFilePath=System.getProperty("spaceappFilePath");
-		
+
 		if (nativeEvent==null) nativeEvent = DEFAULT_NATIVE_EVENT;
 		if (browser==null) browser = DEFAULT_BROWSER;
 		if (baseUrl==null) baseUrl = DEFAULT_BASEURL;
@@ -369,7 +370,7 @@ public class TestBase {
 		if (texboxFilePath==null) texboxFilePath = DEFAULT_TEXTBOXFILEURL;
 		if (languageFilePath==null) languageFilePath = DEFAULT_LANGUAGEURL;
 		if (permissionPath==null) permissionPath = DEFAULT_PERMISSIONURL;
-		
+
 		if (contactIMFilePath==null) contactIMFilePath= DEFAULT_CONTACTIMURL;
 		if (contactPhoneFilePath==null) contactPhoneFilePath= DEFAULT_CONTACTPHONEURL;
 		if (activityMesFilePath==null) activityMesFilePath= DEFAULT_ACTIVITYMESSAGEURL;
@@ -382,7 +383,7 @@ public class TestBase {
 		if (linkPath==null) linkPath = DEFAULT_LINKSURL;
 		if (gateinDefaultGroupsFilePath==null) gateinDefaultGroupsFilePath = DEFAULT_GATEINDEFAULTGROUPSURL;
 		if (gateinNodesFilePath==null) gateinNodesFilePath = DEFAULT_GATEINNODESURL;
-		
+
 		if (gadgetFilePath==null) gadgetFilePath = DEFAULT_GADGETURL;
 		if (containerFilePath==null) containerFilePath = DEFAULT_CONTAINERURL;
 		if (appLayoutFilePath==null) appLayoutFilePath = DEFAULT_APPLAYOUTURL;
@@ -390,24 +391,24 @@ public class TestBase {
 
 		if (appListGateinFilePath==null) appListGateinFilePath = DEFAULT_APPLISTGETINURL;
 		if (appAddGateinFilePath==null) appAddGateinFilePath = DEFAULT_APPADDGATEINURL;
-		
+
 		if (createNewGateinFilePath==null) createNewGateinFilePath = DEFAULT_CREATENEWGATEINURL;
 		if (categoriesGateinFilePath==null) categoriesGateinFilePath = DEFAULT_CATEGORIGATEINURL;
 		if (pageMagListFilePath==null) pageMagListFilePath = DEFAULT_PAGE_MANAGEMENT_LIST_URL;
-   
+
 		if (portalDefaultFilePath==null) portalDefaultFilePath = DEFAULT_PORTAL_DEFAULT_GATEIN_URL;
 		if (portalPermisGroupFilePath==null) portalPermisGroupFilePath = DEFAULT_PORTAL_PERMISSION_GROUP_URL;
-        if (portalPermisMemFilePath==null) portalPermisMemFilePath = DEFAULT_PORTAL_PERMISSION_MEMBERSHIPS_URL;
-        if (videoLinksFilePath==null) videoLinksFilePath = DEFAULT_VIDEO_EMBBED_LINKS_PATH;
-        if (chatStatusFilePath==null) chatStatusFilePath = DEFAULT_CHATSTATUS_URL;
-        if (notiDesFilePath==null) notiDesFilePath = DEFAULT_NOTIFICATION_DESCRIPTION_URL;
-        
-        //Social
-        if (spaceUIFilePath==null) spaceUIFilePath = DEFAULT_SPACE_UI_URL;
-        if (spaceVisibleFilePath==null) spaceVisibleFilePath = DEFAULT_SPACEVISIBLEFILEURL;
+		if (portalPermisMemFilePath==null) portalPermisMemFilePath = DEFAULT_PORTAL_PERMISSION_MEMBERSHIPS_URL;
+		if (videoLinksFilePath==null) videoLinksFilePath = DEFAULT_VIDEO_EMBBED_LINKS_PATH;
+		if (chatStatusFilePath==null) chatStatusFilePath = DEFAULT_CHATSTATUS_URL;
+		if (notiDesFilePath==null) notiDesFilePath = DEFAULT_NOTIFICATION_DESCRIPTION_URL;
+
+		//Social
+		if (spaceUIFilePath==null) spaceUIFilePath = DEFAULT_SPACE_UI_URL;
+		if (spaceVisibleFilePath==null) spaceVisibleFilePath = DEFAULT_SPACEVISIBLEFILEURL;
 		if (spaceRegistrationFilePath==null) spaceRegistrationFilePath = DEFAULT_SPACEREGISTRATIONFILEURL;
 		if (spaceappFilePath==null) spaceappFilePath= DEFAULT_SPACEAPPLICATIONURL;
-		
+
 		userDataFilePath = getAbsoluteFilePath(userDataFilePath);
 		userInfoFilePath = getAbsoluteFilePath(userInfoFilePath);
 		mailSuffixFilePath = getAbsoluteFilePath(mailSuffixFilePath);
@@ -418,24 +419,24 @@ public class TestBase {
 		languageFilePath = getAbsoluteFilePath(languageFilePath);
 		permissionPath = getAbsoluteFilePath(permissionPath);
 		wikiTemplateFilePath = getAbsoluteFilePath(wikiTemplateFilePath);
-		
+
 		changLangDataPath = getAbsoluteFilePath(changLangDataPath);
 		remoteGadgetDataFilePath = getAbsoluteFilePath(remoteGadgetDataFilePath);
 		appGateinDataFilePath = getAbsoluteFilePath(appGateinDataFilePath);
 		getStartFilePath = getAbsoluteFilePath(getStartFilePath);
 		wikiMessageFilePath = getAbsoluteFilePath(wikiMessageFilePath);
-		
-		
+
+
 		contactIMFilePath = getAbsoluteFilePath(contactIMFilePath);
 		contactPhoneFilePath = getAbsoluteFilePath(contactPhoneFilePath);
 		activityMesFilePath =getAbsoluteFilePath(activityMesFilePath);
 		conStatusFilePath = getAbsoluteFilePath(conStatusFilePath);
 		chatStatusFilePath = getAbsoluteFilePath(chatStatusFilePath);
-		
+
 		siteExpDrivePath = getAbsoluteFilePath(siteExpDrivePath);
 		siteExpPathPath = getAbsoluteFilePath(siteExpPathPath);
 		siteExpContentTypeFilePath = getAbsoluteFilePath(siteExpContentTypeFilePath);
-		
+
 		dataTestFilePath = getAbsoluteFilePath(dataTestFilePath);
 		linkPath = getAbsoluteFilePath(linkPath);
 		gateinDefaultGroupsFilePath = getAbsoluteFilePath(gateinDefaultGroupsFilePath);
@@ -456,7 +457,7 @@ public class TestBase {
 		groupNameDataFilePath = getAbsoluteFilePath(groupNameDataFilePath);
 		videoLinksFilePath = getAbsoluteFilePath(videoLinksFilePath);
 		notiDesFilePath = getAbsoluteFilePath(notiDesFilePath);
-		
+
 		//Space
 		spaceUIFilePath = getAbsoluteFilePath(spaceUIFilePath);
 		spaceappFilePath = getAbsoluteFilePath(spaceappFilePath);
@@ -501,7 +502,7 @@ public class TestBase {
 		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 		return new ChromeDriver(capabilities);
 	}
-	
+
 	/**
 	 * Init IE driver
 	 */
@@ -580,21 +581,21 @@ public class TestBase {
 		}
 		action = new Actions(driver);
 	}
-	
+
 	/**
 	 * init newDriver
 	 */
 	public void initNewDriver(){
 		getSystemProperty();
 		if("chrome".equals(browser)){
-			newDriver = new ChromeDriver();
-			chromeFlag = true;
+			newDriver = initChromeDriver();
 		} else if ("iexplorer".equals(browser)){
 			newDriver = initIEDriver();
 			ieFlag = true;
 		} else {
 			newDriver = initFFDriver();
 		}
+		newDriver.manage().window().maximize();
 	}
 
 	/**
@@ -690,7 +691,11 @@ public class TestBase {
 	 */
 	public WebElement getElement(Object locator, Object... opParams) {
 		By by = locator instanceof By ? (By)locator : By.xpath(locator.toString());
-		WebDriver wDriver = (WebDriver) (opParams.length > 0 ? opParams[0]: driver);	
+		WebDriver wDriver;
+		if(isDriver)
+			wDriver = (WebDriver) (opParams.length > 0 ? opParams[0]: driver);
+		else
+			wDriver = (WebDriver) (opParams.length > 0 ? opParams[0]: newDriver);
 		WebElement elem = null;
 		try {
 			elem = wDriver.findElement(by);
@@ -708,7 +713,11 @@ public class TestBase {
 	 */
 	public WebElement getDisplayedElement(Object locator, Object... opParams) {
 		By by = locator instanceof By ? (By)locator : By.xpath(locator.toString());
-		WebDriver wDriver = (WebDriver) (opParams.length > 0 ? opParams[0]: driver);	
+		WebDriver wDriver;
+		if(isDriver)
+			wDriver = (WebDriver) (opParams.length > 0 ? opParams[0]: driver);
+		else
+			wDriver = (WebDriver) (opParams.length > 0 ? opParams[0]: newDriver);
 		WebElement e = null;
 		try {
 			if(by != null)
@@ -765,7 +774,11 @@ public class TestBase {
 		int timeout = (Integer) (opParams.length>0 ? opParams[0] : DEFAULT_TIMEOUT);
 		int isAssert = (Integer) (opParams.length > 1 ? opParams[1]: 1);
 		int notDisplayE = (Integer) (opParams.length > 2 ? opParams[2]: 0);
-		WebDriver wDriver = (WebDriver) (opParams.length > 3 ? opParams[3]: driver);	
+		WebDriver wDriver;
+		if(isDriver)
+			wDriver = (WebDriver) (opParams.length > 3 ? opParams[3]: driver);
+		else
+			wDriver = (WebDriver) (opParams.length > 3 ? opParams[3]: newDriver);
 		for (int tick = 0; tick < timeout/WAIT_INTERVAL; tick++) {
 			if (notDisplayE == 2){
 				elem = getElement(locator,wDriver);
@@ -1263,7 +1276,7 @@ public class TestBase {
 			loopCount = 0;
 		}
 	}
-	
+
 	/**
 	 * doubleClickOnElement
 	 * @param locator
@@ -1957,7 +1970,7 @@ public class TestBase {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		jse.executeScript("arguments[0].scrollIntoView(true);", element);
 	}
-	
+
 	/**
 	 *This function will try to get an element. if after timeout, the element is not found.
 	 *The function will refresh the page and find the element again.
