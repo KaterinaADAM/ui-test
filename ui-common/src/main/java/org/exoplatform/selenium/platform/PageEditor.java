@@ -570,15 +570,22 @@ public class PageEditor extends PlatformBase {
 	 * @param membership
 	 * 			Membership name in group
 	 */
-	public void addAccessPermissionforPortlet(Object portletName, String groupName, String membership){
+	public void addAccessPermissionforPortlet(Object portletName, String groupName, String membership, boolean...makePublic){
+		boolean makepublic = (makePublic.length > 0 ? makePublic[0] : false);
 		goToEditPortlet(portletName);
 		Utils.pause(2000);
 		click(ELEMENT_PORTLET_ACCESS_PERMISSION_TAB);
 		Utils.pause(2000);
-		click(ELEMENT_PORTLET_ADD_PERMISSION_BUTTON);
-//		waitForAndGetElement(ELEMENT_PORTLET_LIST_PERMISSION_WINDOW);
-		click(ELEMENT_PORTLET_PERMISSION_GROUP.replace("${groupName}", groupName));
-		click(ELEMENT_PORTLET_PERMISSION_MEMBERSHIP.replace("${membership}", membership));
+		if (makepublic){
+			waitForAndGetElement(ELEMENT_ACCESS_PERMISSION_MAKEITPUBLIC, 4000, 0);
+			check(ELEMENT_ACCESS_PERMISSION_MAKEITPUBLIC);
+		}
+		else {
+			click(ELEMENT_PORTLET_ADD_PERMISSION_BUTTON);
+			//		waitForAndGetElement(ELEMENT_PORTLET_LIST_PERMISSION_WINDOW);
+			click(ELEMENT_PORTLET_PERMISSION_GROUP.replace("${groupName}", groupName));
+			click(ELEMENT_PORTLET_PERMISSION_MEMBERSHIP.replace("${membership}", membership));
+		}
 		click(ELEMENT_PORTLET_SAVE_AND_CLOSE_BUTTON);
 		waitForElementNotPresent(ELEMENT_PORTLET_ADD_PERMISSION_BUTTON);
 	}

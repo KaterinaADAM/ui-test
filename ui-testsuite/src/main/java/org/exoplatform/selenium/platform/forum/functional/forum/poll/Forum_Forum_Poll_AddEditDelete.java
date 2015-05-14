@@ -11,6 +11,7 @@ import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.HomePageActivity;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationToolbar;
+import org.exoplatform.selenium.platform.PageEditor;
 import org.exoplatform.selenium.platform.PageManagement;
 import org.exoplatform.selenium.platform.forum.ForumBase;
 import org.exoplatform.selenium.platform.forum.ForumManageCategory;
@@ -37,6 +38,7 @@ public class Forum_Forum_Poll_AddEditDelete extends ForumBase {
 	NavigationToolbar nav;
 	HomePageActivity home;
 	PageManagement mPage; 
+	PageEditor pageEdit;
 	
 	@BeforeMethod
 	public void setUpBeforeTest() {
@@ -51,6 +53,7 @@ public class Forum_Forum_Poll_AddEditDelete extends ForumBase {
 		mPage = new PageManagement(driver, this.plfVersion);
 		button = new Button(driver, this.plfVersion);
 		acc = new ManageAccount(driver,this.plfVersion);
+		pageEdit = new PageEditor(driver, this.plfVersion);
 		acc.signIn(DATA_USER1, DATA_PASS);
 		alert = new ManageAlert(driver);
 	}
@@ -454,6 +457,7 @@ public class Forum_Forum_Poll_AddEditDelete extends ForumBase {
 		click(fmPoll.ELEMENT_POLL_SUBMIT_BUTTON);
 		Utils.pause(500);
 		button.close();
+		pageEdit.addAccessPermissionforPortlet(ELEMENT_FRAME_CONTAIN_PORTLET, "", "", true);
 		click(ELEMENT_PAGE_FINISH_BUTTON);
 		waitForTextNotPresent("Page Editor");
 		Utils.pause(1000);
