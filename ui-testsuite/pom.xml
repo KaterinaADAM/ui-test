@@ -326,7 +326,7 @@
 		<profile>
 			<id>forum-forum-part4</id>
 			<properties>
-				<testSuite>fforum-forum-part4.xml</testSuite>
+				<testSuite>forum-forum-part4.xml</testSuite>
 			</properties>
 		</profile>
 		<profile>
