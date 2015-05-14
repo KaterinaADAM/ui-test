@@ -65,7 +65,7 @@ public class Forum_Forum_Topic_ActiveSortWatchAndUnwatch extends ForumBase{
 	@Test
 	public  void test01_CheckSendNotifyWhenAddPostInTopicOrForumOrCategoryThatIsBeingWatched() throws AWTException {
 		info("Test 1: Check send notify when add post in topic or forum or category that is being watched");
-		String catName = "Category 72677";
+		String catName = "Category 72677" + getRandomNumber();
 		String order = "1";
 		int chooseRestricted = 1;
 		String []restricted = {DATA_USER1};

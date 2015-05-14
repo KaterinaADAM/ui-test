@@ -233,6 +233,7 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_POSITION_TEXTBOX_EDIT = By.id("position");
 	public final By ELEMENT_EDIT_POSITION_SAVE_BUTTON = By.id("savePosition");
 	public final By ELEMENT_EDIT_BASIC_INFORMATION = By.xpath("//*[@id='UIBasicInfoSection']//*[@class='uiIconEdit']");
+	public final By ELEMENT_EDIT_MY_PROFILE = By.xpath("//*[@class='uiIconEdit uiIconLightGray']");
 	public final By ELEMENT_FIRST_NAME_TEXTBOX_EDIT = By.id("firstName");
 	public final By ELEMENT_LAST_NAME_TEXTBOX_EDIT = By.id("lastName");
 	public final By ELEMENT_EMAIL_TEXTBOX_EDIT = By.id("email");

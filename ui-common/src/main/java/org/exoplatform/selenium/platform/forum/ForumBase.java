@@ -280,7 +280,8 @@ public class ForumBase extends PlatformBase {
 	public final By ELEMENT_ATTACHMENT_SAVE_BUTTON = By.xpath("//button[@class='btn' and text()='Save'");
 
 	//-----------------------User Management--------------------------------------------//
-	public final By ELEMENT_USER_MANAGEMENT_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='User Management']");
+	//public final By ELEMENT_USER_MANAGEMENT_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='User Management']");
+	public final By ELEMENT_USER_MANAGEMENT_POPUP = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Users']");
 	public final String ELEMENT_USER_EDIT_ICON = "//*[text()='${user}']/..//*[contains(@href, 'EditProfile')]";
 	public final String ELEMENT_VIEW_USER_PROFILE_ICON = "//*[text()='${user}']/..//*[@class='uiIconPreview uiIconLightGray']";
 	public final By ELEMENT_SEARCH_USER_INPUT = By.id("SearchUser");
