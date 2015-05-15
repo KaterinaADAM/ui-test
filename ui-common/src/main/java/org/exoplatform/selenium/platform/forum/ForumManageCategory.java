@@ -111,7 +111,7 @@ public class ForumManageCategory extends ForumBase {
 	//-------------------Message-------------------------------------
 	public String MESSAGE_CATEGORY_NOT_EXISTE ="The category isn't existed";
 	public String MESSAGE_RESTRICTED_AUDIENCE_INVALID="The field \"Restricted Audience\" is invalid: ";
-	public String MESSAGE_CATEGORY_MODERATOR_INVALID = " not found, please enter a valid value.";
+	public String MESSAGE_CATEGORY_MODERATOR_INVALID = "not found, please enter a valid value.";
 	
 	/*------------------------------------common function---------------------------------*/
 

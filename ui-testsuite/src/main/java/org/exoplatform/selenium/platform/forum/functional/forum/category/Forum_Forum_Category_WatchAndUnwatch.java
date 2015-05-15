@@ -108,14 +108,14 @@ public class Forum_Forum_Category_WatchAndUnwatch extends ForumBase{
 	@Test
 	public void test02_CheckSendNotify_AddTopic_WatchCategory_RequiredApproval() throws AWTException {
 		/*Declare variables*/ 
-		String catName = "Category 109104"; 
+		String catName = "Category" + getRandomNumber(); 
 		String order = "1";
 		int chooseRestricted = 1;
 		String[] restricted = {DATA_USER4}; 
 		String description = "Description of Category 002";
-		String[] addForum = {"Forum 109104", "1", "Open", "Unlocked", "Description of forum 002"}; 	
-		String title = "Title topic 109104"; 
-		String message = "Topic 109104";
+		String[] addForum = {"Forum" + getRandomNumber(), "1", "Open", "Unlocked", "Description of forum 002"}; 	
+		String title = "Title topic" + getRandomNumber(); 
+		String message = "Topic" + getRandomNumber();
 		By mail = By.xpath(ELEMENT_GMAIL_EMAIL2.replace("${category}",catName).replace("${forum}", addForum[0]).replace("${topic}", title));
 
 		/* Step 1: Create category, forum */

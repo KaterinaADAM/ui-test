@@ -442,7 +442,7 @@ public class Forum_Forum_Category_Add extends ForumBase {
 	@Test
 	public void test07_AddANewCategoryInCaseValidUserRoleAndGroupEntryForRestrictedAudienceFieldAtOnce() {
 		info("Test 7: Add a new category in case valid user, role and group entry for Restricted audience field at once");
-		String catName = "Category 109095";
+		String catName = "Category" + getRandomNumber();
 		String order = "0";
 		int chooseRestricted = 1;
 		String[] restricted = {"james, manager:/platform/web-contributors, /developers" };
@@ -516,7 +516,7 @@ public class Forum_Forum_Category_Add extends ForumBase {
 	@Test
 	public  void test08_AddCategoryWithValidUserEntryForModeratorField() {
 		info("Test 08 Add category with valid user entry for Moderator field");
-		String catName = "Category 109098";
+		String catName = "Category" + getRandomNumber();
 		String order = "1";
 		int chooseRestricted = 5;
 		String[] restricted = {""}; 
@@ -1015,7 +1015,7 @@ public class Forum_Forum_Category_Add extends ForumBase {
 	@Test
 	public  void test12_AddCategoryWithInvalidUserEntryForModeratorField() {
 		info("Test 12 Add category with invalid user entry for Moderator field");
-		String catName = "Category 109102";
+		String catName = "Category" +getRandomNumber();
 		String order = "1";
 		int chooseRestricted = 5;
 		String[] restricted = {""}; 

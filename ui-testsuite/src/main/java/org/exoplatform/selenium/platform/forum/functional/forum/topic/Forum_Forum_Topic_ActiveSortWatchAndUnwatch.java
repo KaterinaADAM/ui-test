@@ -65,16 +65,16 @@ public class Forum_Forum_Topic_ActiveSortWatchAndUnwatch extends ForumBase{
 	@Test
 	public  void test01_CheckSendNotifyWhenAddPostInTopicOrForumOrCategoryThatIsBeingWatched() throws AWTException {
 		info("Test 1: Check send notify when add post in topic or forum or category that is being watched");
-		String catName = "Category 72677" + getRandomNumber();
+		String catName = "Category" + getRandomNumber();
 		String order = "1";
 		int chooseRestricted = 1;
 		String []restricted = {DATA_USER1};
-		String description = "Description Category 72677";
+		String description = "Description Category 72677" + getRandomString();
 		int setPermission = 2;
 		String []userGroup = {DATA_USER1};
-		String []addForum = {"Forum 72677", "1", "Open", "Unlocked", "Description of forum 001"};
-		String title = "Topic 72677";
-		String message = "Topic 72677";
+		String []addForum = {"Forum 72677" + getRandomNumber(), "1", "Open", "Unlocked", "Description of forum 001"};
+		String title = "Topic 72677" + getRandomNumber();
+		String message = "Topic 72677" + getRandomNumber();
 		String[] permission = {""};
 		
 		/*Step 1: Create category, forum, topic
@@ -285,7 +285,8 @@ public class Forum_Forum_Topic_ActiveSortWatchAndUnwatch extends ForumBase{
 		//Check email
 		goToMail(EMAIL_ADDRESS1, EMAIL_PASS);
 		//checkAndDeleteMailUsingRobot(By.xpath(ELEMENT_GMAIL_EMAIL.replace("${category}",catName).replace("${forum}", addForum[0])), title);
-		checkAndDeleteMail(By.xpath(ELEMENT_GMAIL_EMAIL.replace("${category}",catName).replace("${forum}", addForum[0])), title);
+		//checkAndDeleteMail(By.xpath(ELEMENT_GMAIL_EMAIL.replace("${category}",catName).replace("${forum}", addForum[0])), title);
+		checkAndDeleteMailUsingRobot(By.xpath(ELEMENT_GMAIL_EMAIL.replace("${category}",catName).replace("${forum}", addForum[0])), title);
 		// Clean data test
 		switchToParentWindow();
 		//goToForums();
@@ -379,7 +380,8 @@ public class Forum_Forum_Topic_ActiveSortWatchAndUnwatch extends ForumBase{
 
 		//Check email
 		goToMail(EMAIL_ADDRESS1, EMAIL_PASS);
-		checkAndDeleteMail(By.xpath(ELEMENT_GMAIL_EMAIL.replace("${category}",catName).replace("${forum}", addForum[0])), key);
+		//checkAndDeleteMail(By.xpath(ELEMENT_GMAIL_EMAIL.replace("${category}",catName).replace("${forum}", addForum[0])), key);
+		checkAndDeleteMailUsingRobot(By.xpath(ELEMENT_GMAIL_EMAIL.replace("${category}",catName).replace("${forum}", addForum[0])), title);
 		
 		// Clean data test
 		switchToParentWindow();
@@ -470,8 +472,9 @@ public class Forum_Forum_Topic_ActiveSortWatchAndUnwatch extends ForumBase{
 		info("User 2 check email.");
 		goToMail(EMAIL_ADDRESS1, EMAIL_PASS);
 		String hadleMail = driver.getWindowHandle();
-		checkAndDeleteMail(By.xpath(ELEMENT_GMAIL_EMAIL.replace("${category}",catName).replace("${forum}", addForum[0])), message);
-
+		//checkAndDeleteMail(By.xpath(ELEMENT_GMAIL_EMAIL.replace("${category}",catName).replace("${forum}", addForum[0])), message);
+		checkAndDeleteMailUsingRobot(By.xpath(ELEMENT_GMAIL_EMAIL.replace("${category}",catName).replace("${forum}", addForum[0])), title);
+		
 		/*Step 4: Do set view permission for the user on the category/forum/topic he added watch
 		 *Input Data: 
 		- Login as root to restrict view permission on the category which the being watched forum/topic belong to

@@ -365,7 +365,7 @@ public class Forum_Forum_PortletSettings extends ForumBase {
 	 * Step 4: Check Forum application after settings
 	 */
 	public void test09_EnableTheDisablingPollPanelInForumPorletSetting() {
-		String catName = "Category setting forum 10";
+		String catName = "Category" + getRandomNumber();
 		String fmName = "Test 10 new forum";
 		String topName = "Test 10 topic";
 		String pollQuestion = "Poll 02";
@@ -395,7 +395,7 @@ public class Forum_Forum_PortletSettings extends ForumBase {
 		//********************************Remove data***********************************//
 		info("Remove data");
 		goToForumHome();
-		click(fmCat.ELEMENT_CATEGORY_NAME);
+		click(fmCat.ELEMENT_CATEGORY_NAME.replace("${catName}", catName));
 		fmCat.deleteCategoryInForum(catName);
 		info("Data deleted");
 		goToUserManagement(DATA_USER4);
@@ -417,7 +417,7 @@ public class Forum_Forum_PortletSettings extends ForumBase {
 	 * Step 4: Check Forum application after settings
 	 */
 	public void test10_EnableTheDisablingQuickReplyPanelInForumPorletSetting() {
-		String catName = "Category setting forum 10";
+		String catName = "Category" + getRandomNumber();
 		String fmName = "Test 10 new forum";
 		String topName = "Test 10 topic";
 
@@ -466,7 +466,7 @@ public class Forum_Forum_PortletSettings extends ForumBase {
 	 * Step 4: Check Forum application after settings
 	 */
 	public void test11_EnableTheDisablingRulesPanelInForumPorletSetting() {
-		String catName = "Category setting forum 10";
+		String catName = "Category" + getRandomNumber();
 		String fmName = "Test 10 new forum";
 		String topName = "Test 10 topic";
 
@@ -493,7 +493,7 @@ public class Forum_Forum_PortletSettings extends ForumBase {
 		acc.signOut();
 		acc.signIn(DATA_USER1, DATA_PASS);
 		goToForums();
-		click(fmCat.ELEMENT_CATEGORY_NAME);
+		click(fmCat.ELEMENT_CATEGORY_NAME.replace("${catName}", catName));
 		fmCat.deleteCategoryInForum(catName);
 		info("Data deleted");
 		goToUserManagement(DATA_USER4);
@@ -544,7 +544,7 @@ public class Forum_Forum_PortletSettings extends ForumBase {
 	 * Step 4: Check Forum application after settings
 	 */
 	public void test13_HideCategoryInForumPortletSettings() {
-		String catName1 = "Category setting forum 13";
+		String catName1 = "Category" + getRandomNumber();
 		String description1 = "Add new category 13 in forum";
 
 		fmCat.addNewCategoryInForum(catName1, "1", 0, null, description1, 0, null);
@@ -592,7 +592,7 @@ public class Forum_Forum_PortletSettings extends ForumBase {
 	 */
 	public void test14_HideForumOfCategoryWhichShowingInForumPortletSettings() {
 		info("Test 1: Hide/show Forum of category which showing in Forum portlet settings");
-		String catName = "Test 1 new Category";
+		String catName = "Category" + getRandomNumber();
 		String[] fmName={"Test 1 new forum",null,null,null,null};
 		String description1 = "Add new category 1 in forum";
 		fmCat.addNewCategoryInForum(catName, "1", 0, null, description1, 0, null);
@@ -622,7 +622,7 @@ public class Forum_Forum_PortletSettings extends ForumBase {
 	 * Step 4: Check Forum application after settings
 	 */
 	public void test15_ShowTheHiddenCategoryInForumPortletSettings() {
-		String catName = "Test 1 new Category";
+		String catName = "Category" + getRandomNumber();
 		String[] fmName={"Test 1 new forum",null,null,null,null};
 
 		goToForums();
@@ -656,7 +656,7 @@ public class Forum_Forum_PortletSettings extends ForumBase {
 	 */
 	public void test16_ShowTheHiddenForumOfCategoryWhichShowingInForumPortletSettings() {
 		info("Test 1: Hide/show Forum of category which showing in Forum portlet settings");
-		String catName = "Test 1 new Category";
+		String catName = "Category" + getRandomNumber();
 		String[] fmName={"Test 1 new forum",null,null,null,null};
 		String description1 = "Add new category 1 in forum";
 		fmCat.addNewCategoryInForum(catName, "1", 0, null, description1, 0, null);

@@ -332,7 +332,7 @@
 		<profile>
 			<id>forum-forum-part5</id>
 			<properties>
-				<testSuite>forum-forum-part5</testSuite>
+				<testSuite>forum-forum-part5.xml</testSuite>
 			</properties>
 		</profile>
 		<profile>
