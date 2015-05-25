@@ -543,21 +543,29 @@ public class UserAndGroupManagement extends PlatformBase {
 	 *            name of user
 	 */
 	public void deleteUser(String username) {
-		String userDeleteIcon = ELEMENT_USER_DELETE_ICON.replace("${username}",
-				username);
 		info("--Deleting user " + username + "--");
-		searchUser(username, ELEMENT_MSG_SEARCH_USER_NAME);
-		Utils.pause(3000);
-		click(userDeleteIcon);
-		alert.waitForConfirmation(ELEMENT_MSG_CONFIRM_DELETE.replace("${userName}", username));
-		Utils.pause(1000);
-		type(ELEMENT_INPUT_SEARCH_USER_NAME, username, true);
-		select(ELEMENT_SELECT_SEARCH_OPTION, ELEMENT_MSG_SEARCH_USER_NAME);
+		info("--Search user " + username + "--");
+		if (isTextPresent("Search")) {
+			type(ELEMENT_INPUT_SEARCH_USER_NAME, username, true);
+			select(ELEMENT_SELECT_SEARCH_OPTION, ELEMENT_MSG_SEARCH_USER_NAME);
+		}
 		click(ELEMENT_SEARCH_ICON_USERS_MANAGEMENT);
-		waitForMessage(ELEMENT_MSG_RESULT);
-		dialog.closeMessageDialog();
-		searchUser("", ELEMENT_MSG_SEARCH_USER_NAME);
-		waitForElementNotPresent(userDeleteIcon);
+		if (waitForAndGetElement( ELEMENT_USER_DELETE_ICON.replace("${username}",
+				username), 2000, 0) != null) {
+			Utils.pause(2000);
+			click( ELEMENT_USER_DELETE_ICON.replace("${username}",
+					username));
+			alert.waitForConfirmation(ELEMENT_MSG_CONFIRM_DELETE.replace(
+					"${userName}", username));
+			Utils.pause(1000);
+			type(ELEMENT_INPUT_SEARCH_USER_NAME, username, true);
+			select(ELEMENT_SELECT_SEARCH_OPTION, ELEMENT_MSG_SEARCH_USER_NAME);
+			click(ELEMENT_SEARCH_ICON_USERS_MANAGEMENT);
+			waitForMessage(ELEMENT_MSG_RESULT);
+			dialog.closeMessageDialog();
+			searchUser("", ELEMENT_MSG_SEARCH_USER_NAME);
+			Utils.pause(2000);
+		}
 	}
 	/**
 	 * Remove a user from a group

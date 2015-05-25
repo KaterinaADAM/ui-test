@@ -632,8 +632,8 @@ public class Calendar_Setting extends PlatformBase {
 		 *Expected Outcome: 
 			- List all existing calendar using the exact same list as on the Calendar view including Personal calendar, Group calendar, Shared calendar
 			- Calendars that showing are checked*/
-		click(cMang.ELEMENT_CALENDAR_SETTING_TAB_ITEM.replace("$tab", "Displayed Calendars"));
-		waitForAndGetElement(cMang.ELEMENT_DISPLAY_FORM_PERSONAL_CALENDAR_ITEM_CHECKBOX.replace("$name", fullName));
+		cMang.goToDisplayCalendarTab();
+		waitForAndGetElement(cMang.ELEMENT_DISPLAY_CALENDAR_FORM_CHECKED.replace("$calendar", fullName));
 		waitForAndGetElement(cMang.ELEMENT_DISPLAY_FORM_GROUP_CALENDAR_ITEM_CHECKBOX.replace("$name", group));
 
 		/*Step number: 3
@@ -646,8 +646,8 @@ public class Calendar_Setting extends PlatformBase {
 		 *Expected Outcome: 
 			- Change is saved 
 			- Unchecked calendar(s) is not shown in left pane and its event/task are also not shown in working pane or list*/ 
-		cMang.showHidePersonalCalendar(fullName, false);
-		cMang.showHideGroupCalendar(group, false);
+		cMang.showHideCalendar(fullName, false);
+		cMang.showHideCalendar(group, false);
 		cMang.saveSetting();
 		waitForElementNotPresent(cMang.ELEMENT_CALENDAR_LIST_ITEM.replace("$calendar", fullName));
 		waitForElementNotPresent(cMang.ELEMENT_CALENDAR_LIST_ITEM.replace("$calendar", group));
@@ -657,9 +657,9 @@ public class Calendar_Setting extends PlatformBase {
 		info("Reset data");
 		hp.goToCalendarPage();
 		cMang.goToMenuFromMainCalendar(menuOfMainCalendar.CALSETTING);
-		click(cMang.ELEMENT_CALENDAR_SETTING_TAB_ITEM.replace("$tab", "Displayed Calendars"));
-		cMang.showHidePersonalCalendar(fullName, true);
-		cMang.showHideGroupCalendar(group, true);
+		cMang.goToDisplayCalendarTab();
+		cMang.showHideCalendar(fullName, false);
+		cMang.showHideCalendar(group, false);
 		cMang.saveSetting();
 		cHome.deleteEventTask(titleEvent, selectViewOption.LIST, selectDayOption.ONEDAY,null);
 		cHome.deleteEventTask(titleTask, selectViewOption.LIST, selectDayOption.ONEDAY,null);
@@ -722,7 +722,7 @@ public class Calendar_Setting extends PlatformBase {
 		 *Expected Outcome: 
 			- Feed tab is shown
 			- Form to add new feed is shown*/
-		click(cMang.ELEMENT_CALENDAR_SETTING_TAB_ITEM.replace("$tab", "Feeds"));
+		cMang.goToFeedTab();
 		click(cMang.ELEMENT_FEED_TAB_SAVE_BUTTON);
 		waitForAndGetElement(cMang.ELEMENT_FEED_EDIT_FEED_FORM);
 

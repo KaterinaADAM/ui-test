@@ -469,6 +469,7 @@ public class SpaceManagement extends SpaceHomePage {
 		info("Open Agenda Tab");
 		click(ELEMENT_AGENDA_TAB);
 		waitForAndGetElement(ELEMENT_AGENDA_EVENT_ADD_BTN,2000,0);
+		Utils.pause(2000);
 		info("Agenda portlet is shown");
 	}
 	

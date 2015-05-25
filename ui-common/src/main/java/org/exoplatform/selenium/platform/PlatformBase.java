@@ -42,6 +42,7 @@ public class PlatformBase extends TestBase {
 	public final By ELEMENT_GMAIL_INBOX = By.xpath("//a[contains(@title, 'Inbox')]");
 	public final By ELEMENT_MAIL_CONTENT = By.xpath("//*[contains(@class, 'adP adO')]/div");
 	public final By ELEMENT_GMAIL_USERNAME = By.id("Email");
+	public final By ELEMENT_GMAIL_NEXT_BTN=By.id("next");
 	public final By ELEMENT_GMAIL_PASS = By.id("Passwd");
 	public final By ELEMENT_GMAIL_SIGN_IN = By.id("signIn");
 	public final String ELEMENT_GMAIL_TITLE = "//td/div[@class='xS']//div[@class='xT']//span/b[contains(text(),'{$title}')]";
@@ -251,11 +252,14 @@ public class PlatformBase extends TestBase {
 			}
 		}
 		type(ELEMENT_GMAIL_USERNAME, email, true);
+		click(ELEMENT_GMAIL_NEXT_BTN);
+		Utils.pause(1000);
 		type(ELEMENT_GMAIL_PASS, pass, true);
 		click(ELEMENT_GMAIL_SIGN_IN);
 		clearCache();
+		Utils.pause(2000);
 		click(ELEMENT_GMAIL_INBOX);
-		Utils.pause(1000);
+		Utils.pause(2000);
 	}
 	
 	/**

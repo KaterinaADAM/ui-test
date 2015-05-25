@@ -7,13 +7,14 @@
 			</run>
 		</groups>
 		<classes>
-			<class name="org.org.exoplatform.selenium.platform.calendar.functional.CAL_TestConfig" />
+			<class name="org.exoplatform.selenium.platform.calendar.functional.CAL_TestConfig" />
 			<class name="org.exoplatform.selenium.platform.calendar.functional.CAL_Activity_Event_Activity_Actions" />
 			<class name="org.exoplatform.selenium.platform.calendar.functional.CAL_Activity_Event_Activity_Add" />
 			<class name="org.exoplatform.selenium.platform.calendar.functional.CAL_Activity_General" />
 			<class name="org.exoplatform.selenium.platform.calendar.functional.CAL_Activity_Task_Details" />
 			<class name="org.exoplatform.selenium.platform.calendar.functional.CAL_Activity_Event_Activity_Delete" />
 			<class name="org.exoplatform.selenium.platform.calendar.functional.CAL_Activity_Event_Activity_Display" />
+			<class name="org.exoplatform.selenium.platform.calendar.functional.CAL_Activity_Event_Activity_Recurring" />
 		</classes>
 	</test>
 	<listeners>

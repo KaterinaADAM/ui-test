@@ -14,12 +14,11 @@ import org.openqa.selenium.interactions.Actions;
 
 public class CalendarHomePage extends PlatformBase{
 
-	PlatformPermission per;
-	ManageAlert alert;
-
+	
 	//Calendar panel
 	public final By ELEMENT_CALENDAR_WORKING_PANEL = By.id("UICalendarWorkingContainer");
 	public final String ELEMENT_CELL_TO_WORKING_PANEL = "//td[contains(@startfull,'$date $time:00')]";
+	public final String ELEMENT_CELL_TO_MONTH_WORKING_PANEL = "//td[contains(@starttimefull,'$date')]";
 	public String ELEMENT_ANY_TARGET_DATE = "//*[contains(@startfull, '${targetDate}') or contains(@starttimefull, '${targetDate}')]";
 	public By ELEMENT_CALENDAR_PANEL = By.xpath("//div[@class='uiBox uiCalendars']");
 	public By ELEMENT_SHOW_HIDE_LEFT_PANEL = By.xpath("//div[@id='ShowHideAll']/i");
@@ -39,6 +38,7 @@ public class CalendarHomePage extends PlatformBase{
 	//Day View
 	public final String ELEMENT_EVENT_TASK_DAY_VIEW_ALL_DAY="//*[@id='UIDayView']//*[@class='eventAllDay']//*[contains(@class,'eventContainer')]//div[contains(.,'$name')]";
 	public final String ELEMENT_EVENT_TASK_DAY_VIEW_ONE_DAY="//*[@id='UIDayViewGrid']//div[contains(text(),'$name')]";
+	public final String ELEMENT_EVENT_TASK_DAY_ONE_DAY=".//*[contains(@class,'OddRow')]//*[contains(@startfull,'$time')]";
 
 	//Week View
 	public final String ELEMENT_EVENT_TASK_WEEK_VIEW_ALL_DAY="//*[@id='UIWeekView']//*[@class='eventAllDay']//*[contains(@class,'eventContainer') and contains(@style,'display: block')]//div[contains(text(),'$name')]";
@@ -46,13 +46,23 @@ public class CalendarHomePage extends PlatformBase{
 	public final String ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_VIEW_ONE_DAY = "//*[@id='UIWeekViewGrid']//*[contains(@startfull,'$date')]//div[contains(text(),'$name')]";
 	public final String ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_VIEW_ALL_DAY = "//*[@id='UIWeekViewGridAllDay']//*[contains(@starttimefull,'$date')]//div[contains(text(),'$name')]";
 	public final String ELEMENT_WEEK_VIEW_BAR_TIME="//*[@class='eventWeekBar']//td['$index']/a";
-
+	public final String ELEMENT_EVENT_TASK_DETAIL_TIME_WEEK="//*[@id='UIWeekViewGrid']//*[contains(@startfull,'$date')]//div[contains(text(),'$name')]/..//*[contains(.,'$time')]";
+	public final String ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ONE_DAY = "//*[@id='UIWeekViewGrid']//*[contains(@startfull,'$date')]";
+	public final String ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ALL_DAY = "//*[@id='UIWeekViewGridAllDay']//*[contains(@starttimefull,'$date')]";
+	
+	//Context Menu when right click on a datetime
+	public By ELEMENT_CONTEXT_MENU_ADD_EVENT=By.xpath(".//*[@id='tmpMenuElement']//*[contains(@class,'uiIconCalCreateEvent')]");
+	public By ELEMENT_CONTEXT_MENU_ADD_TASK=By.xpath(".//*[@id='tmpMenuElement']//*[contains(@class,'uiIconCalCreateTask')]");
+	
 	//Month View
 	public final String ELEMENT_EVENT_TASK_MONTH_VIEW="//*[@id='UIMonthView']//span[contains(text(),'$name')]";
+	public final String ELEMENT_EVENT_TASK_MONTH_DATE="//*[@id='UIMonthViewGrid']//*[contains(@starttimefull,'$date')]";
 	public final String ELEMENT_EVENT_TASK_DETAIL_DATE_MONTH_VIEW="//*[@id='UIMonthView']//*[@class='eventMonthContent']//*[@class='rowContainerDay']/*[contains(@starttimefull,'$date')]//span[contains(text(),'$name')]";
 	public final String ELEMENT_EVENT_TASK_DETAIL_DATE_MONTH_VIEW_MORE="//*[@id='UIMonthView']//*[@class='eventMonthContent']//*[@class='moreEventContainer']//*[contains(@starttimefull,'$date')]//span[contains(text(),'$name')]";
 	public final String ELEMENT_EVENT_TASK_DETAIL_DATE_MONTH_VIEW_MORE_ICON="//*[@id='UIMonthView']//*[contains(@starttimefull,'$date')]/..//*[@class='moreEvent' and not(contains(@style, 'display'))]/*[@class='moreEventLabel']";
-
+	public final String ELEMENT_EVENT_TASK_DETAIL_DATE_MONTH_VIEW_MORE_LABEL=".//*[contains(@starttimefull,'$date')]/../../..//*[contains(@class,'moreEventLabel')]";
+	
+	
 	//List View
 	public final String ELEMENT_EVENT_TASK_LIST_VIEW="//*[@id='UIListView']//*[@class='uiListViewRow']//*[contains(text(),'$name')]";
 	public final String ELEMENT_EVENT_TASK_START_DETAIL_DATE_LIST_VIEW="//*[@id='UIListView']//*[contains(text(),'$name')]/../..//td[5][contains(text(),'$date')]";
@@ -105,13 +115,15 @@ public class CalendarHomePage extends PlatformBase{
 	public String ELEMENT_PREVIEW_TASK_EVENT_NAME="//*[@id='UIEventPreview']//*[text()='$name']";
 	public By ELEMENT_CLOSE_PREVIEW_TASK_EVENT_FORM=By.xpath("//*[@id='UIEventPreview']//*[text()='Close']");
 
+	PlatformPermission per;
+	ManageAlert alert;
 	/**
 	 * constructor
 	 * @param dr
 	 */
 	public CalendarHomePage(WebDriver dr){
 		this.driver=dr;
-		alert = new ManageAlert(driver);
+		alert = new ManageAlert(dr);
 	}
 
 	/**
@@ -655,7 +667,168 @@ public class CalendarHomePage extends PlatformBase{
 			break;
 		}
 	}
-
+	
+	
+	/**
+	 * Open Add/Edit task/event by left clicking
+	 * @param date
+	 *          date of event: format (MMM dd yyyy HH:mm:ss)
+	 * @param view
+	 *          view: DAY, WEEK, MONTH, WORKWEEK;
+	 * @param optionDay
+	 *          select ONEDAY or ALLDAY
+	 */
+	public void openAddEditEventTaskByLeftClick(String date, selectViewOption view, selectDayOption optionDay){
+		info("Open Quick Add/EDit task/event by left click");
+		goToView(view);
+		switch (view) {
+		case DAY:
+			click(ELEMENT_EVENT_TASK_DAY_ONE_DAY.replace("$time", date));
+			break;
+		case WEEK:
+			switch (optionDay) {
+			case ONEDAY:
+				click(ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ONE_DAY.replace(
+						"$date", date));
+				break;
+			case ALLDAY:
+				click(ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ALL_DAY.replace(
+						"$date", date));
+				break;
+			default:
+				click(ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ONE_DAY.replace(
+						"$date", date));
+				break;
+			}
+			break;
+		case MONTH:
+			click(ELEMENT_EVENT_TASK_MONTH_DATE.replace("$date", date));
+			break;
+		case WORKWEEK:
+			switch (optionDay) {
+			case ONEDAY:
+				click(ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ONE_DAY.replace(
+						"$date", date));
+				break;
+			case ALLDAY:
+				click(ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ALL_DAY.replace(
+						"$date", date));
+				break;
+			default:
+				click(ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ONE_DAY.replace(
+						"$date", date));
+				break;
+			}
+			break;
+		default:
+			info("You don't select a datetime.Please select a datetime.");
+			break;
+		}
+		Utils.pause(2000);
+	
+	}
+	
+	/**
+	 * Open Add/Edit task/event by right clicking
+	 * @param date
+	 *          date of event: format (MMM dd yyyy HH:mm:ss)
+	 * @param view
+	 *          view: DAY, WEEK, MONTH, WORKWEEK;
+	 * @param optionDay
+	 *          select ONEDAY or ALLDAY
+	 */
+	public void openAddEditEventTaskByRightClick(String date, selectViewOption view, selectDayOption optionDay,contextMenuAddEditEvenTaskOption option){
+		info("Open Quick Add/EDit task/event by right click");
+		goToView(view);
+		switch (view) {
+		case DAY:
+			rightClickOnElement(ELEMENT_EVENT_TASK_DAY_ONE_DAY.replace("$time", date));
+			Utils.pause(2000);
+			selectOptionByRightclickOnDateTime(option);
+			break;
+		case WEEK:
+			switch (optionDay) {
+			case ONEDAY:
+				rightClickOnElement(ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ONE_DAY.replace(
+						"$date", date));
+				Utils.pause(2000);
+				selectOptionByRightclickOnDateTime(option);
+				break;
+			case ALLDAY:
+				rightClickOnElement(ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ALL_DAY.replace(
+						"$date", date));
+				Utils.pause(2000);
+				selectOptionByRightclickOnDateTime(option);
+				break;
+			default:
+				rightClickOnElement(ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ONE_DAY.replace(
+						"$date", date));
+				Utils.pause(2000);
+				selectOptionByRightclickOnDateTime(option);
+				break;
+			}
+			break;
+		case MONTH:
+			rightClickOnElement(ELEMENT_EVENT_TASK_MONTH_DATE.replace("$date", date));
+			Utils.pause(2000);
+			selectOptionByRightclickOnDateTime(option);
+			break;
+		case WORKWEEK:
+			switch (optionDay) {
+			case ONEDAY:
+				rightClickOnElement(ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ONE_DAY.replace(
+						"$date", date));
+				Utils.pause(2000);
+				selectOptionByRightclickOnDateTime(option);
+				break;
+			case ALLDAY:
+				rightClickOnElement(ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ALL_DAY.replace(
+						"$date", date));
+				Utils.pause(2000);
+				selectOptionByRightclickOnDateTime(option);
+				break;
+			default:
+				rightClickOnElement(ELEMENT_EVENT_TASK_DETAIL_DATE_WEEK_ONE_DAY.replace(
+						"$date", date));
+				Utils.pause(2000);
+				selectOptionByRightclickOnDateTime(option);
+				break;
+			}
+			break;
+		default:
+			info("You don't select a optionDay.Please select other optionDay.");
+			break;
+		}
+		Utils.pause(2000);
+	
+	}
+	/**
+	 * 
+	 * right click on a datetime to open Quick ADD/EDIT an event/task 
+	 */
+	public enum contextMenuAddEditEvenTaskOption{
+		ADD_EVENT,ADD_TASK;
+	}
+	
+	/**
+	 * Select an option in context menu
+	 * @param option
+	 */
+	public void selectOptionByRightclickOnDateTime(contextMenuAddEditEvenTaskOption option){
+		switch(option){
+		case ADD_EVENT:
+			info("Select Add new event option");
+			click(ELEMENT_CONTEXT_MENU_ADD_EVENT);
+			break;
+		case ADD_TASK:
+			info("Select Add new task option");
+			click(ELEMENT_CONTEXT_MENU_ADD_TASK);
+			break;
+		default:
+			info("No option to select");
+			break;
+		}
+	}
 	/**
 	 * verify event is not exitst
 	 * @param name

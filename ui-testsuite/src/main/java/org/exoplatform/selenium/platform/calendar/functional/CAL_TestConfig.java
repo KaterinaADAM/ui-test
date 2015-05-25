@@ -3,6 +3,7 @@ package org.exoplatform.selenium.platform.calendar.functional;
 import static org.exoplatform.selenium.TestLogger.info;
 
 import org.exoplatform.selenium.Button;
+import org.exoplatform.selenium.ManageAlert;
 import org.exoplatform.selenium.platform.ActivityStream;
 import org.exoplatform.selenium.platform.HomePagePlatform;
 import org.exoplatform.selenium.platform.ManageLogInOut;
@@ -28,6 +29,7 @@ public class CAL_TestConfig extends PlatformBase {
 	ActivityStream hpAct;
 	ManageLogInOut magAc;
 	Button button;
+	ManageAlert alert;
 
 	NavigationToolbar navTool;
 	EventManagement evMg;
@@ -52,6 +54,7 @@ public class CAL_TestConfig extends PlatformBase {
 		getDefaultUserPass(userDataFilePath,defaultSheet,isUseFile,jdbcDriver,dbUrl,user,pass,sqlUser);
 		magAc = new ManageLogInOut(driver);
 		button = new Button(driver);
+		alert = new ManageAlert(driver);
 		magAc.signIn(DATA_USER1, DATA_PASS);
 		
 		navTool = new NavigationToolbar(driver);

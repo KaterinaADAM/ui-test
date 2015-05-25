@@ -2,6 +2,7 @@ package org.exoplatform.selenium.platform.calendar.functional;
 
 import static org.exoplatform.selenium.TestLogger.info;
 
+import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.calendar.CalendarHomePage.selectDayOption;
 import org.exoplatform.selenium.platform.calendar.CalendarHomePage.selectViewOption;
 import org.exoplatform.selenium.platform.calendar.EventManagement.priorityType;
@@ -611,7 +612,7 @@ import org.testng.annotations.*;
 		evMg.selectPrivacyParticipant(false);
 		evMg.selectAvailable(selectAvailableOption.AVAILABLE);
 		evMg.click(evMg.ELEMENT_INVITATION_PARTICITPANT_USER);
-		evMg.selectUserParticipants(users, content, 1);
+		evMg.selectUserParticipants(users, content,1);
 		click(evMg.ELEMETN_INVITATION_SAVE_BUTTON);
 		evMg.selectSendInvitation(selectInvitationOption.NEVER);
 		evMg.saveAddEventDetails();
@@ -1145,6 +1146,7 @@ import org.testng.annotations.*;
 		info("Edit an recurring event");
 		hp.goToSpecificSpace(space);
 		spaMg.goToAgendaTab();
+		Utils.pause(2000);
 		cMang.openEditEventTaskPopup(newEvent);
 		/*Step number: 2
 		*Step Name: Update availabity during event

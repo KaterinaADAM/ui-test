@@ -38,6 +38,7 @@ public class EventManagement extends PlatformBase {
 	public By ELEMENT_BUTTON_EVENT_SAVE = By.xpath("//*[@id='UIQuickAddEventPopupWindow']//*[text()='Save']");
 	public String ELEMENT_ITEM_QUICK_EVENT_CATEGORY_OPTION="//*[@id='UIQuickAddEventPopupWindow']//*[@name='category']/*[text()='$category']";
     public String ELEMENT_EVENT_TITLE =".//*[@id='UIWeekViewGrid']//*[contains(@class,'eventContainer') and text()='${name}']";
+    public String ELEMENT_EVENT_INPUT_EVENT_TIME_COMBOBOX=".//*[@id='eventDetail']//input[@class='UIComboboxInput' and @value='${time}']";
 	
 	//----------------------------------Add EVENT Form (more details )------------------------------------\\
 	public By ELEMENT_ADD_EDIT_EVENT_NAME = By.xpath("//*[@id='UIEventForm']//*[@name='eventName']");
@@ -71,11 +72,16 @@ public class EventManagement extends PlatformBase {
 
 	//Attach file form
 	public By ELEMENT_ATTACH_SAVE_BUTTON = By.xpath("//form[@id='UIAttachFileForm']//*[text()='Save']");
+	public By ELEMENT_ATTACH_LABEL_FIELD=By.xpath(".//*[@id='eventDetail']//div[@class='control-label' and text()='Files:']");
 	public By ELEMENT_EVENT_ADD_ATTACHMENT = By.xpath("//button[contains(@onclick,'AddAttachment')]");
 	public String ELEMENT_EVENT_ATTACHMENT = "//*[@id='UIEventForm']/..//a[@data-original-title='${file}']";
 	public By ELEMENT_ATTACHMENT_SAVE_BUTTON = By.xpath("//*[@id='UIAttachFileForm']//*[text()='Save']");
 	public String ELEMENT_ATTACHMENT_FORM_FILE_NAME = "//*[@class='fileNameLabel' and text()='$fileName']";
-
+    public String ELEMENT_ATTACHMENT_DELETE_BTN="//*[@data-original-title='$fileName']/following-sibling::*[2]";
+    public By ELEMENT_ATTACH_FORM=By.xpath(".//*[contains(@class,'UIAttachFileForm')]");
+    public By ELEMENT_ATTACHMENT_FORM_SELECT_FILE=By.xpath(".//*[@id='upload']//label[text()='Select File']");
+    public By ELEMENT_ATTACHMENT_FORM_NO_FILE=By.xpath(".//*[@id='upload']//label[@class='noFile']");
+	
 	//Schedule tab
 	public final By ELEMENT_ADD_PARTICIPANTS_BUTTON_IN_SCHEDULE_TAB = By.xpath("//*[@id='UIEventForm']//*[@class='uiIconCalInviteUser uiIconLightGray']");
 	public final String ELEMENT_USER_CHECKBOX_FULLNAME = "//*[contains(text(),'${user}')]/../..//*[@type='checkbox']";
@@ -86,6 +92,8 @@ public class EventManagement extends PlatformBase {
 	public final By ELEMENT_SCHEDULE_PREVIOUS_DAY=By.xpath("//*[@title='Previous Day' or @data-original-title='Previous Day']");
 	public final String ELEMENT_SCHEDULE_DRAG = "//td[${index}]//span[@data-original-title=\"Drag here to change your event's start and end times\" or @title=\"Drag here to change your event's start and end times\"]";
 	public final String ELEMENT_SCHEDULE_SELECTED_DATE="//*[@id='RowContainerDay' and @datevalue='$date']";
+	public final String ELEMENT_SCHEDULE_TOOLTIP_PARTICIPANTS=".//*[@id='RowContainerDay']//tr[2]/td[${index}]/span[contains(@rel,'tooltip')][contains(@data-original-title,\"Drag here to change your event's start and end times\")]";
+	
 
 	//Participant tab
 	public final By ELEMENT_PRIVACY_PUBLIC_CHECKBOX=By.xpath("//*[@value='public']");
@@ -97,13 +105,25 @@ public class EventManagement extends PlatformBase {
 	public final By ELEMENT_SEND_INVITATION_ALWAYS_CHECKBOX=By.xpath("//*[@value='always']");
 	public final By ELEMENT_SEND_INVITATION_ASK_CHECKBOX=By.xpath("//*[@value='ask']");
 	public final By ELEMENT_ADD_PARTICIPANTS_BUTTON_IN_PARTICIPANT_TAB = By.xpath("//*[@class='uiFormGrid']//*[@class='uiIconPlus uiIconLightGray']");
+	public final By ELEMENT_PICK_USER_PARTICIPANTS_TAB =By.xpath(".//*[@id='uiInvitationUser']/*[contains(@class,'uiIconUser')]");
 	public final By ELEMENT_INVITATION_PARTICITPANT_USER=By.xpath("//*[@id='eventShare-tab']//*[@data-original-title='Add Participant' or @title='Add Participant']");
 	public final By ELEMENT_INVITATION_PARTICIPANT_TEXTBOX=By.id("participant");
 	public final By ELEMENT_INVITATION_PARTICITPANT_MSG=By.id("invitation-msg");
 	public final By ELEMENT_INVITATION_SELECT_USER_BUTTON=By.id("uiInvitationUser");
 	public final By ELEMETN_INVITATION_SAVE_BUTTON=By.xpath("//*[@id='UIInvitationContainer']//*[text()='Save']");
 	public final By ELEMETN_INVITATION_CANCEL_BUTTON=By.xpath("//*[@id='UIInvitationContainer']//*[text()='Cancel']");
-
+	public final String ELEMENT_PARTICIPANT_SEND_INVITATION_OPTION_CHECKED=".//*[@id='eventShare']//input[@value='$option' and @checked='checked']";
+	public final By ELEMENT_CONFIRM_SEND_INVITATION_MESSAGE =By.xpath(".//*[@id='UIConfirmation']//*[contains(text(),'Would you like to send updates to all guests?')]");
+	public final By ELMEMENT_CONFIRM_SEND_INVITATION_YES_BTN=By.xpath(".//*[@id='UIConfirmation']//*[contains(@class,'btn')][contains(text(),'Yes')]");
+	public final By ELMEMENT_CONFIRM_SEND_INVITATION_NO_BTN=By.xpath(".//*[@id='UIConfirmation']//*[contains(@class,'btn')][contains(text(),'No')]");
+	public final String ELEMENT_INVITATION_PARTICIPANTS_USER=".//*[@id='UIParticipantList']//tr//*[contains(text(),'$fullName')]";
+	public final String ELEMENT_INVITATION_PARTICIPANTS_REFUSED=".//*[@id='UIParticipantList']//*[contains(text(),'$fullName')]/../..//*[contains(text(),'No')]";
+	public final String ELEMENT_INVITATION_PARTICIPANTS_MAYBE=".//*[@id='UIParticipantList']//*[contains(text(),'$fullName')]/../..//*[contains(text(),'Maybe')]";
+	public final String ELEMENT_INVITATION_PARTICIPANTS_YES=".//*[@id='UIParticipantList']//*[contains(text(),'$fullName')]/../..//*[contains(text(),'Yes')]";
+	public final String ELEMENT_INVITATION_PARTICIPANTS_REMOVE_BTN=".//*[@id='UIParticipantList']//*[contains(text(),'$fullName')]/../..//*[contains(@class,'uiIconDelete')]";
+	public final String ELEMENT_INVITATION_PARTICIPANTS_INVALID_USER_MESSAGE=".//*[contains(@class,'warningIcon')][contains(text(),\"'$user' is not a valid participant.\")]";
+	public final String ELEMENT_INVITATION_PARTICIPANTS_INVALID_EMAIL_MESSAGE=".//*[contains(@class,'warningIcon')][contains(text(),\"'$email' is not a valid email.\")]";
+	
 	//Reminder tab
 	public final By ELEMENT_REMINDER_TAB=By.xpath(".//*[contains(@data-target,'#eventReminder-tab')]");
 	public final By ELEMENT_REMINDER_BY_POPUP=By.id("popupReminder");
@@ -247,8 +267,40 @@ public class EventManagement extends PlatformBase {
 			tempTime = getCurrentDate("HH")+":00";
 			info("Selected date is current date" + tempTime);
 		}
-
 		String cell = cHome.ELEMENT_CELL_TO_WORKING_PANEL.replace("$date", tempDate2).replace("$time", tempTime);
+		rightClickOnElement(cell);
+		click(cHome.ELEMENT_RIGHT_CLICK_ADD_EVENT);
+		waitForAndGetElement(ELEMENT_QUICK_ADD_EVENT_POPUP);
+	}
+
+	/**
+	 * Open add event/task by right click in Month view
+	 * @param date
+	 * 				date to create event
+	 * 				format: MM/dd/yyyy (Ex: 12/09/2014)
+	 */
+	public void goToAddEventByRightClickForMothnView(String date){
+		info("Go to add task by right clicking from main panel");
+		SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat format2 = new SimpleDateFormat("MMM dd yyyy");
+		String tempDate2 = getCurrentDate("MMM dd yyyy");
+		Date tempDate1 = null;
+
+		info("Get date");
+		if(date!=null && date!=""){
+			try {
+				tempDate1 = format1.parse(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			tempDate2 = format2.format(tempDate1);
+			info("Selected date is " + tempDate2);
+		}
+		else{
+			tempDate2 = getCurrentDate("MMM dd yyyy");
+			info("Selected date is current date" + tempDate2);
+		}
+		String cell = cHome.ELEMENT_CELL_TO_MONTH_WORKING_PANEL.replace("$date", tempDate2);
 		rightClickOnElement(cell);
 		click(cHome.ELEMENT_RIGHT_CLICK_ADD_EVENT);
 		waitForAndGetElement(ELEMENT_QUICK_ADD_EVENT_POPUP);
@@ -463,7 +515,7 @@ public class EventManagement extends PlatformBase {
 	 * @param path
 	 * 				path of attachment of a EVENT
 	 */
-	public void attachFileToEvent(String path){
+	public void attachFileToEvent(String path,Boolean... opt){
 		String fullPath="";
 		if ("win".equals(server)){
 			fullPath="TestData\\" + path;
@@ -474,10 +526,15 @@ public class EventManagement extends PlatformBase {
 		click(ELEMENT_EVENT_ADD_ATTACHMENT);
 		click(ELEMENT_SELECT_FILE_BUTTON);
 		uploadFileUsingRobot(fullPath);
+		info("opt.length:"+opt.length);
+		if(opt.length==0)
+		{
 		waitForAndGetElement(ELEMENT_ATTACHMENT_FORM_FILE_NAME.replace("$fileName", path));
 		click(ELEMENT_ATTACHMENT_SAVE_BUTTON,0,true);
 		waitForAndGetElement(ELEMENT_ATTACH_FILE_NAME.replace("$fileName", path));
+		}
 	}	
+	
 
 	/**
 	 * Check default suggestion EVENT time in detail add form
@@ -648,7 +705,8 @@ public class EventManagement extends PlatformBase {
 		int toIndex = convertFromTimeToIndex(to);
 		info("From index is " + String.valueOf(fromIndex));
 		info("To index is " + String.valueOf(toIndex));
-		for(int i = fromIndex; i<= toIndex; i++){
+		for(int i = fromIndex; i<= toIndex-1; i++){
+			info("index:"+i);
 			assert waitForAndGetElement(ELEMENT_SCHEDULE_BUSY_TIME.replace("${user}", user).replace("${index}", String.valueOf(i))).getAttribute("class")
 			.contains("busyDotTime"):"Wrong busy time";
 		}
@@ -799,14 +857,16 @@ public class EventManagement extends PlatformBase {
 	 */
 	public void selectUserParticipants(String users, String content, int type){
 		info("Select User Participant");
-		if(type==1){
+		if(type==0){
 			String[] temp = users.split("/");
 			for (int i = 0; i < temp.length; i ++){
 				type(ELEMENT_INVITATION_PARTICIPANT_TEXTBOX,","+temp[i],false);
 			}
 		}
 		else{
-			pPer.selectUserPermission(user, 1);
+			click(ELEMENT_PICK_USER_PARTICIPANTS_TAB);
+			Utils.pause(2000);
+			pPer.selectUserPermission(users,type);
 		}
 		if(content!=null && content!=""){
 			type(ELEMENT_INVITATION_PARTICITPANT_MSG,content,true);
@@ -1060,8 +1120,7 @@ public class EventManagement extends PlatformBase {
 			break;
 		case ALL_EVENT:
 			info("Edit all event recurring");
-			check(By.xpath("(.//*[@id='UIConfirmFormDelete']//*[contains(@class,'radio')])[3]"),2);
-			//click(ELEMENT_EDIT_DELETE_ALL_EVENT,2);
+			click(ELEMENT_EDIT_DELETE_ALL_EVENT,2);
 			break;
 		}
 		Utils.pause(2000);
@@ -1107,6 +1166,54 @@ public class EventManagement extends PlatformBase {
 		select(ELEMENT_REMINDER_DROP_BOX,option);
 		Utils.pause(2000);
 	}
-	
+	/**
+	 * Open schedule tab
+	 */
+	public void goToScheduleTab(){
+		info("Click on Schedule tab");
+		click(ELEMENT_EVENT_SCHEDULE_TAB);
+		Utils.pause(2000);
+	}
+	/**
+	 * Open Detail tab
+	 */
+	public void goToDetailsTab(){
+		info("Click on Detail tab");
+		click(ELEMENT_EVENT_DETAILS_TAB);
+		Utils.pause(2000);
+	}
+	/**
+	 * Open participants tab
+	 */
+	public void goToParticipantsTab(){
+		info("Click on Participants tab");
+		click(ELEMENT_EVENT_PARTICIPANTS_TAB);
+		Utils.pause(2000);
+	}
+	/**
+	 * Open invitation participant popup
+	 */
+	public void goToInvitationParticipantForm(){
+		info("Click on invitation Participants button");
+		click(ELEMENT_INVITATION_PARTICITPANT_USER);
+		Utils.pause(2000);
+	}
+	/**
+	 * Save all changes of invitation participant form
+	 */
+	public void saveInvitationParticipantForm(){
+		info("Click on save button");
+		click(ELEMETN_INVITATION_SAVE_BUTTON);
+		Utils.pause(2000);
+	}
+	/**
+	 * Remove an user in participants tab of Add/Edit Event/Task form
+	 * @param fullName
+	 */
+	public void removeUser(String fullName){
+		info("Click on Delete button");
+		click(ELEMENT_INVITATION_PARTICIPANTS_REMOVE_BTN.replace("$fullName",fullName));
+		waitForElementNotPresent(ELEMENT_INVITATION_PARTICIPANTS_REMOVE_BTN.replace("$fullName",fullName));
+	}
 }
 
