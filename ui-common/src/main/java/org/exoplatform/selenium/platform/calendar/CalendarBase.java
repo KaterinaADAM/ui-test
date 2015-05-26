@@ -46,7 +46,7 @@ public class CalendarBase extends PlatformBase {
 
 	//--------------Mini calendar-------------------
 	public String ELEMENT_MINI_CALENDAR_DATE_HIGHLIGHT = "//td[contains(@class,'highLight') and contains(text(),'${date}')]";
-
+	public String ELEMENT_LEFT_CALENDAR = ".//*[@id='UICalendars']//*[contains(text(),'${calendar}')]";
 	//---------------Working pane---------------------
 	public String ELEMENT_WORKING_PANE_23H = "//td[@class='tdTime center']/div[contains(text(),'23:00')]";
 
@@ -58,10 +58,13 @@ public class CalendarBase extends PlatformBase {
 	public By ELEMENT_PERSONAL_CALENDAR = By.xpath("//*[@id='defaultCalendarTab']//div[@class='myCalendar']/*[@class='calendarTitle' and text()='Personal Calendars']");
 	public By ELEMENT_GROUP_CALENDAR = By.xpath("//*[@id='defaultCalendarTab']//div[@class='myCalendar']/*[@class='calendarTitle' and text()='Group Calendars']");
 	public String ELEMENT_VERIFY_CALENDAR = "//*[@id='defaultCalendarTab'] //div[@class='myCalendar']/*[@class='calendarTitle']/..//li[contains(@class,'calendarItem' )]//*[text()='${UserName}']/../a[@class='${CheckboxColor}']//span[@class='${checkicon}']";
+	public String ELEMENT_DISPLAYED_CALENDAR_CHECK = "//*[@id='defaultCalendarTab'] //div[@class='myCalendar']/..//li[contains(@class,'calendarItem' )]//*[contains(text(),'${title}')]";
 	public By ELEMENT_UNCHECK_BOX = By.xpath("//span[@class='iconCheckBox checkbox']");
 	public By ELEMENT_SETTINGS_FORM_SAVE_BUTTON = By.xpath("//*[@id='UICalendarSettingForm']//*[text()='Save']");
 	public By ELEMENT_SETTINGS_FORM_CANCEL_BUTTON = By.xpath("//*[@id='UICalendarSettingForm']//*[text()='Cancel']");
-
+	public By ELEMENT_DISPLAYED_CALENDAR_ZONE = By.xpath("//a[@data-toggle='tab' and text()='Settings']");
+	public String  ELEMENT_SEND_INVITATION_CHOOSE = "//*[@id='setting']//*[@class='uiRadio']//*[contains(text(),'${choose}')]";
+	public String ELEMENT_SEND_INVITATION_CHOOSE_CHECKED = ".//*[@id='setting']//*[@class='uiRadio']//*[contains(text(),'${choose}')]/..//*[@checked='checked']";
 	public By ELEMENT_VIEW_TYPE = By.name("viewType");
 	public By ELEMENT_SELECTED_VIEW_TYPE = By.xpath("//*[@name='viewType']//*[@selected='selected']");
 	public By ELEMENT_DATE_FORMAT = By.name("dateFormat");
@@ -192,13 +195,16 @@ public class CalendarBase extends PlatformBase {
 	public By ELEMENT_TARGET_DATE = By.xpath("//*[contains(@startfull, '${targetDate}')]".replace("${targetDate}", ELEMENT_TARGET_TIME));
 	public String ELEMENT_ANY_TARGET_DATE = "//*[contains(@startfull, '${targetDate}')]";
 	//-----------------Calendar Search-----------------------------
-	public String ELEMENT_INPUT_QUICK_SEARCH = "//div[@class='uiSearchForm uiSearchInput pull-right']//*[@id='value']";
+	public String ELEMENT_INPUT_QUICK_SEARCH = "//div[@class='uiSearchForm uiSearchInput pull-right searchWithIcon']//*[@id='value']";
 	public String ELEMENT_QUICK_SEARCH_FORM = "//div[@class='uiSearchForm uiSearchInput pull-right']";
 	public String ELEMENT_BUTTON_CLOSE_QUICK_SEARCH_RESULT = "//button[contains(text(),'Close Search')]";
 	public String ELEMENT_BUTTON_OPEN_ADVANCE_SEARCH_FORM = "//button[contains(text(),'Advanced Search')]";
 	public String ELEMENT_INPUT_TEXT_ADVANCE_SEARCH = "//*[@id='UIAdvancedSearchForm']//*[@id='text']";
 	public String ELEMENT_BUTTON_SEARCH_ADVANCE_SEARCH = "//*[@id='UIAdvancedSearchForm']//button[contains(text(),'Search')]";
-
+	
+	//------------------------------------------------------------
+	public String ELEMENT_TITLE_RESULT = ".//*[@id='UIListUsers']//*[contains(text(),'${title}')]";
+	public String ELEMENT_COLUMN_NAME_AND_RESULT_NAME = ".//*[@id='UIListUsers']//*[contains(text(),'${title}')]/../../../..//*[contains(text(),'${name}')]";
 	//----------------------Calendar View------------------------------
 	public By ELEMENT_LINK_TODAY_VIEW = By.xpath("//a[contains(text(), 'Today')]");
 	public String ELEMENT_BUTTON_DAY_VIEW = "//*[@id='UIActionBar']//a[text()='Day']";

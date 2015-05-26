@@ -54,6 +54,7 @@ public class Calendar_Search extends CalendarBase{
 
 		info("Search an event");
 		quickSearchCalendar(EVENT_NAME_01);
+		
 		Utils.pause(3000);
 		info("Restore data");
 		click(ELEMENT_BUTTON_CLOSE_QUICK_SEARCH_RESULT);
