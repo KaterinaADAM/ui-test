@@ -81,7 +81,7 @@ public class PeopleProfile extends PlatformBase {
 	public final String ELEMENT_CONTACT_URL_REMOVE_ICON = "/*[@class='multiValueContainer']/div[${index}]//*[@data-original-title='Remove Item']";
 
 	//Avatar
-	public final By	ELEMENT_CHANGE_AVATAR_LINK = By.className("changeAvatar");
+	public final By	ELEMENT_CHANGE_AVATAR_LINK = By.xpath(".//*[@id='Avatar']//*[@class='btn btn-mini changeAvatar']");
 	public final By ELEMENT_CHOOSE_AVATAR_IMAGE = By.className("fileNameLabel");
 	public final By ELEMENT_SELECT_AVATAR = By.xpath(".//*[@id='Uploader']//*[text()='Select File']");
 	public final By ELEMENT_UPLOAD_NAME = By.name("file");
@@ -132,6 +132,9 @@ public class PeopleProfile extends PlatformBase {
 	public final By ELEMENT_UIMINICONNECTIONS_PORLET_DISCONNECTED_STATUS=By.xpath(".//*[@id='UIActionProfilePortlet']//*[@class='btn hide-default']/*[@class='uiIconStatusDisconnect']");
 	public final By ELEMENT_UIMINICONNECTIONS_PORTLET_DENY_STATUS=By.xpath(".//*[@id='UIRelationshipAction']//*[@class='uiIconStatusDeny']/..");
 	public final By ELEMENT_UIMINICONNECTIONS_PORTLET_TITLE = By.xpath(".//*[@id='UIMiniConnectionsPortlet']/h4[contains(text(),'Connections')]");
+	
+	public final By ELEMENT_EDIT_MY_PROFILE = By.xpath(".//*[@id='UIExperienceProfilePortlet']/div/button");
+	
 	/**
 	 * constructor
 	 * @param dr
@@ -210,6 +213,7 @@ public class PeopleProfile extends PlatformBase {
 	 */
 	public void changeAvatar(String linkfile){
 		info("-- changeAvatar --");
+		click(ELEMENT_EDIT_MY_PROFILE);
 		click(ELEMENT_CHANGE_AVATAR_LINK);
 		click(ELEMENT_SELECT_AVATAR);
 		uploadFileUsingRobot(linkfile);
