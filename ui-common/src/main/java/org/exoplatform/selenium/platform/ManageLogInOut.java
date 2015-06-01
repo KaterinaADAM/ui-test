@@ -18,7 +18,9 @@ public class ManageLogInOut extends PlatformBase {
 		driver = dr;
 		magAlert = new ManageAlert(driver);
 	}
-
+	public enum SSO{
+		OPENAM,CAS;
+	}
 	/**
 	 * Log in to intranet
 	 * @param username
@@ -31,19 +33,60 @@ public class ManageLogInOut extends PlatformBase {
 			signOut();
 		}
 		info("--Sign in as " + username + "--");
-		type(ELEMENT_INPUT_USERNAME, username, true);
-		type(ELEMENT_INPUT_PASSWORD, password, true);
-		click(ELEMENT_SIGN_IN_BUTTON);
-		if(verify)
-			waitForElementNotPresent(ELEMENT_SIGN_IN_BUTTON);
+		if(ssoType == "" || ssoType == null){
+			info("login normally if not use SSO");
+			type(ELEMENT_INPUT_USERNAME, username, true);
+			type(ELEMENT_INPUT_PASSWORD, password, true);
+			click(ELEMENT_SIGN_IN_BUTTON);
+			if(verify)
+				waitForElementNotPresent(ELEMENT_SIGN_IN_BUTTON);
+		}
+		else{
+			SSO sso = SSO.valueOf(ssoType.toUpperCase());
+			switch(sso){
+			case OPENAM:
+				info("login by openam");
+				signInOpenam(username, password);
+				break;
+			case CAS:
+			    info("Login by cas");
+			    signInCas(username,password);
+			    break;
+			}
+		}
 		Utils.pause(3000);
 		driver.navigate().refresh();
 	}
-
+	/**
+	 * Log in via OpenAM
+	 * @param username
+	 * @param password
+	 */
+    public void signInOpenam(String username, String password){
+    	type(ELEMENT_INPUT_USERNAME_OPENAM, username, true);
+		type(ELEMENT_INPUT_PASSWORD_OPENAM, password, true);
+		click(ELEMENT_SIGN_IN_BUTTON_OPENAM);
+		waitForElementNotPresent(ELEMENT_SIGN_IN_BUTTON_OPENAM,3000);
+		
+    }
+    /**
+     * Log in via CAS
+     * @param username
+     * @param password
+     */
+    public void signInCas(String username, String password){
+    	this.driver.get(baseUrl);
+    	type(ELEMENT_INPUT_USERNAME_CAS, username, true);
+		type(ELEMENT_INPUT_PASSWORD_CAS, password, true);
+		click(ELEMENT_SIGN_IN_BUTTON_CAS);
+		waitForElementNotPresent(ELEMENT_SIGN_IN_BUTTON_CAS,3000);
+		
+    }
 	/**
 	 * Sign out from intranet
 	 */
 	public void signOut(){
+		
 		info("Sign out");
 		for(int repeat=0;; repeat ++){
 			if (repeat > 1){
@@ -58,7 +101,8 @@ public class ManageLogInOut extends PlatformBase {
 			info("Retry...[" + repeat + "]");
 		}
 		click(ELEMENT_SIGN_OUT_LINK);
-		waitForAndGetElement(ELEMENT_INPUT_USERNAME);
+		//waitForAndGetElement(ELEMENT_INPUT_USERNAME);
+		waitForElementNotPresent(ELEMENT_SIGN_OUT_LINK);
 		if ( ExpectedConditions.alertIsPresent() != null ){
 			magAlert = new ManageAlert(driver);
 			magAlert.acceptAlert();

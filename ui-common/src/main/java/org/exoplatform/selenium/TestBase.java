@@ -155,8 +155,11 @@ public class TestBase {
 	
 	
 	protected String notiDesFilePath;
+	
+	protected static String ssoType;
 
 	/*========Default System Property=============*/
+	public final String DEFAULT_SSOTYPE="openam";
 	public final String DEFAULT_NATIVE_EVENT = "true";
 	public final String DEFAULT_BASEURL="http://localhost:8080/portal";
 	public final String DEFAULT_BROWSER="firefox";//iexplorer, firefox, chrome
@@ -271,7 +274,17 @@ public class TestBase {
 	public final By ELEMENT_YOUR_ACCOUNT_LABEL = By.xpath("//h5[contains(text(), 'Create your account')]");
 	public final By ELEMENT_ADMIN_PASS_LABEL = By.xpath("//h5[contains(text(), 'Admin Password')]");
 	public final By ELEMENT_ACCOUNT_ERROR = By.xpath("//*[@class='accountSetupError']");
-
+    	
+	//SSO Login with OpenAM
+	public final By ELEMENT_INPUT_PASSWORD_OPENAM = By.name("IDToken2");
+	public final By ELEMENT_INPUT_USERNAME_OPENAM = By.name("IDToken1");
+	public final By ELEMENT_SIGN_IN_BUTTON_OPENAM = By.xpath("//*[@class='button primary' and @value='Log In']");
+	
+	//SSO Login with CAS
+	public final By ELEMENT_INPUT_PASSWORD_CAS = By.id("password");
+	public final By ELEMENT_INPUT_USERNAME_CAS = By.id("username");
+	public final By ELEMENT_SIGN_IN_BUTTON_CAS = By.xpath(".//*[contains(@class,'btn-submit')]");
+	
 	//Upload file popup
 	public final By ELEMENT_UPLOAD_SELECT_BUTTON = By.xpath("//*[@class='uploadButton']/*[@class='btn']");
 	public final By ELEMENT_UPLOAD_POPUP_FILE = By.xpath("//span[@class='PopupTitle popupTitle' and text()='Attach File']");
@@ -289,6 +302,8 @@ public class TestBase {
 		browser = System.getProperty("browser");
 		server = System.getProperty("server");
 		baseUrl = System.getProperty("baseUrl");
+		
+		ssoType = System.getProperty("ssoType");
 
 		jdbcDriver = System.getProperty("jdbcDriver");
 		dbUrl = System.getProperty("dbUrl");
@@ -358,6 +373,8 @@ public class TestBase {
 		calGroupNameFilePath = System.getProperty("calGroupNameFilePath");
 		calTabNameFilePath =System.getProperty("calTabNameFilePath");
 		calCommentsFilePath =System.getProperty("calCommentsFilePath");
+		
+		if (ssoType==null) ssoType = DEFAULT_SSOTYPE;
 		
 		if (nativeEvent==null) nativeEvent = DEFAULT_NATIVE_EVENT;
 		if (browser==null) browser = DEFAULT_BROWSER;
