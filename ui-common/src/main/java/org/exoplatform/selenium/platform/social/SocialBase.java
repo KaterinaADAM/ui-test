@@ -31,7 +31,7 @@ public class SocialBase extends PlatformBase {
 	public final By ELEMENT_SPACE_LINE_ON_MY_SPACE = By.xpath("//*[@id='UISpaceNavigationPortlet']/*[@class='spaceNavigation']/li");
 	public final By ELEMENT_SPACE_NAVIGATION_ON_MY_SPACE = By.xpath("//*[@id='UISpaceNavigationPortlet']/ul");
 	public final By ELEMENT_JOIN_SPACE_LINK_ON_MY_SPACE = By.xpath("//*[@id='UISpaceNavigationPortlet']//*[@class='joinSpace']/a");
-	public final By ELEMENT_MY_SPACE_SEARCH_BOX = By.xpath("//*[@id='UISpaceNavigationPortlet']//input[@value='Search Spaces']");
+	public final By ELEMENT_MY_SPACE_SEARCH_BOX = By.xpath("//*[@id='UISpaceNavigationPortlet']//input[@placeholder='Search Spaces']");
 	public final By ELEMENT_MY_SPACE_NO_FOUND_LABEL = By.xpath("//*[@id='UISpaceNavigationPortlet']//*[@class='noSpace' and text()='No space found']");
 	public final String ELEMENT_SPACE_TOOL_TIP = "//*[@id='UISpaceNavigationPortlet']//*[@class='tooltip fade bottom in']/*[@class='tooltip-inner' and text()='${space}']";
 
