@@ -309,7 +309,7 @@ public class ManageMember extends SpaceManagement {
 		default:
 			break;
 		}
-		Utils.pause(1000);
+		Utils.pause(2000);
 	}
 
 	public void searchUser(String username){

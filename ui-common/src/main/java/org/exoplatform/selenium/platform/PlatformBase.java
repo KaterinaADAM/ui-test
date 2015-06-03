@@ -32,6 +32,7 @@ public class PlatformBase extends TestBase {
 
 	public final String USER_ROOT = "root";
 	public final String PASS_ROOT = "gtngtn";
+
 	public final String DATA_USER3 = "james";
 	public final String DATA_USER4 = "demo";
 	//	public final String DATA_PASS = "gtngtn";
@@ -271,7 +272,7 @@ public class PlatformBase extends TestBase {
 	//End User Profile
 	//End - Add User Form
 	//Setting -> user -> Groups and roles
-	public final String ELEMENT_GROUP_AND_ROLE_LINK = "//a[contains(text(),'Groups and Roles') or contains(text(),'Ajouter un Utilisateur')]";
+	public final String ELEMENT_GROUP_AND_ROLE_LINK = "//a[contains(text(),'Community') or contains(text(),'Ajouter un Utilisateur')]";
 
 	/* Username link - END*/
 

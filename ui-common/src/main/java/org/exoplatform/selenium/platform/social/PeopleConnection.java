@@ -33,7 +33,7 @@ public class PeopleConnection extends SocialBase {
 	public final String ELEMENT_EVERYONE_TAB_ACTIVE = "//li[@class='active']/a[contains(text(),'Everyone')]";
 	public final By ELEMENT_REQUEST_SENT_TAB = By.linkText("Requests Sent");
 
-	public final String ELEMENT_CONNECTION_BUTTON = "//*[contains(text(), '${peopleName}')]/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Connect')]";
+	public final String ELEMENT_CONNECTION_BUTTON = "//*[@id='UIAllPeoplePortlet']//*[contains(text(), '${peopleName}')]/../../..//*[contains(text(),'Connect')]";
 	public final String ELEMENT_CANCEL_REQUEST_BUTTON = "//a[text()='${peopleName}']/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Cancel Request')]";
 	public final String ELEMENT_REMOVE_CONNECTION_BUTTON = "//a[text()='${peopleName}']/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Remove Connection')]";
 	public final String ELEMENT_CONFIRM_BUTTON = "//a[text()='${peopleName}']/ancestor::div[contains(@class,'pull-left')]//button[contains(text(),'Confirm')]";
@@ -64,7 +64,7 @@ public class PeopleConnection extends SocialBase {
 		}
 		if(waitForAndGetElement(ELEMENT_EVERYONE_TAB_ACTIVE,5000,0) == null)
 			click(ELEMENT_EVERYONE_TAB);
-		resetConnection(peopleName);
+		//resetConnection(peopleName);
 		info("-----Click connect to people-----");
 		click(ELEMENT_CONNECTION_BUTTON.replace("${peopleName}", peopleName));
 		info("---Verify Connect button is disappeared----");

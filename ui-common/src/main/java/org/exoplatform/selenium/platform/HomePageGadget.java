@@ -273,7 +273,7 @@ public class HomePageGadget extends PlatformBase{
 		waitForAndGetElement(ELEMENT_WHOISONLINE_GADGET);
 
 		mouseOver(ELEMENT_ONLINE_USER_AVATAR.replace("${acc}",userName),true);
-
+        Utils.pause(2000);
 		info("Confirm user avatar");
 
 		waitForAndGetElement(ELEMENT_ONLINE_USER_ACC_IMG.replace("${acc}",userName), DEFAULT_TIMEOUT,1,2);

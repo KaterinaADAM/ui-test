@@ -6,7 +6,9 @@ import org.exoplatform.selenium.Utils;
 import org.exoplatform.selenium.platform.ManageAccount;
 import org.exoplatform.selenium.platform.NavigationToolbar;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -27,16 +29,22 @@ public class PLF_HomepageGadgets_WhoIsOnline extends Activity {
 	ManageAccount acc;
 	HomePageGadget hg;
 	NavigationToolbar navToolBar;
+	
 	PeopleConnection peopleC;
 	PeopleSearch peopleS;
-	String user1 = "Mary Williams";
+	String user = "John Smith";
+	String user1 = "Jack Miller";
+	String user2 = "James Davis";
+	String user3 = "Mary Williams";
+	String user4 = "FQA VN";
+	String user5 = "Root Root";
 
 	@BeforeMethod
 	public void setUpBeforeTest(){
 		initSeleniumTest();
 		driver.get(baseUrl);
 		acc = new ManageAccount(driver, this.plfVersion);
-		//hg = new HomePageGadget(driver, this.plfVersion);
+		hg = new HomePageGadget(driver, this.plfVersion);
 		peopleC = new PeopleConnection(driver, this.plfVersion);
 		peopleS = new PeopleSearch(driver);
 		navToolBar = new NavigationToolbar(driver, this.plfVersion);
@@ -45,10 +53,89 @@ public class PLF_HomepageGadgets_WhoIsOnline extends Activity {
 
 	@AfterMethod
 	public void afterTest(){
-//		driver.manage().deleteAllCookies();
-//		driver.quit();
+		driver.manage().deleteAllCookies();
+		driver.quit();
 	}
 
+	/**@date 24/4/2014
+	 * @author lientm: insert
+	 * CaseID 121057
+	 * Automatic refresh of the Gadget "Who's online?"
+	 **/
+	@Test
+	public void test01_AutomaticRefresh(){
+		info("Test 01: Automatic refresh of the Gadget Who's online?");
+		//loginWithAnotherAccOnThesameBrowser(DATA_USER2, DATA_PASS);
+		newDriver = new FirefoxDriver();
+		newDriver.get(baseUrl);
+		driver.manage().window().maximize();
+		ManageAccount  acc1 = new ManageAccount(newDriver);
+		//HomePageGadget hg1 =new HomePageGadget(newDriver, this.plfVersion);
+		acc1.signIn(DATA_USER2, DATA_PASS);
+		Utils.pause(2000);
+		
+		//user1 check user2 display on Who is online gadget after 1 minus
+		Utils.pause(2000);//buffer 1s
+		hg.checkUserInfoOnWhoisOnlineGadget(DATA_USER2,user3, null, false, null, 0);
+		//user 2 logout
+		acc1.signOut();
+		newDriver.manage().deleteAllCookies();
+		newDriver.quit();
+		//user1 check user2 not display on who is online gadget after 1 minus
+
+		Utils.pause(2000);//buffer 1s
+
+		waitForElementNotPresent(hg.ELEMENT_ONLINE_USER_AVATAR.replace("${acc}",DATA_USER2));
+
+	}	
+	
+	/** 
+	 * Case ID: 121087.
+	 * Test Case Name: Check the display of Gadget "Who's online?" when start server with "minimal"profile
+	 * This case pending because can not start package with "minimal" profile activating
+	 */
+	@Test (groups = "pending")
+	public  void test02_CheckDisplayOfWhoOnlineGadGetWhenStartingServerWithMinimalProfile() {
+		info("Test 02: Check the display of Gadget Who's online? when start server with minimal profile");
+		
+	}
+	
+	/** 
+	 * Case ID: 121158.
+	 * Test Case Name: Display 18 last connected users in the gadget "Who's online?"
+
+	 */
+	@Test
+	public  void test03_Display18LastConnectedUsersInWhoOnlineGadGet() {
+		info("Test 03: Display 18 last connected users in the gadget Who's online?");
+		String password="gtngtn";
+		
+		String []username = new String[19];
+		navToolBar.goToNewStaff();
+		
+		for(int i = 0; i<19; i++){
+			username[i]=getRandomString();
+			info("Create use "+username[i]);	
+			acc.addNewUserAccount(username[i], password, password, username[i], username[i], "", username[i]+"@gmail.com", null, null, false);
+			Utils.pause(2000);
+			button.ok();
+		}
+		
+		WebDriver[] nDriver = new WebDriver[19];
+		for(int i = 0; i<19; i++){
+			nDriver[i] = new FirefoxDriver();
+			nDriver[i] .get(baseUrl);
+			driver.manage().window().maximize();
+			ManageAccount  acc1 = new ManageAccount(nDriver[i]);
+			acc1.signIn(username[i], password);
+			Utils.pause(2000);
+		}
+		
+		for(int i = 0; i<19; i++){
+			nDriver[i].close();
+		}
+	}
+	
 	/**
 	 * CaseID 79683
 	 * Check the display of online user on Who'sOnline gadget
@@ -58,7 +145,7 @@ public class PLF_HomepageGadgets_WhoIsOnline extends Activity {
 	 * 
 	 */
 	@Test
-	public void test01_checkDisplayOfOnlineUser(){				
+	public void test02_checkDisplayOfOnlineUser(){				
 		info("USER2: Switch to other window to login");
 		loginWithAnotherAccOnThesameBrowser(DATA_USER2, DATA_PASS);
 		hg=new HomePageGadget(newDriver);
@@ -188,28 +275,5 @@ public class PLF_HomepageGadgets_WhoIsOnline extends Activity {
 		this.driver.quit();
 	}
 
-	/**@date 24/4/2014
-	 * @author lientm: insert
-	 * CaseID 79677
-	 * Automatic refresh of the Gadget "Who's online?"
-	 **/
-	@Test
-	public void test04_AutomaticRefresh(){
-
-		loginWithAnotherAccOnThesameBrowser(DATA_USER2, DATA_PASS);
-		//user1 check user2 display on Who is online gadget after 1 minus
-		Utils.pause(31000);//buffer 1s
-		hg.checkUserInfoOnWhoisOnlineGadget(DATA_USER2, user1, null, false, null, 0);
-		//user 2 logout
-		acc = new ManageAccount(newDriver);
-		acc.signOut();
-		newDriver.manage().deleteAllCookies();
-		newDriver.quit();
-		//user1 check user2 not display on who is online gadget after 1 minus
-
-		Utils.pause(31000);//buffer 1s
-
-		waitForElementNotPresent(hg.ELEMENT_ONLINE_USER_AVATAR.replace("${acc}",DATA_USER1));
-
-	}	
+	
 }

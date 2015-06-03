@@ -288,7 +288,7 @@ public class ManageAccount extends PlatformBase {
 	 * Mary Williams: publisher 
 	 */
 	public enum userType {
-		ROOT, ADMIN, AUTHOR, DEVELOPER, PUBLISHER, NEW_USER;
+		ROOT, ADMIN, AUTHOR, DEVELOPER, PUBLISHER, MEMBER, NEW_USER;
 	}
 
 	/**
@@ -315,6 +315,9 @@ public class ManageAccount extends PlatformBase {
 			break;
 		case PUBLISHER:
 			signIn(DATA_USER2, DATA_PASS);
+			break;
+		case MEMBER:
+			signIn(DATA_USER5, DATA_PASS5);
 			break;
 		default:
 			break;
