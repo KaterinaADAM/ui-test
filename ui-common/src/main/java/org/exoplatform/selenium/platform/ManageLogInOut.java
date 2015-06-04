@@ -66,7 +66,8 @@ public class ManageLogInOut extends PlatformBase {
     	type(ELEMENT_INPUT_USERNAME_OPENAM, username, true);
 		type(ELEMENT_INPUT_PASSWORD_OPENAM, password, true);
 		click(ELEMENT_SIGN_IN_BUTTON_OPENAM);
-		waitForElementNotPresent(ELEMENT_SIGN_IN_BUTTON_OPENAM,3000);
+		Utils.pause(3000);
+		//waitForElementNotPresent(ELEMENT_SIGN_IN_BUTTON_OPENAM,3000);
 		
     }
     /**
@@ -79,7 +80,8 @@ public class ManageLogInOut extends PlatformBase {
     	type(ELEMENT_INPUT_USERNAME_CAS, username, true);
 		type(ELEMENT_INPUT_PASSWORD_CAS, password, true);
 		click(ELEMENT_SIGN_IN_BUTTON_CAS);
-		waitForElementNotPresent(ELEMENT_SIGN_IN_BUTTON_CAS,3000);
+		Utils.pause(3000);
+		//waitForElementNotPresent(ELEMENT_SIGN_IN_BUTTON_CAS,3000);
 		
     }
 	/**
@@ -101,8 +103,7 @@ public class ManageLogInOut extends PlatformBase {
 			info("Retry...[" + repeat + "]");
 		}
 		click(ELEMENT_SIGN_OUT_LINK);
-		//waitForAndGetElement(ELEMENT_INPUT_USERNAME);
-		waitForElementNotPresent(ELEMENT_SIGN_OUT_LINK);
+		Utils.pause(3000);
 		if ( ExpectedConditions.alertIsPresent() != null ){
 			magAlert = new ManageAlert(driver);
 			magAlert.acceptAlert();
