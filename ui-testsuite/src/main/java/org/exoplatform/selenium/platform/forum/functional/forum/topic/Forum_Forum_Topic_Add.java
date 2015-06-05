@@ -233,16 +233,16 @@ public class Forum_Forum_Topic_Add extends ForumBase{
 	@Test
 	public  void test03_AddNewTopicInCaseLimitPosterInCategoryWhichContainsThisTopic() {
 		info("Test 3: Add new topic in case limit poster in category which contains this topic");
-		String catName = "Category 73171";
+		String catName = "Category" + getRandomNumber();
 		String order = "1";
 		int chooseRestricted = 1;
 		String []restricted = {""};
 		String description = "Description Category 73171";
 		int setPermission = 2;
 		String []userGroup = {DATA_USER1};
-		String []addForum = {"Forum 73171", "1", "Open", "Unlocked", "Description of forum 003"};
-		String title = "Topic 73171";
-		String message = "Topic 73171";
+		String []addForum = {"Forum" + getRandomNumber(), "1", "Open", "Unlocked", "Description of forum 003"};
+		String title = "Topic" + getRandomNumber();
+		String message = "Topic" + getRandomNumber();
 		String []userGroupTopic = {""};
 
 		/*Step 1: Show form to create category
@@ -312,6 +312,7 @@ public class Forum_Forum_Topic_Add extends ForumBase{
 		// Clean data test
 		acc.userSignIn(userType.ADMIN);
 		goToForums();
+		waitForAndGetElement(By.linkText(catName));
 		click(By.linkText(catName));
 		cat.deleteCategoryInForum(catName, true);	
 	}
